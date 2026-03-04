@@ -18,4 +18,4 @@ MonoBehaviour:
   walkable: 0
   breakable: 0
   respawnRate: 0
-  replacementBlockId: 7
+  replacementBlockId: 0

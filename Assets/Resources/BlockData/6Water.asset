@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
   m_Name: 6Water
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
-  id: 5
+  id: 6
   displayName: Wood
   tile: {fileID: 11400000, guid: ee7d1a0ea644b470b89a16b08493263a, type: 2}
   walkable: 0
   breakable: 0
   respawnRate: 0
-  replacementBlockId: 6
+  replacementBlockId: 0
