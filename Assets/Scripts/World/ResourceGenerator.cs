@@ -7,22 +7,20 @@ using UnityEngine.Tilemaps;
 public class ResourceGenerator : MonoBehaviour
 {
     [SerializeField] GameConfig gameConfig;
-    [SerializeField] PlayerController playerController;
     [SerializeField] Transform playerTransform;
 
+    [SerializeField] WorldInteractionManager worldInteractionManager;
     [SerializeField] TileMapManager tileMapManager;
 
     public void Start()
     {
-        playerController.OnBlockBroken += HandleBlockBroken;
+        worldInteractionManager.OnBlockBroken += HandleBlockBroken;
     }
 
     private void HandleBlockBroken((BlockType, Vector2Int) brokenBlockInfo)
     {
         BlockType block = brokenBlockInfo.Item1;
         Vector2Int position = brokenBlockInfo.Item2;
-
-        Debug.Log("ResourceGenerator received block broken event for " + block.displayName + " at " + position);
 
         // Check if the broken block has a spawn rate and valid spawn range
         if (block.respawnRate > 0)

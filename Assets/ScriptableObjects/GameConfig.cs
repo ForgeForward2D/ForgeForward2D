@@ -7,4 +7,7 @@ public class GameConfig : ScriptableObject
     public float camera_aspect;
 
     public float player_speed;
+    public float player_breaking_speed;
+    public float min_destruction_animation_interval;
+    public float player_breaking_animation_interval;
 }

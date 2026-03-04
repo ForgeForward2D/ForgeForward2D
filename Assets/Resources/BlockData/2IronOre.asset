@@ -17,5 +17,6 @@ MonoBehaviour:
   tile: {fileID: 11400000, guid: b619084e3fcf04580865ac2e0eba880f, type: 2}
   walkable: 0
   breakable: 1
+  health: 2
   respawnRate: 5
   replacementBlockId: 1

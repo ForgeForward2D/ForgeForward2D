@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/BlockType")]
-public class BlockType : ScriptableObject 
+public class BlockType : ScriptableObject
 {
     public int id;
 
@@ -13,8 +13,9 @@ public class BlockType : ScriptableObject
 
     public bool walkable;
     public bool breakable;
+    public float health;
     // bool farmable;
 
-    public int respawnRate; 
+    public int respawnRate;
     public int replacementBlockId;
 }

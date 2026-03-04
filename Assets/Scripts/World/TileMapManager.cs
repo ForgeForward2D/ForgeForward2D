@@ -10,6 +10,8 @@ public class TileMapManager : MonoBehaviour
 
     [SerializeField] Tilemap wallTilemap;
     [SerializeField] Tilemap walkableTilemap;
+    [SerializeField] Tilemap animationTilemap;
+
 
     public void DrawBlock(BlockType blockType, Vector2Int position)
     {
@@ -97,5 +99,12 @@ public class TileMapManager : MonoBehaviour
         int xMax = Mathf.Max(walkableTileBounds.xMax, wallTileBounds.xMax);
 
         return (xMin, xMax, yMin, yMax);
+    }
+
+    public void UpdateBlockBreakingProgress(Vector2Int position, int stage)
+    {
+        Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
+        TileBase destroyTile = DestroyTileRepository.GetDestroyTile(stage);
+        animationTilemap.SetTile(tilePosition, destroyTile);
     }
 }

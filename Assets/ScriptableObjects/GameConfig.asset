@@ -15,3 +15,6 @@ MonoBehaviour:
   camera_width: 18
   camera_aspect: 1.7777778
   player_speed: 5
+  player_breaking_speed: 1
+  min_destruction_animation_interval: 0.25
+  player_breaking_animation_interval: 1
