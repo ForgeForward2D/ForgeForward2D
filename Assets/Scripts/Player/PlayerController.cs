@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private Vector2Int moveDirection;
 
+    [SerializeField] private InventoryUI inventoryUI;
+
     public event Action<(BlockType, Vector2Int)> OnBlockBroken;
 
     public void Start()
@@ -101,6 +103,14 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase != InputActionPhase.Performed) return;
 
-        Debug.Log("Inventory toggled");
+        if (inventoryUI != null)
+        {
+            inventoryUI.ToggleInventory();
+            Debug.Log("Inventory toggled");
+        }
+        else
+        {
+            Debug.LogWarning("InventoryUI reference is missing in Player!");
+        }
     }
 }

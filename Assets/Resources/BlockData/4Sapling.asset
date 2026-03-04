@@ -19,3 +19,4 @@ MonoBehaviour:
   breakable: 0
   respawnRate: 0
   replacementBlockId: 0
+  itemID: 4
