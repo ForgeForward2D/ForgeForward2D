@@ -41,15 +41,26 @@ public class ResourceGenerator : MonoBehaviour
             Vector2Int cellPosition = position;
             Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerTransform.position);
 
-            if (cellPosition != playerCellPosition)
+            BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(cellPosition);
+            if (currentBlock != null && currentBlock.id == block.replacementBlockId)
             {
-
-                tileMapManager.DrawBlock(block, cellPosition);
-                Debug.Log("Generated " + block.displayName + " at " + cellPosition + " after delay of " + block.respawnRate + " seconds.");
+                if (cellPosition != playerCellPosition)
+                {
+                    tileMapManager.DrawBlock(block, cellPosition);
+                    Debug.Log("Generated " + block.displayName + " at " + cellPosition + " after delay of " + block.respawnRate + " seconds.");
+                    break;
+                }
+                else
+                {
+                    Debug.Log("Skipping regeneration of " + block.displayName + " at " + cellPosition + " because player is too close (distance: " + Vector2Int.Distance(cellPosition, playerCellPosition) + ").");
+                }
+            }
+            else
+            {
+                Debug.Log("Skipping regeneration of " + block.displayName + " at " + cellPosition + " because block at cell position (id: " + (currentBlock == null ? "null" : currentBlock.id) + ") does not equal the replacement block (id: " + block.replacementBlockId + ").");
                 break;
             }
-            Debug.Log("Skipping regeneration of " + block.displayName + " at " + cellPosition + " because player is too close (distance: " + Vector2Int.Distance(cellPosition, playerCellPosition) + ").");
         }
-    }
 
+    }
 }
