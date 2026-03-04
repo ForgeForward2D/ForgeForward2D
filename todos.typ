@@ -23,25 +23,26 @@
   )[TODOs for Wednesday / until Friday]
 }
 #v(1em)
-- cleanup _testing-and-playing-around_-files and push on GitHub Tim
-- inventory listens on block-break-event and puts item into inventory Nils/Leon
+- #strike[cleanup _testing-and-playing-around_-files and push on GitHub Tim]
+- inventory listens on block-break-event and puts item into inventory Nils
 - player animation with tool in hand (depending on selected tool) Sinan
 - merge everything everyone
-- block-break animation Sinan
+- block-break animation Tim
 - logic: what happens in what event (documentation): Leon
   #list(
     marker: math.arrow,
     [e.g. breaking iron spawns cobble, cobble may convert to iron after 5s (probability: 20%)],
-    [types of materials we use: iron, cobble, wood, ...],
+    [types of materials we use: iron, cobblestone, wood, diamond, water, bricks],
     [clean stone cannot be passed, wood can be broken #math.triangle.r.filled becomes passable],
   )
-- Design map with a bit of a story (maybe a little labyrinth with some different blocks) todo
+- Design map with a bit of a story (maybe a little labyrinth with some different blocks) Leon
+- #optional[Design hotbar Nils]
 - #optional[blocks can only be broken with special tools #math.triangle.r.filled pickaxe, ...
     #list(
       marker: math.arrow,
       [player has one tool selected at a time],
       [every block has a hardness and tool group (pickaxe, shovel, or axe)],
-      [every tool has a hardness (only block with lower or equalhardness can be broken)],
+      [every tool has a hardness (only block with lower or equal hardness can be broken)],
       [blocks don't break if used with tool that is not hard enough],
     )]
 - #optional[draw architecture diagram]
