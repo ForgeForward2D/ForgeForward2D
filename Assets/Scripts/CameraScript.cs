@@ -17,31 +17,9 @@ public class CameraScript : MonoBehaviour
 
     void Start()
     {
-        // Automatically get the required components
-        pixelPerfectCam = GetComponent<PixelPerfectCamera>();
-        camera_height = Mathf.RoundToInt(gameConfig.camera_width / gameConfig.camera_aspect); 
-        
-        if (pixelPerfectCam == null)
-            Debug.LogError("PixelPerfectCamera component missing!");
-
+        camera_height = Mathf.RoundToInt(gameConfig.camera_width / gameConfig.camera_aspect);
         GetComponent<Camera>().orthographicSize = camera_height / 2f;
         GetComponent<Camera>().aspect = gameConfig.camera_aspect;
-
-        if (pixelPerfectCamera == null)
-        {
-            pixelPerfectCamera = GetComponent<UnityEngine.U2D.PixelPerfectCamera>();
-            Debug.Log("Resolving Pixel Perfect Camera component from the same GameObject.");
-        }
-
-        if (pixelPerfectCamera == null) {
-            Debug.Log("Pixel Perfect Camera is not assigned!");
-        } else {
-            Debug.Log("Pixel Perfect Camera is assigned.");
-            int ppu = 16; 
-            pixelPerfectCamera.assetsPPU = ppu;
-            pixelPerfectCamera.refResolutionX = gameConfig.camera_width * ppu;
-            pixelPerfectCamera.refResolutionY =camera_height * ppu;
-        }
     }
 
     void LateUpdate()
@@ -62,10 +40,10 @@ public class CameraScript : MonoBehaviour
 
         float y = playerTransform.position.y;
         y = Mathf.Min(y, gameConfig.world_height - halfHeight);
-        y = Mathf.Max(y, halfHeight); 
+        y = Mathf.Max(y, halfHeight);
 
-        x = Mathf.Round(x * 16f) / 16f;
-        y = Mathf.Round(y * 16f) / 16f;
+        // x = Mathf.Round(x * (float)ppu) / (float)ppu;
+        // y = Mathf.Round(y * (float)ppu) / (float)ppu;
 
         transform.position = new Vector3(x, y, transform.position.z);
     }
