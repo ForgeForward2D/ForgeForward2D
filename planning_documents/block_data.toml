@@ -1,0 +1,50 @@
+[Iron]
+_id = 4
+breakable = true
+replaced_by = 2
+walkable = false
+respawns = true
+avg_respawn_time = 10
+
+[Cobblestone]
+_id = 2
+breakable = true
+respawns = false
+replaced_by = 2
+walkable = false
+
+[Water]
+_id = 1
+breakable = false
+walkable = false
+
+[Wood]
+_id = 3
+breakable = true
+replaced_by = 7
+walkable = false
+respawns = true
+avg_respawn_time = 20
+
+[Diamonds]
+_id = 5
+breakable = true
+replaced_by = 2
+walkable = false
+respawns = true
+avg_respawn_time = 30
+
+[Bricks]
+_id = 6
+breakable = false
+walkable = false
+
+[Dirt]
+_id = 0
+breakable = false
+walkable = true
+
+[Sapling]
+_id = 7
+breakable = false
+walkable = true
