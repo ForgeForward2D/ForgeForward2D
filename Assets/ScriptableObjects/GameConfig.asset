@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775b0e6f342944aa7b89e69d03b3a3b7, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: Assembly-CSharp::GameConfig
-  world_width: 32
-  world_height: 32
   camera_width: 18
   camera_aspect: 1.7777778
-  player_speed: 10
+  player_speed: 5

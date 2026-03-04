@@ -35,12 +35,12 @@ public class CameraScript : MonoBehaviour
         float halfWidth = (camera_height * gameConfig.camera_aspect) / 2f;
 
         float x = playerTransform.position.x;
-        x = Mathf.Min(x, gameConfig.world_width - halfWidth);
-        x = Mathf.Max(x, halfWidth);
+        x = Mathf.Min(x, gameConfig.xMax - halfWidth);
+        x = Mathf.Max(x, gameConfig.xMin + halfWidth);
 
         float y = playerTransform.position.y;
-        y = Mathf.Min(y, gameConfig.world_height - halfHeight);
-        y = Mathf.Max(y, halfHeight);
+        y = Mathf.Min(y, gameConfig.yMax - halfHeight);
+        y = Mathf.Max(y, gameConfig.yMin + halfHeight);
 
         // x = Mathf.Round(x * (float)ppu) / (float)ppu;
         // y = Mathf.Round(y * (float)ppu) / (float)ppu;
