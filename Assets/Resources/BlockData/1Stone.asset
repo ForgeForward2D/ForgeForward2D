@@ -20,3 +20,4 @@ MonoBehaviour:
   hardness: 1
   respawnRate: 0
   replacementBlockId: 0
+  itemID: 1

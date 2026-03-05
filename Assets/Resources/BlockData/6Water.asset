@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: 6Water
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   id: 6
-  displayName: Wood
+  displayName: Water
   tile: {fileID: 11400000, guid: ee7d1a0ea644b470b89a16b08493263a, type: 2}
   walkable: 0
   breakable: 0
+  hardness: 0
   respawnRate: 0
   replacementBlockId: 0
+  itemID: 0
