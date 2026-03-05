@@ -174,4 +174,5 @@ MonoBehaviour:
   gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
   playerTransform: {fileID: 0}
   pixelPerfectCamera: {fileID: 3183225426325636783}
+  tileMapManager: {fileID: 4581334995825877410, guid: d171fd27535f541b6a3426005f941f92, type: 3}
   camera_height: 0
