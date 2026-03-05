@@ -27,8 +27,7 @@ public class WorldInteractionManager : MonoBehaviour
 
     public Vector2Int PositionToCoordinate(Vector3 worldPosition)
     {
-        Vector2Int coordinate = tileMapManager.PositionToCoordinate(worldPosition);
-        return coordinate;
+        return tileMapManager.PositionToCoordinate(worldPosition);
     }
 
     public bool StartBlockBreaking(Vector2Int cellPosition)
@@ -52,8 +51,8 @@ public class WorldInteractionManager : MonoBehaviour
             return false;
         }
 
-        Debug.Log("Started breaking block of type " + blockType.displayName + " at position " + cellPosition);
         StartCoroutine(BlockBreakingCoroutine(blockType, cellPosition));
+        Debug.Log("Started breaking block of type " + blockType.displayName + " at position " + cellPosition);
         return true;
     }
 
@@ -67,7 +66,7 @@ public class WorldInteractionManager : MonoBehaviour
     {
         isBreakingBlock = true;
         cancelBreakingBlock = false;
-        float totalBreakingTime = blockType.health / gameConfig.player_breaking_speed;
+        float totalBreakingTime = blockType.hardness / gameConfig.player_breaking_speed;
 
         float elapsed = 0f;
         float lastAnimation = -gameConfig.player_breaking_animation_interval;

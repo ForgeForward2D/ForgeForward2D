@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
             mySpriteRenderer.flipX = false;
         }
 
-
         // Handle direction for sprite and recording latest moveDirection
         if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
         {

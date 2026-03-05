@@ -13,7 +13,7 @@ public class BlockType : ScriptableObject
 
     public bool walkable;
     public bool breakable;
-    public float health;
+    public float hardness;
     // bool farmable;
 
     public int respawnRate;
