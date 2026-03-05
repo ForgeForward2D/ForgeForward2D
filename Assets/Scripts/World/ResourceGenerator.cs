@@ -42,7 +42,9 @@ public class ResourceGenerator : MonoBehaviour
             Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerTransform.position);
 
             BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(cellPosition);
-            if (currentBlock != null && currentBlock.id == block.replacementBlockId)
+            // if current block does not equal the old block's replacementBlock
+            int currentBlockId = currentBlock == null ? 0 : currentBlock.id;
+            if (currentBlockId == block.replacementBlockId)
             {
                 if (cellPosition != playerCellPosition)
                 {
@@ -57,7 +59,7 @@ public class ResourceGenerator : MonoBehaviour
             }
             else
             {
-                Debug.Log("Skipping regeneration of " + block.displayName + " at " + cellPosition + " because block at cell position (id: " + (currentBlock == null ? "null" : currentBlock.id) + ") does not equal the replacement block (id: " + block.replacementBlockId + ").");
+                Debug.Log("Skipping regeneration of " + block.displayName + " at " + cellPosition + " because block at cell position (id: " + currentBlockId + ") does not equal the replacement block (id: " + block.replacementBlockId + ").");
                 break;
             }
         }
