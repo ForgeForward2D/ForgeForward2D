@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private Vector2Int moveDirection;
 
+    private Animator myAnimator;
+    private SpriteRenderer mySpriteRenderer;
+
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private InventoryUI inventoryUI;
 
@@ -27,6 +30,8 @@ public class PlayerController : MonoBehaviour
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void FixedUpdate()
@@ -34,18 +39,20 @@ public class PlayerController : MonoBehaviour
         // Handle movement
         rb.linearVelocity = moveInput * gameConfig.player_speed;
 
-        // Handle direction for sprite and recording latest moveDirection 
+        // Handle direction for sprite and recording latest moveDirection
         if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
         {
             if (moveInput.x > 0)
             {
                 // Moving right
                 moveDirection = Vector2Int.right;
+                mySpriteRenderer.flipX = false;
             }
             else
             {
                 // Moving left
                 moveDirection = Vector2Int.left;
+                mySpriteRenderer.flipX = true;
             }
         }
         else
@@ -68,6 +75,9 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 input = context.ReadValue<Vector2>();
         moveInput = input;
+
+        myAnimator.SetFloat("moveX", input.x);
+        myAnimator.SetFloat("moveY", input.y);
     }
 
     public void Attack(InputAction.CallbackContext context)
@@ -107,6 +117,7 @@ public class PlayerController : MonoBehaviour
         Vector2Int cellPosition2D = new Vector2Int(cellPosition.x, cellPosition.y);
         Debug.Log("[EVENT] Broke " + brokenBlockType?.displayName + " at " + cellPosition2D);
         OnBlockBroken?.Invoke((brokenBlockType, cellPosition2D));
+        myAnimator.SetTrigger("attack");
     }
     public void Inventory(InputAction.CallbackContext context)
     {

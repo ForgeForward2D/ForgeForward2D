@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
-  m_Name: 5Wood
+  m_Name: 7Bricks
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
-  id: 5
-  displayName: Wood
-  tile: {fileID: 11400000, guid: 81f4b56709c6e45d6a72938cc4e41c1b, type: 2}
+  id: 7
+  displayName: Bricks
+  tile: {fileID: 11400000, guid: 199c19d17db464ca48be3e224e704c6e, type: 2}
   walkable: 0
-  breakable: 1
-  respawnRate: 20
-  replacementBlockId: 4
-  itemID: 5
+  breakable: 0
+  respawnRate: 0
+  replacementBlockId: 0

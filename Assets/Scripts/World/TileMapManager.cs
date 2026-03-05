@@ -82,4 +82,20 @@ public class TileMapManager : MonoBehaviour
         }
         return null;
     }
+
+    public (int, int, int, int) GetBounds()
+    {
+        walkableTilemap.CompressBounds();
+        wallTilemap.CompressBounds();
+
+        BoundsInt walkableTileBounds = walkableTilemap.cellBounds;
+        BoundsInt wallTileBounds = wallTilemap.cellBounds;
+
+        int yMin = Mathf.Min(walkableTileBounds.yMin, wallTileBounds.yMin);
+        int yMax = Mathf.Max(walkableTileBounds.yMax, wallTileBounds.yMax);
+        int xMin = Mathf.Min(walkableTileBounds.xMin, wallTileBounds.xMin);
+        int xMax = Mathf.Max(walkableTileBounds.xMax, wallTileBounds.xMax);
+
+        return (xMin, xMax, yMin, yMax);
+    }
 }
