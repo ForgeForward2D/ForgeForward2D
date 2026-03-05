@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ItemType : ScriptableObject 
 {
-    [field: SerializeField] public int Id { get; private set; }
-    [field: SerializeField] public string DisplayName { get; private set; }
-    [field: SerializeField] public int MaxStackSize { get; private set; } = 64;
-    [field: SerializeField] public Sprite Icon { get; private set; }
+    [SerializeField] public int Id;
+    [SerializeField] public string DisplayName;
+    [SerializeField] public int MaxStackSize = 64;
+    [SerializeField] public Sprite Icon;
 
 }

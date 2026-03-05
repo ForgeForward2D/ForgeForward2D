@@ -10,7 +10,6 @@ public class WorldInteractionManager : MonoBehaviour
 {
     [SerializeField] GameConfig gameConfig;
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private InventoryManager inventoryManager;
 
     private TileMapManager tileMapManager;
     private bool isBreakingBlock;
@@ -115,14 +114,6 @@ public class WorldInteractionManager : MonoBehaviour
 
         Debug.Log("[EVENT] Broke block of type " + blockType.displayName + " at position " + cellPosition + ", replaced with " + replacementBlockType.displayName);
         OnBlockBroken?.Invoke((blockType, cellPosition));
-    }
-
-    private void HandleItemDrop((BlockType type, Vector2Int pos) data)
-    {
-        if (data.type.itemID != 0)
-        {
-            inventoryManager.AddItem(data.type.itemID);
-        }
     }
 
     public void InteractWithBlock(Vector2Int cellPosition)

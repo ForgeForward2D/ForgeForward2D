@@ -4,10 +4,35 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    [SerializeField] private WorldInteractionManager worldInteractionManager;
     [SerializeField] private int maxSlots = 21;
     private readonly List<InventoryItem> _inventory = new();
 
     public event Action OnInventoryChanged;
+
+    private void OnEnable()
+    {
+        if (worldInteractionManager != null)
+        {
+            worldInteractionManager.OnBlockBroken += HandleBlockBroken;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (worldInteractionManager != null)
+        {
+            worldInteractionManager.OnBlockBroken -= HandleBlockBroken;
+        }
+    }
+
+    private void HandleBlockBroken((BlockType type, Vector2Int pos) data)
+    {
+        if(data.block.itemID != 0)
+        {
+            AddItem(data.blocl.itemID);
+        }
+    }
 
     public void AddItem(int itemId)
     {
