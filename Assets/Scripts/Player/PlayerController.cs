@@ -35,6 +35,17 @@ public class PlayerController : MonoBehaviour
         // Handle movement
         rb.linearVelocity = moveInput * gameConfig.player_speed;
 
+        // TODO make this work together and be more efficient
+        if (moveInput.x < 0)
+        {
+            mySpriteRenderer.flipX = true;
+        }
+        else if (moveInput.x > 0)
+        {
+            mySpriteRenderer.flipX = false;
+        }
+
+
         // Handle direction for sprite and recording latest moveDirection
         if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
         {
@@ -42,13 +53,11 @@ public class PlayerController : MonoBehaviour
             {
                 // Moving right
                 moveDirection = Vector2Int.right;
-                mySpriteRenderer.flipX = false;
             }
             else
             {
                 // Moving left
                 moveDirection = Vector2Int.left;
-                mySpriteRenderer.flipX = true;
             }
         }
         else
