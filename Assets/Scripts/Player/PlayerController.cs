@@ -52,13 +52,11 @@ public class PlayerController : MonoBehaviour
             {
                 // Moving right
                 moveDirection = Vector2Int.right;
-                mySpriteRenderer.flipX = false;
             }
             else
             {
                 // Moving left
                 moveDirection = Vector2Int.left;
-                mySpriteRenderer.flipX = true;
             }
         }
         else
