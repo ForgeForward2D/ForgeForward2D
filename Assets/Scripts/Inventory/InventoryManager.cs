@@ -28,9 +28,9 @@ public class InventoryManager : MonoBehaviour
 
     private void HandleBlockBroken((BlockType type, Vector2Int pos) data)
     {
-        if(data.block.itemID != 0)
+        if(data.type.itemID != 0)
         {
-            AddItem(data.blocl.itemID);
+            AddItem(data.type.itemID);
         }
     }
 

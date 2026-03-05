@@ -24,7 +24,6 @@ public class WorldInteractionManager : MonoBehaviour
         isBreakingBlock = false;
         cancelBreakingBlock = false;
 
-        OnBlockBroken += HandleItemDrop;
     }
 
     public Vector2Int PositionToCoordinate(Vector3 worldPosition)
