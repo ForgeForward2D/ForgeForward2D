@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(TileMapManager))]
 public class ResourceGenerator : MonoBehaviour
 {
-    [SerializeField] GameConfig gameConfig;
-    [SerializeField] Transform playerTransform;
-
-    [SerializeField] WorldInteractionManager worldInteractionManager;
-    [SerializeField] TileMapManager tileMapManager;
+    [SerializeField] private PlayerController playerController;
+    private TileMapManager tileMapManager;
 
     public void Start()
     {
-        worldInteractionManager.OnBlockBroken += HandleBlockBroken;
+        tileMapManager = GetComponent<TileMapManager>();
+        GetComponent<WorldInteractionManager>().OnBlockBroken += HandleBlockBroken;
     }
 
     private void HandleBlockBroken((BlockType, Vector2Int) brokenBlockInfo)
@@ -38,7 +37,7 @@ public class ResourceGenerator : MonoBehaviour
             yield return new WaitForSeconds(block.respawnRate);
 
             Vector2Int cellPosition = position;
-            Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerTransform.position);
+            Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerController.GetPosition());
 
             BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(cellPosition);
             // if current block does not equal the old block's replacementBlock

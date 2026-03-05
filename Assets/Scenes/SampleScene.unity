@@ -232,8 +232,9 @@ TilemapRenderer:
   m_DetectChunkCullingBounds: 0
 --- !u!4 &1185572671
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4583477208521156108, guid: e79f4fea186d443dc9295d76c47f582e, type: 3}
-  m_PrefabInstance: {fileID: 5753115883932946348}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185572668}
   serializedVersion: 2
@@ -3190,8 +3191,9 @@ GameObject:
   m_IsActive: 1
 --- !u!114 &1218283978515674310
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2990818303733424120, guid: e79f4fea186d443dc9295d76c47f582e, type: 3}
-  m_PrefabInstance: {fileID: 5753115883932946348}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4083778717018187740}
   m_Enabled: 1

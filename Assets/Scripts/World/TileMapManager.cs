@@ -6,8 +6,6 @@ using UnityEngine.Tilemaps;
 
 public class TileMapManager : MonoBehaviour
 {
-    [SerializeField] GameConfig gameConfig;
-
     [SerializeField] Tilemap wallTilemap;
     [SerializeField] Tilemap walkableTilemap;
     [SerializeField] Tilemap animationTilemap;

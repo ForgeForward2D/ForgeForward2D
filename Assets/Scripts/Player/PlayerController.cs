@@ -9,16 +9,14 @@ public class PlayerController : MonoBehaviour
     // Config
     [SerializeField] GameConfig gameConfig;
 
-
-
     // Block breaking mechanic
     [SerializeField] WorldInteractionManager worldInteractionManager;
 
     // State
-    [SerializeField] private Vector2 moveInput;
-    [SerializeField] private Vector2Int moveDirection;
+    private Vector2 moveInput;
+    private Vector2Int moveDirection;
 
-    private Transform myTransform;
+    private Transform playerTransform;
     private Rigidbody2D rb;
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
@@ -26,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     public void Start()
     {
-        myTransform = GetComponent<Transform>();
+        playerTransform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         mySpriteRenderer = GetComponent<SpriteRenderer>();
@@ -71,17 +69,18 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 GetPosition()
     {
-        return myTransform.position;
+        return playerTransform.position;
     }
 
     public Vector2Int GetTargettingBlock()
     {
-        return worldInteractionManager.PositionToCoordinate(GetPosition()) + moveDirection;
+        Vector3 position = GetPosition();
+        Vector2Int cellPosition = worldInteractionManager.PositionToCoordinate(position);
+        return cellPosition + moveDirection;
     }
 
     public void TriggerAttackAnimation()
     {
-        Debug.Log("Attack animation triggered");
         myAnimator.SetTrigger("attack");
     }
 
@@ -105,7 +104,7 @@ public class PlayerController : MonoBehaviour
                 {
                     break;
                 }
-                Debug.Log("No block to break, attack!");
+                // TODO: No block to break: attack!
                 break;
             case InputActionPhase.Canceled:
                 worldInteractionManager.CancelBlockBreaking();

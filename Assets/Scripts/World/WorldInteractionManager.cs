@@ -5,10 +5,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(TileMapManager))]
 public class WorldInteractionManager : MonoBehaviour
 {
     [SerializeField] GameConfig gameConfig;
-    [SerializeField] PlayerController playerController;
+    [SerializeField] private PlayerController playerController;
 
     private TileMapManager tileMapManager;
     private bool isBreakingBlock;
@@ -19,15 +20,16 @@ public class WorldInteractionManager : MonoBehaviour
     public void Start()
     {
         tileMapManager = GetComponent<TileMapManager>();
+
         isBreakingBlock = false;
         cancelBreakingBlock = false;
     }
 
     public Vector2Int PositionToCoordinate(Vector3 worldPosition)
     {
-        return tileMapManager.PositionToCoordinate(worldPosition);
+        Vector2Int coordinate = tileMapManager.PositionToCoordinate(worldPosition);
+        return coordinate;
     }
-
 
     public bool StartBlockBreaking(Vector2Int cellPosition)
     {
