@@ -272,26 +272,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 775486311543761510, guid: d171fd27535f541b6a3426005f941f92, type: 3}
-      propertyPath: m_Tiles.Array.size
-      value: 34
-      objectReference: {fileID: 0}
-    - target: {fileID: 775486311543761510, guid: d171fd27535f541b6a3426005f941f92, type: 3}
-      propertyPath: m_TileAssetArray.Array.data[1].m_RefCount
-      value: 34
-      objectReference: {fileID: 0}
-    - target: {fileID: 775486311543761510, guid: d171fd27535f541b6a3426005f941f92, type: 3}
-      propertyPath: m_TileColorArray.Array.data[0].m_RefCount
-      value: 34
-      objectReference: {fileID: 0}
-    - target: {fileID: 775486311543761510, guid: d171fd27535f541b6a3426005f941f92, type: 3}
-      propertyPath: m_TileMatrixArray.Array.data[0].m_RefCount
-      value: 34
-      objectReference: {fileID: 0}
-    - target: {fileID: 775486311543761510, guid: d171fd27535f541b6a3426005f941f92, type: 3}
-      propertyPath: m_TileSpriteArray.Array.data[1].m_RefCount
-      value: 34
-      objectReference: {fileID: 0}
     - target: {fileID: 5279324956202110486, guid: d171fd27535f541b6a3426005f941f92, type: 3}
       propertyPath: playerTransform
       value: 

@@ -14,7 +14,7 @@ public class WorldGeneration : MonoBehaviour
         TileMapManager tileMapManager = GetComponent<TileMapManager>();
 
         (int xMin, int xMax, int yMin, int yMax) mapBounds = tileMapManager.GetBounds();
-        Debug.Log("Set world size to (" + (mapBounds.xMax - mapBounds.xMin) + ", " + (mapBounds.yMax - mapBounds.yMin) + ")");
+        Debug.Log("Set world borders to x: (" + mapBounds.xMin + ", " + mapBounds.xMax + "), y: (" + mapBounds.yMin + ", " + mapBounds.yMax + ")");
 
         for (int y = mapBounds.yMin - 1; y <= mapBounds.yMax; y++)
         {
