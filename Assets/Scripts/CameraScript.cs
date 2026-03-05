@@ -16,15 +16,24 @@ public class CameraScript : MonoBehaviour
 
     public int camera_height;
 
+    private int cameraPixelHeight;
+    private int cameraPixelWidth;
+    private int ppu;
+
     private (int xMin, int xMax, int yMin, int yMax) mapBounds;
 
     void Start()
     {
         pixelPerfectCamera = GetComponent<PixelPerfectCamera>();
 
-        camera_height = Mathf.RoundToInt(gameConfig.camera_width / gameConfig.camera_aspect);
-        GetComponent<Camera>().orthographicSize = camera_height / 2f;
-        GetComponent<Camera>().aspect = gameConfig.camera_aspect;
+        ppu = pixelPerfectCamera.assetsPPU;
+        cameraPixelWidth = gameConfig.camera_width * ppu;
+        cameraPixelHeight = Mathf.RoundToInt(cameraPixelWidth / gameConfig.camera_aspect);
+
+        camera_height = Mathf.RoundToInt((float)cameraPixelHeight / ppu);
+
+        GetComponent<Camera>().orthographicSize = cameraPixelHeight / (2f * ppu);
+        GetComponent<Camera>().aspect = (float)cameraPixelWidth / cameraPixelHeight;
 
         mapBounds = tileMapManager.GetBounds();
     }
@@ -36,8 +45,8 @@ public class CameraScript : MonoBehaviour
 
     void UpdateCameraPosition()
     {
-        float halfHeight = camera_height / 2f;
-        float halfWidth = camera_height * gameConfig.camera_aspect / 2f;
+        float halfHeight = cameraPixelHeight / (2f * ppu);
+        float halfWidth = cameraPixelWidth / (2f * ppu);
 
         float x = playerTransform.position.x;
         x = Mathf.Min(x, mapBounds.xMax - halfWidth);
@@ -47,9 +56,8 @@ public class CameraScript : MonoBehaviour
         y = Mathf.Min(y, mapBounds.yMax - halfHeight);
         y = Mathf.Max(y, mapBounds.yMin + halfHeight);
 
-        float ppu = pixelPerfectCamera.assetsPPU;
-        x = Mathf.Round(x * (float)ppu) / (float)ppu;
-        y = Mathf.Round(y * (float)ppu) / (float)ppu;
+        x = Mathf.Round(x * ppu) / ppu;
+        y = Mathf.Round(y * ppu) / ppu;
 
         transform.position = new Vector3(x, y, transform.position.z);
     }
