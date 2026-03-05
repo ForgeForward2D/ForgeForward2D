@@ -40,8 +40,6 @@ public class CameraScript : MonoBehaviour
         float halfHeight = camera_height / 2f;
         float halfWidth = (camera_height * gameConfig.camera_aspect) / 2f;
 
-        Debug.Log("Player pos: (" + playerTransform.position + ")");
-
         float x = playerTransform.position.x;
         x = Mathf.Min(x, mapBounds.xMax - halfWidth);
         x = Mathf.Max(x, mapBounds.xMin + halfWidth);
