@@ -22,7 +22,7 @@ public class ResourceGenerator : MonoBehaviour
         BlockType block = brokenBlockInfo.Item1;
         Vector2Int position = brokenBlockInfo.Item2;
 
-        // Check if the broken block has a spawn rate and valid spawn range
+        // Check if the broken block is regeneratable 
         if (block.respawnRate > 0)
         {
             // Start a coroutine to generate resources after the specified spawn rate
@@ -32,6 +32,7 @@ public class ResourceGenerator : MonoBehaviour
 
     private IEnumerator RegenerateResourceAfterDelay(BlockType block, Vector2Int position)
     {
+        Debug.Log("Started regeneration process for " + block.displayName + " at " + position + " with respawn rate of " + block.respawnRate + " seconds.");
         while (true)
         {
             yield return new WaitForSeconds(block.respawnRate);
