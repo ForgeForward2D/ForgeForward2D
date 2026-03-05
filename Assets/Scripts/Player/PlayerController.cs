@@ -9,23 +9,22 @@ public class PlayerController : MonoBehaviour
     // Config
     [SerializeField] GameConfig gameConfig;
 
-    // Movement
-    [SerializeField] Rigidbody2D rb;
-
     // Block breaking mechanic
-    [SerializeField] TileMapManager tileMapManager;
+    [SerializeField] WorldInteractionManager worldInteractionManager;
 
     // State
-    [SerializeField] private Vector2 moveInput;
-    [SerializeField] private Vector2Int moveDirection;
+    private Vector2 moveInput;
+    private Vector2Int moveDirection;
 
+    private Transform playerTransform;
+    private Rigidbody2D rb;
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
 
-    public event Action<(BlockType, Vector2Int)> OnBlockBroken;
 
     public void Start()
     {
+        playerTransform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         mySpriteRenderer = GetComponent<SpriteRenderer>();
@@ -68,6 +67,23 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public Vector3 GetPosition()
+    {
+        return playerTransform.position;
+    }
+
+    public Vector2Int GetTargettingBlock()
+    {
+        Vector3 position = GetPosition();
+        Vector2Int cellPosition = worldInteractionManager.PositionToCoordinate(position);
+        return cellPosition + moveDirection;
+    }
+
+    public void TriggerAttackAnimation()
+    {
+        myAnimator.SetTrigger("attack");
+    }
+
     public void Move(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
@@ -79,35 +95,25 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (context.phase != InputActionPhase.Performed) return;
-
-        // Todo: Refactor
-        // Maybe push more into resource generation?
-        Vector2Int cellPosition = tileMapManager.PositionToCoordinate(transform.position) + Vector2Int.RoundToInt(moveDirection);
-
-        BlockType brokenBlockType = tileMapManager.GetBlockTypeAtPosition(cellPosition);
-
-        if (brokenBlockType == null)
+        // Skip started phase to avoid processing input twice (once for started and once for performed)
+        switch (context.phase)
         {
-            Debug.Log("Trying to break null block at " + cellPosition);
-            return;
+            case InputActionPhase.Performed:
+                Vector2Int cellPosition = GetTargettingBlock();
+                if (worldInteractionManager.StartBlockBreaking(cellPosition))
+                {
+                    break;
+                }
+                // TODO: No block to break: attack!
+                break;
+            case InputActionPhase.Canceled:
+                worldInteractionManager.CancelBlockBreaking();
+                break;
+            default:
+                return;
         }
-
-        if (!brokenBlockType.breakable)
-        {
-            Debug.Log("Trying to break unbreakable block (" + brokenBlockType.displayName + ") at " + cellPosition);
-            return;
-        }
-
-        BlockType replacementBlockType = BlockTypeRepository.GetBlockById(brokenBlockType.replacementBlockId);
-
-        tileMapManager.DrawBlock(replacementBlockType, cellPosition);
-
-        Vector2Int cellPosition2D = new Vector2Int(cellPosition.x, cellPosition.y);
-        Debug.Log("[EVENT] Broke " + brokenBlockType?.displayName + " at " + cellPosition2D);
-        OnBlockBroken?.Invoke((brokenBlockType, cellPosition2D));
-        myAnimator.SetTrigger("attack");
     }
+
     public void Inventory(InputAction.CallbackContext context)
     {
         if (context.phase != InputActionPhase.Performed) return;

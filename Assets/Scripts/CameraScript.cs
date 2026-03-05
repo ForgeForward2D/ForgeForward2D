@@ -9,11 +9,10 @@ public class CameraScript : MonoBehaviour
 
     [SerializeField] Transform playerTransform;
 
-    [SerializeField] UnityEngine.U2D.PixelPerfectCamera pixelPerfectCamera;
+    [SerializeField] PixelPerfectCamera pixelPerfectCamera;
 
     [SerializeField] TileMapManager tileMapManager;
 
-    private PixelPerfectCamera pixelPerfectCam;
 
     public int camera_height;
 
@@ -21,6 +20,8 @@ public class CameraScript : MonoBehaviour
 
     void Start()
     {
+        pixelPerfectCamera = GetComponent<PixelPerfectCamera>();
+
         camera_height = Mathf.RoundToInt(gameConfig.camera_width / gameConfig.camera_aspect);
         GetComponent<Camera>().orthographicSize = camera_height / 2f;
         GetComponent<Camera>().aspect = gameConfig.camera_aspect;
@@ -35,10 +36,8 @@ public class CameraScript : MonoBehaviour
 
     void UpdateCameraPosition()
     {
-        // float halfHeight = GetComponent<Camera>().orthographicSize;
-        // float halfWidth = halfHeight * GetComponent<Camera>().aspect;
         float halfHeight = camera_height / 2f;
-        float halfWidth = (camera_height * gameConfig.camera_aspect) / 2f;
+        float halfWidth = camera_height * gameConfig.camera_aspect / 2f;
 
         float x = playerTransform.position.x;
         x = Mathf.Min(x, mapBounds.xMax - halfWidth);
@@ -48,8 +47,9 @@ public class CameraScript : MonoBehaviour
         y = Mathf.Min(y, mapBounds.yMax - halfHeight);
         y = Mathf.Max(y, mapBounds.yMin + halfHeight);
 
-        // x = Mathf.Round(x * (float)ppu) / (float)ppu;
-        // y = Mathf.Round(y * (float)ppu) / (float)ppu;
+        float ppu = pixelPerfectCamera.assetsPPU;
+        x = Mathf.Round(x * (float)ppu) / (float)ppu;
+        y = Mathf.Round(y * (float)ppu) / (float)ppu;
 
         transform.position = new Vector3(x, y, transform.position.z);
     }

@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(TileMapManager))]
 public class ResourceGenerator : MonoBehaviour
 {
-    [SerializeField] GameConfig gameConfig;
-    [SerializeField] PlayerController playerController;
-    [SerializeField] Transform playerTransform;
-
-    [SerializeField] TileMapManager tileMapManager;
+    [SerializeField] private PlayerController playerController;
+    private TileMapManager tileMapManager;
 
     public void Start()
     {
-        playerController.OnBlockBroken += HandleBlockBroken;
+        tileMapManager = GetComponent<TileMapManager>();
+        GetComponent<WorldInteractionManager>().OnBlockBroken += HandleBlockBroken;
     }
 
     private void HandleBlockBroken((BlockType, Vector2Int) brokenBlockInfo)
@@ -22,9 +21,7 @@ public class ResourceGenerator : MonoBehaviour
         BlockType block = brokenBlockInfo.Item1;
         Vector2Int position = brokenBlockInfo.Item2;
 
-        Debug.Log("ResourceGenerator received block broken event for " + block.displayName + " at " + position);
-
-        // Check if the broken block has a spawn rate and valid spawn range
+        // Check if the broken block is regeneratable 
         if (block.respawnRate > 0)
         {
             // Start a coroutine to generate resources after the specified spawn rate
@@ -34,12 +31,13 @@ public class ResourceGenerator : MonoBehaviour
 
     private IEnumerator RegenerateResourceAfterDelay(BlockType block, Vector2Int position)
     {
+        Debug.Log("Started regeneration process for " + block.displayName + " at " + position + " with respawn rate of " + block.respawnRate + " seconds.");
         while (true)
         {
             yield return new WaitForSeconds(block.respawnRate);
 
             Vector2Int cellPosition = position;
-            Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerTransform.position);
+            Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerController.GetPosition());
 
             BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(cellPosition);
             // if current block does not equal the old block's replacementBlock
