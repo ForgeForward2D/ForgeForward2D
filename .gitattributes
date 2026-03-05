@@ -1,0 +1,11 @@
+# Set default behavior to handle line endings automatically
+* text=auto
+
+# Ensure C# files always use LF (standard for cross-platform coding)
+*.cs text eol=lf
+
+# Treat Unity's YAML files as binary to prevent Git from touching line endings
+*.unity binary
+*.asset binary
+*.prefab binary
+*.mat binary
