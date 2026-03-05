@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private InventoryUI inventoryUI;
 
-    public event Action<(BlockType, Vector2Int)> OnBlockBroken;
-
     public void Start()
     {
         playerTransform = GetComponent<Transform>();
@@ -48,7 +46,6 @@ public class PlayerController : MonoBehaviour
         {
             mySpriteRenderer.flipX = false;
         }
-
 
         // Handle direction for sprite and recording latest moveDirection
         if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
@@ -131,8 +128,6 @@ public class PlayerController : MonoBehaviour
             default:
                 return;
         }
-
-        inventoryManager?.AddItem(brokenBlockType.itemID);  
     }
 
     public void Inventory(InputAction.CallbackContext context)

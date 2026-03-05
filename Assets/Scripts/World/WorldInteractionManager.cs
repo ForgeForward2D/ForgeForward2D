@@ -10,6 +10,7 @@ public class WorldInteractionManager : MonoBehaviour
 {
     [SerializeField] GameConfig gameConfig;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private InventoryManager inventoryManager;
 
     private TileMapManager tileMapManager;
     private bool isBreakingBlock;
@@ -23,12 +24,13 @@ public class WorldInteractionManager : MonoBehaviour
 
         isBreakingBlock = false;
         cancelBreakingBlock = false;
+
+        OnBlockBroken += HandleItemDrop;
     }
 
     public Vector2Int PositionToCoordinate(Vector3 worldPosition)
     {
-        Vector2Int coordinate = tileMapManager.PositionToCoordinate(worldPosition);
-        return coordinate;
+        return tileMapManager.PositionToCoordinate(worldPosition);
     }
 
     public bool StartBlockBreaking(Vector2Int cellPosition)
@@ -52,8 +54,8 @@ public class WorldInteractionManager : MonoBehaviour
             return false;
         }
 
-        Debug.Log("Started breaking block of type " + blockType.displayName + " at position " + cellPosition);
         StartCoroutine(BlockBreakingCoroutine(blockType, cellPosition));
+        Debug.Log("Started breaking block of type " + blockType.displayName + " at position " + cellPosition);
         return true;
     }
 
@@ -67,7 +69,7 @@ public class WorldInteractionManager : MonoBehaviour
     {
         isBreakingBlock = true;
         cancelBreakingBlock = false;
-        float totalBreakingTime = blockType.health / gameConfig.player_breaking_speed;
+        float totalBreakingTime = blockType.hardness / gameConfig.player_breaking_speed;
 
         float elapsed = 0f;
         float lastAnimation = -gameConfig.player_breaking_animation_interval;
@@ -115,6 +117,13 @@ public class WorldInteractionManager : MonoBehaviour
         OnBlockBroken?.Invoke((blockType, cellPosition));
     }
 
+    private void HandleItemDrop((BlockType type, Vector2Int pos) data)
+    {
+        if (data.type.itemID != 0)
+        {
+            inventoryManager.AddItem(data.type.itemID);
+        }
+    }
 
     public void InteractWithBlock(Vector2Int cellPosition)
     {
