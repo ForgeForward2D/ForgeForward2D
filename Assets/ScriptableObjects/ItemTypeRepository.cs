@@ -13,7 +13,7 @@ public static class ItemTypeRepository
 
         foreach (var item in itemTypes)
         {
-            idLookup[item.id] = item;
+            idLookup[item.Id] = item;
         }
 
 

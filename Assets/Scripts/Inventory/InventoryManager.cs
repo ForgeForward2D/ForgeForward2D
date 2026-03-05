@@ -1,68 +1,37 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField] private PlayerController playerController;
+    [SerializeField] private int maxSlots = 21;
+    private readonly List<InventoryItem> _inventory = new();
 
-    [SerializeField] private List<InventoryItem> inventory = new List<InventoryItem>();
+    public event Action OnInventoryChanged;
 
-    public Action OnInventoryChanged;
-
-    private void OnEnable()
+    public void AddItem(int itemId)
     {
-        if (playerController != null)
-        {
-            playerController.OnBlockBroken += AddBlockToInventory;
-        }
-    }
+        ItemType itemData = ItemTypeRepository.GetItemById(itemId);
+        if (itemData == null) return;
 
-    private void OnDisable()
-    {
-        if (playerController != null)
-        {
-            playerController.OnBlockBroken -= AddBlockToInventory;
-        }
-    }
-
-    private void AddBlockToInventory((BlockType block, Vector2Int position) brokenBlockInfo)
-    {
-        BlockType block = brokenBlockInfo.block;
-
-        ItemType itemToAdd = ItemTypeRepository.GetItemById(block.itemID);
-
-        if (itemToAdd == null)
-        {
-            Debug.LogWarning($"No Item found for ID {block.itemID}!");
-            return;
-        }
-
-        InventoryItem existingStack = inventory.Find(i =>
-            i.Item.id == itemToAdd.id &&
-            i.Count < itemToAdd.maxStackSize
-        );
+        InventoryItem existingStack = _inventory.Find(i => i.Item.Id == itemId && !i.IsFull);
 
         if (existingStack != null)
         {
             existingStack.Count++;
         }
+        else if (_inventory.Count < maxSlots)
+        {
+            _inventory.Add(new InventoryItem(itemData, 1));
+        }
         else
         {
-            if (inventory.Count < 20)
-            {
-                inventory.Add(new InventoryItem(itemToAdd, 1));
-            }
-            else
-            {
-                Debug.Log("Inventory Full!");
-                return;
-            }
+            Debug.Log("Inventory Full!");
+            return;
         }
 
         OnInventoryChanged?.Invoke();
     }
 
-    public List<InventoryItem> GetInventoryItems() => inventory;
+    public List<InventoryItem> GetItems() => _inventory;
 }

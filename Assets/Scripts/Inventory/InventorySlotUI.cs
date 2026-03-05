@@ -7,34 +7,23 @@ public class InventorySlotUI : MonoBehaviour
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI countText;
 
-    public void SetItem(ItemType item, int count)
+    public void UpdateSlot(InventoryItem item)
     {
-        if (item == null || iconImage == null)
+        if (item == null)
         {
+            ClearSlot();
             return;
         }
 
-        iconImage.sprite = item.icon;
+        iconImage.sprite = item.Item.Icon;
         iconImage.color = Color.white;
-
-        if(countText != null)
-        {
-        countText.text = count > 1 ? count.ToString() : "";
-        }
+        countText.text = item.Count > 1 ? item.Count.ToString() : string.Empty;
     }
 
     public void ClearSlot()
     {
-        if(iconImage == null)
-        {
-            return;
-        }
-
         iconImage.sprite = null;
-        iconImage.color = new Color(1, 1, 1, 0);
-        if(countText != null)
-        {
-            countText.text = "";
-        }
+        iconImage.color = Color.clear;
+        countText.text = string.Empty;
     }
 }

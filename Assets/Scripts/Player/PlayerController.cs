@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private Vector2Int moveDirection;
 
+    [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private InventoryUI inventoryUI;
 
     public event Action<(BlockType, Vector2Int)> OnBlockBroken;
@@ -71,6 +72,12 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
+
+        if (inventoryUI !=null && inventoryUI.IsOpen)
+        {
+            return;
+        }
+
         if (context.phase != InputActionPhase.Performed) return;
 
         // Todo: Refactor
@@ -95,6 +102,8 @@ public class PlayerController : MonoBehaviour
 
         tileMapManager.DrawBlock(replacementBlockType, cellPosition);
 
+        inventoryManager?.AddItem(brokenBlockType.itemID);
+
         Vector2Int cellPosition2D = new Vector2Int(cellPosition.x, cellPosition.y);
         Debug.Log("[EVENT] Broke " + brokenBlockType?.displayName + " at " + cellPosition2D);
         OnBlockBroken?.Invoke((brokenBlockType, cellPosition2D));
@@ -105,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
         if (inventoryUI != null)
         {
-            inventoryUI.ToggleInventory();
+            inventoryUI.Toggle();
             Debug.Log("Inventory toggled");
         }
         else

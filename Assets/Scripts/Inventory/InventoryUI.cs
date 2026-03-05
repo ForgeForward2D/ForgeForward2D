@@ -6,53 +6,49 @@ using TMPro;
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private InventoryManager inventoryManager;
-    [SerializeField] private GameObject slotPrefab;
-    [SerializeField] private Transform container;
-
     [SerializeField] private GameObject visualPanel;
 
-    private List<InventorySlotUI> uiSlots = new List<InventorySlotUI>();
+    private List<InventorySlotUI> _uiSlots = new();
+
+    public bool IsOpen => visualPanel.activeSelf;
 
     private void Awake()
     {
-        uiSlots.AddRange(container.GetComponentsInChildren<InventorySlotUI>(true));
+        _uiSlots.AddRange(GetComponentsInChildren<InventorySlotUI>(true));
     }
 
     private void OnEnable()
     {
+        inventoryManager.OnInventoryChanged += RefreshUI;
         RefreshUI();
     }
+
+    private void OnDisable() => inventoryManager.OnInventoryChanged -= RefreshUI;
     
     public void RefreshUI()
     {
-        var items = inventoryManager.GetInventoryItems();
-
-        for(int i = 0; i < uiSlots.Count; i++)
+        var items = inventoryManager.GetItems();
+        for(int i = 0; i < _uiSlots.Count; i++)
         {
-            if (i < items.Count)
-            {
-                uiSlots[i].SetItem(items[i].Item, items[i].Count);
-            }
-            else
-            {
-                uiSlots[i].ClearSlot();
-            }
+            _uiSlots[i].UpdateSlot(i < items.Count ? items[i] : null);
         }
     }
 
-    public void ToggleInventory()
+    public void Toggle()
     {
-        if(visualPanel != null)
+        visualPanel.SetActive(!visualPanel.activeSelf);
+        bool isOpen = visualPanel.activeSelf;
+
+        if(isOpen)
         {
-            bool isActive = !visualPanel.activeSelf;
-            visualPanel.SetActive(isActive);
-
-            Debug.Log("Inventory Panel is now: " + (isActive ? "Visible" : "Hidden"));
-
-            if (isActive)
-            {
-                RefreshUI();
-            }
+            RefreshUI();
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Time.timeScale = 1f;
         }
     }
 }
