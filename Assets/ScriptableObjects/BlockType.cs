@@ -18,4 +18,6 @@ public class BlockType : ScriptableObject
 
     public int respawnRate;
     public int replacementBlockId;
+
+    public int itemID;
 }

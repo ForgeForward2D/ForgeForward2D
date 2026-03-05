@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
 
+    [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private InventoryUI inventoryUI;
 
     public void Start()
     {
@@ -103,6 +105,12 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
+
+        if (inventoryUI !=null && inventoryUI.IsOpen)
+        {
+            return;
+        }
+
         // Skip started phase to avoid processing input twice (once for started and once for performed)
         switch (context.phase)
         {
@@ -126,6 +134,14 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase != InputActionPhase.Performed) return;
 
-        Debug.Log("Inventory toggled");
+        if (inventoryUI != null)
+        {
+            inventoryUI.Toggle();
+            Debug.Log("Inventory toggled");
+        }
+        else
+        {
+            Debug.LogWarning("InventoryUI reference is missing in Player!");
+        }
     }
 }

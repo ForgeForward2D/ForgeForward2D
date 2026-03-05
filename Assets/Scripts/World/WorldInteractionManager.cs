@@ -23,6 +23,7 @@ public class WorldInteractionManager : MonoBehaviour
 
         isBreakingBlock = false;
         cancelBreakingBlock = false;
+
     }
 
     public Vector2Int PositionToCoordinate(Vector3 worldPosition)
@@ -113,7 +114,6 @@ public class WorldInteractionManager : MonoBehaviour
         Debug.Log("[EVENT] Broke block of type " + blockType.displayName + " at position " + cellPosition + ", replaced with " + replacementBlockType.displayName);
         OnBlockBroken?.Invoke((blockType, cellPosition));
     }
-
 
     public void InteractWithBlock(Vector2Int cellPosition)
     {
