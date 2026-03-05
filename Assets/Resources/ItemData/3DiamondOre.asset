@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a45c7459feb2c44c95e9e3334a4d479, type: 3}
   m_Name: 3DiamondOre
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
-  <Id>k__BackingField: 3
-  <DisplayName>k__BackingField: Diamond Ore
-  <MaxStackSize>k__BackingField: 64
-  <Icon>k__BackingField: {fileID: 425945882, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
+  Id: 3
+  DisplayName: 
+  MaxStackSize: 64
+  Icon: {fileID: 425945882, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}

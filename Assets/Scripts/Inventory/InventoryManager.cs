@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
     [SerializeField] private WorldInteractionManager worldInteractionManager;
     [SerializeField] private int maxSlots = 21;
-    private readonly List<InventoryItem> _inventory = new();
+    private readonly List<InventoryItem> inventory = new();
 
     public event Action OnInventoryChanged;
 
@@ -39,15 +39,15 @@ public class InventoryManager : MonoBehaviour
         ItemType itemData = ItemTypeRepository.GetItemById(itemId);
         if (itemData == null) return;
 
-        InventoryItem existingStack = _inventory.Find(i => i.Item.Id == itemId && !i.IsFull);
+        InventoryItem existingStack = inventory.Find(i => i.Item.Id == itemId && !i.IsFull);
 
         if (existingStack != null)
         {
             existingStack.Count++;
         }
-        else if (_inventory.Count < maxSlots)
+        else if (inventory.Count < maxSlots)
         {
-            _inventory.Add(new InventoryItem(itemData, 1));
+            inventory.Add(new InventoryItem(itemData, 1));
         }
         else
         {
@@ -58,5 +58,5 @@ public class InventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
-    public List<InventoryItem> GetItems() => _inventory;
+    public List<InventoryItem> GetItems() => inventory;
 }

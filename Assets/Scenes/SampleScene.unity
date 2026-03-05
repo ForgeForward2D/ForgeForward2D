@@ -748,6 +748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19c0bc9c67ee7ef4b99f319ed5dcca48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+  worldInteractionManager: {fileID: 7367874862585846643}
   maxSlots: 21
 --- !u!114 &488311292
 MonoBehaviour:
@@ -18875,7 +18876,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldInteractionManager
   gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
   playerController: {fileID: 4220411106964447491}
-  inventoryManager: {fileID: 488311291}
 --- !u!20 &8170033572664962785
 Camera:
   m_ObjectHideFlags: 0

@@ -8,13 +8,13 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private GameObject visualPanel;
 
-    private List<InventorySlotUI> _uiSlots = new();
+    private List<InventorySlotUI> uiSlots = new();
 
     public bool IsOpen => visualPanel.activeSelf;
 
     private void Awake()
     {
-        _uiSlots.AddRange(GetComponentsInChildren<InventorySlotUI>(true));
+        uiSlots.AddRange(GetComponentsInChildren<InventorySlotUI>(true));
     }
 
     private void OnEnable()
@@ -28,9 +28,9 @@ public class InventoryUI : MonoBehaviour
     public void RefreshUI()
     {
         var items = inventoryManager.GetItems();
-        for(int i = 0; i < _uiSlots.Count; i++)
+        for(int i = 0; i < uiSlots.Count; i++)
         {
-            _uiSlots[i].UpdateSlot(i < items.Count ? items[i] : null);
+            uiSlots[i].UpdateSlot(i < items.Count ? items[i] : null);
         }
     }
 
