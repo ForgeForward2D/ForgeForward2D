@@ -102,3 +102,7 @@ InitTestScene*.unity*
 
 # generated typst PDFs
 planning_documents/*.pdf
+planning_documents/*.svg
+
+# Apple's .DS_Store
+.DS_Store
