@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         // Update sprite flip whenever there's horizontal input
         if (moveInput.x != 0)
         {
-            mySpriteRenderer.flipX = moveInput.x < 0;
+            mySpriteRenderer.flipX = moveInput.x > 0;
         }
 
         // Determine movement direction based on dominant axis
