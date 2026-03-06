@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
 
-    [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private InventoryUI inventoryUI;
 
     public void Start()
