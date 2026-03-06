@@ -99,3 +99,6 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 .vscode/
+
+# generated typst PDFs
+planning_documents/*.pdf
