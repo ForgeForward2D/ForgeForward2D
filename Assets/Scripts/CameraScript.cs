@@ -9,17 +9,24 @@ public class CameraScript : MonoBehaviour
 
     [SerializeField] Transform playerTransform;
 
-    [SerializeField] UnityEngine.U2D.PixelPerfectCamera pixelPerfectCamera;
+    [SerializeField] PixelPerfectCamera pixelPerfectCamera;
 
-    private PixelPerfectCamera pixelPerfectCam;
+    [SerializeField] TileMapManager tileMapManager;
+
 
     public int camera_height;
 
+    private (int xMin, int xMax, int yMin, int yMax) mapBounds;
+
     void Start()
     {
+        pixelPerfectCamera = GetComponent<PixelPerfectCamera>();
+
         camera_height = Mathf.RoundToInt(gameConfig.camera_width / gameConfig.camera_aspect);
         GetComponent<Camera>().orthographicSize = camera_height / 2f;
         GetComponent<Camera>().aspect = gameConfig.camera_aspect;
+
+        mapBounds = tileMapManager.GetBounds();
     }
 
     void LateUpdate()
@@ -29,21 +36,20 @@ public class CameraScript : MonoBehaviour
 
     void UpdateCameraPosition()
     {
-        // float halfHeight = GetComponent<Camera>().orthographicSize;
-        // float halfWidth = halfHeight * GetComponent<Camera>().aspect;
         float halfHeight = camera_height / 2f;
-        float halfWidth = (camera_height * gameConfig.camera_aspect) / 2f;
+        float halfWidth = camera_height * gameConfig.camera_aspect / 2f;
 
         float x = playerTransform.position.x;
-        x = Mathf.Min(x, gameConfig.world_width - halfWidth);
-        x = Mathf.Max(x, halfWidth);
+        x = Mathf.Min(x, mapBounds.xMax - halfWidth);
+        x = Mathf.Max(x, mapBounds.xMin + halfWidth);
 
         float y = playerTransform.position.y;
-        y = Mathf.Min(y, gameConfig.world_height - halfHeight);
-        y = Mathf.Max(y, halfHeight);
+        y = Mathf.Min(y, mapBounds.yMax - halfHeight);
+        y = Mathf.Max(y, mapBounds.yMin + halfHeight);
 
-        // x = Mathf.Round(x * (float)ppu) / (float)ppu;
-        // y = Mathf.Round(y * (float)ppu) / (float)ppu;
+        float ppu = pixelPerfectCamera.assetsPPU;
+        x = Mathf.Round(x * (float)ppu) / (float)ppu;
+        y = Mathf.Round(y * (float)ppu) / (float)ppu;
 
         transform.position = new Vector3(x, y, transform.position.z);
     }

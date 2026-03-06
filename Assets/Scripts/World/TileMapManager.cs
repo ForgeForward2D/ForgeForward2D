@@ -6,10 +6,10 @@ using UnityEngine.Tilemaps;
 
 public class TileMapManager : MonoBehaviour
 {
-    [SerializeField] GameConfig gameConfig;
-
     [SerializeField] Tilemap wallTilemap;
     [SerializeField] Tilemap walkableTilemap;
+    [SerializeField] Tilemap animationTilemap;
+
 
     public void DrawBlock(BlockType blockType, Vector2Int position)
     {
@@ -81,5 +81,28 @@ public class TileMapManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public (int, int, int, int) GetBounds()
+    {
+        walkableTilemap.CompressBounds();
+        wallTilemap.CompressBounds();
+
+        BoundsInt walkableTileBounds = walkableTilemap.cellBounds;
+        BoundsInt wallTileBounds = wallTilemap.cellBounds;
+
+        int yMin = Mathf.Min(walkableTileBounds.yMin, wallTileBounds.yMin);
+        int yMax = Mathf.Max(walkableTileBounds.yMax, wallTileBounds.yMax);
+        int xMin = Mathf.Min(walkableTileBounds.xMin, wallTileBounds.xMin);
+        int xMax = Mathf.Max(walkableTileBounds.xMax, wallTileBounds.xMax);
+
+        return (xMin, xMax, yMin, yMax);
+    }
+
+    public void UpdateBlockBreakingProgress(Vector2Int position, int stage)
+    {
+        Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
+        TileBase destroyTile = DestroyTileRepository.GetDestroyTile(stage);
+        animationTilemap.SetTile(tilePosition, destroyTile);
     }
 }

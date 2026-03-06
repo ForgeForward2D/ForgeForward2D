@@ -9,23 +9,24 @@ public class PlayerController : MonoBehaviour
     // Config
     [SerializeField] GameConfig gameConfig;
 
-    // Movement
-    [SerializeField] Rigidbody2D rb;
-
     // Block breaking mechanic
-    [SerializeField] TileMapManager tileMapManager;
+    [SerializeField] WorldInteractionManager worldInteractionManager;
 
     // State
-    [SerializeField] private Vector2 moveInput;
-    [SerializeField] private Vector2Int moveDirection;
+    private Vector2 moveInput;
+    private Vector2Int moveDirection;
 
+    private Transform playerTransform;
+    private Rigidbody2D rb;
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
 
-    public event Action<(BlockType, Vector2Int)> OnBlockBroken;
+    [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private InventoryUI inventoryUI;
 
     public void Start()
     {
+        playerTransform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         mySpriteRenderer = GetComponent<SpriteRenderer>();
@@ -36,36 +37,43 @@ public class PlayerController : MonoBehaviour
         // Handle movement
         rb.linearVelocity = moveInput * gameConfig.player_speed;
 
-        // Handle direction for sprite and recording latest moveDirection
-        if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
+        // Handle sprite flipping and movement direction
+        float absX = Mathf.Abs(moveInput.x);
+        float absY = Mathf.Abs(moveInput.y);
+
+        // Update sprite flip whenever there's horizontal input
+        if (moveInput.x != 0)
         {
-            if (moveInput.x > 0)
-            {
-                // Moving right
-                moveDirection = Vector2Int.right;
-                mySpriteRenderer.flipX = false;
-            }
-            else
-            {
-                // Moving left
-                moveDirection = Vector2Int.left;
-                mySpriteRenderer.flipX = true;
-            }
-        }
-        else
-        {
-            if (moveInput.y > 0)
-            {
-                // Moving up
-                moveDirection = Vector2Int.up;
-            }
-            else if (moveInput.y < 0)
-            {
-                // Moving down
-                moveDirection = Vector2Int.down;
-            }
+            mySpriteRenderer.flipX = moveInput.x < 0;
         }
 
+        // Determine movement direction based on dominant axis
+        if (absX > absY)
+        {
+            moveDirection = moveInput.x > 0 ? Vector2Int.right : Vector2Int.left;
+        }
+        else if (absY > 0)
+        {
+            moveDirection = moveInput.y > 0 ? Vector2Int.up : Vector2Int.down;
+        }
+
+    }
+
+    public Vector3 GetPosition()
+    {
+        return playerTransform.position;
+    }
+
+    public Vector2Int GetTargettingBlock()
+    {
+        Vector3 position = GetPosition();
+        Vector2Int cellPosition = worldInteractionManager.PositionToCoordinate(position);
+        return cellPosition + moveDirection;
+    }
+
+    public void TriggerAttackAnimation()
+    {
+        myAnimator.SetTrigger("attack");
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -79,39 +87,43 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (context.phase != InputActionPhase.Performed) return;
 
-        // Todo: Refactor
-        // Maybe push more into resource generation?
-        Vector2Int cellPosition = tileMapManager.PositionToCoordinate(transform.position) + Vector2Int.RoundToInt(moveDirection);
-
-        BlockType brokenBlockType = tileMapManager.GetBlockTypeAtPosition(cellPosition);
-
-        if (brokenBlockType == null)
+        if (inventoryUI !=null && inventoryUI.IsOpen)
         {
-            Debug.Log("Trying to break null block at " + cellPosition);
             return;
         }
 
-        if (!brokenBlockType.breakable)
+        // Skip started phase to avoid processing input twice (once for started and once for performed)
+        switch (context.phase)
         {
-            Debug.Log("Trying to break unbreakable block (" + brokenBlockType.displayName + ") at " + cellPosition);
-            return;
+            case InputActionPhase.Performed:
+                Vector2Int cellPosition = GetTargettingBlock();
+                if (worldInteractionManager.StartBlockBreaking(cellPosition))
+                {
+                    break;
+                }
+                // TODO: No block to break: attack!
+                break;
+            case InputActionPhase.Canceled:
+                worldInteractionManager.CancelBlockBreaking();
+                break;
+            default:
+                return;
         }
-
-        BlockType replacementBlockType = BlockTypeRepository.GetBlockById(brokenBlockType.replacementBlockId);
-
-        tileMapManager.DrawBlock(replacementBlockType, cellPosition);
-
-        Vector2Int cellPosition2D = new Vector2Int(cellPosition.x, cellPosition.y);
-        Debug.Log("[EVENT] Broke " + brokenBlockType?.displayName + " at " + cellPosition2D);
-        OnBlockBroken?.Invoke((brokenBlockType, cellPosition2D));
-        myAnimator.SetTrigger("attack");
     }
+
     public void Inventory(InputAction.CallbackContext context)
     {
         if (context.phase != InputActionPhase.Performed) return;
 
-        Debug.Log("Inventory toggled");
+        if (inventoryUI != null)
+        {
+            inventoryUI.Toggle();
+            Debug.Log("Inventory toggled");
+        }
+        else
+        {
+            Debug.LogWarning("InventoryUI reference is missing in Player!");
+        }
     }
 }
