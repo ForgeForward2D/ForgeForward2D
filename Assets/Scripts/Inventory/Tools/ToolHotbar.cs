@@ -7,6 +7,8 @@ public class ToolHotbar : ItemContainer
     public struct StartingTool { public int itemId;}
 
     [SerializeField] private StartingTool[] startingTools;
+
+    [SerializeField] private WorldInteractionManager worldInteractionManager;
     public int SelectedIndex = 0;
 
     public event Action OnSelectionChanged;
@@ -22,6 +24,22 @@ public class ToolHotbar : ItemContainer
             }
         }
         NotifyContentsChanged();
+    }
+
+    private void OnEnable()
+    {
+        if (worldInteractionManager != null)
+        {
+            worldInteractionManager.OnRequestActiveTool += GetSelectedTool;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (worldInteractionManager != null)
+        {
+            worldInteractionManager.OnRequestActiveTool -= GetSelectedTool;
+        }
     }
 
     public void ChangeSelectedSlot(int index)

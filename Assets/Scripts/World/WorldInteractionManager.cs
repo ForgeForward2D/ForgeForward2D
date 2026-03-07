@@ -17,6 +17,8 @@ public class WorldInteractionManager : MonoBehaviour
 
     public event Action<(BlockType, Vector2Int)> OnBlockBroken;
 
+    public Func<InventoryItem> OnRequestActiveTool;
+
     public void Start()
     {
         tileMapManager = GetComponent<TileMapManager>();
@@ -50,6 +52,22 @@ public class WorldInteractionManager : MonoBehaviour
         {
             Debug.Log("Interacted with non-breakable block of type " + blockType.displayName + " at position " + cellPosition);
             return false;
+        }
+
+        if (OnRequestActiveTool != null)
+        {
+            InventoryItem activeTool = OnRequestActiveTool.Invoke();
+
+            if (activeTool == null)
+            {
+                Debug.Log("Cannot break block: No tool equipped");
+                //return false;
+            }
+            else
+            {
+                Debug.Log($"Attempting to break {blockType.displayName} with {activeTool.Item.DisplayName}");
+                // TODO: Add tool validation logic here
+            }
         }
 
         StartCoroutine(BlockBreakingCoroutine(blockType, cellPosition));
