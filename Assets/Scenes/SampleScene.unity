@@ -2262,8 +2262,8 @@ MonoBehaviour:
     - {fileID: 410736826}
     m_DefaultLocalRotations:
     - {x: -0, y: -0, z: 0.70845795, w: 0.7057531}
-    - {x: 0, y: -0, z: 0.99992883, w: -0.011933571}
-    - {x: 0, y: 0, z: -0.040099133, w: 0.99919575}
+    - {x: -0, y: -0, z: 0.99998, w: 0.0063267937}
+    - {x: -0, y: -0, z: -0.053400867, w: 0.99857324}
     m_StoredLocalRotations:
     - {x: 0, y: 0, z: 0, w: 0}
     - {x: 0, y: 0, z: 0, w: 0}
@@ -2546,8 +2546,8 @@ MonoBehaviour:
     - {fileID: 355202064}
     m_DefaultLocalRotations:
     - {x: -0, y: -0, z: 0.70845795, w: 0.7057531}
-    - {x: 0, y: 0, z: -0.9997627, w: 0.021783818}
-    - {x: 0, y: 0, z: -0.016742116, w: 0.9998599}
+    - {x: -0, y: -0, z: -0.9992318, w: 0.039190948}
+    - {x: -0, y: -0, z: -0.04186482, w: 0.99912333}
     m_StoredLocalRotations:
     - {x: 0, y: 0, z: 0, w: 0}
     - {x: 0, y: 0, z: 0, w: 0}
@@ -6392,7 +6392,7 @@ Animator:
   m_GameObject: {fileID: 6854287795457830472}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: eecaecb73c4bb4d4eb7bc2c0e0ddf498, type: 2}
+  m_Controller: {fileID: 9100000, guid: 36a66f3adad5e4d1389d54cd7b6961e3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
