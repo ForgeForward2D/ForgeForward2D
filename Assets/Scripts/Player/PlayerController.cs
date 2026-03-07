@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
     public void TriggerAttackAnimation()
     {
-        myAnimator.SetTrigger("attack");
+        myAnimator.SetTrigger("break");
     }
 
     public void Move(InputAction.CallbackContext context)
