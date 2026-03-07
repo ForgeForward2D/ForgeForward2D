@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
 
-    [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private ResourceInventoryUI resourceInventoryUI;
 
     public void Start()
     {
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
     public void Attack(InputAction.CallbackContext context)
     {
 
-        if (inventoryUI !=null && inventoryUI.IsOpen)
+        if (resourceInventoryUI !=null && resourceInventoryUI.IsOpen)
         {
             return;
         }
@@ -115,14 +115,14 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase != InputActionPhase.Performed) return;
 
-        if (inventoryUI != null)
+        if (resourceInventoryUI != null)
         {
-            inventoryUI.Toggle();
-            Debug.Log("Inventory toggled");
+            resourceInventoryUI.Toggle();
+            Debug.Log("Resource Inventory toggled");
         }
         else
         {
-            Debug.LogWarning("InventoryUI reference is missing in Player!");
+            Debug.LogWarning("ResourceInventoryUI reference is missing in Player!");
         }
     }
 }

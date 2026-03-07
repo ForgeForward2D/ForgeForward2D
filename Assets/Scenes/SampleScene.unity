@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 488311294}
   - component: {fileID: 488311293}
   - component: {fileID: 488311292}
-  - component: {fileID: 488311291}
+  - component: {fileID: 488311296}
   m_Layer: 5
   m_Name: InventoryCanvas
   m_TagString: Untagged
@@ -445,20 +445,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &488311291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488311290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c0bc9c67ee7ef4b99f319ed5dcca48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
-  worldInteractionManager: {fileID: 7367874862585846643}
-  maxSlots: 21
 --- !u!114 &488311292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,6 +528,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &488311296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488311290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4832e026b09389748bce07581d7a38b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResourceInventory
+  capacity: 21
+  worldInteractionManager: {fileID: 7367874862585846643}
 --- !u!1001 &550204131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1912,8 +1912,8 @@ GameObject:
   - component: {fileID: 1447784741}
   - component: {fileID: 1447784745}
   - component: {fileID: 1447784744}
-  - component: {fileID: 1447784743}
   - component: {fileID: 1447784742}
+  - component: {fileID: 1447784746}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -1985,20 +1985,6 @@ MonoBehaviour:
   m_Spacing: {x: 50, y: 50}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &1447784743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1447784740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7942c555062113428445d37a0f3d63a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
-  inventoryManager: {fileID: 488311291}
-  visualPanel: {fileID: 1447784740}
 --- !u!114 &1447784744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2037,6 +2023,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447784740}
   m_CullTransparentMesh: 1
+--- !u!114 &1447784746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447784740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb2beb237caac444b94f50448438b56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResourceInventoryUI
+  targetContainer: {fileID: 488311296}
+  visualPanel: {fileID: 1447784740}
 --- !u!1001 &1471892821
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6022,7 +6022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
   worldInteractionManager: {fileID: 7367874862585846643}
-  inventoryUI: {fileID: 1447784743}
+  resourceInventoryUI: {fileID: 1447784746}
 --- !u!61 &4267914035134336910
 BoxCollider2D:
   m_ObjectHideFlags: 0
