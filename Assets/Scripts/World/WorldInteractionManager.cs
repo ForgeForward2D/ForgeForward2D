@@ -61,12 +61,18 @@ public class WorldInteractionManager : MonoBehaviour
             if (activeTool == null)
             {
                 Debug.Log("Cannot break block: No tool equipped");
-                //return false;
+                return false;
             }
             else
             {
                 Debug.Log($"Attempting to break {blockType.displayName} with {activeTool.Item.DisplayName}");
-                // TODO: Add tool validation logic here
+
+                if (!IsCorrectTool(blockType.displayName, activeTool.Item.DisplayName))
+                {
+                    Debug.Log($"Cannot break {blockType.displayName} with {activeTool.Item.DisplayName}: Incorrect tool");
+                    return false;
+                }
+                
             }
         }
 
@@ -131,6 +137,19 @@ public class WorldInteractionManager : MonoBehaviour
 
         Debug.Log("[EVENT] Broke block of type " + blockType.displayName + " at position " + cellPosition + ", replaced with " + replacementBlockType.displayName);
         OnBlockBroken?.Invoke((blockType, cellPosition));
+    }
+
+    private bool IsCorrectTool(string blockTypeName, string toolTypeName)
+    {
+        if (blockTypeName == "Stone" || blockTypeName == "IronOre" || blockTypeName == "DiamondOre")
+        {
+            return toolTypeName == "Pickaxe";
+        }
+        else if (blockTypeName == "Wood")
+        {
+            return toolTypeName == "Axe";
+        }
+        return true; // For blocks that can be broken by hand or any tool
     }
 
     public void InteractWithBlock(Vector2Int cellPosition)
