@@ -71,9 +71,14 @@ public class PlayerController : MonoBehaviour
         return cellPosition + moveDirection;
     }
 
+    public void SetBreakingAnimation(bool isBreaking)
+    {
+        myAnimator.SetBool("isBreaking", isBreaking);
+    }
+
     public void TriggerAttackAnimation()
     {
-        myAnimator.SetTrigger("break");
+        // TODO
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -81,8 +86,7 @@ public class PlayerController : MonoBehaviour
         Vector2 input = context.ReadValue<Vector2>();
         moveInput = input;
 
-        myAnimator.SetFloat("moveX", input.x);
-        myAnimator.SetFloat("moveY", input.y);
+        myAnimator.SetBool("isMoving", input.magnitude > 0.01f);
     }
 
     public void Attack(InputAction.CallbackContext context)
