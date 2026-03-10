@@ -1,9 +1,30 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ToolHotbarUI : ContainerUI
 {
     [SerializeField] private RectTransform selectionHighlight;
+
+    private List<RectTransform> slotTransforms = new List<RectTransform>();
+
+    protected override void Awake()
+    {
+        base.Awake();
+        CacheSlotTransforms();
+    }
+
+    private void CacheSlotTransforms()
+    {
+        slotTransforms.Clear();
+        foreach (var slot in uiSlots)
+        {
+            if (slot != null)
+            {
+                slotTransforms.Add(slot.GetComponent<RectTransform>());
+            }
+        }
+    }
 
     protected override void OnEnable()
     {
@@ -32,11 +53,17 @@ public class ToolHotbarUI : ContainerUI
 
     private void UpdateHighlight()
     {
-        if (targetContainer is ToolHotbar hotbar && selectionHighlight != null && uiSlots.Length > 0)
+        if (targetContainer is ToolHotbar hotbar && selectionHighlight != null)
         {
-            RectTransform targetSlot = uiSlots[hotbar.SelectedIndex].GetComponent<RectTransform>();
-            selectionHighlight.position = targetSlot.position;
-            selectionHighlight.sizeDelta = targetSlot.sizeDelta + new Vector2(10, 10);;
+            int index = hotbar.SelectedIndex;
+
+            if (index >= 0 && index < slotTransforms.Count)
+            {
+                RectTransform targetSlot = slotTransforms[index];
+
+                selectionHighlight.position = targetSlot.position;
+                selectionHighlight.sizeDelta = targetSlot.sizeDelta + new Vector2(10, 10);
+            }
         }
     }
 }

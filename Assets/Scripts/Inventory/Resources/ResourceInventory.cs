@@ -18,7 +18,10 @@ public class ResourceInventory : ItemContainer
 
     private void HandleBlockBroken((BlockType type, Vector2Int position) data)
     {
-        if(data.type.itemID != 0) AddItem(data.type.itemID);
+        if(data.type.itemID != 0) 
+        {
+            AddItem(data.type.itemID);
+        }
     }
     
     public void AddItem(int itemId)
@@ -27,7 +30,11 @@ public class ResourceInventory : ItemContainer
         if (itemData == null) return;
 
         if (TryStackExisting(itemId)) return;
-        TryAddNewSlot(itemData);
+
+        if (!TryAddNewSlot(itemData))
+        {
+            Debug.LogWarning($"Inventory Full! Could not add item: {itemData.DisplayName} (ID: {itemId})");
+        }
     }
 
     private bool TryStackExisting(int itemId)

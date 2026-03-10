@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
     public void Attack(InputAction.CallbackContext context)
     {
 
-        if (resourceInventoryUI !=null && resourceInventoryUI.IsOpen)
+        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
         {
             return;
         }
