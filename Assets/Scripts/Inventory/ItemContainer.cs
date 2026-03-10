@@ -14,13 +14,7 @@ public abstract class ItemContainer : MonoBehaviour
         items = new InventoryItem[capacity];
     }
 
-    public InventoryItem[] GetItems()
-    {
-        return items;
-    }
+    public InventoryItem[] GetItems() => items;
 
-    protected void NotifyContentsChanged()
-    {
-        OnContentChanged?.Invoke();
-    }
+    protected void NotifyContentsChanged() => OnContentChanged?.Invoke();
 }

@@ -15,34 +15,25 @@ public class HotbarInput : MonoBehaviour
 
     private void HandleNumberKeys()
     {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(0);
-        if (Keyboard.current.digit2Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(1);
-        if (Keyboard.current.digit3Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(2);
-        if (Keyboard.current.digit4Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(3);
-        if (Keyboard.current.digit5Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(4);
+        var kb = Keyboard.current;
+        
+        if (kb.digit1Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(0);
+        else if (kb.digit2Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(1);
+        else if (kb.digit3Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(2);
+        else if (kb.digit4Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(3);
+        else if (kb.digit5Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(4);
     }
 
     private void HandleScrollWheel()
     {
         float scrollY = Mouse.current.scroll.ReadValue().y;
 
-        if (scrollY != 0f)
-        {
-            int currentIndex = toolHotbar.SelectedIndex;
-            int hotbarSize = toolHotbar.GetItems().Length;
+        if (scrollY == 0f) return;
+        
+        int size = toolHotbar.GetItems().Length;
+        int step = scrollY > 0 ? -1 : 1;
 
-            if (scrollY > 0f)
-            {
-                currentIndex--;
-                if (currentIndex < 0) currentIndex = hotbarSize - 1;
-            }
-            else if (scrollY < 0f)
-            {
-                currentIndex++;
-                if (currentIndex >= hotbarSize) currentIndex = 0;
-            }
-
-            toolHotbar.ChangeSelectedSlot(currentIndex);
-        }
+        int nextIndex = (toolHotbar.SelectedIndex + step + size) % size;
+        toolHotbar.ChangeSelectedSlot(nextIndex);
     }
 }

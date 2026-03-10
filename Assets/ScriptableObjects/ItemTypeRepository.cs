@@ -8,6 +8,7 @@ public static class ItemTypeRepository
     private static void Initialize()
     {
         var itemTypes = Resources.LoadAll<ItemType>("ItemData");
+        var hotbarItemTypes = Resources.LoadAll<ItemType>("HotbarItemData");
 
         idLookup = new Dictionary<int, ItemType>();
 
@@ -16,8 +17,14 @@ public static class ItemTypeRepository
             idLookup[item.Id] = item;
         }
 
+        foreach (var item in hotbarItemTypes)
+        {
+            idLookup[item.Id] = item;
+        }
 
-        Debug.Log("Initialized ItemTypeRepository with " + itemTypes.Length + " items.");
+        int totalItems = itemTypes.Length + hotbarItemTypes.Length;
+
+        Debug.Log("Initialized ItemTypeRepository with " + totalItems + " items.");
     }
 
     public static ItemType GetItemById(int id)

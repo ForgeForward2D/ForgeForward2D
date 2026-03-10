@@ -8,13 +8,13 @@ public class ResourceInventoryUI : ContainerUI
 
     public void Toggle()
     {
-        visualPanel.SetActive(!visualPanel.activeSelf);
-        bool isOpen = visualPanel.activeSelf;
-        
-        if(isOpen) RefreshUI();
+        if (visualPanel == null) return;
 
-        Time.timeScale = isOpen ? 0f : 1f;
-        // Cursor.lockState = isOpen ? CursorLockMode.None : CursorLockMode.Locked;
-        // Cursor.visible = isOpen;
+        bool newState = !visualPanel.activeSelf;
+        visualPanel.SetActive(newState);
+
+        if (newState) RefreshUI();
+
+        Time.timeScale = newState ? 0f : 1f;
     }
 }

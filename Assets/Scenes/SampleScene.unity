@@ -2025,8 +2025,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolHotbar
   capacity: 5
-  startingTools: []
-  worldInteractionManager: {fileID: 7367874862585846643}
+  startingTools:
+  - itemId: 101
+  - itemId: 102
+  - itemId: 103
+  - itemId: 104
+  - itemId: 105
   SelectedIndex: 0
 --- !u!4 &1142236175
 Transform:

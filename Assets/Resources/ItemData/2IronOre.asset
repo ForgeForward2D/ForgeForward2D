@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 2IronOre
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
   Id: 2
-  DisplayName: 
+  DisplayName: Iron Ore
   MaxStackSize: 64
   Icon: {fileID: 1503520895, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}

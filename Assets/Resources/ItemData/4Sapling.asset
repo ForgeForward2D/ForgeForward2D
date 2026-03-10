@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 4Sapling
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
   Id: 4
-  DisplayName: 
+  DisplayName: Sapling
   MaxStackSize: 64
   Icon: {fileID: 1643529745, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}

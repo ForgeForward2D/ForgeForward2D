@@ -17,8 +17,6 @@ public class WorldInteractionManager : MonoBehaviour
 
     public event Action<(BlockType, Vector2Int)> OnBlockBroken;
 
-    public Func<InventoryItem> OnRequestActiveTool;
-
     public void Start()
     {
         tileMapManager = GetComponent<TileMapManager>();
@@ -52,28 +50,6 @@ public class WorldInteractionManager : MonoBehaviour
         {
             Debug.Log("Interacted with non-breakable block of type " + blockType.displayName + " at position " + cellPosition);
             return false;
-        }
-
-        if (OnRequestActiveTool != null)
-        {
-            InventoryItem activeTool = OnRequestActiveTool.Invoke();
-
-            if (activeTool == null)
-            {
-                Debug.Log("Cannot break block: No tool equipped");
-                return false;
-            }
-            else
-            {
-                Debug.Log($"Attempting to break {blockType.displayName} with {activeTool.Item.DisplayName}");
-
-                if (!IsCorrectTool(blockType.displayName, activeTool.Item.DisplayName))
-                {
-                    Debug.Log($"Cannot break {blockType.displayName} with {activeTool.Item.DisplayName}: Incorrect tool");
-                    return false;
-                }
-                
-            }
         }
 
         StartCoroutine(BlockBreakingCoroutine(blockType, cellPosition));
@@ -137,19 +113,6 @@ public class WorldInteractionManager : MonoBehaviour
 
         Debug.Log("[EVENT] Broke block of type " + blockType.displayName + " at position " + cellPosition + ", replaced with " + replacementBlockType.displayName);
         OnBlockBroken?.Invoke((blockType, cellPosition));
-    }
-
-    private bool IsCorrectTool(string blockTypeName, string toolTypeName)
-    {
-        if (blockTypeName == "Stone" || blockTypeName == "IronOre" || blockTypeName == "DiamondOre")
-        {
-            return toolTypeName == "Pickaxe";
-        }
-        else if (blockTypeName == "Wood")
-        {
-            return toolTypeName == "Axe";
-        }
-        return true; // For blocks that can be broken by hand or any tool
     }
 
     public void InteractWithBlock(Vector2Int cellPosition)
