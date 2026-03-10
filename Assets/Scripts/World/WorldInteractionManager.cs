@@ -67,6 +67,9 @@ public class WorldInteractionManager : MonoBehaviour
     {
         isBreakingBlock = true;
         cancelBreakingBlock = false;
+
+        playerController.SetBreakingAnimation(true);
+
         float totalBreakingTime = blockType.hardness / gameConfig.player_breaking_speed;
 
         float elapsed = 0f;
@@ -79,6 +82,7 @@ public class WorldInteractionManager : MonoBehaviour
             {
                 tileMapManager.UpdateBlockBreakingProgress(cellPosition, 0);
                 isBreakingBlock = false;
+                playerController.SetBreakingAnimation(false);
                 yield break;
             }
 
@@ -106,6 +110,7 @@ public class WorldInteractionManager : MonoBehaviour
         }
 
         isBreakingBlock = false;
+        playerController.SetBreakingAnimation(false);
         tileMapManager.UpdateBlockBreakingProgress(cellPosition, 0);
 
         BlockType replacementBlockType = BlockTypeRepository.GetBlockById(blockType.replacementBlockId);
