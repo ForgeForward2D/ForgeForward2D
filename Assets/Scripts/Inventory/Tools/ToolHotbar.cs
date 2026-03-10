@@ -3,10 +3,7 @@ using UnityEngine;
 
 public class ToolHotbar : ItemContainer
 {
-    [System.Serializable]
-    public struct StartingTool { public int itemId;}
-
-    [SerializeField] private StartingTool[] startingTools;
+    [SerializeField] private int[] startingItemIds;
 
     public int SelectedIndex = 0;
 
@@ -14,12 +11,19 @@ public class ToolHotbar : ItemContainer
 
     private void Start()
     {
-        for (int i = 0; i < capacity && i < startingTools.Length; i++)
+        int count = Mathf.Min(capacity, startingItemIds.Length);
+
+        for (int i = 0; i < count; i++)
         {
-            if (startingTools[i].itemId != 0)
+            int itemId = startingItemIds[i];
+
+            if (itemId != 0)
             {
-                ItemType data = ItemTypeRepository.GetItemById(startingTools[i].itemId);
-                if (data != null) items[i] = new InventoryItem(data, 1);
+                ItemType data = ItemTypeRepository.GetItemById(itemId);
+                if (data != null)
+                {
+                    items[i] = new InventoryItem(data, 1);
+                }
             }
         }
         NotifyContentsChanged();

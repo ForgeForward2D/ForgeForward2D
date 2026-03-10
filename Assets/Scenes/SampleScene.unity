@@ -2042,12 +2042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolHotbar
   capacity: 5
-  startingTools:
-  - itemId: 101
-  - itemId: 102
-  - itemId: 103
-  - itemId: 104
-  - itemId: 105
+  startingItemIds: 6500000066000000670000006800000069000000
   SelectedIndex: 0
 --- !u!1001 &968510751
 PrefabInstance:
@@ -7009,6 +7004,38 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9033000692423820053}
+        m_TargetAssemblyTypeName: HotbarInput, Assembly-CSharp
+        m_MethodName: OnHotbarSelected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 668dfb31-6642-4898-9c58-e6ce7b55dff6
+    m_ActionName: 'Player/HotbarSelect[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9033000692423820053}
+        m_TargetAssemblyTypeName: HotbarInput, Assembly-CSharp
+        m_MethodName: OnHotbarScroll
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c64ac1f7-ad65-4b58-ae7a-d07b4b9dea0e
+    m_ActionName: 'Player/HotbarScroll[/Mouse/scroll]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

@@ -5,34 +5,29 @@ public class HotbarInput : MonoBehaviour
 {
     [SerializeField] private ToolHotbar toolHotbar;
 
-    private void Update()
+    public void OnHotbarSelected(InputAction.CallbackContext context)
     {
-        if (Keyboard.current == null || Mouse.current == null) return;
+        if (!context.performed) return;
 
-        HandleNumberKeys();
-        HandleScrollWheel();
+        string keyName = context.control.name;
+
+        if (int.TryParse(keyName, out int digit))
+        {
+            toolHotbar.ChangeSelectedSlot(digit - 1);
+        }
     }
 
-    private void HandleNumberKeys()
+    public void OnHotbarScroll(InputAction.CallbackContext context)
     {
-        var kb = Keyboard.current;
-        
-        if (kb.digit1Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(0);
-        else if (kb.digit2Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(1);
-        else if (kb.digit3Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(2);
-        else if (kb.digit4Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(3);
-        else if (kb.digit5Key.wasPressedThisFrame) toolHotbar.ChangeSelectedSlot(4);
-    }
+        if (!context.performed) return;
 
-    private void HandleScrollWheel()
-    {
-        float scrollY = Mouse.current.scroll.ReadValue().y;
+        Vector2 scrollValue = context.ReadValue<Vector2>();
 
-        if (scrollY == 0f) return;
-        
+        if (scrollValue.y == 0f) return;
+
         int size = toolHotbar.GetItems().Length;
-        int step = scrollY > 0 ? -1 : 1;
-
+        int step = scrollValue.y > 0 ? -1 : 1;
+        
         int nextIndex = (toolHotbar.SelectedIndex + step + size) % size;
         toolHotbar.ChangeSelectedSlot(nextIndex);
     }
