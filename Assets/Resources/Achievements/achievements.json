@@ -1,0 +1,11 @@
+{
+    "achievements": [
+        {
+            "id": "first_wood",
+            "title": "Timber!",
+            "description": "Chop down your first tree.",
+            "isUnlocked": false,
+            "iconPath": "Icons/test"
+        }
+    ]
+}
