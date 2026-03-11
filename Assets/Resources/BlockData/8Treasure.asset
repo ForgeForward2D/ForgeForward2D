@@ -10,22 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
-  m_Name: 5Wood
+  m_Name: 8Treasure
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
-  id: 5
-  displayName: Wood
-  tile: {fileID: 11400000, guid: 81f4b56709c6e45d6a72938cc4e41c1b, type: 2}
+  id: 8
+  displayName: Treasure
+  tile: {fileID: 11400000, guid: b0a8ff7ca237d4bfea096752a8b3857a, type: 2}
   walkable: 0
   breakable: 1
   hardness: 3
-  respawnRate: 20
-  replacementBlockId: 4
-  toolType: 3
+  respawnRate: 0
+  replacementBlockId: 0
+  toolType: 5
   minimumToolTier: 0
   lootDrops:
   - itemType: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
-    amount: 1
+    amount: 5
     chance: 1
-  - itemType: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
-    amount: 1
+  - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
+    amount: 2
     chance: 0.5
+  - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
+    amount: 1
+    chance: 0.1

@@ -24,8 +24,13 @@ public class ToolHotbar : ItemContainer
                 {
                     items[i] = new InventoryItem(data, 1);
                 }
+                else
+                {
+                    Debug.LogWarning($"No item found for ID {itemId} in ToolHotbar starting items.");
+                }
             }
         }
+        OnSelectionChanged?.Invoke();
         NotifyContentsChanged();
     }
 
@@ -38,5 +43,20 @@ public class ToolHotbar : ItemContainer
         }
     }
 
-    public InventoryItem GetSelectedTool() => items[SelectedIndex];
+    public Tool GetSelectedTool()
+    {
+
+        ItemType item = items[SelectedIndex]?.Item;
+
+        if (item == null)
+        {
+            return ItemTypeRepository.GetDefaultTool(); // Return a default "empty" tool
+        }
+
+        if (item is Tool tool)
+        {
+            return tool;
+        }
+        return ItemTypeRepository.GetToolById(item.Id);
+    }
 }

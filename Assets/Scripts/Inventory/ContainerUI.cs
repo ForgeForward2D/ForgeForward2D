@@ -32,7 +32,7 @@ public abstract class ContainerUI : MonoBehaviour
         var items = targetContainer.GetItems();
 
         if (items == null) return;
-        
+
         for (int i = 0; i < uiSlots.Length; i++)
         {
             if (i < items.Length)
