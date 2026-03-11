@@ -19,5 +19,13 @@ public class BlockType : ScriptableObject
     public int respawnRate;
     public int replacementBlockId;
 
-    public int itemID;
+    public LootDrop[] lootDrops;
+}
+
+[System.Serializable]
+public struct LootDrop
+{
+    public ItemType itemType;
+    public int amount;
+    [Range(0f, 1f)] public float chance;
 }

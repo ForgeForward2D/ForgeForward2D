@@ -20,4 +20,13 @@ MonoBehaviour:
   hardness: 5
   respawnRate: 30
   replacementBlockId: 1
-  itemID: 3
+  lootDrops:
+  - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
+    amount: 1
+    chance: 1
+  - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
+    amount: 1
+    chance: 0.5
+  - itemType: {fileID: 11400000, guid: e20d3d99a6b413346b430aa823cbdd11, type: 2}
+    amount: 1
+    chance: 0.25

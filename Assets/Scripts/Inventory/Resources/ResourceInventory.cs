@@ -1,22 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceInventory : ItemContainer
 {
     [SerializeField] private WorldInteractionManager worldInteractionManager;
-    [SerializeField] private BlockLootTable[] lootTables;
-
-    private Dictionary<BlockType, LootDrop[]> lootLookup;
-
-    private void Start()
-    {
-        lootLookup = new Dictionary<BlockType, LootDrop[]>();
-        foreach (var entry in lootTables)
-        {
-            if (entry.blockType != null)
-                lootLookup[entry.blockType] = entry.drops;
-        }
-    }
 
     private void OnEnable()
     {
@@ -32,38 +18,34 @@ public class ResourceInventory : ItemContainer
 
     private void HandleBlockBroken((BlockType type, Vector2Int position) data)
     {
-        if (lootLookup.TryGetValue(data.type, out var drops))
-        {
-            foreach (var drop in drops)
-            {
-                if (Random.value <= drop.chance)
-                    AddItem(drop.itemType.Id);
-            }
-        }
-        else
+        if (data.type.lootDrops == null || data.type.lootDrops.Length == 0)
         {
             Debug.LogWarning($"No loot table found for block {data.type.displayName} (ID: {data.type.id})");
+            return;
         }
-        // if (data.type.itemID != 0)
-        // {
-        //     AddItem(data.type.itemID);
-        // }
+
+        foreach (var drop in data.type.lootDrops)
+        {
+            if (Random.value <= drop.chance)
+                AddItem(drop.itemType.Id, drop.amount);
+        }
     }
 
-    public void AddItem(int itemId)
+    public void AddItem(int itemId, int amount)
     {
         ItemType itemData = ItemTypeRepository.GetItemById(itemId);
         if (itemData == null) return;
 
-        if (TryStackExisting(itemId))
+        for (int i = 0; i < amount; i++)
         {
-            Debug.Log($"Add item {itemData.DisplayName} (ID: {itemId}) to inventory");
-            return;
-        }
-
-        if (!TryAddNewSlot(itemData))
-        {
-            Debug.Log($"Inventory Full! Could not add item: {itemData.DisplayName} (ID: {itemId})");
+            if (TryStackExisting(itemId))
+            {
+                Debug.Log($"Add item {itemData.DisplayName} (ID: {itemId}) to inventory");
+            }
+            else if (!TryAddNewSlot(itemData))
+            {
+                Debug.Log($"Inventory Full! Could not add item: {itemData.DisplayName} (ID: {itemId})");
+            }
         }
     }
 
