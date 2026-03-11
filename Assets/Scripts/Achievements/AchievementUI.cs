@@ -40,4 +40,16 @@ public class AchievementUI : MonoBehaviour
             newSlot.GetComponent<AchievementSlotUI>().Setup(ach);
         }
     }
+
+    public bool IsOpen => gameObject.activeSelf;
+
+    public void Toggle()
+    {
+        bool newState = !gameObject.activeSelf;
+        gameObject.SetActive(newState);
+
+        if (newState) RefreshUI();
+
+        Time.timeScale = newState ? 0f : 1f;
+    }
 }

@@ -31,6 +31,11 @@ public class AchievementManager : MonoBehaviour
     private void Awake()
     {
         savePath = Path.Combine(Application.persistentDataPath, fileName);
+
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+        }
         LoadAchievements();
     }
 

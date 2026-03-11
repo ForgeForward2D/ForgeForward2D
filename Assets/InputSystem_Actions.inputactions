@@ -104,6 +104,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Achievements",
+                    "type": "Button",
+                    "id": "e529b92f-71d1-4a81-bdce-0ba0f20c899d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -577,6 +586,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "HotbarScroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "532d5995-5b72-49e0-b6db-adbf3630bd9e",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Achievements",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer mySpriteRenderer;
 
     [SerializeField] private ResourceInventoryUI resourceInventoryUI;
+    [SerializeField] private AchievementUI achievementUI;
 
     public bool IsHoldingAttack { get; private set; }
 
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour
     public void Attack(InputAction.CallbackContext context)
     {
 
-        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
+        if ((resourceInventoryUI != null && resourceInventoryUI.IsOpen) || (achievementUI != null && achievementUI.IsOpen))
         {
             IsHoldingAttack = false;
             return;
@@ -117,6 +118,12 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase != InputActionPhase.Performed) return;
 
+        if(achievementUI != null && achievementUI.IsOpen)
+        {
+            Debug.Log("Cannot open Inventory: Achievement are currently open!");
+            return;
+        }
+
         if (resourceInventoryUI != null)
         {
             resourceInventoryUI.Toggle();
@@ -125,6 +132,27 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.LogWarning("ResourceInventoryUI reference is missing in Player!");
+        }
+    }
+
+    public void Achievements(InputAction.CallbackContext context)
+    {
+        if (context.phase != InputActionPhase.Performed) return;
+
+        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
+        {
+            Debug.Log("Cannot open Achievements: Inventory is currently open!");
+            return;
+        }
+
+        if (achievementUI != null)
+        {
+            achievementUI.Toggle();
+            Debug.Log("Achievement UI toggled");
+        }
+        else
+        {
+            Debug.LogWarning("AchievementUI reference is missing in Player!");
         }
     }
 }
