@@ -2,18 +2,14 @@ using UnityEngine;
 
 public class ResourceInventory : ItemContainer
 {
-    [SerializeField] private WorldInteractionManager worldInteractionManager;
-
     private void OnEnable()
     {
-        if (worldInteractionManager != null)
-            worldInteractionManager.OnBlockBroken += HandleBlockBroken;
+        BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
     }
 
     private void OnDisable()
     {
-        if (worldInteractionManager != null)
-            worldInteractionManager.OnBlockBroken -= HandleBlockBroken;
+        BlockBreakingManager.OnBlockBroken -= HandleBlockBroken;
     }
 
     private void HandleBlockBroken((BlockType type, Vector2Int position) data)
