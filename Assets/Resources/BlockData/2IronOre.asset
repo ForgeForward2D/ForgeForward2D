@@ -21,7 +21,7 @@ MonoBehaviour:
   respawnRate: 5
   replacementBlockId: 1
   toolType: 2
-  minimumToolTier: 0
+  minimumToolTier: 1
   lootDrops:
   - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
     amount: 1
