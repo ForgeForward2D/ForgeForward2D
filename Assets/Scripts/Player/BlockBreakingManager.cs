@@ -11,30 +11,31 @@ public class BlockBreakingManager : MonoBehaviour
     [SerializeField] private ToolHotbar toolHotbar;
 
     public Tool currentTool;
-    private Vector2Int currentTargetPos;
 
     private bool isBreaking = false;
     private float breakProgress = 0f;
+    private Vector2Int currentTargetPos;
+    private BlockType currentTargetBlock;
     private DateTime lastProgressUpdateTime;
 
     void OnEnable()
     {
         lastProgressUpdateTime = DateTime.Now;
         toolHotbar.OnSelectionChanged += HandleSelectionChanged;
+        TileMapManager.OnBlockChanged += HandleBlockChanged;
     }
 
     void OnDisable()
     {
         toolHotbar.OnSelectionChanged -= HandleSelectionChanged;
+        TileMapManager.OnBlockChanged -= HandleBlockChanged;
     }
 
     void Update()
     {
-        Vector2Int targetBlock = playerController.GetTargettingBlock();
-
         if (playerController.IsHoldingAttack)
         {
-            HandleBreaking(targetBlock);
+            HandleBreaking();
         }
         else if (isBreaking)
         {
@@ -47,11 +48,29 @@ public class BlockBreakingManager : MonoBehaviour
         currentTool = toolHotbar.GetSelectedTool();
     }
 
-    private void HandleBreaking(Vector2Int targetPos)
+    private void HandleBlockChanged((BlockType, Vector2Int) blockInfo)
     {
-        BlockType block = tileMapManager.GetBlockTypeAtPosition(targetPos);
+        // If the block that changed is the one we're currently breaking, update our reference
+        if (blockInfo.Item2 == currentTargetPos)
+        {
+            currentTargetBlock = blockInfo.Item1;
+        }
+    }
 
-        float efficiency = CalculateEfficiency(block);
+    private void HandleBreaking()
+    {
+        Vector2Int targetPos = playerController.GetTargettingBlock();
+        // If we moved to a new block, reset progress
+        if (targetPos != currentTargetPos)
+        {
+            tileMapManager.UpdateBlockBreakingProgress(currentTargetPos, 0);
+            currentTargetPos = targetPos;
+            currentTargetBlock = tileMapManager.GetBlockTypeAtPosition(currentTargetPos);
+            breakProgress = 0f;
+        }
+
+
+        float efficiency = CalculateEfficiency();
 
         // Block not breakable with current tool
         if (efficiency <= 0f)
@@ -60,24 +79,17 @@ public class BlockBreakingManager : MonoBehaviour
             return;
         }
 
-        // If we moved to a new block, reset progress
-        if (targetPos != currentTargetPos)
-        {
-            tileMapManager.UpdateBlockBreakingProgress(currentTargetPos, 0);
-            currentTargetPos = targetPos;
-            breakProgress = 0f;
-        }
         isBreaking = true;
         playerController.SetBreakingAnimation(true);
 
 
         // Progress formula: 
-        float deltaProgress = Time.deltaTime * gameConfig.player_breaking_speed * efficiency / block.hardness;
+        float deltaProgress = Time.deltaTime * gameConfig.player_breaking_speed * efficiency / currentTargetBlock.hardness;
         breakProgress += deltaProgress;
 
         if (breakProgress >= 1f)
         {
-            TriggerBreak(block);
+            TriggerBreak();
             return;
         }
 
@@ -93,23 +105,23 @@ public class BlockBreakingManager : MonoBehaviour
         }
     }
 
-    public float CalculateEfficiency(BlockType block)
+    public float CalculateEfficiency()
     {
-        if (block == null || !block.breakable) return 0.0f;
+        if (currentTargetBlock == null || !currentTargetBlock.breakable) return 0.0f;
 
         // If the block doesn't require a specific tool, every tool is efficient
-        if (block.toolType == ToolType.None)
+        if (currentTargetBlock.toolType == ToolType.None)
         {
             return currentTool.efficiency;
         }
 
         // Wrong tool type: Same as no tool
-        if (block.toolType != currentTool.type)
+        if (currentTargetBlock.toolType != currentTool.type)
         {
-            return block.minimumToolTier == ToolTier.None ? 1.0f : 0.0f;
+            return currentTargetBlock.minimumToolTier == ToolTier.None ? 1.0f : 0.0f;
         }
 
-        if (currentTool.tier < block.minimumToolTier)
+        if (currentTool.tier < currentTargetBlock.minimumToolTier)
         {
             // Tool is not good enough to break the block
             return 0.0f;
@@ -118,11 +130,11 @@ public class BlockBreakingManager : MonoBehaviour
         return currentTool.efficiency;
     }
 
-    private void TriggerBreak(BlockType blockType)
+    private void TriggerBreak( )
     {
-        BlockType replacementBlock = BlockTypeRepository.GetBlockById(blockType.replacementBlockId);
+        BlockType replacementBlock = BlockTypeRepository.GetBlockById(currentTargetBlock.replacementBlockId);
+        OnBlockBroken?.Invoke((currentTargetBlock, currentTargetPos));
         tileMapManager.DrawBlock(replacementBlock, currentTargetPos);
-        OnBlockBroken?.Invoke((blockType, currentTargetPos));
         CancelBreaking();
     }
 

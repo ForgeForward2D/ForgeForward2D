@@ -45,8 +45,8 @@ public static class ItemTypeRepository
     {
         if (toolIdLookup == null)
             Initialize();
-        Tool tool = toolIdLookup.GetValueOrDefault(id);
-        if (tool == null)
+
+        if (!toolIdLookup.TryGetValue(id, out Tool tool))
         {
             Debug.LogWarning($"No tool found for ID {id} in ToolHotbar.");
             return GetDefaultTool(); // Return a default "empty" tool
