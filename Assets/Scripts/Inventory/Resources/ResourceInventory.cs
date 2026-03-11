@@ -1,8 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceInventory : ItemContainer
 {
     [SerializeField] private WorldInteractionManager worldInteractionManager;
+    [SerializeField] private BlockLootTable[] lootTables;
+
+    private Dictionary<BlockType, LootDrop[]> lootLookup;
+
+    private void Start()
+    {
+        lootLookup = new Dictionary<BlockType, LootDrop[]>();
+        foreach (var entry in lootTables)
+        {
+            if (entry.blockType != null)
+                lootLookup[entry.blockType] = entry.drops;
+        }
+    }
 
     private void OnEnable()
     {
@@ -18,10 +32,22 @@ public class ResourceInventory : ItemContainer
 
     private void HandleBlockBroken((BlockType type, Vector2Int position) data)
     {
-        if (data.type.itemID != 0)
+        if (lootLookup.TryGetValue(data.type, out var drops))
         {
-            AddItem(data.type.itemID);
+            foreach (var drop in drops)
+            {
+                if (Random.value <= drop.chance)
+                    AddItem(drop.itemType.Id);
+            }
         }
+        else
+        {
+            Debug.LogWarning($"No loot table found for block {data.type.displayName} (ID: {data.type.id})");
+        }
+        // if (data.type.itemID != 0)
+        // {
+        //     AddItem(data.type.itemID);
+        // }
     }
 
     public void AddItem(int itemId)
@@ -29,11 +55,15 @@ public class ResourceInventory : ItemContainer
         ItemType itemData = ItemTypeRepository.GetItemById(itemId);
         if (itemData == null) return;
 
-        if (TryStackExisting(itemId)) return;
+        if (TryStackExisting(itemId))
+        {
+            Debug.Log($"Add item {itemData.DisplayName} (ID: {itemId}) to inventory");
+            return;
+        }
 
         if (!TryAddNewSlot(itemData))
         {
-            Debug.LogWarning($"Inventory Full! Could not add item: {itemData.DisplayName} (ID: {itemId})");
+            Debug.Log($"Inventory Full! Could not add item: {itemData.DisplayName} (ID: {itemId})");
         }
     }
 
