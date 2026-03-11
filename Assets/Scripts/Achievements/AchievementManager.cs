@@ -58,7 +58,7 @@ public class AchievementManager : MonoBehaviour
         }
         else
         {
-            TextAsset template = Resources.Load<TextAsset>("achievements_template");
+            TextAsset template = Resources.Load<TextAsset>("Achievements/achievements");
             if (template != null)
             {
                 achievementList = JsonUtility.FromJson<AchievementDataWrapper>(template.text).achievements;

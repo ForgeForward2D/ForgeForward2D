@@ -229,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AchievementSlotUI
   titleText: {fileID: 4972382029774009362}
   descriptionText: {fileID: 9166852120079804887}
-  background: {fileID: 0}
+  background: {fileID: 2247789805815083844}
 --- !u!1 &8901049597109878101
 GameObject:
   m_ObjectHideFlags: 0
