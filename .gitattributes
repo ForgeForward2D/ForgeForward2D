@@ -4,8 +4,8 @@
 # Ensure C# files always use LF (standard for cross-platform coding)
 *.cs text eol=lf
 
-# Treat Unity's YAML files as binary to prevent Git from touching line endings
-*.unity binary
-*.asset binary
-*.prefab binary
-*.mat binary
+# Treat Unity's YAML files as text so Git can diff and merge them
+*.unity text eol=lf
+*.asset text eol=lf
+*.prefab text eol=lf
+*.mat text eol=lf
