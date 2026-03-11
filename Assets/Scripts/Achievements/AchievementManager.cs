@@ -7,7 +7,9 @@ public class AchievementManager : MonoBehaviour
 {
     [SerializeField] private string fileName = "achievements.json";
 
-    [Serializable]
+    public static event Action<Achievement> OnAchievementUnlocked;
+
+    [System.Serializable]
     public class Achievement
     {
         public string id;
@@ -48,25 +50,52 @@ public class AchievementManager : MonoBehaviour
         Debug.Log($"<color=green>Achievement Unlocked: {ach.title}</color>");
 
         SaveAchievements();
+
+        OnAchievementUnlocked?.Invoke(ach);
     }
     private void LoadAchievements()
     {
         if (File.Exists(savePath))
         {
             string json = File.ReadAllText(savePath);
-            achievementList = JsonUtility.FromJson<AchievementDataWrapper>(json).achievements;
-        }
-        else
-        {
-            TextAsset template = Resources.Load<TextAsset>("Achievements/achievements");
-            if (template != null)
+            AchievementDataWrapper wrapper = JsonUtility.FromJson<AchievementDataWrapper>(json);
+
+            if (wrapper != null && wrapper.achievements != null)
             {
-                achievementList = JsonUtility.FromJson<AchievementDataWrapper>(template.text).achievements;
+                achievementList =wrapper.achievements;
             }
             else
             {
-                Debug.LogError("No achievement template found in Resources!");
+                Debug.LogWarning("Save file was corrupted or empty. Loading from tamplate...");
+                LoadFromTemplate();
             }
+        }
+        else
+        {
+            LoadFromTemplate();
+        }
+
+        if (achievementList == null)
+        {
+            achievementList = new List<Achievement>();
+        }
+    }
+
+    private void LoadFromTemplate()
+    {
+        TextAsset template = Resources.Load<TextAsset>("Achievements/achievements");
+
+        if (template != null)
+        {
+            AchievementDataWrapper wrapper = JsonUtility.FromJson<AchievementDataWrapper>(template.text);
+            if (wrapper != null && wrapper.achievements != null)
+            {
+                achievementList = wrapper.achievements;
+            }
+        }
+        else
+        {
+            Debug.LogError("No achievement template found in Resources!");
         }
     }
 

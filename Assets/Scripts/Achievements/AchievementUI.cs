@@ -10,6 +10,17 @@ public class AchievementUI : MonoBehaviour
     private void OnEnable()
     {
         RefreshUI();
+        AchievementManager.OnAchievementUnlocked += HandleAchievementUnlocked;
+    }
+
+    private void OnDisable()
+    {
+        AchievementManager.OnAchievementUnlocked -= HandleAchievementUnlocked;
+    }
+
+    private void HandleAchievementUnlocked(AchievementManager.Achievement ach)
+    {
+        RefreshUI();
     }
 
     public void RefreshUI()
