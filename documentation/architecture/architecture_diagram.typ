@@ -33,8 +33,10 @@
   != none { text(fill: green, label) })
 #let node = _node.with(height: 50pt, stroke: blue)
 
+
+
+
 #diagram(
-  debug: 3,
   node-stroke: 1pt,
   spacing: (100pt, 50pt),
   node((0, 0), [Player Controller], name: <player>),
