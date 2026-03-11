@@ -41,7 +41,12 @@
 - add mobs (that only run around for now) todo
 - add achievements (only the screen and a json/... template for achievements) Nils
 - add achievements logic Nils
-- #optional[implement level creation-logic Sinan]
+- add logic for limited vision todo
+- levels:
+  - write world creation logic for forest, mine, ...
+  - add second layer
+  - design starter level: starter house with crafting table, anvil, starter treasure; some resources on the map; portals to the other worlds
+  - level/world switching logic
 
 #pagebreak(weak: true)
 = Next Steps
