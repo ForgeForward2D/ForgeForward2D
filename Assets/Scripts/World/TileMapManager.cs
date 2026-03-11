@@ -10,6 +10,8 @@ public class TileMapManager : MonoBehaviour
     [SerializeField] Tilemap walkableTilemap;
     [SerializeField] Tilemap animationTilemap;
 
+    public static Action<(BlockType, Vector2Int)> OnBlockChanged;
+
 
     public void DrawBlock(BlockType blockType, Vector2Int position)
     {
@@ -30,6 +32,8 @@ public class TileMapManager : MonoBehaviour
             wallTilemap.SetTile(tilePosition, blockType.tile);
             walkableTilemap.SetTile(tilePosition, null);
         }
+
+        OnBlockChanged?.Invoke((blockType, position));
     }
 
     public void ClearTile(Vector2Int position)

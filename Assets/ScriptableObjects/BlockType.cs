@@ -19,6 +19,9 @@ public class BlockType : ScriptableObject
     public int respawnRate;
     public int replacementBlockId;
 
+    public ToolType toolType;
+    public ToolTier minimumToolTier;
+
     public LootDrop[] lootDrops;
 }
 
