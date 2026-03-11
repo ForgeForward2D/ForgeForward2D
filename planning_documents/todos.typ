@@ -1,5 +1,6 @@
 #set enum(spacing: 1.5em)
 #set list(marker: math.square.stroked.big)
+#set strike(stroke: 1.5pt)
 
 #let date = it => {
   pagebreak(weak: true)
@@ -31,17 +32,34 @@
   text(
     fill: black.lighten(40%),
     size: text.size * 80%,
+  )[TODOs unitl Friday, 20.03.]
+}
+- write blog article Leon
+- adapt walk-animation speed to walk speed todo
+- add tool animation (as alternative to attack) Sinan
+- add `crafting table` and `anvil` as interactable blocks with crafting logic:\ crafting recipes as JSON or similar Tim
+- add mobs (that only run around for now) todo
+- add achievements (only the screen and a json/... template for achievements) Nils
+- add achievements logic Nils
+- #optional[implement level creation-logic Sinan]
+
+#pagebreak(weak: true)
+= Next Steps
+#context {
+  text(
+    fill: black.lighten(40%),
+    size: text.size * 80%,
   )[TODOs unitl Friday, 13.03.]
 }
 - write blog article Leon
-- add hotbar Nils
-- add tools Tim
+- #strike[add hotbar Nils]
+- #strike[add tools Tim]
 - add tool animation (as alternative to attack) Sinan
-- add tool logic (block has _tool_ and _hardness_ attribute #math.arrow calculate mineability and speed) Tim
+- #strike[add tool logic (block has _tool_ and _hardness_ attribute #math.arrow calculate mineability and speed) Tim]
 - add `crafting table` and `anvil` as interactable blocks with crafting logic:\ crafting recipes as JSON or similar Tim
 - #optional[add mobs (that only run around for now)]
-- add loot-tables for blocks Leon
-- add treasures Leon
+- #strike[add loot-tables for blocks Leon]
+- #strike[add treasures Leon]
 - add more materials Leon
 - add achievements (only the screen and a json/... template for achievements) Nils
 - add achievements logic Nils
@@ -50,11 +68,15 @@
 - #optional[Add sound effects for block break etc.]
 
 #pagebreak(weak: true)
-= Game Idea
+= Backlog
+- #optional[Add background music]
+- #optional[Add sound effects for block break etc.]
+
+== Game Idea
 - spawn in house/base, entry world has portals to further worlds
 - one world for every resource
 
-= Feedback
+== Feedback
 - "villagers"/farm workers can be bought and placed
 - weather conditions like fog where you cant see the whole map so that would make it a bit harder to find stuff
    - torch for more viewing distance
@@ -90,71 +112,13 @@
     [clean stone cannot be passed, wood can be broken #math.triangle.r.filled becomes passable],
   )]
 - #strike[Design map with a bit of a story (maybe a little labyrinth with some different blocks) Leon]
-- #optional[Design hotbar Nils]
-- #optional[blocks can only be broken with special tools #math.triangle.r.filled pickaxe, ...
+- #strike[#optional[Design hotbar Nils]]
+- #strike[#optional[blocks can only be broken with special tools #math.triangle.r.filled pickaxe, ...
     #list(
       marker: math.arrow,
       [player has one tool selected at a time],
       [every block has a hardness and tool group (pickaxe, shovel, or axe)],
       [every tool has a hardness (only block with lower or equal hardness can be broken)],
       [blocks don't break if used with tool that is not hard enough],
-    )]
+    )]]
 - #optional[draw architecture diagram]
-
-#pagebreak(weak: true)
-= Ideas
-- Separate Item and Block abstraction?
-  - Collect attributes and create sciptable objects for them
-    - Block
-      - ID
-      - Tile Reference
-      - spawn rate
-      - resource item id
-      - resource replacement id
-      - walkable?
-      - breakable/farmable?
-    - Item
-      - ID
-      - Max stack
-      - Display name
-      - Sprite
-
-
-// ## Todos
-// ### World
-// - Map design
-// 	- support for different backgrounds?
-// - Decide on a resource generation and breaking method
-// 	- current: ore respawns in fixed location and turns into stone / sapling temporary
-// 	- how to handle stone as a resource?
-// 	- let the player destroy stuff?
-// - Handle resource generation, when the player stands on sapling
-// - include metadata array
-
-// ### Player
-// - Steve sprite with animation
-// - tools and animation
-// - Solves glitches with Tilemap and moving camera
-
-// ### Integration
-// - Separate Item and Block abstraction?
-// 	- Collect attributes and create sciptable objects for them
-// 		- Block
-// 			- ID
-// 			- Tile Reference
-// 			- spawn rate
-// 			- resource item id
-// 			- resource replacement id
-// 			- walkable?
-// 			- breakable/farmable?
-// 		- Item
-// 			- ID
-// 			- Max stack
-// 			- Display name
-// 			- Sprite
-// - Subscribe inventory to block breaking event
-// - setup git and join code
-// 	- think about architecture / folder hierarchy
-// - draw architecture diagram?
-
-// ### Inventory / Crafting / Interactables?
