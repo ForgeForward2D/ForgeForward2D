@@ -10,10 +10,15 @@ public class ResourceGenerator : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     private TileMapManager tileMapManager;
 
-    public void Start()
+    private void OnEnable()
     {
+        BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
         tileMapManager = GetComponent<TileMapManager>();
-        GetComponent<WorldInteractionManager>().OnBlockBroken += HandleBlockBroken;
+    }
+
+    private void OnDisable()
+    {
+        BlockBreakingManager.OnBlockBroken -= HandleBlockBroken;
     }
 
     private void HandleBlockBroken((BlockType, Vector2Int) brokenBlockInfo)

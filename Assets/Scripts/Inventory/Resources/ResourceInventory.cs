@@ -2,28 +2,24 @@ using UnityEngine;
 
 public class ResourceInventory : ItemContainer
 {
-    [SerializeField] private WorldInteractionManager worldInteractionManager;
-
     private void OnEnable()
     {
-        if (worldInteractionManager != null)
-            worldInteractionManager.OnBlockBroken += HandleBlockBroken;
+        BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
     }
 
     private void OnDisable()
     {
-        if (worldInteractionManager != null)
-            worldInteractionManager.OnBlockBroken -= HandleBlockBroken;
+        BlockBreakingManager.OnBlockBroken -= HandleBlockBroken;
     }
 
     private void HandleBlockBroken((BlockType type, Vector2Int position) data)
     {
-        if(data.type.itemID != 0) 
+        if (data.type.itemID != 0)
         {
             AddItem(data.type.itemID);
         }
     }
-    
+
     public void AddItem(int itemId)
     {
         ItemType itemData = ItemTypeRepository.GetItemById(itemId);

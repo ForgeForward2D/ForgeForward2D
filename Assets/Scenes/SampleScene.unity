@@ -7180,7 +7180,6 @@ GameObject:
   - component: {fileID: 7367874862585846642}
   - component: {fileID: 1218283978515674310}
   - component: {fileID: 6572473323192129339}
-  - component: {fileID: 7367874862585846643}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -7201,7 +7200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
-  worldInteractionManager: {fileID: 7367874862585846643}
+  tileMapManager: {fileID: 7367874862585846642}
   resourceInventoryUI: {fileID: 1447784746}
 --- !u!61 &4267914035134336910
 BoxCollider2D:
@@ -19949,6 +19948,7 @@ GameObject:
   - component: {fileID: 9033000692423820052}
   - component: {fileID: 9033000692423820053}
   - component: {fileID: 9033000692423820054}
+  - component: {fileID: 9033000692423820055}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -20045,20 +20045,6 @@ MonoBehaviour:
   wallTilemap: {fileID: 4401200518655729685}
   walkableTilemap: {fileID: 6010278485427196086}
   animationTilemap: {fileID: 235586927470923289}
---- !u!114 &7367874862585846643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4083778717018187740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a35ccdb5f5f40b39719098a298f185, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WorldInteractionManager
-  gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
-  playerController: {fileID: 4220411106964447491}
 --- !u!20 &8170033572664962785
 Camera:
   m_ObjectHideFlags: 0
@@ -20271,7 +20257,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceInventory
   capacity: 21
-  worldInteractionManager: {fileID: 7367874862585846643}
+--- !u!114 &9033000692423820055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6854287795457830472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d9924dc6eac4cc081bf07edf1a1971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlockBreakingManager
+  gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
+  playerController: {fileID: 4220411106964447491}
+  tileMapManager: {fileID: 7367874862585846642}
+  toolHotbar: {fileID: 957897782}
+  currentTool: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

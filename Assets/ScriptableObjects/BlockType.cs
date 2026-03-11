@@ -20,4 +20,7 @@ public class BlockType : ScriptableObject
     public int replacementBlockId;
 
     public int itemID;
+
+    public ToolType toolType;
+    public ToolTier minimumToolTier;
 }
