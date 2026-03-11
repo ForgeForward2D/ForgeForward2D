@@ -14,22 +14,34 @@ public class ResourceInventory : ItemContainer
 
     private void HandleBlockBroken((BlockType type, Vector2Int position) data)
     {
-        if (data.type.itemID != 0)
+        if (data.type.lootDrops == null || data.type.lootDrops.Length == 0)
         {
-            AddItem(data.type.itemID);
+            Debug.LogWarning($"No loot table found for block {data.type.displayName} (ID: {data.type.id})");
+            return;
+        }
+
+        foreach (var drop in data.type.lootDrops)
+        {
+            if (Random.value <= drop.chance)
+                AddItem(drop.itemType.Id, drop.amount);
         }
     }
 
-    public void AddItem(int itemId)
+    public void AddItem(int itemId, int amount)
     {
         ItemType itemData = ItemTypeRepository.GetItemById(itemId);
         if (itemData == null) return;
 
-        if (TryStackExisting(itemId)) return;
-
-        if (!TryAddNewSlot(itemData))
+        for (int i = 0; i < amount; i++)
         {
-            Debug.LogWarning($"Inventory Full! Could not add item: {itemData.DisplayName} (ID: {itemId})");
+            if (TryStackExisting(itemId))
+            {
+                Debug.Log($"Add item {itemData.DisplayName} (ID: {itemId}) to inventory");
+            }
+            else if (!TryAddNewSlot(itemData))
+            {
+                Debug.Log($"Inventory Full! Could not add item: {itemData.DisplayName} (ID: {itemId})");
+            }
         }
     }
 

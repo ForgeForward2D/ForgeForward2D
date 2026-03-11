@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/ItemType")]
 
-public class ItemType : ScriptableObject 
+public class ItemType : ScriptableObject
 {
     [SerializeField] public int Id;
     [SerializeField] public string DisplayName;

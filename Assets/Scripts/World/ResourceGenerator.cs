@@ -26,7 +26,7 @@ public class ResourceGenerator : MonoBehaviour
         BlockType block = brokenBlockInfo.Item1;
         Vector2Int position = brokenBlockInfo.Item2;
 
-        // Check if the broken block is regeneratable 
+        // Check if the broken block is regeneratable
         if (block.respawnRate > 0)
         {
             // Start a coroutine to generate resources after the specified spawn rate
