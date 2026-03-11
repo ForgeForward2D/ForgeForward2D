@@ -8,6 +8,5 @@ public class GameConfig : ScriptableObject
 
     public float player_speed;
     public float player_breaking_speed;
-    public float min_destruction_animation_interval;
-    public float player_breaking_animation_interval;
+    public float block_breaking_animation_min_update_interval;
 }

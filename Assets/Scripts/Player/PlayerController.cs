@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameConfig gameConfig;
 
     // Block breaking mechanic
-    [SerializeField] WorldInteractionManager worldInteractionManager;
+    [SerializeField] TileMapManager tileMapManager;
 
     // State
     private Vector2 moveInput;
@@ -21,8 +21,9 @@ public class PlayerController : MonoBehaviour
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
 
-    [SerializeField] private InventoryManager inventoryManager;
-    [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private ResourceInventoryUI resourceInventoryUI;
+
+    public bool IsHoldingAttack { get; private set; }
 
     public void Start()
     {
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
         // Update sprite flip whenever there's horizontal input
         if (moveInput.x != 0)
         {
-            mySpriteRenderer.flipX = moveInput.x < 0;
+            mySpriteRenderer.flipX = moveInput.x > 0;
         }
 
         // Determine movement direction based on dominant axis
@@ -67,13 +68,18 @@ public class PlayerController : MonoBehaviour
     public Vector2Int GetTargettingBlock()
     {
         Vector3 position = GetPosition();
-        Vector2Int cellPosition = worldInteractionManager.PositionToCoordinate(position);
+        Vector2Int cellPosition = tileMapManager.PositionToCoordinate(position);
         return cellPosition + moveDirection;
+    }
+
+    public void SetBreakingAnimation(bool isBreaking)
+    {
+        myAnimator.SetBool("isBreaking", isBreaking);
     }
 
     public void TriggerAttackAnimation()
     {
-        myAnimator.SetTrigger("attack");
+        // TODO
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -81,15 +87,15 @@ public class PlayerController : MonoBehaviour
         Vector2 input = context.ReadValue<Vector2>();
         moveInput = input;
 
-        myAnimator.SetFloat("moveX", input.x);
-        myAnimator.SetFloat("moveY", input.y);
+        myAnimator.SetBool("isMoving", input.magnitude > 0.01f);
     }
 
     public void Attack(InputAction.CallbackContext context)
     {
 
-        if (inventoryUI !=null && inventoryUI.IsOpen)
+        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
         {
+            IsHoldingAttack = false;
             return;
         }
 
@@ -97,15 +103,10 @@ public class PlayerController : MonoBehaviour
         switch (context.phase)
         {
             case InputActionPhase.Performed:
-                Vector2Int cellPosition = GetTargettingBlock();
-                if (worldInteractionManager.StartBlockBreaking(cellPosition))
-                {
-                    break;
-                }
-                // TODO: No block to break: attack!
+                IsHoldingAttack = true;
                 break;
             case InputActionPhase.Canceled:
-                worldInteractionManager.CancelBlockBreaking();
+                IsHoldingAttack = false;
                 break;
             default:
                 return;
@@ -116,14 +117,14 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase != InputActionPhase.Performed) return;
 
-        if (inventoryUI != null)
+        if (resourceInventoryUI != null)
         {
-            inventoryUI.Toggle();
-            Debug.Log("Inventory toggled");
+            resourceInventoryUI.Toggle();
+            Debug.Log("Resource Inventory toggled");
         }
         else
         {
-            Debug.LogWarning("InventoryUI reference is missing in Player!");
+            Debug.LogWarning("ResourceInventoryUI reference is missing in Player!");
         }
     }
 }

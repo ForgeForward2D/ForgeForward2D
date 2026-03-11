@@ -10,10 +10,15 @@ public class ResourceGenerator : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     private TileMapManager tileMapManager;
 
-    public void Start()
+    private void OnEnable()
     {
+        BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
         tileMapManager = GetComponent<TileMapManager>();
-        GetComponent<WorldInteractionManager>().OnBlockBroken += HandleBlockBroken;
+    }
+
+    private void OnDisable()
+    {
+        BlockBreakingManager.OnBlockBroken -= HandleBlockBroken;
     }
 
     private void HandleBlockBroken((BlockType, Vector2Int) brokenBlockInfo)
@@ -21,7 +26,7 @@ public class ResourceGenerator : MonoBehaviour
         BlockType block = brokenBlockInfo.Item1;
         Vector2Int position = brokenBlockInfo.Item2;
 
-        // Check if the broken block is regeneratable 
+        // Check if the broken block is regeneratable
         if (block.respawnRate > 0)
         {
             // Start a coroutine to generate resources after the specified spawn rate

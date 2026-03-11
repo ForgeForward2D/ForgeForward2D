@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f094bd8a31d5484b9393d7018ff19cd, type: 3}
+  m_Name: 105WoodenHammer
+  m_EditorClassIdentifier: Assembly-CSharp::Tool
+  Id: 105
+  DisplayName: Wooden Hammer
+  MaxStackSize: 1
+  Icon: {fileID: -2706983636478456882, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
+  type: 5
+  tier: 1
+  efficiency: 2

@@ -16,5 +16,4 @@ MonoBehaviour:
   camera_aspect: 1.7777778
   player_speed: 5
   player_breaking_speed: 1
-  min_destruction_animation_interval: 0.25
-  player_breaking_animation_interval: 1
+  block_breaking_animation_min_update_interval: 0.25

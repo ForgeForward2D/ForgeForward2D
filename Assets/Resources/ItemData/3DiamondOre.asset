@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 3DiamondOre
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
   Id: 3
-  DisplayName: 
+  DisplayName: Diamond Ore
   MaxStackSize: 64
   Icon: {fileID: 425945882, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
