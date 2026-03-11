@@ -6,6 +6,8 @@ public static class ItemTypeRepository
     private static Dictionary<int, ItemType> idLookup;
     private static Dictionary<int, Tool> toolIdLookup;
 
+    private static Tool defaultTool;
+
     private static void Initialize()
     {
         var itemTypes = Resources.LoadAll<ItemType>("ItemData");
@@ -47,8 +49,17 @@ public static class ItemTypeRepository
         if (tool == null)
         {
             Debug.LogWarning($"No tool found for ID {id} in ToolHotbar.");
-            return ScriptableObject.CreateInstance<Tool>(); // Return a default "empty" tool
+            return GetDefaultTool(); // Return a default "empty" tool
         }
         return tool;
+    }
+
+    public static Tool GetDefaultTool()
+    {
+        if (defaultTool == null)
+        {
+            defaultTool = ScriptableObject.CreateInstance<Tool>();
+        }
+        return defaultTool;
     }
 }

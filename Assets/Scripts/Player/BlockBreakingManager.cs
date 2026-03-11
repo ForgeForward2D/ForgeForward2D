@@ -12,16 +12,20 @@ public class BlockBreakingManager : MonoBehaviour
 
     public Tool currentTool;
     private Vector2Int currentTargetPos;
-    private float breakProgress = 0f;
+
     private bool isBreaking = false;
+    private float breakProgress = 0f;
+    private DateTime lastProgressUpdateTime;
 
-    // Assumptions: You have a way to get BlockType from a position
-    // and a way to detect the mouse/target position.
-
-    void Start()
+    void OnEnable()
     {
-        currentTool = ScriptableObject.CreateInstance<Tool>();
-        toolHotbar.OnSelectionChanged += () => currentTool = toolHotbar.GetSelectedTool();
+        lastProgressUpdateTime = DateTime.Now;
+        toolHotbar.OnSelectionChanged += HandleSelectionChanged;
+    }
+
+    void OnDisable()
+    {
+        toolHotbar.OnSelectionChanged -= HandleSelectionChanged;
     }
 
     void Update()
@@ -38,7 +42,10 @@ public class BlockBreakingManager : MonoBehaviour
         }
     }
 
-
+    private void HandleSelectionChanged()
+    {
+        currentTool = toolHotbar.GetSelectedTool();
+    }
 
     private void HandleBreaking(Vector2Int targetPos)
     {
@@ -65,16 +72,23 @@ public class BlockBreakingManager : MonoBehaviour
 
 
         // Progress formula: 
-        breakProgress += Time.deltaTime * gameConfig.player_breaking_speed * efficiency / block.hardness;
+        float deltaProgress = Time.deltaTime * gameConfig.player_breaking_speed * efficiency / block.hardness;
+        breakProgress += deltaProgress;
 
         if (breakProgress >= 1f)
         {
             TriggerBreak(block);
-
+            return;
         }
-        else
-        {
-            int stage = Mathf.CeilToInt(breakProgress * 10f);
+
+        int previousStage = Mathf.CeilToInt((breakProgress - deltaProgress) * 10f);
+        int stage = Mathf.CeilToInt(breakProgress * 10f);
+
+        float timeSinceLastUpdate = (float)(DateTime.Now - lastProgressUpdateTime).TotalSeconds;        
+
+        if (stage != previousStage && timeSinceLastUpdate >= gameConfig.block_breaking_animation_min_update_interval) {
+
+            lastProgressUpdateTime = DateTime.Now;
             tileMapManager.UpdateBlockBreakingProgress(currentTargetPos, stage);
         }
     }

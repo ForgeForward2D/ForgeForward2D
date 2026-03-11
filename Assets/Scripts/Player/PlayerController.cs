@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
 
         if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
         {
+            IsHoldingAttack = false;
             return;
         }
 

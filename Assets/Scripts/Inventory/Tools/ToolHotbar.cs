@@ -30,6 +30,7 @@ public class ToolHotbar : ItemContainer
                 }
             }
         }
+        OnSelectionChanged?.Invoke();
         NotifyContentsChanged();
     }
 
@@ -49,16 +50,13 @@ public class ToolHotbar : ItemContainer
 
         if (item == null)
         {
-            Debug.Log("No item in selected hotbar slot.");
-            return ItemTypeRepository.GetToolById(0); // Return a default "empty" tool
+            return ItemTypeRepository.GetDefaultTool(); // Return a default "empty" tool
         }
 
         if (item is Tool tool)
         {
-            Debug.Log($"Selected tool: {tool.name} (Type: {tool.type}, Tier: {tool.tier}, Efficiency: {tool.efficiency})");
             return tool;
         }
-        Debug.Log("Selected item is not a tool or is null.");
         return ItemTypeRepository.GetToolById(item.Id);
     }
 }
