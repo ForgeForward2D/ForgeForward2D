@@ -9,7 +9,7 @@ public class BlockType : ScriptableObject
     public string displayName;
 
     public TileBase tile;
-    // public TileBase activeTile; // Maybe for burning furnace 
+    // public TileBase activeTile; // Maybe for burning furnace
 
     public bool walkable;
     public bool breakable;

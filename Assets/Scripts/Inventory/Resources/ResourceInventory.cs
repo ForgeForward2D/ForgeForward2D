@@ -18,12 +18,12 @@ public class ResourceInventory : ItemContainer
 
     private void HandleBlockBroken((BlockType type, Vector2Int position) data)
     {
-        if(data.type.itemID != 0) 
+        if (data.type.itemID != 0)
         {
             AddItem(data.type.itemID);
         }
     }
-    
+
     public void AddItem(int itemId)
     {
         ItemType itemData = ItemTypeRepository.GetItemById(itemId);
