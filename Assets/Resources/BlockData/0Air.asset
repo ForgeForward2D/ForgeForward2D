@@ -20,5 +20,4 @@ MonoBehaviour:
   hardness: 0
   respawnRate: 0
   replacementBlockId: 0
-  itemID: 0
   lootDrops: []
