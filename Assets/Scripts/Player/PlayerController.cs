@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameConfig gameConfig;
 
     // Block breaking mechanic
-    [SerializeField] WorldInteractionManager worldInteractionManager;
+    [SerializeField] TileMapManager tileMapManager;
 
     // State
     private Vector2 moveInput;
@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer mySpriteRenderer;
 
     [SerializeField] private ResourceInventoryUI resourceInventoryUI;
+
+    public bool IsHoldingAttack { get; private set; }
 
     public void Start()
     {
@@ -66,7 +68,7 @@ public class PlayerController : MonoBehaviour
     public Vector2Int GetTargettingBlock()
     {
         Vector3 position = GetPosition();
-        Vector2Int cellPosition = worldInteractionManager.PositionToCoordinate(position);
+        Vector2Int cellPosition = tileMapManager.PositionToCoordinate(position);
         return cellPosition + moveDirection;
     }
 
@@ -100,15 +102,10 @@ public class PlayerController : MonoBehaviour
         switch (context.phase)
         {
             case InputActionPhase.Performed:
-                Vector2Int cellPosition = GetTargettingBlock();
-                if (worldInteractionManager.StartBlockBreaking(cellPosition))
-                {
-                    break;
-                }
-                // TODO: No block to break: attack!
+                IsHoldingAttack = true;
                 break;
             case InputActionPhase.Canceled:
-                worldInteractionManager.CancelBlockBreaking();
+                IsHoldingAttack = false;
                 break;
             default:
                 return;

@@ -21,3 +21,5 @@ MonoBehaviour:
   respawnRate: 20
   replacementBlockId: 4
   itemID: 5
+  toolType: 3
+  minimumToolTier: 0

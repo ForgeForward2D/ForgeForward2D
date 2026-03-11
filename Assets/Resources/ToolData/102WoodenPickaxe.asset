@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a45c7459feb2c44c95e9e3334a4d479, type: 3}
-  m_Name: 102Pickaxe
-  m_EditorClassIdentifier: Assembly-CSharp::ItemType
+  m_Script: {fileID: 11500000, guid: 8f094bd8a31d5484b9393d7018ff19cd, type: 3}
+  m_Name: 102WoodenPickaxe
+  m_EditorClassIdentifier: Assembly-CSharp::Tool
   Id: 102
-  DisplayName: Pickaxe
+  DisplayName: Wooden Pickaxe
   MaxStackSize: 1
   Icon: {fileID: 246200477909967752, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
+  type: 2
+  tier: 1
+  efficiency: 1.5
