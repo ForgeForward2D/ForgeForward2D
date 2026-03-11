@@ -79,11 +79,11 @@
 == Feedback
 - "villagers"/farm workers can be bought and placed
 - weather conditions like fog where you cant see the whole map so that would make it a bit harder to find stuff
-   - torch for more viewing distance
-   - craft sth like blitz in pokemon where you can then see the whole map?
+  - torch for more viewing distance
+  - craft sth like blitz in pokemon where you can then see the whole map?
 - achievements
 - upgradable tool #math.arrow enchantments
-   - man könnte auch so 2x2 enchantments hinzufügen (also dass man statt 1x1 2x2 abbauen kann)
+  - man könnte auch so 2x2 enchantments hinzufügen (also dass man statt 1x1 2x2 abbauen kann)
 - mobs disturbing you from mining
 - #optional[food]
 - armor for the player to protect against mobs
@@ -105,12 +105,12 @@
 - #strike[merge everything everyone]
 - #strike[block-break animation Tim]
 - #strike[logic: what happens in what event (documentation): Leon
-  #list(
-    marker: math.arrow,
-    [e.g. breaking iron spawns cobble, cobble may convert to iron after 5s (probability: 20%)],
-    [types of materials we use: iron, cobblestone, wood, diamond, water, bricks],
-    [clean stone cannot be passed, wood can be broken #math.triangle.r.filled becomes passable],
-  )]
+    #list(
+      marker: math.arrow,
+      [e.g. breaking iron spawns cobble, cobble may convert to iron after 5s (probability: 20%)],
+      [types of materials we use: iron, cobblestone, wood, diamond, water, bricks],
+      [clean stone cannot be passed, wood can be broken #math.triangle.r.filled becomes passable],
+    )]
 - #strike[Design map with a bit of a story (maybe a little labyrinth with some different blocks) Leon]
 - #strike[#optional[Design hotbar Nils]]
 - #strike[#optional[blocks can only be broken with special tools #math.triangle.r.filled pickaxe, ...
