@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     // Block breaking mechanic
     [SerializeField] TileMapManager tileMapManager;
 
+    [SerializeField] private ResourceInventoryUI resourceInventoryUI;
+    [SerializeField] private AchievementUI achievementUI;
+
     // State
     private Vector2 moveInput;
     private Vector2Int moveDirection;
@@ -20,9 +23,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
-
-    [SerializeField] private ResourceInventoryUI resourceInventoryUI;
-    [SerializeField] private AchievementUI achievementUI;
 
     public bool IsHoldingAttack { get; private set; }
 

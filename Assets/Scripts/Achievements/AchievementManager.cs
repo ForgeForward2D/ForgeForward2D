@@ -6,10 +6,11 @@ using UnityEngine;
 public class AchievementManager : MonoBehaviour
 {
     [SerializeField] private string fileName = "achievements.json";
+    [SerializeField] private string templatePath = "Achievements/achievements";
 
     public static event Action<Achievement> OnAchievementUnlocked;
 
-    [System.Serializable]
+    [Serializable]
     public class Achievement
     {
         public string id;
@@ -22,28 +23,26 @@ public class AchievementManager : MonoBehaviour
     [Serializable]
     private class AchievementDataWrapper
     {
-        public List<Achievement> achievements;
+        public List<Achievement> achievements = new List<Achievement>();
     }
 
-    private List<Achievement> achievementList = new List<Achievement>();
+    private Dictionary<string, Achievement> achievementLookup = new Dictionary<string, Achievement>();
     private string savePath;
 
     private void Awake()
     {
         savePath = Path.Combine(Application.persistentDataPath, fileName);
 
-        if (File.Exists(savePath))
+        /*if (File.Exists(savePath)) //Delete unlocked Achievements every start for testing
         {
             File.Delete(savePath);
-        }
+        }*/
         LoadAchievements();
     }
 
     public void UnlockAchievement(string id)
     {
-        Achievement ach = achievementList.Find(a => a.id == id);
-
-        if (ach == null)
+        if (!achievementLookup.TryGetValue(id, out Achievement ach))
         {
             Debug.LogWarning($"Achievement ID '{id}' not found!");
             return;
@@ -55,60 +54,78 @@ public class AchievementManager : MonoBehaviour
         Debug.Log($"<color=green>Achievement Unlocked: {ach.title}</color>");
 
         SaveAchievements();
-
         OnAchievementUnlocked?.Invoke(ach);
     }
+
     private void LoadAchievements()
     {
+        List<Achievement> masterList = LoadFromTemplate();
+
+        achievementLookup.Clear();
+        foreach (Achievement ach in masterList)
+        {
+            achievementLookup[ach.id] = ach;
+        }
+
         if (File.Exists(savePath))
         {
-            string json = File.ReadAllText(savePath);
-            AchievementDataWrapper wrapper = JsonUtility.FromJson<AchievementDataWrapper>(json);
-
-            if (wrapper != null && wrapper.achievements != null)
+            try
             {
-                achievementList =wrapper.achievements;
-            }
-            else
-            {
-                Debug.LogWarning("Save file was corrupted or empty. Loading from tamplate...");
-                LoadFromTemplate();
-            }
-        }
-        else
-        {
-            LoadFromTemplate();
-        }
+                string json = File.ReadAllText(savePath);
+                AchievementDataWrapper wrapper = JsonUtility.FromJson<AchievementDataWrapper>(json);
 
-        if (achievementList == null)
-        {
-            achievementList = new List<Achievement>();
+                if (wrapper?.achievements != null)
+                {
+                    foreach (Achievement savedAch in wrapper.achievements)
+                    {
+                        if (achievementLookup.TryGetValue(savedAch.id, out Achievement masterAch))
+                        {
+                            masterAch.isUnlocked = savedAch.isUnlocked;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to read save file: {e.Message}. Proceeding with clean template");
+            }
         }
     }
 
-    private void LoadFromTemplate()
+    private List<Achievement> LoadFromTemplate()
     {
-        TextAsset template = Resources.Load<TextAsset>("Achievements/achievements");
+        TextAsset template = Resources.Load<TextAsset>(templatePath);
 
         if (template != null)
         {
             AchievementDataWrapper wrapper = JsonUtility.FromJson<AchievementDataWrapper>(template.text);
-            if (wrapper != null && wrapper.achievements != null)
+            if (wrapper?.achievements != null)
             {
-                achievementList = wrapper.achievements;
+                return wrapper.achievements;
             }
         }
-        else
-        {
-            Debug.LogError("No achievement template found in Resources!");
-        }
+        
+        Debug.LogError("No achievement template found in Resources!");
+        return new List<Achievement>();
     }
 
     private void SaveAchievements()
     {
-        string json = JsonUtility.ToJson(new AchievementDataWrapper { achievements = achievementList}, true);
-        File.WriteAllText(savePath, json);
+        try
+        {
+            AchievementDataWrapper wrapper = new AchievementDataWrapper
+            {
+                achievements = new List<Achievement>(achievementLookup.Values)
+            };
+
+            string json = JsonUtility.ToJson(wrapper, true);
+            File.WriteAllText(savePath, json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to save achievements: {e.Message}");
+        }
     }
 
-    public List<Achievement> GetAchievements() => achievementList;
+    public IEnumerable<Achievement> GetAchievements() => achievementLookup.Values;
 }

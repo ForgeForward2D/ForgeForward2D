@@ -4,13 +4,15 @@ using System.Collections.Generic;
 public class AchievementUI : MonoBehaviour
 {
     [SerializeField] private AchievementManager achievementManager;
-    [SerializeField] private GameObject slotPrefab;
+    [SerializeField] private AchievementSlotUI slotPrefab;
     [SerializeField] private Transform container;
+
+    private List<AchievementSlotUI> spawnedSlots = new List<AchievementSlotUI>();
 
     private void OnEnable()
     {
-        RefreshUI();
         AchievementManager.OnAchievementUnlocked += HandleAchievementUnlocked;
+        RefreshUI();
     }
 
     private void OnDisable()
@@ -27,17 +29,25 @@ public class AchievementUI : MonoBehaviour
     {
         if (achievementManager == null) return;
 
-        foreach (Transform child in container)
-        {
-            Destroy(child.gameObject);
-        }
+        var allAchievements = achievementManager.GetAchievements();
 
-        List<AchievementManager.Achievement> allAchievements = achievementManager.GetAchievements();
-
+        int index = 0;
         foreach (var ach in allAchievements)
         {
-            GameObject newSlot = Instantiate(slotPrefab, container);
-            newSlot.GetComponent<AchievementSlotUI>().Setup(ach);
+            if (index >= spawnedSlots.Count)
+            {
+                AchievementSlotUI newSlot = Instantiate(slotPrefab, container);
+                spawnedSlots.Add(newSlot);
+            }
+
+            spawnedSlots[index].gameObject.SetActive(true);
+            spawnedSlots[index].Setup(ach);
+            index++;
+        }
+
+        for (int i = index; i < spawnedSlots.Count; i++)
+        {
+            spawnedSlots[i].gameObject.SetActive(false);
         }
     }
 
@@ -46,9 +56,8 @@ public class AchievementUI : MonoBehaviour
     public void Toggle()
     {
         bool newState = !gameObject.activeSelf;
-        gameObject.SetActive(newState);
 
-        if (newState) RefreshUI();
+        gameObject.SetActive(newState);
 
         Time.timeScale = newState ? 0f : 1f;
     }
