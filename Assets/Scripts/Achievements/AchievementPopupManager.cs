@@ -14,6 +14,8 @@ public class AchievementPopupManager : MonoBehaviour
     [SerializeField] private float displayDuration = 3f;
     [SerializeField] private float fadeDuration = 0.5f;
 
+    [SerializeField] private Sprite defaultIcon;
+
     private Queue<AchievementManager.Achievement> achievementQueue = new Queue<AchievementManager.Achievement>();
     private bool isShowingPopup = false;
 
@@ -56,12 +58,25 @@ public class AchievementPopupManager : MonoBehaviour
             AchievementManager.Achievement currentAch = achievementQueue.Dequeue();
 
             titleText.text = currentAch.title;
-            descriptionText.text = currentAch.description;
-            
+            BlockType type = BlockTypeRepository.GetBlockById(currentAch.blockTypeId);
+            string blockName = (type != null) ? type.displayName : "Unknown Block";
+
+            descriptionText.text = currentAch.GetDescription(blockName);
+
+            iconImage.sprite = defaultIcon;
+
             if (!string.IsNullOrEmpty(currentAch.iconPath))
             {
-                Sprite icon = Resources.Load<Sprite>(currentAch.iconPath);
-                if (icon != null) iconImage.sprite = icon;
+                Sprite[] icons = Resources.LoadAll<Sprite>(currentAch.iconPath);
+
+                if (icons != null && icons.Length > 0)
+                {
+                    iconImage.sprite = icons[0];
+                }
+                else
+                {
+                    Debug.LogWarning($"AchievementPopupManager: Icon not found at 'Resources/{currentAch.iconPath}' for achievement '{currentAch.id}'");
+                }
             }
 
             yield return StartCoroutine(FadePopup(0f, 1f));

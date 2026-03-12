@@ -4,17 +4,9 @@ public class AchievementTracker : MonoBehaviour
 {
     [SerializeField] private AchievementManager achievementManager;
 
-    private const string BlockNameWood = "Wood";
-    private const string AchIdFirstWood = "first_wood";
-
     private void OnEnable()
     {
-        if (achievementManager == null)
-        {
-            Debug.LogError("AchievementTracker: AchievementManager reference is missing!");
-            return;
-        }
-
+        if (achievementManager == null) return;
         BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
     }
 
@@ -25,13 +17,24 @@ public class AchievementTracker : MonoBehaviour
 
     private void HandleBlockBroken((BlockType block, Vector2Int pos) brokenBlockInfo)
     {
-        var (block, _) = brokenBlockInfo;
+        var (brokenBlock, _) = brokenBlockInfo;
 
-        switch (block.displayName)
+        foreach (var ach in achievementManager.GetAchievements())
         {
-            case BlockNameWood:
-                achievementManager.UnlockAchievement(AchIdFirstWood);
-                break;
+            if (ach.isUnlocked) continue;
+
+            if (ach.group == "collect_material")
+            {
+                if (ach.blockTypeId == brokenBlock.id)
+                {
+                    ach.currentProgress++;
+
+                    if (ach.currentProgress >= ach.number)
+                    {
+                        achievementManager.UnlockAchievement(ach.id);
+                    }
+                }
+            }
         }
     }
 }

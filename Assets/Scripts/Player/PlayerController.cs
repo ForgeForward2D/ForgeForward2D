@@ -118,9 +118,9 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase != InputActionPhase.Performed) return;
 
-        if(achievementUI != null && achievementUI.IsOpen)
+        if (achievementUI != null && achievementUI.IsOpen)
         {
-            Debug.Log("Cannot open Inventory: Achievement are currently open!");
+            Debug.Log("Cannot open Inventory: Achievements are currently open!");
             return;
         }
 

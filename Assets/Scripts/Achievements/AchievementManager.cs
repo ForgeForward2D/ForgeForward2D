@@ -15,9 +15,18 @@ public class AchievementManager : MonoBehaviour
     {
         public string id;
         public string title;
-        public string description;
-        public bool isUnlocked;
+        public string group;
+        public int number;
+        public int blockTypeId;
         public string iconPath;
+
+        public bool isUnlocked;
+        public int currentProgress;
+
+        public string GetDescription(string blockName)
+        {
+            return $"Break {number} blocks of {blockName}.";
+        }
     }
 
     [Serializable]
@@ -26,6 +35,7 @@ public class AchievementManager : MonoBehaviour
         public List<Achievement> achievements = new List<Achievement>();
     }
 
+    private List<Achievement> achievementOrderedList = new List<Achievement>();
     private Dictionary<string, Achievement> achievementLookup = new Dictionary<string, Achievement>();
     private string savePath;
 
@@ -59,10 +69,10 @@ public class AchievementManager : MonoBehaviour
 
     private void LoadAchievements()
     {
-        List<Achievement> masterList = LoadFromTemplate();
+        achievementOrderedList = LoadFromTemplate();
 
         achievementLookup.Clear();
-        foreach (Achievement ach in masterList)
+        foreach (Achievement ach in achievementOrderedList)
         {
             achievementLookup[ach.id] = ach;
         }
@@ -81,6 +91,7 @@ public class AchievementManager : MonoBehaviour
                         if (achievementLookup.TryGetValue(savedAch.id, out Achievement masterAch))
                         {
                             masterAch.isUnlocked = savedAch.isUnlocked;
+                            masterAch.currentProgress = savedAch.currentProgress;
                         }
                     }
                 }
@@ -104,7 +115,7 @@ public class AchievementManager : MonoBehaviour
                 return wrapper.achievements;
             }
         }
-        
+
         Debug.LogError("No achievement template found in Resources!");
         return new List<Achievement>();
     }
@@ -115,7 +126,7 @@ public class AchievementManager : MonoBehaviour
         {
             AchievementDataWrapper wrapper = new AchievementDataWrapper
             {
-                achievements = new List<Achievement>(achievementLookup.Values)
+                achievements = achievementOrderedList
             };
 
             string json = JsonUtility.ToJson(wrapper, true);
@@ -127,5 +138,5 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
-    public IEnumerable<Achievement> GetAchievements() => achievementLookup.Values;
+    public IEnumerable<Achievement> GetAchievements() => achievementOrderedList;
 }

@@ -3,8 +3,17 @@
         {
             "id": "first_wood",
             "title": "Timber!",
-            "description": "Chop down your first tree.",
-            "isUnlocked": false,
+            "group": "collect_material",
+            "number": 1,
+            "blockTypeId": 5,
+            "iconPath": "Icons/test"
+        },
+        {
+            "id": "wood_collector",
+            "title": "Lumberjack",
+            "group": "collect_material",
+            "number": 10,
+            "blockTypeId": 5,
             "iconPath": "Icons/test"
         }
     ]

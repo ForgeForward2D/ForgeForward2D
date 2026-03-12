@@ -12,6 +12,8 @@ public class AchievementSlotUI : MonoBehaviour
     [SerializeField] private Color unlockedColor = new Color(1f, 0.8f, 0f, 0.5f);
     [SerializeField] private Color lockedColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
 
+    [SerializeField] private Sprite defaultIcon;
+
     public void Setup(AchievementManager.Achievement data)
     {
         if (data == null)
@@ -21,14 +23,21 @@ public class AchievementSlotUI : MonoBehaviour
         }
 
         titleText.text = data.title;
-        descriptionText.text = data.description;
+
+        BlockType type = BlockTypeRepository.GetBlockById(data.blockTypeId);
+        string blockName = (type != null) ? type.displayName : "Unknown Block";
+
+        descriptionText.text = data.GetDescription(blockName);
+
+        iconImage.sprite = defaultIcon;
 
         if (!string.IsNullOrEmpty(data.iconPath))
         {
-            Sprite icon = Resources.Load<Sprite>(data.iconPath);
-            if (icon != null)
+            Sprite[] icons = Resources.LoadAll<Sprite>(data.iconPath);
+
+            if (icons != null && icons.Length > 0)
             {
-                iconImage.sprite = icon;
+                iconImage.sprite = icons[0];
             }
             else
             {
