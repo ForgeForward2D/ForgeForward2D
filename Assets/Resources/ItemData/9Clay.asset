@@ -16,4 +16,4 @@ MonoBehaviour:
   DisplayName: Clay
   MaxStackSize: 64
   Icon: {fileID: -236667059, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
-  Prefab: {fileID: 2094685673995534264, guid: 8466049d9d2ae497eb34d179300e25d1, type: 3}
+  Prefab: {fileID: 0}
