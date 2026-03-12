@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -14,7 +15,6 @@ public class BlockType : ScriptableObject
     public bool walkable;
     public bool breakable;
     public float hardness;
-    // bool farmable;
 
     public int respawnRate;
     public int replacementBlockId;

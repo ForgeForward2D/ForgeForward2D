@@ -59,4 +59,36 @@ public class ToolHotbar : ItemContainer
         }
         return ItemTypeRepository.GetToolById(item.Id);
     }
+
+    public bool TryAddTool(Tool tool)
+    {
+        int index =  tool.type switch
+        {
+            ToolType.Sword => 0,
+            ToolType.Pickaxe => 1,
+            ToolType.Axe => 2,
+            ToolType.Shovel => 3,
+            ToolType.Hammer => 4,
+            _ => -1
+        };
+        if (index == -1)
+        {
+            Debug.LogWarning("Unsupported tool type " + tool.type.ToString() + " cannot be added to ToolHotbar.");
+            return false;
+        }
+        if (items[index] == null)
+        {
+            items[index] = new InventoryItem(tool, 1);
+            NotifyContentsChanged();
+            return true;
+        }
+        if (((Tool)items[index].Item).tier < tool.tier)
+        {
+            items[index] = new InventoryItem(tool, 1);
+            NotifyContentsChanged();
+            return true;
+        }
+         Debug.LogWarning("Slot "+index+" in ToolHotbar is already occupied by a tool of equal or higher tier. Cannot add tool "+tool.DisplayName+" (ID: "+tool.Id+").");
+        return false;
+    }
 }

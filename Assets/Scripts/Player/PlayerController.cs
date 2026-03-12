@@ -2,7 +2,6 @@ using System;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public Transform characterModel;
 
     [SerializeField] private ResourceInventoryUI resourceInventoryUI;
+    [SerializeField] private CraftingTableUI craftingTableUI;
 
     public bool IsHoldingAttack { get; private set; }
 
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
     public void Attack(InputAction.CallbackContext context)
     {
 
-        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
+        if ((resourceInventoryUI != null && resourceInventoryUI.IsOpen) || (craftingTableUI != null && craftingTableUI.IsOpen))
         {
             IsHoldingAttack = false;
             return;
@@ -106,9 +106,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public static event Action<(BlockType, Vector2Int)> OnInteraction;
+
+    public void Interact(InputAction.CallbackContext context)
+    {
+        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
+        {
+            return;
+        }
+
+        if (context.phase != InputActionPhase.Performed) return;
+
+        Debug.Log("Interaction triggered");
+
+        Vector2Int targetBlockPos = GetTargettingBlock();
+        BlockType targetBlock = tileMapManager.GetBlockTypeAtPosition(targetBlockPos);
+        OnInteraction?.Invoke((targetBlock, targetBlockPos));
+    }
+
     public void Inventory(InputAction.CallbackContext context)
     {
         if (context.phase != InputActionPhase.Performed) return;
+
+        if (craftingTableUI != null && craftingTableUI.IsOpen)
+         {
+             return;
+         }
 
         if (resourceInventoryUI != null)
         {
@@ -120,5 +143,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("ResourceInventoryUI reference is missing in Player!");
         }
+
     }
 }
