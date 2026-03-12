@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ResourceInventory : ItemContainer
 {
@@ -36,6 +37,10 @@ public class ResourceInventory : ItemContainer
 
         if (itemType is Tool tool) {
             Debug.Assert(amount==1, $"Attempted to add multiple ({amount}) of tool {tool.DisplayName} (ID: {tool.Id}) to ResourceInventory. Only one can be added at a time.");
+            if (toolHotbar == null) {
+                Debug.LogError($"ToolHotbar reference is missing in ResourceInventory.");
+                return false;
+            }
             return toolHotbar.TryAddTool(tool);
         }
         
@@ -55,6 +60,7 @@ public class ResourceInventory : ItemContainer
                 remaining -= space;
                 if (remaining <= 0) {
                     items[i].Count += space + remaining;
+                    NotifyContentsChanged();
                     return true; 
                 }
     
@@ -69,6 +75,7 @@ public class ResourceInventory : ItemContainer
                 remaining -= itemType.MaxStackSize;
                 if (remaining <= 0) {
                     items[i] = new InventoryItem(itemType, itemType.MaxStackSize + remaining);
+                    NotifyContentsChanged();
                     return true;
                 }
                 items[i] = new InventoryItem(itemType, itemType.MaxStackSize);
@@ -82,6 +89,11 @@ public class ResourceInventory : ItemContainer
     {
         if (CountItem(itemType) < amount)
             return false;
+
+        if (itemType is Tool tool) {
+            Debug.LogError("Attempting to remove a tool " + tool.DisplayName + " (ID: "+tool.Id+") but this should not happen");
+            return false;
+        }
         
         int remaining = amount;
         for (int i = 0; i < items.Length; i++)
@@ -91,16 +103,21 @@ public class ResourceInventory : ItemContainer
                 if (items[i].Count <= remaining) {
                     remaining -= items[i].Count;
                     items[i] = null;   
-                    if (remaining == 0)
-                        break;
+                    if (remaining == 0) {
+                        NotifyContentsChanged();
+                        return true;
+                    }
+                        
                 } else {
                     items[i].Count -= remaining;
                     remaining = 0;
-                    break;
+                    NotifyContentsChanged();
+                    return true;
                 }
             }
         }
-        return true; 
+        Debug.LogError($"Failed to remove {amount} of {itemType.DisplayName} (ID: {itemType.Id}) from ResourceInventory. This should not happen since availability was checked.");
+        return false;
     }
 
     public bool TryCraft(CraftingRecipe recipe)
@@ -164,30 +181,13 @@ public class ResourceInventory : ItemContainer
 
     public List<(ItemType, int, int)> ComputeAvailability(CraftingRecipe recipe)
     {
-        Dictionary<ItemType, (int, int)> availability = new Dictionary<ItemType, (int, int)>();
 
-        foreach (var ingredient in recipe.ingredients)
-        {
+        List<(ItemType, int, int)> availabilityList = recipe.ingredients.Select(ingredient => {
             ItemType itemType = ingredient.Item;
             int requiredAmount = ingredient.Count;
-
-            availability.Add(itemType, (requiredAmount, 0));
-        }
-
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (items[i] != null && availability.ContainsKey(items[i].Item))
-            {
-                var (required, current) = availability[items[i].Item];
-                availability[items[i].Item] = (required, current + items[i].Count);
-            }
-        }
-
-        List<(ItemType, int, int)> availabilityList = new List<(ItemType, int, int)>();
-        foreach (var kvp in availability)
-        {
-            availabilityList.Add((kvp.Key, kvp.Value.Item1, kvp.Value.Item2));
-        }
+            int availableAmount = CountItem(itemType);
+            return (itemType, requiredAmount, availableAmount);
+        }).ToList();
 
         return availabilityList;
     }

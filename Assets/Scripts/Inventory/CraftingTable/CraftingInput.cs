@@ -42,8 +42,12 @@ public class CraftingInput : MonoBehaviour
         }
     }
 
-    private void Awake() {
+    private void OnEnable() {
         PlayerController.OnInteraction += Interact;
+    }
+
+    private void OnDisable() {
+        PlayerController.OnInteraction -= Interact;
     }
 
     public void Interact((BlockType, Vector2Int) interactionInfo)
@@ -54,12 +58,13 @@ public class CraftingInput : MonoBehaviour
         if (craftingTableUI == null) return;
 
         if (craftingTableUI.IsOpen) {
+            Debug.Log("Closing crafting table UI");
             craftingTableUI.SetActive(false);
             return;
         }
 
         if (blockType != craftingTableBlockType) return;
-
+        Debug.Log("Opening crafting table UI");
         craftingTableUI.SetActive(true);
     }
 }

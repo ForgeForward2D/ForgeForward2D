@@ -117,8 +117,6 @@ public class PlayerController : MonoBehaviour
 
         if (context.phase != InputActionPhase.Performed) return;
 
-        Debug.Log("Interaction triggered");
-
         Vector2Int targetBlockPos = GetTargettingBlock();
         BlockType targetBlock = tileMapManager.GetBlockTypeAtPosition(targetBlockPos);
         OnInteraction?.Invoke((targetBlock, targetBlockPos));
@@ -126,6 +124,8 @@ public class PlayerController : MonoBehaviour
 
     public void Escape(InputAction.CallbackContext context)
     {
+        if (context.phase != InputActionPhase.Performed) return;
+
         if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
         {
             resourceInventoryUI.Toggle();

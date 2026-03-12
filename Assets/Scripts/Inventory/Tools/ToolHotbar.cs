@@ -71,7 +71,7 @@ public class ToolHotbar : ItemContainer
             ToolType.Hammer => 4,
             _ => -1
         };
-        if (index == -1)
+        if (index < 0 || index >= items.Length)
         {
             Debug.LogWarning("Unsupported tool type " + tool.type.ToString() + " cannot be added to ToolHotbar.");
             return false;
@@ -114,7 +114,7 @@ public class ToolHotbar : ItemContainer
             ToolType.Hammer => 4,
             _ => -1
         };
-        if (index == -1)
+        if (index < 0 || index >= items.Length)
         {
             Debug.LogWarning("Unsupported tool type " + tool.type.ToString() + " cannot be added to ToolHotbar.");
             return false;

@@ -12,6 +12,7 @@ public class CraftingTableUI : MonoBehaviour
 
     [Header("Debugging")]
     [SerializeField] private List<RecipeEntryUI> recipeEntries = new List<RecipeEntryUI>();
+    [SerializeField] private List<CraftingRecipe> availableRecipes = new List<CraftingRecipe>();
     [SerializeField] private int selectedRecipeIndex = 0;
 
     public bool IsOpen => visualPanel != null && visualPanel.activeSelf;
@@ -32,7 +33,7 @@ public class CraftingTableUI : MonoBehaviour
     public void RefreshUI() {
         if (recipeEntries == null) return;
 
-        List<CraftingRecipe> availableRecipes = CraftingRecipeRepository.GetAllRecipes()
+        availableRecipes = CraftingRecipeRepository.GetAllRecipes()
             .Where(recipe => playerInventory.CountFreeSpace(recipe.result.Item) >= recipe.result.Count)
             .ToList();
         selectedRecipeIndex = selectedRecipeIndex > availableRecipes.Count - 1 ? 0 : selectedRecipeIndex;
@@ -56,9 +57,9 @@ public class CraftingTableUI : MonoBehaviour
     {
         selectedRecipeIndex += delta;
         if (selectedRecipeIndex < 0)
-            selectedRecipeIndex += CraftingRecipeRepository.GetAllRecipes().Count;
-        if (selectedRecipeIndex >= CraftingRecipeRepository.GetAllRecipes().Count)
-            selectedRecipeIndex -= CraftingRecipeRepository.GetAllRecipes().Count;
+            selectedRecipeIndex += availableRecipes.Count;
+        if (selectedRecipeIndex >= availableRecipes.Count)
+            selectedRecipeIndex -= availableRecipes.Count;
         RefreshUI();
     }
 
