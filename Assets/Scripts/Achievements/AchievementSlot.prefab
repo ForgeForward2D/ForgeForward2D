@@ -371,8 +371,8 @@ MonoBehaviour:
   descriptionText: {fileID: 9166852120079804887}
   background: {fileID: 2247789805815083844}
   iconImage: {fileID: 2599785384011431642}
-  unlockedColor: {r: 1, g: 0.8, b: 0, a: 0.5}
-  lockedColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.5}
+  unlockedColor: {r: 0, g: 0.78431374, b: 0.05882353, a: 0.78431374}
+  lockedColor: {r: 0.37254903, g: 0.37254903, b: 0.37254903, a: 0.78431374}
   defaultIcon: {fileID: 0}
 --- !u!114 &766385223281742542
 MonoBehaviour:

@@ -8,7 +8,6 @@ public class AchievementPopupManager : MonoBehaviour
 {
     [SerializeField] private CanvasGroup popupCanvasGroup;
     [SerializeField] private TextMeshProUGUI titleText;
-    [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Image iconImage;
 
     [SerializeField] private float displayDuration = 3f;
@@ -60,8 +59,6 @@ public class AchievementPopupManager : MonoBehaviour
             titleText.text = currentAch.title;
             BlockType type = BlockTypeRepository.GetBlockById(currentAch.blockTypeId);
             string blockName = (type != null) ? type.displayName : "Unknown Block";
-
-            descriptionText.text = currentAch.GetDescription(blockName);
 
             iconImage.sprite = defaultIcon;
 

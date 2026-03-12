@@ -84,6 +84,8 @@ public class AchievementManager : MonoBehaviour
 
             achievementLookup[ach.id] = ach;
         }
+
+        Debug.Log($"{achievementOrderedList.Count} achievements loaded.");
     }
 
     public IEnumerable<Achievement> GetAchievements() => achievementOrderedList;
