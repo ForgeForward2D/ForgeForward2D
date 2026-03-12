@@ -1724,15 +1724,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 81c0ff5acc51c483aacfb9930d1484dd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81c0ff5acc51c483aacfb9930d1484dd, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81c0ff5acc51c483aacfb9930d1484dd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81c0ff5acc51c483aacfb9930d1484dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6919,52 +6919,6 @@ MonoBehaviour:
   tileMapManager: {fileID: 7367874862585846642}
   characterModel: {fileID: 917483593}
   resourceInventoryUI: {fileID: 1447784746}
---- !u!61 &4267914035134336910
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6854287795457830472}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 634dd1549f431482ba303fdf33991af1, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.016820729, y: -0.36415243}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.8, y: 13.5}
-    newSize: {x: 10.8, y: 13.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 2.7118406, y: 4.959689}
-  m_EdgeRadius: 0
 --- !u!1839735485 &4401200518655729685
 Tilemap:
   m_ObjectHideFlags: 0
@@ -20433,7 +20387,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9033000692423820050}
-  - component: {fileID: 4267914035134336910}
   - component: {fileID: 6028660828552569453}
   - component: {fileID: 3533221952782378166}
   - component: {fileID: 4220411106964447491}
@@ -20700,8 +20653,8 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::ResourceInventory
   capacity: 21
---- !u!114 &9033000692423820055
-MonoBehaviour:
+--- !u!70 &9033000692423820055
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -20717,6 +20670,35 @@ MonoBehaviour:
   tileMapManager: {fileID: 7367874862585846642}
   toolHotbar: {fileID: 957897782}
   currentTool: {fileID: 0}
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.042740256, y: -0.91464216}
+  m_Size: {x: 3.2182765, y: 3.9522545}
+  m_Direction: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
