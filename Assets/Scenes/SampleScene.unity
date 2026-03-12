@@ -20431,8 +20431,9 @@ GameObject:
   - component: {fileID: 4220411106964447491}
   - component: {fileID: 9033000692423820053}
   - component: {fileID: 9033000692423820054}
-  - component: {fileID: 9033000692423820055}
+  - component: {fileID: 9033000692423820057}
   - component: {fileID: 9033000692423820056}
+  - component: {fileID: 9033000692423820058}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -20693,8 +20694,8 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::ResourceInventory
   capacity: 21
---- !u!70 &9033000692423820055
-CapsuleCollider2D:
+--- !u!114 &9033000692423820056
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -20702,14 +20703,19 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 6854287795457830472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14d9924dc6eac4cc081bf07edf1a1971, type: 3}
+  m_Script: {fileID: 11500000, guid: ce057be441e6d411db1d093fe160edbc, type: 3}
   m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::BlockBreakingManager
-  gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
-  playerController: {fileID: 4220411106964447491}
-  tileMapManager: {fileID: 7367874862585846642}
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHandController
   toolHotbar: {fileID: 957897782}
-  currentTool: {fileID: 0}
+  socketRightHand: {fileID: 203281914}
+--- !u!70 &9033000692423820057
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6854287795457830472}
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -20736,10 +20742,10 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.042740256, y: -0.91464216}
-  m_Size: {x: 3.2182765, y: 3.9522545}
+  m_Offset: {x: 0, y: -1.2468439}
+  m_Size: {x: 3.2334075, y: 3.3185685}
   m_Direction: 0
---- !u!114 &9033000692423820056
+--- !u!114 &9033000692423820058
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20748,11 +20754,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6854287795457830472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce057be441e6d411db1d093fe160edbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHandController
+  m_Script: {fileID: 11500000, guid: 14d9924dc6eac4cc081bf07edf1a1971, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BlockBreakingManager
+  gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
+  playerController: {fileID: 4220411106964447491}
+  tileMapManager: {fileID: 7367874862585846642}
   toolHotbar: {fileID: 957897782}
-  socketRightHand: {fileID: 203281914}
+  currentTool: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
