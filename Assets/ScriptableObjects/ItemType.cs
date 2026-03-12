@@ -8,5 +8,5 @@ public class ItemType : ScriptableObject
     [SerializeField] public string DisplayName;
     [SerializeField] public int MaxStackSize = 64;
     [SerializeField] public Sprite Icon;
-
+    [SerializeField] public GameObject Prefab;
 }

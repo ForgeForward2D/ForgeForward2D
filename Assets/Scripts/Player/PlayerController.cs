@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private Transform playerTransform;
     private Rigidbody2D rb;
     private Animator myAnimator;
-    private SpriteRenderer mySpriteRenderer;
+    public Transform characterModel;
 
     public bool IsHoldingAttack { get; private set; }
 
@@ -30,8 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         playerTransform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
-        myAnimator = GetComponent<Animator>();
-        mySpriteRenderer = GetComponent<SpriteRenderer>();
+        myAnimator = GetComponentInChildren<Animator>();
     }
 
     public void FixedUpdate()
@@ -43,22 +42,16 @@ public class PlayerController : MonoBehaviour
         float absX = Mathf.Abs(moveInput.x);
         float absY = Mathf.Abs(moveInput.y);
 
-        // Update sprite flip whenever there's horizontal input
-        if (moveInput.x != 0)
-        {
-            mySpriteRenderer.flipX = moveInput.x > 0;
-        }
-
-        // Determine movement direction based on dominant axis
         if (absX > absY)
         {
             moveDirection = moveInput.x > 0 ? Vector2Int.right : Vector2Int.left;
+            characterModel.localRotation = Quaternion.Euler(0f, moveInput.x > 0 ? -90f : 90f, 0f);
         }
         else if (absY > 0)
         {
             moveDirection = moveInput.y > 0 ? Vector2Int.up : Vector2Int.down;
+            characterModel.localRotation = Quaternion.Euler(0f, moveInput.y < 0 ? 0f : 180f, 0f);
         }
-
     }
 
     public Vector3 GetPosition()
@@ -127,6 +120,7 @@ public class PlayerController : MonoBehaviour
         if (resourceInventoryUI != null)
         {
             resourceInventoryUI.Toggle();
+            myAnimator.SetBool("isMoving", !resourceInventoryUI.IsOpen && moveInput.magnitude > 0.01f);
             Debug.Log("Resource Inventory toggled");
         }
         else
