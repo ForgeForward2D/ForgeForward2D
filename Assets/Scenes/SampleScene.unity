@@ -873,7 +873,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
   m_IgnoreReversedGraphics: 1
   m_BlockingObjects: 0
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
@@ -1602,7 +1602,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
   m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
@@ -1633,7 +1633,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
@@ -1991,7 +1991,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
@@ -2029,7 +2029,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
   m_Padding:
     m_Left: 50
@@ -2055,7 +2055,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ebf2d401d52ba14e888bcea325552e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolHotbarUI
   targetContainer: {fileID: 957897782}
   selectionHighlight: {fileID: 985730316}
@@ -2069,7 +2069,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f27188d002dd9148819353b02fda7f7, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolHotbar
   capacity: 5
   startingItemIds: 6500000066000000670000006800000069000000
@@ -2219,7 +2219,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
@@ -2257,7 +2257,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
   m_IgnoreLayout: 1
   m_MinWidth: -1
@@ -2923,7 +2923,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
   m_Padding:
     m_Left: 50
@@ -2947,7 +2947,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
@@ -2985,7 +2985,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: afb2beb237caac444b94f50448438b56, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceInventoryUI
   targetContainer: {fileID: 9033000692423820054}
   visualPanel: {fileID: 1447784740}
@@ -3419,7 +3419,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage:
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -3597,8 +3597,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
@@ -4518,9 +4518,9 @@ CompositeCollider2D:
         Y: 30000000
       - X: 90000000
         Y: 10000000
-      - X: 80000000
+      - X: 70000000
         Y: 10000000
-      - X: 80000000
+      - X: 70000000
         Y: 0
       - X: 30000000
         Y: 0
@@ -5127,14 +5127,6 @@ CompositeCollider2D:
       - X: -60000000
         Y: 10000000
       - X: -60000000
-        Y: 20000000
-      - X: -70000000
-        Y: 20000000
-      - X: -70000000
-        Y: 30000000
-      - X: -60000000
-        Y: 30000000
-      - X: -60000000
         Y: 40000000
       - X: -70000000
         Y: 40000000
@@ -5626,74 +5618,6 @@ CompositeCollider2D:
         Y: -190000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 41.999973, y: 3}
-      - {x: 41.999973, y: 4}
-      - {x: 41, y: 4.0000296}
-      - {x: 41.00003, y: 5}
-      - {x: 42, y: 5.000029}
-      - {x: 41.999973, y: 6}
-      - {x: 41, y: 6.0000296}
-      - {x: 40.999973, y: 7}
-      - {x: 39, y: 7.0000296}
-      - {x: 39.00003, y: 8}
-      - {x: 40, y: 8.00003}
-      - {x: 40.00003, y: 9}
-      - {x: 41, y: 9.00003}
-      - {x: 40.999973, y: 11}
-      - {x: 40, y: 11.00003}
-      - {x: 39.999973, y: 12}
-      - {x: 39, y: 12.00003}
-      - {x: 39.00003, y: 14}
-      - {x: 40, y: 14.000029}
-      - {x: 40.00003, y: 15}
-      - {x: 41, y: 15.000029}
-      - {x: 41.00003, y: 18}
-      - {x: 42, y: 18.000029}
-      - {x: 41.999973, y: 26}
-      - {x: 37, y: 25.999971}
-      - {x: 36.999973, y: 25}
-      - {x: 35, y: 24.999971}
-      - {x: 35.00003, y: 24}
-      - {x: 36, y: 23.999971}
-      - {x: 36.00003, y: 23}
-      - {x: 37, y: 22.999971}
-      - {x: 37.00003, y: 22}
-      - {x: 38, y: 21.999971}
-      - {x: 38.00003, y: 21}
-      - {x: 39, y: 20.999971}
-      - {x: 39.00003, y: 17}
-      - {x: 40, y: 16.999971}
-      - {x: 39.999973, y: 16}
-      - {x: 39, y: 15.999971}
-      - {x: 38.999973, y: 15}
-      - {x: 38, y: 14.999971}
-      - {x: 37.999973, y: 14}
-      - {x: 36, y: 14.000029}
-      - {x: 35.999973, y: 15}
-      - {x: 35, y: 14.999971}
-      - {x: 35.00003, y: 13}
-      - {x: 36, y: 12.99997}
-      - {x: 36.00003, y: 12}
-      - {x: 37, y: 11.99997}
-      - {x: 37.00003, y: 11}
-      - {x: 38, y: 10.99997}
-      - {x: 37.999973, y: 8}
-      - {x: 37, y: 7.9999704}
-      - {x: 37.00003, y: 5}
-      - {x: 38, y: 5.000029}
-      - {x: 38.00003, y: 6}
-      - {x: 39, y: 5.9999704}
-      - {x: 39.00003, y: 4}
-      - {x: 40, y: 3.9999704}
-      - {x: 40.00003, y: 3}
-    - - {x: 32.999973, y: 23}
-      - {x: 32.999973, y: 26}
-      - {x: 32, y: 25.999971}
-      - {x: 31.999971, y: 25}
-      - {x: 31, y: 24.999971}
-      - {x: 31.000029, y: 24}
-      - {x: 32, y: 23.999971}
-      - {x: 32.00003, y: 23}
     - - {x: -7.0000296, y: -19}
       - {x: -6.9999704, y: -18}
       - {x: -5, y: -18.000029}
@@ -5828,6 +5752,74 @@ CompositeCollider2D:
       - {x: 28.999971, y: 26}
       - {x: -11, y: 25.999971}
       - {x: -10.99997, y: -19}
+    - - {x: 32.999973, y: 23}
+      - {x: 32.999973, y: 26}
+      - {x: 32, y: 25.999971}
+      - {x: 31.999971, y: 25}
+      - {x: 31, y: 24.999971}
+      - {x: 31.000029, y: 24}
+      - {x: 32, y: 23.999971}
+      - {x: 32.00003, y: 23}
+    - - {x: 41.999973, y: 3}
+      - {x: 41.999973, y: 4}
+      - {x: 41, y: 4.0000296}
+      - {x: 41.00003, y: 5}
+      - {x: 42, y: 5.000029}
+      - {x: 41.999973, y: 6}
+      - {x: 41, y: 6.0000296}
+      - {x: 40.999973, y: 7}
+      - {x: 39, y: 7.0000296}
+      - {x: 39.00003, y: 8}
+      - {x: 40, y: 8.00003}
+      - {x: 40.00003, y: 9}
+      - {x: 41, y: 9.00003}
+      - {x: 40.999973, y: 11}
+      - {x: 40, y: 11.00003}
+      - {x: 39.999973, y: 12}
+      - {x: 39, y: 12.00003}
+      - {x: 39.00003, y: 14}
+      - {x: 40, y: 14.000029}
+      - {x: 40.00003, y: 15}
+      - {x: 41, y: 15.000029}
+      - {x: 41.00003, y: 18}
+      - {x: 42, y: 18.000029}
+      - {x: 41.999973, y: 26}
+      - {x: 37, y: 25.999971}
+      - {x: 36.999973, y: 25}
+      - {x: 35, y: 24.999971}
+      - {x: 35.00003, y: 24}
+      - {x: 36, y: 23.999971}
+      - {x: 36.00003, y: 23}
+      - {x: 37, y: 22.999971}
+      - {x: 37.00003, y: 22}
+      - {x: 38, y: 21.999971}
+      - {x: 38.00003, y: 21}
+      - {x: 39, y: 20.999971}
+      - {x: 39.00003, y: 17}
+      - {x: 40, y: 16.999971}
+      - {x: 39.999973, y: 16}
+      - {x: 39, y: 15.999971}
+      - {x: 38.999973, y: 15}
+      - {x: 38, y: 14.999971}
+      - {x: 37.999973, y: 14}
+      - {x: 36, y: 14.000029}
+      - {x: 35.999973, y: 15}
+      - {x: 35, y: 14.999971}
+      - {x: 35.00003, y: 13}
+      - {x: 36, y: 12.99997}
+      - {x: 36.00003, y: 12}
+      - {x: 37, y: 11.99997}
+      - {x: 37.00003, y: 11}
+      - {x: 38, y: 10.99997}
+      - {x: 37.999973, y: 8}
+      - {x: 37, y: 7.9999704}
+      - {x: 37.00003, y: 5}
+      - {x: 38, y: 5.000029}
+      - {x: 38.00003, y: 6}
+      - {x: 39, y: 5.9999704}
+      - {x: 39.00003, y: 4}
+      - {x: 40, y: 3.9999704}
+      - {x: 40.00003, y: 3}
     - - {x: 15.999971, y: 22}
       - {x: 15.999971, y: 24}
       - {x: 14, y: 23.999971}
@@ -5920,6 +5912,82 @@ CompositeCollider2D:
       - {x: 23.999971, y: 15}
       - {x: 23, y: 14.999971}
       - {x: 23.000029, y: 14}
+    - - {x: 8.99997, y: -7}
+      - {x: 9.00003, y: -4}
+      - {x: 12, y: -4.0000296}
+      - {x: 12.00003, y: -5}
+      - {x: 13, y: -4.999971}
+      - {x: 12.99997, y: -3}
+      - {x: 12, y: -2.9999707}
+      - {x: 11.99997, y: -2}
+      - {x: 11, y: -1.9999707}
+      - {x: 11.00003, y: 0}
+      - {x: 12, y: 0.000029300001}
+      - {x: 12.00003, y: 2}
+      - {x: 13, y: 1.9999707}
+      - {x: 13.00003, y: -2}
+      - {x: 14, y: -1.9999708}
+      - {x: 14.000029, y: 1}
+      - {x: 15, y: 1.0000293}
+      - {x: 14.999971, y: 5}
+      - {x: 12, y: 5.0000296}
+      - {x: 12.00003, y: 6}
+      - {x: 16, y: 6.000029}
+      - {x: 15.999971, y: 8}
+      - {x: 15, y: 7.9999704}
+      - {x: 14.999971, y: 7}
+      - {x: 11, y: 7.0000296}
+      - {x: 11.00003, y: 9}
+      - {x: 13, y: 8.99997}
+      - {x: 13.00003, y: 8}
+      - {x: 15, y: 8.00003}
+      - {x: 14.999971, y: 10}
+      - {x: 14, y: 10.00003}
+      - {x: 13.999971, y: 11}
+      - {x: 13, y: 11.00003}
+      - {x: 13.00003, y: 13}
+      - {x: 19, y: 13.00003}
+      - {x: 18.999971, y: 14}
+      - {x: 15, y: 14.000029}
+      - {x: 14.999971, y: 15}
+      - {x: 14, y: 14.999971}
+      - {x: 13.999971, y: 14}
+      - {x: 12, y: 13.999971}
+      - {x: 11.99997, y: 13}
+      - {x: 8, y: 12.99997}
+      - {x: 8.00003, y: 12}
+      - {x: 12, y: 11.99997}
+      - {x: 11.99997, y: 10}
+      - {x: 10, y: 10.00003}
+      - {x: 9.99997, y: 11}
+      - {x: 9, y: 10.99997}
+      - {x: 8.99997, y: 10}
+      - {x: 6, y: 10.00003}
+      - {x: 5.999971, y: 11}
+      - {x: 5, y: 10.99997}
+      - {x: 4.9999704, y: 9}
+      - {x: 3, y: 8.99997}
+      - {x: 2.9999707, y: 8}
+      - {x: 2, y: 7.9999704}
+      - {x: 2.0000293, y: 6}
+      - {x: 3, y: 5.9999704}
+      - {x: 3.0000293, y: 5}
+      - {x: 4, y: 5.000029}
+      - {x: 4.0000296, y: 6}
+      - {x: 6, y: 5.9999704}
+      - {x: 6.000029, y: 3}
+      - {x: 9, y: 2.9999707}
+      - {x: 8.99997, y: 1}
+      - {x: 7, y: 0.99997073}
+      - {x: 6.9999704, y: 0}
+      - {x: 3, y: -0.000029300001}
+      - {x: 3.0000293, y: -1}
+      - {x: 4, y: -1.0000294}
+      - {x: 4.000029, y: -3}
+      - {x: 5, y: -3.0000293}
+      - {x: 5.000029, y: -4}
+      - {x: 8, y: -4.0000296}
+      - {x: 8.00003, y: -7}
     - - {x: 4.999971, y: 12}
       - {x: 5.0000296, y: 13}
       - {x: 6, y: 13.00003}
@@ -6114,82 +6182,6 @@ CompositeCollider2D:
       - {x: 16.000029, y: -18}
       - {x: 17, y: -18.000029}
       - {x: 17.000029, y: -19}
-    - - {x: 8.99997, y: -7}
-      - {x: 9.00003, y: -4}
-      - {x: 12, y: -4.0000296}
-      - {x: 12.00003, y: -5}
-      - {x: 13, y: -4.999971}
-      - {x: 12.99997, y: -3}
-      - {x: 12, y: -2.9999707}
-      - {x: 11.99997, y: -2}
-      - {x: 11, y: -1.9999707}
-      - {x: 11.00003, y: 0}
-      - {x: 12, y: 0.000029300001}
-      - {x: 12.00003, y: 2}
-      - {x: 13, y: 1.9999707}
-      - {x: 13.00003, y: -2}
-      - {x: 14, y: -1.9999708}
-      - {x: 14.000029, y: 1}
-      - {x: 15, y: 1.0000293}
-      - {x: 14.999971, y: 5}
-      - {x: 12, y: 5.0000296}
-      - {x: 12.00003, y: 6}
-      - {x: 16, y: 6.000029}
-      - {x: 15.999971, y: 8}
-      - {x: 15, y: 7.9999704}
-      - {x: 14.999971, y: 7}
-      - {x: 11, y: 7.0000296}
-      - {x: 11.00003, y: 9}
-      - {x: 13, y: 8.99997}
-      - {x: 13.00003, y: 8}
-      - {x: 15, y: 8.00003}
-      - {x: 14.999971, y: 10}
-      - {x: 14, y: 10.00003}
-      - {x: 13.999971, y: 11}
-      - {x: 13, y: 11.00003}
-      - {x: 13.00003, y: 13}
-      - {x: 19, y: 13.00003}
-      - {x: 18.999971, y: 14}
-      - {x: 15, y: 14.000029}
-      - {x: 14.999971, y: 15}
-      - {x: 14, y: 14.999971}
-      - {x: 13.999971, y: 14}
-      - {x: 12, y: 13.999971}
-      - {x: 11.99997, y: 13}
-      - {x: 8, y: 12.99997}
-      - {x: 8.00003, y: 12}
-      - {x: 12, y: 11.99997}
-      - {x: 11.99997, y: 10}
-      - {x: 10, y: 10.00003}
-      - {x: 9.99997, y: 11}
-      - {x: 9, y: 10.99997}
-      - {x: 8.99997, y: 10}
-      - {x: 6, y: 10.00003}
-      - {x: 5.999971, y: 11}
-      - {x: 5, y: 10.99997}
-      - {x: 4.9999704, y: 9}
-      - {x: 3, y: 8.99997}
-      - {x: 2.9999707, y: 8}
-      - {x: 2, y: 7.9999704}
-      - {x: 2.0000293, y: 6}
-      - {x: 3, y: 5.9999704}
-      - {x: 3.0000293, y: 5}
-      - {x: 4, y: 5.000029}
-      - {x: 4.0000296, y: 6}
-      - {x: 6, y: 5.9999704}
-      - {x: 6.000029, y: 3}
-      - {x: 9, y: 2.9999707}
-      - {x: 8.99997, y: 1}
-      - {x: 8, y: 0.99997073}
-      - {x: 7.9999704, y: 0}
-      - {x: 3, y: -0.000029300001}
-      - {x: 3.0000293, y: -1}
-      - {x: 4, y: -1.0000294}
-      - {x: 4.000029, y: -3}
-      - {x: 5, y: -3.0000293}
-      - {x: 5.000029, y: -4}
-      - {x: 8, y: -4.0000296}
-      - {x: 8.00003, y: -7}
     - - {x: 33.999973, y: 10}
       - {x: 33.999973, y: 14}
       - {x: 33, y: 13.999971}
@@ -6228,10 +6220,6 @@ CompositeCollider2D:
       - {x: -4.000029, y: 12}
       - {x: -5, y: 11.99997}
       - {x: -4.999971, y: 11}
-    - - {x: -8.00003, y: 10}
-      - {x: -8.00003, y: 11}
-      - {x: -9, y: 10.99997}
-      - {x: -8.99997, y: 10}
     - - {x: 3.999971, y: 10}
       - {x: 3.999971, y: 11}
       - {x: 3, y: 10.99997}
@@ -6240,6 +6228,10 @@ CompositeCollider2D:
       - {x: 30.999971, y: 11}
       - {x: 30, y: 10.99997}
       - {x: 30.000029, y: 10}
+    - - {x: -8.00003, y: 10}
+      - {x: -8.00003, y: 11}
+      - {x: -9, y: 10.99997}
+      - {x: -8.99997, y: 10}
     - - {x: 30.820301, y: 10.1172285}
       - {x: 30.179699, y: 10.1172285}
       - {x: 30.195284, y: 10.164072}
@@ -6303,10 +6295,6 @@ CompositeCollider2D:
       - {x: 1, y: 0.0000294}
       - {x: 0.99997073, y: 1}
       - {x: -6, y: 1.0000294}
-      - {x: -6.000029, y: 2}
-      - {x: -7, y: 2.0000293}
-      - {x: -6.9999704, y: 3}
-      - {x: -6, y: 3.0000293}
       - {x: -6.000029, y: 4}
       - {x: -7, y: 4.0000296}
       - {x: -7.0000296, y: 7}
@@ -6318,18 +6306,18 @@ CompositeCollider2D:
       - {x: -7.9999704, y: 0}
       - {x: -7, y: -0.0000294}
       - {x: -6.9999704, y: -2}
-    - - {x: 1.9999708, y: 5}
-      - {x: 1.9999708, y: 6}
-      - {x: 1, y: 5.999971}
-      - {x: 1.0000293, y: 5}
-    - - {x: 17.999971, y: 5}
-      - {x: 17.999971, y: 6}
-      - {x: 17, y: 5.999971}
-      - {x: 17.000029, y: 5}
     - - {x: 27.999971, y: 5}
       - {x: 27.999971, y: 6}
       - {x: 27, y: 5.999971}
       - {x: 27.000029, y: 5}
+    - - {x: 17.999971, y: 5}
+      - {x: 17.999971, y: 6}
+      - {x: 17, y: 5.999971}
+      - {x: 17.000029, y: 5}
+    - - {x: 1.9999708, y: 5}
+      - {x: 1.9999708, y: 6}
+      - {x: 1, y: 5.999971}
+      - {x: 1.0000293, y: 5}
     - - {x: 3.820299, y: 5.1172295}
       - {x: 3.1797013, y: 5.1172295}
       - {x: 3.1952848, y: 5.1640716}
@@ -6356,14 +6344,18 @@ CompositeCollider2D:
       - {x: 38.999973, y: 3}
       - {x: 37, y: 2.999971}
       - {x: 37.00003, y: 2}
-    - - {x: 2.999971, y: 1}
-      - {x: 2.999971, y: 2}
-      - {x: 2, y: 1.9999708}
-      - {x: 2.0000293, y: 1}
     - - {x: 36.999973, y: 1}
       - {x: 36.999973, y: 2}
       - {x: 35, y: 1.9999708}
       - {x: 35.00003, y: 1}
+    - - {x: 2.999971, y: 1}
+      - {x: 2.999971, y: 2}
+      - {x: 2, y: 1.9999708}
+      - {x: 2.0000293, y: 1}
+    - - {x: 30.999971, y: 0}
+      - {x: 30.999971, y: 1}
+      - {x: 30, y: 0.99997073}
+      - {x: 30.000029, y: 0}
     - - {x: 35.999973, y: -5}
       - {x: 35.999973, y: -2}
       - {x: 35, y: -1.9999707}
@@ -6378,10 +6370,6 @@ CompositeCollider2D:
       - {x: 34.00003, y: -3}
       - {x: 35, y: -3.0000293}
       - {x: 35.00003, y: -5}
-    - - {x: 30.999971, y: 0}
-      - {x: 30.999971, y: 1}
-      - {x: 30, y: 0.99997073}
-      - {x: 30.000029, y: 0}
     - - {x: 19.999971, y: -2}
       - {x: 19.999971, y: -1}
       - {x: 19, y: -1.0000293}
@@ -6396,6 +6384,14 @@ CompositeCollider2D:
       - {x: -2.0000293, y: -4}
       - {x: -3, y: -4.000029}
       - {x: -2.999971, y: -5}
+    - - {x: -3.0000293, y: -4}
+      - {x: -3.0000293, y: -3}
+      - {x: -4, y: -3.0000293}
+      - {x: -3.999971, y: -4}
+    - - {x: 14.999971, y: -4}
+      - {x: 14.999971, y: -3}
+      - {x: 14, y: -3.0000293}
+      - {x: 14.000029, y: -4}
     - - {x: -3.0000293, y: -11}
       - {x: -3.0000293, y: -10}
       - {x: -5, y: -9.99997}
@@ -6408,14 +6404,6 @@ CompositeCollider2D:
       - {x: -6.9999704, y: -10}
       - {x: -6, y: -10.00003}
       - {x: -5.999971, y: -11}
-    - - {x: -3.0000293, y: -4}
-      - {x: -3.0000293, y: -3}
-      - {x: -4, y: -3.0000293}
-      - {x: -3.999971, y: -4}
-    - - {x: 14.999971, y: -4}
-      - {x: 14.999971, y: -3}
-      - {x: 14, y: -3.0000293}
-      - {x: 14.000029, y: -4}
     - - {x: 25.999971, y: -5}
       - {x: 25.999971, y: -4}
       - {x: 25, y: -4.000029}
@@ -6458,10 +6446,6 @@ CompositeCollider2D:
       - {x: 10.99997, y: -7}
       - {x: 10, y: -7.0000296}
       - {x: 10.00003, y: -8}
-    - - {x: 19.999971, y: -10}
-      - {x: 19.999971, y: -9}
-      - {x: 18, y: -9.00003}
-      - {x: 18.000029, y: -10}
     - - {x: 15.999971, y: -15}
       - {x: 16.000029, y: -14}
       - {x: 17, y: -13.999971}
@@ -6482,10 +6466,18 @@ CompositeCollider2D:
       - {x: 9.00003, y: -14}
       - {x: 11, y: -14.000029}
       - {x: 11.00003, y: -15}
+    - - {x: 19.999971, y: -10}
+      - {x: 19.999971, y: -9}
+      - {x: 18, y: -9.00003}
+      - {x: 18.000029, y: -10}
     - - {x: -5.000029, y: -13}
       - {x: -5.000029, y: -12}
       - {x: -6, y: -12.00003}
       - {x: -5.999971, y: -13}
+    - - {x: 20.999971, y: -13}
+      - {x: 20.999971, y: -12}
+      - {x: 20, y: -12.00003}
+      - {x: 20.000029, y: -13}
     - - {x: -0.000029300001, y: -15}
       - {x: 0.0000294, y: -14}
       - {x: 1, y: -13.999971}
@@ -6496,10 +6488,6 @@ CompositeCollider2D:
       - {x: -3.999971, y: -14}
       - {x: -1, y: -14.000029}
       - {x: -0.99997073, y: -15}
-    - - {x: 20.999971, y: -13}
-      - {x: 20.999971, y: -12}
-      - {x: 20, y: -12.00003}
-      - {x: 20.000029, y: -13}
     - - {x: 7.9999704, y: -16}
       - {x: 7.9999704, y: -15}
       - {x: 6, y: -14.999971}
@@ -6587,7 +6575,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e8b037bb609b4e48bf0dd9aab71899e, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceGenerator
   playerController: {fileID: 4220411106964447491}
 --- !u!4 &1725904510741904752
@@ -6615,8 +6603,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_ComponentVersion: 2
   m_LightType: 4
   m_BlendStyleIndex: 0
@@ -6713,7 +6701,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
   m_Actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_NotificationBehavior: 2
@@ -6739,7 +6727,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument:
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
@@ -6759,7 +6747,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument:
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
@@ -6795,7 +6783,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument:
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 2af769e4-6c3b-47cb-9613-ae017e2f6edd
@@ -6851,7 +6839,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument:
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 668dfb31-6642-4898-9c58-e6ce7b55dff6
@@ -6867,11 +6855,19 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument:
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: c64ac1f7-ad65-4b58-ae7a-d07b4b9dea0e
     m_ActionName: 'Player/HotbarScroll[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2791fcd-75ac-424c-aec2-cfe9827b9f10
+    m_ActionName: 'Player/Interact[/Mouse/rightButton,/Keyboard/k]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eb68c28a-54a3-472a-afde-9e9f366762df
+    m_ActionName: 'Player/Escape[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -6952,12 +6948,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42362e8c5c6814c7ba0af8b448b29c76, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
   tileMapManager: {fileID: 7367874862585846642}
   characterModel: {fileID: 917483593}
   resourceInventoryUI: {fileID: 1447784746}
+  craftingTableUI: {fileID: 0}
 --- !u!1839735485 &4401200518655729685
 Tilemap:
   m_ObjectHideFlags: 0
@@ -12077,6 +12074,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 7, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 8
+      m_TileSpriteIndex: 8
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 8, y: 0, z: 0}
     second:
       serializedVersion: 2
@@ -12502,6 +12509,16 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 5
       m_TileSpriteIndex: 5
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -7, y: 2, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 8
+      m_TileSpriteIndex: 8
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -19175,6 +19192,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: b0a8ff7ca237d4bfea096752a8b3857a, type: 2}
   - m_RefCount: 114
     m_Data: {fileID: 11400000, guid: bfe5784f0f5f7418c9a9e1160d581e8f, type: 2}
+  - m_RefCount: 2
+    m_Data: {fileID: 11400000, guid: 1b4a24749d3044b19bb24be3c0ebfa4e, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 98
     m_Data: {fileID: -1205228681, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
@@ -19192,8 +19211,10 @@ Tilemap:
     m_Data: {fileID: -2042771439, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
   - m_RefCount: 114
     m_Data: {fileID: -236667059, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
+  - m_RefCount: 2
+    m_Data: {fileID: 1597303865, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 1219
+  - m_RefCount: 1221
     m_Data:
       e00: 1
       e01: 0
@@ -19212,7 +19233,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 1219
+  - m_RefCount: 1221
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -20394,7 +20415,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6e1c057507d34d299c265ecb99c6875, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraScript
   gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
   playerTransform: {fileID: 9033000692423820050}
@@ -20411,7 +20432,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e08e852084c146139d6c49fe7d5bb51, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldGeneration
   backgroundTilemap: {fileID: 227713742353278553}
   backgroundTile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
@@ -20434,6 +20455,7 @@ GameObject:
   - component: {fileID: 9033000692423820057}
   - component: {fileID: 9033000692423820056}
   - component: {fileID: 9033000692423820058}
+  - component: {fileID: 9033000692423820059}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -20525,7 +20547,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45abccff28c87422292cca39a0a89f28, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileMapManager
   wallTilemap: {fileID: 4401200518655729685}
   walkableTilemap: {fileID: 6010278485427196086}
@@ -20612,7 +20634,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.2D.PixelPerfect::UnityEngine.U2D.PixelPerfectCamera
   m_AssetsPPU: 128
   m_RefResolutionX: 640
@@ -20678,7 +20700,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cccf7ef4c992dec489d74228311a8e2a, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HotbarInput
   toolHotbar: {fileID: 957897782}
 --- !u!114 &9033000692423820054
@@ -20691,9 +20713,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4832e026b09389748bce07581d7a38b1, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceInventory
   capacity: 21
+  toolHotbar: {fileID: 0}
 --- !u!114 &9033000692423820056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20704,7 +20727,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce057be441e6d411db1d093fe160edbc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHandController
   toolHotbar: {fileID: 957897782}
   socketRightHand: {fileID: 203281914}
@@ -20755,13 +20778,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14d9924dc6eac4cc081bf07edf1a1971, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlockBreakingManager
   gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
   playerController: {fileID: 4220411106964447491}
   tileMapManager: {fileID: 7367874862585846642}
   toolHotbar: {fileID: 957897782}
   currentTool: {fileID: 0}
+--- !u!114 &9033000692423820059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6854287795457830472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89bfe4d3d3d934dc0924584ec736ef78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingInput
+  craftingTableBlockType: {fileID: 11400000, guid: 89f83da8992794179af136d4c2564c87, type: 2}
+  craftingTableUI: {fileID: 0}
+  playerInventory: {fileID: 9033000692423820054}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
