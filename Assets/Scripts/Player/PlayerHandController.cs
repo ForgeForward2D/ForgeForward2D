@@ -5,7 +5,7 @@ public class PlayerHandController : MonoBehaviour
     [SerializeField] private ToolHotbar toolHotbar;
     [SerializeField] private Transform socketRightHand;
 
-    private GameObject _currentHandItem;
+    private GameObject currentHandItem;
 
     private void OnEnable()
     {
@@ -27,10 +27,10 @@ public class PlayerHandController : MonoBehaviour
 
     private void UpdateHandItem()
     {
-        if (_currentHandItem != null)
+        if (currentHandItem != null)
         {
-            Destroy(_currentHandItem);
-            _currentHandItem = null;
+            Destroy(currentHandItem);
+            currentHandItem = null;
         }
 
         Tool selected = toolHotbar.GetSelectedTool();
@@ -38,9 +38,9 @@ public class PlayerHandController : MonoBehaviour
         if (selected == null || selected.Prefab == null)
             return;
 
-        _currentHandItem = Instantiate(selected.Prefab, socketRightHand);
-        _currentHandItem.transform.localPosition = Vector3.zero;
-        _currentHandItem.transform.localRotation = Quaternion.identity;
-        _currentHandItem.transform.localScale = Vector3.one;
+        currentHandItem = Instantiate(selected.Prefab, socketRightHand);
+        currentHandItem.transform.localPosition = Vector3.zero;
+        currentHandItem.transform.localRotation = Quaternion.identity;
+        currentHandItem.transform.localScale = Vector3.one;
     }
 }
