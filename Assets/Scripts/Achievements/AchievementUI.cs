@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class AchievementUI : MonoBehaviour
@@ -7,7 +8,12 @@ public class AchievementUI : MonoBehaviour
     [SerializeField] private AchievementSlotUI slotPrefab;
     [SerializeField] private Transform container;
 
+    [SerializeField] private ScrollRect scrollRect;
+    [SerializeField] private float scrollSpeed = 5f;
+
     private List<AchievementSlotUI> spawnedSlots = new List<AchievementSlotUI>();
+
+    private float currentScrollInput;
 
     private void OnEnable()
     {
@@ -18,6 +24,23 @@ public class AchievementUI : MonoBehaviour
     private void OnDisable()
     {
         AchievementManager.OnAchievementUnlocked -= HandleAchievementUnlocked;
+    }
+
+    private void Update()
+    {
+        if (!gameObject.activeSelf || scrollRect == null || currentScrollInput == 0)
+        {
+            return;
+        }
+
+        scrollRect.verticalNormalizedPosition = Mathf.Clamp01(
+            scrollRect.verticalNormalizedPosition + (currentScrollInput * scrollSpeed * Time.unscaledDeltaTime)
+        );
+    }
+
+    public void SetScrollInput(float value)
+    {
+        currentScrollInput = value;
     }
 
     private void HandleAchievementUnlocked(AchievementManager.Achievement ach)
@@ -36,7 +59,7 @@ public class AchievementUI : MonoBehaviour
         {
             if (index >= spawnedSlots.Count)
             {
-                AchievementSlotUI newSlot = Instantiate(slotPrefab, container);
+                AchievementSlotUI newSlot = Instantiate(slotPrefab, container, false);
                 spawnedSlots.Add(newSlot);
             }
 
@@ -56,8 +79,17 @@ public class AchievementUI : MonoBehaviour
     public void Toggle()
     {
         bool newState = !gameObject.activeSelf;
-
         gameObject.SetActive(newState);
+
+        if (newState && scrollRect != null)
+        {
+            scrollRect.verticalNormalizedPosition = 1f;
+        }
+
+        if (!newState)
+        {
+            currentScrollInput = 0;
+        }
 
         Time.timeScale = newState ? 0f : 1f;
     }

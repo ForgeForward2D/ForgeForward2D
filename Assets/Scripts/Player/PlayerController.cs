@@ -155,4 +155,13 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("AchievementUI reference is missing in Player!");
         }
     }
+
+    public void OnScrollAchievements(InputAction.CallbackContext context)
+    {
+        if (achievementUI != null && achievementUI.IsOpen)
+        {
+            float value = context.ReadValue<float>();
+            achievementUI.SetScrollInput(value);
+        }
+    }
 }

@@ -721,6 +721,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5525421268416640686, guid: 7c59cc021a90ae74793fafb00b62f2b3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5525421268416640686, guid: 7c59cc021a90ae74793fafb00b62f2b3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5525421268416640686, guid: 7c59cc021a90ae74793fafb00b62f2b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000061035156
+      objectReference: {fileID: 0}
+    - target: {fileID: 5525421268416640686, guid: 7c59cc021a90ae74793fafb00b62f2b3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0009765625
+      objectReference: {fileID: 0}
     - target: {fileID: 6506506133431037009, guid: 7c59cc021a90ae74793fafb00b62f2b3, type: 3}
       propertyPath: m_Name
       value: Achievements
@@ -7402,6 +7418,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e529b92f-71d1-4a81-bdce-0ba0f20c899d
     m_ActionName: 'Player/Achievements[/Keyboard/u]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4220411106964447491}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnScrollAchievements
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1e9ee1ee-a68c-4a37-a9f5-3cc1d12645ef
+    m_ActionName: 'Player/ScrollAchievements[/Keyboard/s,/Keyboard/w]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
