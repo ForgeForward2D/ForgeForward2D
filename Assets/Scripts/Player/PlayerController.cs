@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
         if (resourceInventoryUI != null)
         {
             resourceInventoryUI.Toggle();
-            myAnimator.SetBool("isMoving", false);
+            myAnimator.SetBool("isMoving", !resourceInventoryUI.IsOpen && moveInput.magnitude > 0.01f);
             Debug.Log("Resource Inventory toggled");
         }
         else
