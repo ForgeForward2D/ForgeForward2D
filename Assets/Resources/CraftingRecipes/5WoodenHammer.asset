@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 5
   ingredients:
   - Item: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
-    Count: 50
+    Count: 10
   result:
     Item: {fileID: 11400000, guid: fc5f72ce49d044f0aa93e706c7bbe6b4, type: 2}
     Count: 1

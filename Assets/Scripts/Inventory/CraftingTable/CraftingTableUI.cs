@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,25 +21,21 @@ public class CraftingTableUI : MonoBehaviour
         recipeEntries = new List<RecipeEntryUI>(GetComponentsInChildren<RecipeEntryUI>(true));
     }
 
-    public void SetActive() {
+    public void SetActive(bool active) {
         if (visualPanel == null) return;
-        visualPanel.SetActive(true);
-        RefreshUI();
-        Time.timeScale = 0f;
-    }
-
-    public void SetInactive() {
-        if (visualPanel == null) return;
-        visualPanel.SetActive(false);
-        Time.timeScale = 1f;
+        visualPanel.SetActive(active);
+        if (active) 
+            RefreshUI();
+        Time.timeScale = active ? 0f : 1f;
     }
 
     public void RefreshUI() {
         if (recipeEntries == null) return;
 
-        List<CraftingRecipe> availableRecipes = CraftingRecipeRepository.GetAllRecipes();
-
-        Debug.Log("Refresh CraftingTableUI: Found " + availableRecipes.Count + " recipes in repository for "+recipeEntries.Count+" slots.");
+        List<CraftingRecipe> availableRecipes = CraftingRecipeRepository.GetAllRecipes()
+            .Where(recipe => playerInventory.CountFreeSpace(recipe.result.Item) >= recipe.result.Count)
+            .ToList();
+        selectedRecipeIndex = selectedRecipeIndex > availableRecipes.Count - 1 ? 0 : selectedRecipeIndex;
 
         for (int i = 0; i < recipeEntries.Count; i++)
         {
@@ -57,8 +54,6 @@ public class CraftingTableUI : MonoBehaviour
 
     public void ScrollSelectedRecipe(int delta)
     {
-        Debug.Log("Scrolling selected recipe by " + delta);
-
         selectedRecipeIndex += delta;
         if (selectedRecipeIndex < 0)
             selectedRecipeIndex += CraftingRecipeRepository.GetAllRecipes().Count;
@@ -71,7 +66,7 @@ public class CraftingTableUI : MonoBehaviour
     {
         if (recipeEntries == null || recipeEntries.Count == 0)
             return null;
-        RecipeEntryUI entryUi = recipeEntries[selectedRecipeIndex % recipeEntries.Count];
+        RecipeEntryUI entryUi = recipeEntries[0].gameObject.activeSelf ? recipeEntries[0] : null;
         return entryUi != null ? entryUi.AssignedRecipe : null;
     }
 

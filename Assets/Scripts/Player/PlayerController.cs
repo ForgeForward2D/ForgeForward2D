@@ -124,6 +124,20 @@ public class PlayerController : MonoBehaviour
         OnInteraction?.Invoke((targetBlock, targetBlockPos));
     }
 
+    public void Escape(InputAction.CallbackContext context)
+    {
+        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
+        {
+            resourceInventoryUI.Toggle();
+        }
+
+        if (craftingTableUI != null && craftingTableUI.IsOpen)
+        {
+            craftingTableUI.SetActive(false);
+        }
+    }
+
+
     public void Inventory(InputAction.CallbackContext context)
     {
         if (context.phase != InputActionPhase.Performed) return;

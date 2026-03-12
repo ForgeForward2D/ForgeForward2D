@@ -125,6 +125,11 @@ public class ResourceInventory : ItemContainer
 
     public int CountFreeSpace(ItemType itemType)
     {
+        if (itemType == null) return 0;
+        if (itemType is Tool) {
+            return toolHotbar.CanAdd((Tool)itemType) ? 1 : 0;
+        }
+
         int freeSpace = 0;
         for (int i = 0; i < items.Length; i++)
         {
@@ -142,6 +147,10 @@ public class ResourceInventory : ItemContainer
 
     public int CountItem(ItemType itemType)
     {
+        if (itemType == null) return 0;
+        if (itemType is Tool) {
+            return toolHotbar.Contains((Tool)itemType) ? 1 : 0;
+        }
         int totalCount = 0;
         for (int i = 0; i < items.Length; i++)
         {

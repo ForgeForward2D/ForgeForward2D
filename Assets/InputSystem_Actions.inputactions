@@ -97,6 +97,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "eb68c28a-54a3-472a-afde-9e9f366762df",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "HotbarSelect",
                     "type": "Value",
                     "id": "668dfb31-6642-4898-9c58-e6ce7b55dff6",
@@ -509,6 +518,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a29d164-89d4-47c3-bbdb-b8bd471278af",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

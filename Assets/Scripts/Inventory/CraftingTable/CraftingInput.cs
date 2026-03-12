@@ -13,7 +13,6 @@ public class CraftingInput : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {   
-        //TODO: cap scroll speed
         if (!context.performed || craftingTableUI == null || !craftingTableUI.IsOpen)
             return;
         
@@ -32,44 +31,35 @@ public class CraftingInput : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
+        if (!context.performed || craftingTableUI == null || !craftingTableUI.IsOpen)
+            return;
         CraftingRecipe selectedRecipe = craftingTableUI.GetSelectedRecipe();
         if (selectedRecipe == null) return;
-        bool result = playerInventory.TryCraft(selectedRecipe);
-        if (result)
+       if(playerInventory.TryCraft(selectedRecipe))
         {
+            craftingTableUI.RefreshUI();
             Debug.Log("Crafting succeeded: " + selectedRecipe.result.Item.DisplayName);
         }
-        else
-        {
-            Debug.Log("Crafting failed: " + selectedRecipe.result.Item.DisplayName);
-        }
-
-
-        craftingTableUI.RefreshUI();
     }
 
-    void Awake() {
-        Debug.Log("Registering CraftingInput to PlayerController.OnInteraction");
+    private void Awake() {
         PlayerController.OnInteraction += Interact;
     }
 
     public void Interact((BlockType, Vector2Int) interactionInfo)
     {
-        Debug.Log("CraftingInput received interaction event with block type: " + interactionInfo.Item1 + " at position: " + interactionInfo.Item2);
         BlockType blockType = interactionInfo.Item1;
         Vector2Int position = interactionInfo.Item2;
     
         if (craftingTableUI == null) return;
 
         if (craftingTableUI.IsOpen) {
-            craftingTableUI.SetInactive();
+            craftingTableUI.SetActive(false);
             return;
         }
 
         if (blockType != craftingTableBlockType) return;
 
-        Debug.Log("Interacted with crafting table at position: " + position);
-        craftingTableUI.SetActive();
+        craftingTableUI.SetActive(true);
     }
 }

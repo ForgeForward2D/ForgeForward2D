@@ -16,7 +16,6 @@ public class RecipeEntryUI : MonoBehaviour
         ingredientSlots = new List<InventorySlotUI>(GetComponentsInChildren<InventorySlotUI>(true));
         resultSlot = ingredientSlots[ingredientSlots.Count - 1];
         ingredientSlots.RemoveAt(ingredientSlots.Count - 1);
-        Debug.Log("RecipeEntryUI OnEnable: Found " + ingredientSlots.Count + " ingredient slots and 1 result slot ("+(resultSlot==null)+").");
     }
 
     public void Refresh(CraftingRecipe recipe, ResourceInventory playerInventory)
