@@ -33,12 +33,12 @@ public class PlayerHandController : MonoBehaviour
             _currentHandItem = null;
         }
 
-        InventoryItem selected = toolHotbar.GetSelectedTool();
+        Tool selected = toolHotbar.GetSelectedTool();
 
-        if (selected == null || selected.Item == null || selected.Item.Prefab == null)
+        if (selected == null || selected.Prefab == null)
             return;
 
-        _currentHandItem = Instantiate(selected.Item.Prefab, socketRightHand);
+        _currentHandItem = Instantiate(selected.Prefab, socketRightHand);
         _currentHandItem.transform.localPosition = Vector3.zero;
         _currentHandItem.transform.localRotation = Quaternion.identity;
         _currentHandItem.transform.localScale = Vector3.one;
