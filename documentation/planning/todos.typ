@@ -47,6 +47,9 @@
   - add second layer
   - design starter level: starter house with crafting table, anvil, starter treasure; some resources on the map; portals to the other worlds
   - level/world switching logic
+- modular 3D tool presets (change blade based on material)
+- think of storyline and progression system #math.arrow create a plan (figma/excalidraw)
+- generate/redesign the world based on the plan (2.5D)
 
 #pagebreak(weak: true)
 = Next Steps
