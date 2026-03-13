@@ -21,10 +21,10 @@ public class ResourceGenerator : MonoBehaviour
         BlockBreakingManager.OnBlockBroken -= HandleBlockBroken;
     }
 
-    private void HandleBlockBroken((BlockType, Vector2Int) brokenBlockInfo)
+    private void HandleBlockBroken((BlockType blockType, Vector2Int position) brokenBlockInfo)
     {
-        BlockType block = brokenBlockInfo.Item1;
-        Vector2Int position = brokenBlockInfo.Item2;
+        BlockType block = brokenBlockInfo.blockType;
+        Vector2Int position = brokenBlockInfo.position;
 
         // Check if the broken block is regeneratable
         if (block.respawnRate > 0)

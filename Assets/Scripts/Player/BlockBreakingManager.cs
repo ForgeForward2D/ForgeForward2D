@@ -48,12 +48,12 @@ public class BlockBreakingManager : MonoBehaviour
         currentTool = toolHotbar.GetSelectedTool();
     }
 
-    private void HandleBlockChanged((BlockType, Vector2Int) blockInfo)
+    private void HandleBlockChanged((BlockType blockType, Vector2Int position) blockInfo)
     {
         // If the block that changed is the one we're currently breaking, update our reference
-        if (blockInfo.Item2 == currentTargetPos)
+        if (blockInfo.position == currentTargetPos)
         {
-            currentTargetBlock = blockInfo.Item1;
+            currentTargetBlock = blockInfo.blockType;
         }
     }
 
@@ -83,7 +83,7 @@ public class BlockBreakingManager : MonoBehaviour
         playerController.SetBreakingAnimation(true);
 
 
-        // Progress formula: 
+        // Progress formula:
         float deltaProgress = Time.deltaTime * gameConfig.player_breaking_speed * efficiency / currentTargetBlock.hardness;
         breakProgress += deltaProgress;
 
@@ -96,7 +96,7 @@ public class BlockBreakingManager : MonoBehaviour
         int previousStage = Mathf.CeilToInt((breakProgress - deltaProgress) * 10f);
         int stage = Mathf.CeilToInt(breakProgress * 10f);
 
-        float timeSinceLastUpdate = (float)(DateTime.Now - lastProgressUpdateTime).TotalSeconds;        
+        float timeSinceLastUpdate = (float)(DateTime.Now - lastProgressUpdateTime).TotalSeconds;
 
         if (stage != previousStage && timeSinceLastUpdate >= gameConfig.block_breaking_animation_min_update_interval) {
 
