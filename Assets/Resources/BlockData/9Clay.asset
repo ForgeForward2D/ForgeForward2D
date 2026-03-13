@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
   m_Name: 9Clay
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
-  id: 8
+  id: 9
   displayName: Treasure
   tile: {fileID: 11400000, guid: bfe5784f0f5f7418c9a9e1160d581e8f, type: 2}
   walkable: 0

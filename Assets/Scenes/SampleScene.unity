@@ -21575,6 +21575,12 @@ MonoBehaviour:
   backgroundTile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
   wallTilemap: {fileID: 4401200518655729685}
   wallTile: {fileID: 11400000, guid: ee7d1a0ea644b470b89a16b08493263a, type: 2}
+  walkableTilemap: {fileID: 6010278485427196086}
+  noiseScale: 0.1
+  woodChance: 0.08
+  saplingChance: 0.05
+  bigTreeChance: 0.02
+  worldSeed: 235354165
 --- !u!1 &6854287795457830472
 GameObject:
   m_ObjectHideFlags: 0

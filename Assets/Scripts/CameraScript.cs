@@ -36,16 +36,17 @@ public class CameraScript : MonoBehaviour
 
     void UpdateCameraPosition()
     {
+        mapBounds = tileMapManager.GetBounds();
         float halfHeight = camera_height / 2f;
         float halfWidth = camera_height * gameConfig.camera_aspect / 2f;
 
         float x = playerTransform.position.x;
-        x = Mathf.Min(x, mapBounds.xMax - halfWidth);
-        x = Mathf.Max(x, mapBounds.xMin + halfWidth);
+        x = Mathf.Min(x, mapBounds.xMax - 1 - halfWidth);
+        x = Mathf.Max(x, mapBounds.xMin + 1 + halfWidth);
 
         float y = playerTransform.position.y;
-        y = Mathf.Min(y, mapBounds.yMax - halfHeight);
-        y = Mathf.Max(y, mapBounds.yMin + halfHeight);
+        y = Mathf.Min(y, mapBounds.yMax - 1 - halfHeight);
+        y = Mathf.Max(y, mapBounds.yMin + 1 + halfHeight);
 
         float ppu = pixelPerfectCamera.assetsPPU;
         x = Mathf.Round(x * (float)ppu) / (float)ppu;
