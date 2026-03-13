@@ -37,11 +37,7 @@ public class AchievementManager : MonoBehaviour
 
         if (achievements != null)
         {
-            AchievementDataWrapper wrapper = JsonUtility.FromJson<AchievementDataWrapper>(template.text);
-            if (wrapper?.achievements != null)
-            {
-                achievementOrderedList = wrapper.achievements;
-            }
+            achievementList = new List<Achievement>(achievements);
         }
         else
         {
