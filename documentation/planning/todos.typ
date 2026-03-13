@@ -38,6 +38,7 @@
 // - adapt walk-animation speed to walk speed todo
 - refactor Tim
 - treasures hidden in Lehm blocks Leon
+- small icon on how to interact with the targeted block Nils
 - levels: Leon + Sinan
   - write world creation logic for forest, mine, ...
   - add second layer
