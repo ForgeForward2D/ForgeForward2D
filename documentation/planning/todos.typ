@@ -35,21 +35,19 @@
   )[TODOs unitl Friday, 20.03.]
 }
 - write blog article Leon
-- adapt walk-animation speed to walk speed todo
-- add tool animation (as alternative to attack) Sinan
-- add `crafting table` and `anvil` as interactable blocks with crafting logic:\ crafting recipes as JSON or similar Tim
-- add mobs (that only run around for now) todo
-- add achievements (only the screen and a json/... template for achievements) Nils
-- add achievements logic Nils
-- add logic for limited vision todo
-- levels:
+// - adapt walk-animation speed to walk speed todo
+- refactor Tim
+- treasures hidden in Lehm blocks Leon
+- levels: Leon + Sinan
   - write world creation logic for forest, mine, ...
   - add second layer
-  - design starter level: starter house with crafting table, anvil, starter treasure; some resources on the map; portals to the other worlds
-  - level/world switching logic
-- modular 3D tool presets (change blade based on material)
-- think of storyline and progression system #math.arrow create a plan (figma/excalidraw)
-- generate/redesign the world based on the plan (2.5D)
+  - design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds
+  - level/world switching logic, door/portal etc.
+  - limited vision
+- think of storyline and progression system #math.arrow create a plan (figma/excalidraw) Leon + Sinan
+- add mobs (that only run around for now) Nils
+- #optional[tool animations Sinan]
+- #optional[modular 3D tool presets (change blade based on material)]
 
 #pagebreak(weak: true)
 = Next Steps
@@ -59,18 +57,18 @@
     size: text.size * 80%,
   )[TODOs unitl Friday, 13.03.]
 }
-- write blog article Leon
+- #strike[write blog article Leon]
 - #strike[add hotbar Nils]
 - #strike[add tools Tim]
 - add tool animation (as alternative to attack) Sinan
 - #strike[add tool logic (block has _tool_ and _hardness_ attribute #math.arrow calculate mineability and speed) Tim]
-- add `crafting table` and `anvil` as interactable blocks with crafting logic:\ crafting recipes as JSON or similar Tim
+- #strike[add `crafting table` and `anvil` as interactable blocks with crafting logic:\ crafting recipes as JSON or similar Tim]
 - #optional[add mobs (that only run around for now)]
 - #strike[add loot-tables for blocks Leon]
 - #strike[add treasures Leon]
-- add more materials Leon
-- add achievements (only the screen and a json/... template for achievements) Nils
-- add achievements logic Nils
+- #strike[add more materials Leon]
+- #strike[add achievements (only the screen and a json/... template for achievements) Nils]
+- #strike[add achievements logic Nils]
 - #optional[implement level creation-logic Sinan]
 - #optional[Add background music]
 - #optional[Add sound effects for block break etc.]
