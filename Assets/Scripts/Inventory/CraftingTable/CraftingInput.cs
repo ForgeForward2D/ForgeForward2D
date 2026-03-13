@@ -19,11 +19,11 @@ public class CraftingInput : MonoBehaviour
         
         Vector2 input = context.ReadValue<Vector2>();
 
-        if (input.y > 0.5f)
+        if (input.y > 0f)
         {
             craftingTableUI.ScrollSelectedRecipe(-1);
         }
-        else if (input.y < -0.5f)
+        else if (input.y < 0f)
         {
             craftingTableUI.ScrollSelectedRecipe(1);
         }
