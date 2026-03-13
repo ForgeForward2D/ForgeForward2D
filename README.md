@@ -1,2 +1,2 @@
 # Todos for the next week
-![todos](planning_documents/current_todos.svg)
+![todos](documentation/planning/current_todos.svg)
