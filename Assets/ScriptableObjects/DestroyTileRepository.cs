@@ -24,7 +24,7 @@ public static class DestroyTileRepository
 
         if (stage < 0 || stage > destroyTiles.Count)
         {
-            Debug.LogWarning("Invalid destroy tile stage: " + stage);
+            Debug.LogError("Invalid destroy tile stage: " + stage);
             return null;
         }
         return destroyTiles[stage - 1]; // stage is 1-indexed for the caller, but list is 0-indexed

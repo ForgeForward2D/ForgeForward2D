@@ -2,7 +2,6 @@ using System;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,9 +18,10 @@ public class PlayerController : MonoBehaviour
     private Transform playerTransform;
     private Rigidbody2D rb;
     private Animator myAnimator;
-    private SpriteRenderer mySpriteRenderer;
+    public Transform characterModel;
 
     [SerializeField] private ResourceInventoryUI resourceInventoryUI;
+    [SerializeField] private CraftingTableUI craftingTableUI;
 
     public bool IsHoldingAttack { get; private set; }
 
@@ -29,8 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         playerTransform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
-        myAnimator = GetComponent<Animator>();
-        mySpriteRenderer = GetComponent<SpriteRenderer>();
+        myAnimator = GetComponentInChildren<Animator>();
     }
 
     public void FixedUpdate()
@@ -42,22 +41,16 @@ public class PlayerController : MonoBehaviour
         float absX = Mathf.Abs(moveInput.x);
         float absY = Mathf.Abs(moveInput.y);
 
-        // Update sprite flip whenever there's horizontal input
-        if (moveInput.x != 0)
-        {
-            mySpriteRenderer.flipX = moveInput.x > 0;
-        }
-
-        // Determine movement direction based on dominant axis
         if (absX > absY)
         {
             moveDirection = moveInput.x > 0 ? Vector2Int.right : Vector2Int.left;
+            characterModel.localRotation = Quaternion.Euler(0f, moveInput.x > 0 ? -90f : 90f, 0f);
         }
         else if (absY > 0)
         {
             moveDirection = moveInput.y > 0 ? Vector2Int.up : Vector2Int.down;
+            characterModel.localRotation = Quaternion.Euler(0f, moveInput.y < 0 ? 0f : 180f, 0f);
         }
-
     }
 
     public Vector3 GetPosition()
@@ -93,7 +86,7 @@ public class PlayerController : MonoBehaviour
     public void Attack(InputAction.CallbackContext context)
     {
 
-        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
+        if ((resourceInventoryUI != null && resourceInventoryUI.IsOpen) || (craftingTableUI != null && craftingTableUI.IsOpen))
         {
             IsHoldingAttack = false;
             return;
@@ -113,18 +106,57 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Inventory(InputAction.CallbackContext context)
+    public static event Action<(BlockType, Vector2Int)> OnInteraction;
+
+    public void Interact(InputAction.CallbackContext context)
+    {
+        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
+        {
+            return;
+        }
+
+        if (context.phase != InputActionPhase.Performed) return;
+
+        Vector2Int targetBlockPos = GetTargettingBlock();
+        BlockType targetBlock = tileMapManager.GetBlockTypeAtPosition(targetBlockPos);
+        OnInteraction?.Invoke((targetBlock, targetBlockPos));
+    }
+
+    public void Escape(InputAction.CallbackContext context)
     {
         if (context.phase != InputActionPhase.Performed) return;
 
         if (resourceInventoryUI != null)
         {
-            resourceInventoryUI.Toggle();
+            resourceInventoryUI.SetActive(false);
+        }
+
+        if (craftingTableUI != null)
+        {
+            craftingTableUI.SetActive(false);
+        }
+    }
+
+
+    public void Inventory(InputAction.CallbackContext context)
+    {
+        if (context.phase != InputActionPhase.Performed) return;
+
+        if (craftingTableUI != null && craftingTableUI.IsOpen)
+         {
+             return;
+         }
+
+        if (resourceInventoryUI != null)
+        {
+            resourceInventoryUI.SetActive(!resourceInventoryUI.IsOpen);
+            myAnimator.SetBool("isMoving", !resourceInventoryUI.IsOpen && moveInput.magnitude > 0.01f);
             Debug.Log("Resource Inventory toggled");
         }
         else
         {
             Debug.LogWarning("ResourceInventoryUI reference is missing in Player!");
         }
+
     }
 }

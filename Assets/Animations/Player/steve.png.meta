@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 871b2870eee49488d9d0e76031bb2127
+guid: 4956826d714ad4983b5f3b6d11ec2476
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5883783581652324808
-    second: spritesheet_characters_0
+      213: 8418792827717123542
+    second: steve_0
+  - first:
+      213: -4378399266540917504
+    second: steve_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -55,9 +58,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -75,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spritesheet_characters_0
+      name: steve_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 306
-        height: 305
+        y: 31
+        width: 64
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +131,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8c199af6ef567a150800000000000000
-      internalID: 5883783581652324808
+      spriteID: 6dd7fadd87f85d470800000000000000
+      internalID: 8418792827717123542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: steve_1
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 0
+        width: 43
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00d6ff8901dcc33c0800000000000000
+      internalID: -4378399266540917504
       vertices: []
       indices: 
       edges: []
@@ -148,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      spritesheet_characters_0: 5883783581652324808
+      steve_0: 8418792827717123542
+      steve_1: -4378399266540917504
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

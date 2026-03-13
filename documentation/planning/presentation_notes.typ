@@ -11,6 +11,28 @@
   ), column-gutter: 1em, row-gutter: 0.5em, ..elements)
 #set heading(numbering: "1.1")
 
+#date[13.03.2026: Unity & Software Architecture]
+- ForgeForward2D: The game for endless mining, collecting, and exploring
+
+= Demo
+- #action[show game]
+- treasures
+- loot tables
+- #action[explain new animation]
+- next week: 3D tools
+- hardness and tool on every block, some blocks require special tool level
+- ??? crafting ??? // TODO
+- #action[show inventory]
+
+#pagebreak(weak: true)
+= Architecture
+- #action[show architecture diagram and explain]
+
+== Biggest Problems
+- Merge conflicts in `Scene.unity` file
+
+#pagebreak()
+
 #date[06.03.2026: MVP]
 - ForgeForward2D: The game for endless mining, collecting, and exploring
 = Demo
