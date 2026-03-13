@@ -92,7 +92,7 @@ public class ResourceInventory : ItemContainer
 
         if (itemType is Tool tool)
         {
-            Debug.LogError("Attempting to remove a tool " + tool.displayName + " but this should not happen");
+            Debug.LogError($"Attempting to remove a tool {tool.displayName} but this should not happen");
             return false;
         }
 
@@ -130,13 +130,13 @@ public class ResourceInventory : ItemContainer
         // Checks if any ingredient has more required (Item2) than available (Item3)
         if (ComputeAvailability(recipe).Exists(x => x.Item3 < x.Item2))
         {
-            Debug.Log("Cannot craft " + recipe.result.itemType.displayName + ": not enough ingredients.");
+            Debug.Log($"Cannot craft {recipe.result.itemType.displayName}: not enough ingredients.");
             return false;
         }
         // Check if there is not enough free space for the result item.
         if (CountFreeSpace(recipe.result.itemType) < recipe.result.count)
         {
-            Debug.Log("Cannot craft " + recipe.result.itemType.displayName + ": not enough inventory space.");
+            Debug.Log($"Cannot craft {recipe.result.itemType.displayName}: not enough inventory space.");
             return false;
         }
 

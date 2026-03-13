@@ -67,7 +67,7 @@ public class ToolHotbar : ItemContainer
         };
         if (index < 0 || index >= items.Length)
         {
-            Debug.LogWarning("Unsupported tool type " + tool.type.ToString() + " cannot be added to ToolHotbar.");
+            Debug.LogWarning($"Unsupported tool type {tool.type} cannot be added to ToolHotbar.");
             return false;
         }
         if (items[index] == null)
@@ -82,7 +82,7 @@ public class ToolHotbar : ItemContainer
             NotifyContentsChanged();
             return true;
         }
-        Debug.LogWarning("Slot "+index+" in ToolHotbar is already occupied by a tool of equal or higher tier. Cannot add tool "+tool.displayName+".");
+        Debug.LogWarning($"Slot {index} in ToolHotbar is already occupied by a tool of equal or higher tier. Cannot add tool {tool.displayName}.");
         return false;
     }
     public bool Contains(Tool tool)
@@ -112,7 +112,7 @@ public class ToolHotbar : ItemContainer
         };
         if (index < 0 || index >= items.Length)
         {
-            Debug.LogWarning("Unsupported tool type " + tool.type.ToString() + " cannot be added to ToolHotbar.");
+            Debug.LogWarning($"Unsupported tool type {tool.type} cannot be added to ToolHotbar.");
             return false;
         }
         if (items[index] == null)

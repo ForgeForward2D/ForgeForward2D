@@ -69,7 +69,7 @@ public class TileMapManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("No block found for wall tile at " + position);
+                Debug.Log($"No block found for wall tile at {position}");
             }
         }
         TileBase walkableTile = walkableTilemap.GetTile(tilePosition);
@@ -83,7 +83,7 @@ public class TileMapManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("No block found for walkable tile at " + position);
+                Debug.Log($"No block found for walkable tile at {position}");
             }
         }
         return null;

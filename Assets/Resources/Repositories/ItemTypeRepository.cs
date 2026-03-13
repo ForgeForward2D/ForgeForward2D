@@ -30,7 +30,7 @@ public static class ItemTypeRepository
 
         int totalItems = itemTypes.Length + toolTypes.Length;
 
-        Debug.Log("Initialized ItemTypeRepository with " + totalItems + " items (" + itemTypes.Length + " items, " + toolTypes.Length + " tools).");
+        Debug.Log($"Initialized ItemTypeRepository with {totalItems} items ({itemTypes.Length} items, {toolTypes.Length} tools).");
     }
     
     public static ItemType GetItemByName(string name)

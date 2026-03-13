@@ -26,7 +26,7 @@ public static class BlockTypeRepository
             }
         }
 
-        Debug.Log("Initialized BlockTypeRepository with " + BlockTypes.Length + " blocks.");
+        Debug.Log($"Initialized BlockTypeRepository with {BlockTypes.Length} blocks.");
     }
 
     public static BlockType GetBlockByName(string name)

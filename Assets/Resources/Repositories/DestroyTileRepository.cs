@@ -12,7 +12,7 @@ public static class DestroyTileRepository
     private static void Initialize()
     {
         destroyTiles = Resources.LoadAll<TileBase>("DestroyAnimation").ToList();
-        Debug.Log("Initialized DestroyTileRepository with " + destroyTiles.Count + " destroy animation tiles.");
+        Debug.Log($"Initialized DestroyTileRepository with {destroyTiles.Count} destroy animation tiles.");
     }
 
     public static TileBase GetDestroyTile(int stage)
@@ -25,7 +25,7 @@ public static class DestroyTileRepository
 
         if (stage < 0 || stage > destroyTiles.Count)
         {
-            Debug.LogError("Invalid destroy tile stage: " + stage);
+            Debug.LogError($"Invalid destroy tile stage: {stage}");
             return null;
         }
         return destroyTiles[stage - 1]; // stage is 1-indexed for the caller, but list is 0-indexed

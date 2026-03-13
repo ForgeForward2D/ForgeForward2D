@@ -40,7 +40,7 @@ public class ResourceGenerator : MonoBehaviour
             Debug.LogError("BlockType is null. Cannot regenerate resource.");
             yield break;
         }
-        Debug.Log("Started regeneration process for " + block.displayName + " at " + position + " with respawn rate of " + block.respawnRate + " seconds.");
+        Debug.Log($"Started regeneration process for {block.displayName} at {position} with respawn rate of {block.respawnRate} seconds.");
         while (true)
         {
             yield return new WaitForSeconds(block.respawnRate);
@@ -57,17 +57,17 @@ public class ResourceGenerator : MonoBehaviour
                 if (cellPosition != playerCellPosition)
                 {
                     tileMapManager.DrawBlock(block, cellPosition);
-                    Debug.Log("Generated " + block.displayName + " at " + cellPosition + " after delay of " + block.respawnRate + " seconds.");
+                    Debug.Log($"Generated {block.displayName} at {cellPosition} after delay of {block.respawnRate} seconds.");
                     break;
                 }
                 else
                 {
-                    Debug.Log("Skipping regeneration of " + block.displayName + " at " + cellPosition + " because player is too close (distance: " + Vector2Int.Distance(cellPosition, playerCellPosition) + ").");
+                    Debug.Log($"Skipping regeneration of {block.displayName} at {cellPosition} because player is too close (distance: {Vector2Int.Distance(cellPosition, playerCellPosition)}).");
                 }
             }
             else
             {
-                Debug.Log("Skipping regeneration of " + block.displayName + " at " + cellPosition + " because block at cell position (" + currentBlock.displayName + ") does not equal the replacement block (" + block.replacementBlock.displayName + ").");
+                Debug.Log($"Skipping regeneration of {block.displayName} at {cellPosition} because block at cell position ({currentBlock.displayName}) does not equal the replacement block ({block.replacementBlock.displayName}).");
                 break;
             }
         }
