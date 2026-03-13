@@ -21,11 +21,6 @@ public static class CraftingRecipeRepository
             idLookup[recipe.id] = recipe;
             if (recipe.result != null)
             {
-                if (recipe.result.Item == null)
-                {
-                    Debug.LogWarning($"CraftingRecipe {recipe.name} has a null result item.");
-                    continue;
-                }
                 if (!resultLookup.ContainsKey(recipe.result.Item))
                 {
                     resultLookup[recipe.result.Item] = new List<CraftingRecipe>();

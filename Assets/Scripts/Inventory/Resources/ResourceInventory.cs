@@ -36,18 +36,12 @@ public class ResourceInventory : ItemContainer
         if (itemType == null) return false;
 
         if (itemType is Tool tool) {
-            Debug.Assert(amount==1, $"Attempted to add multiple ({amount}) of tool {tool.DisplayName} (ID: {tool.Id}) to ResourceInventory. Only one can be added at a time.");
+            Debug.Assert(amount==1, $"Attempted to {amount} tools {tool.DisplayName} (ID: {tool.Id}) to ResourceInventory. Only one can be added at a time.");
             if (toolHotbar == null) {
                 Debug.LogError($"ToolHotbar reference is missing in ResourceInventory.");
                 return false;
             }
             return toolHotbar.TryAddTool(tool);
-        }
-        
-        if (CountFreeSpace(itemType) < amount)
-        {
-            Debug.LogWarning($"Not enough space to add {amount} of {itemType.DisplayName} (ID: {itemType.Id}) to ResourceInventory.");
-            return false;
         }
 
         int remaining = amount;
@@ -57,14 +51,14 @@ public class ResourceInventory : ItemContainer
             {
                 int space = items[i].Item.MaxStackSize - items[i].Count;
 
-                remaining -= space;
-                if (remaining <= 0) {
-                    items[i].Count += space + remaining;
+                if (remaining <= space) {
+                    items[i].Count += remaining;
                     NotifyContentsChanged();
                     return true; 
                 }
-    
+
                 items[i].Count = items[i].Item.MaxStackSize;
+                remaining -= space;
             }
         }
 
@@ -81,7 +75,7 @@ public class ResourceInventory : ItemContainer
                 items[i] = new InventoryItem(itemType, itemType.MaxStackSize);
             }
         }
-        Debug.LogError($"Failed to add {amount} of {itemType.DisplayName} (ID: {itemType.Id}) to ResourceInventory. This should not happen since free space was checked.");
+        Debug.Log($"Failed to add {amount} of {itemType.DisplayName} (ID: {itemType.Id}) to ResourceInventory. Not enough space.");
         return false;
     }
 
@@ -121,11 +115,13 @@ public class ResourceInventory : ItemContainer
     }
 
     public bool TryCraft(CraftingRecipe recipe)
-    {
+    {   
+        // Checks if any ingredient has more required (Item2) than available (Item3)
         if (ComputeAvailability(recipe).Exists(x => x.Item3 < x.Item2)) {
             Debug.Log("Cannot craft " + recipe.result.Item.DisplayName + ": not enough ingredients.");
             return false;
         }
+        // Check if there is not enough free space for the result item.
         if (CountFreeSpace(recipe.result.Item) < recipe.result.Count) {
             Debug.Log("Cannot craft " + recipe.result.Item.DisplayName + ": not enough inventory space.");
             return false;

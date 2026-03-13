@@ -126,12 +126,12 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase != InputActionPhase.Performed) return;
 
-        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
+        if (resourceInventoryUI != null)
         {
-            resourceInventoryUI.Toggle();
+            resourceInventoryUI.SetActive(false);
         }
 
-        if (craftingTableUI != null && craftingTableUI.IsOpen)
+        if (craftingTableUI != null)
         {
             craftingTableUI.SetActive(false);
         }
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
         if (resourceInventoryUI != null)
         {
-            resourceInventoryUI.Toggle();
+            resourceInventoryUI.SetActive(!resourceInventoryUI.IsOpen);
             myAnimator.SetBool("isMoving", !resourceInventoryUI.IsOpen && moveInput.magnitude > 0.01f);
             Debug.Log("Resource Inventory toggled");
         }

@@ -6,15 +6,15 @@ public class ResourceInventoryUI : ContainerUI
 
     public bool IsOpen => visualPanel != null && visualPanel.activeSelf;
 
-    public void Toggle()
+    public void SetActive(bool active)
     {
         if (visualPanel == null) return;
+        if (active == visualPanel.activeSelf) return;
 
-        bool newState = !visualPanel.activeSelf;
-        visualPanel.SetActive(newState);
+        visualPanel.SetActive(active);
 
-        if (newState) RefreshUI();
+        if (active) RefreshUI();
 
-        Time.timeScale = newState ? 0f : 1f;
+        Time.timeScale = active ? 0f : 1f;
     }
 }

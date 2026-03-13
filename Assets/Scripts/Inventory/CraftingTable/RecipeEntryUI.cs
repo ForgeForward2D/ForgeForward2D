@@ -21,7 +21,7 @@ public class RecipeEntryUI : MonoBehaviour
     public void Refresh(CraftingRecipe recipe, ResourceInventory playerInventory)
     {
         AssignedRecipe = recipe;
-        List<(ItemType, int, int)> availability = playerInventory.ComputeAvailability(recipe);
+        List<(ItemType ingredient, int requiredCount, int availableCount)> availability = playerInventory.ComputeAvailability(recipe);
 
         resultSlot.UpdateSlot(recipe.result);
 
@@ -30,9 +30,9 @@ public class RecipeEntryUI : MonoBehaviour
             if (i < recipe.ingredients.Count)
             {
                 var slotAvailability = availability[i];
-                ItemType ingredient = slotAvailability.Item1;
-                int requiredCount = slotAvailability.Item2;
-                int availableCount = slotAvailability.Item3;
+                ItemType ingredient = slotAvailability.ingredient;
+                int requiredCount = slotAvailability.requiredCount;
+                int availableCount = slotAvailability.availableCount;
                 ingredientSlots[i].UpdateSlotWithString(ingredient, $"{availableCount}/{requiredCount}");
             }
             else

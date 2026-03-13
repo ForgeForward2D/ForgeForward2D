@@ -48,12 +48,12 @@ public class BlockBreakingManager : MonoBehaviour
         currentTool = toolHotbar.GetSelectedTool();
     }
 
-    private void HandleBlockChanged((BlockType, Vector2Int) blockInfo)
+    private void HandleBlockChanged((BlockType blockType, Vector2Int position) blockInfo)
     {
         // If the block that changed is the one we're currently breaking, update our reference
-        if (blockInfo.Item2 == currentTargetPos)
+        if (blockInfo.position == currentTargetPos)
         {
-            currentTargetBlock = blockInfo.Item1;
+            currentTargetBlock = blockInfo.blockType;
         }
     }
 

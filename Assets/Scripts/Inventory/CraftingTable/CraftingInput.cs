@@ -11,6 +11,7 @@ public class CraftingInput : MonoBehaviour
     [SerializeField] private CraftingTableUI craftingTableUI;
     [SerializeField] private ResourceInventory playerInventory;
 
+    // The move input is repurposed for recipe selection when the crafting table UI is open
     public void Move(InputAction.CallbackContext context)
     {   
         if (!context.performed || craftingTableUI == null || !craftingTableUI.IsOpen)
@@ -29,13 +30,14 @@ public class CraftingInput : MonoBehaviour
 
     }
 
+    // The attack input is repurposed for crafting confirmation when the crafting table UI is open
     public void Attack(InputAction.CallbackContext context)
     {
         if (!context.performed || craftingTableUI == null || !craftingTableUI.IsOpen)
             return;
         CraftingRecipe selectedRecipe = craftingTableUI.GetSelectedRecipe();
         if (selectedRecipe == null) return;
-       if(playerInventory.TryCraft(selectedRecipe))
+        if(playerInventory.TryCraft(selectedRecipe))
         {
             craftingTableUI.RefreshUI();
             Debug.Log("Crafting succeeded: " + selectedRecipe.result.Item.DisplayName);
@@ -50,11 +52,9 @@ public class CraftingInput : MonoBehaviour
         PlayerController.OnInteraction -= Interact;
     }
 
-    public void Interact((BlockType, Vector2Int) interactionInfo)
+    public void Interact((BlockType blockType, Vector2Int position) interactionInfo)
     {
-        BlockType blockType = interactionInfo.Item1;
-        Vector2Int position = interactionInfo.Item2;
-    
+        var (blockType, position) = interactionInfo;
         if (craftingTableUI == null) return;
 
         if (craftingTableUI.IsOpen) {

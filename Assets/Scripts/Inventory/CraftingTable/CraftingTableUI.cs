@@ -24,6 +24,8 @@ public class CraftingTableUI : MonoBehaviour
 
     public void SetActive(bool active) {
         if (visualPanel == null) return;
+        if (active == visualPanel.activeSelf) return;
+
         visualPanel.SetActive(active);
         if (active) 
             RefreshUI();
@@ -43,8 +45,8 @@ public class CraftingTableUI : MonoBehaviour
             if (i < availableRecipes.Count)
             {
                 CraftingRecipe recipe = availableRecipes[(selectedRecipeIndex + i) % availableRecipes.Count];
-                recipeEntries[i].Refresh(recipe, playerInventory);
                 recipeEntries[i].SetActive(true);
+                recipeEntries[i].Refresh(recipe, playerInventory);
             }
             else
             {
@@ -56,10 +58,12 @@ public class CraftingTableUI : MonoBehaviour
     public void ScrollSelectedRecipe(int delta)
     {
         selectedRecipeIndex += delta;
-        if (selectedRecipeIndex < 0)
-            selectedRecipeIndex += availableRecipes.Count;
-        if (selectedRecipeIndex >= availableRecipes.Count)
-            selectedRecipeIndex -= availableRecipes.Count;
+
+        // Wrap around the recipe index using c# remainder operator (there is no built in modulo operator)
+        selectedRecipeIndex %= availableRecipes.Count;
+        selectedRecipeIndex += availableRecipes.Count;
+        selectedRecipeIndex %= availableRecipes.Count; 
+
         RefreshUI();
     }
 

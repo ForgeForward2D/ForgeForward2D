@@ -62,6 +62,8 @@ public class ToolHotbar : ItemContainer
 
     public bool TryAddTool(Tool tool)
     {
+        if (tool == null) return false;
+
         int index =  tool.type switch
         {
             ToolType.Sword => 0,
@@ -93,6 +95,7 @@ public class ToolHotbar : ItemContainer
     }
     public bool Contains(Tool tool)
     {
+        if (tool == null) return false;
         foreach (var item in items)
         {
             if (item != null && item.Item.Id == tool.Id)
@@ -105,6 +108,7 @@ public class ToolHotbar : ItemContainer
 
     public bool CanAdd(Tool tool)
     {
+        if (tool == null) return false;
         int index =  tool.type switch
         {
             ToolType.Sword => 0,
