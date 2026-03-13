@@ -25,7 +25,7 @@ public class AchievementTracker : MonoBehaviour
 
             if (ach.group == "collect_material")
             {
-                if (ach.blockTypeId == brokenBlock.id)
+                if (ach.blockTypeName == brokenBlock.displayName)
                 {
                     ach.currentProgress++;
 

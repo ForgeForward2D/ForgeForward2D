@@ -36,7 +36,7 @@ public class CraftingTableUI : MonoBehaviour
         if (recipeEntries == null) return;
 
         availableRecipes = CraftingRecipeRepository.GetAllRecipes()
-            .Where(recipe => playerInventory.CountFreeSpace(recipe.result.Item) >= recipe.result.Count)
+            .Where(recipe => playerInventory.CountFreeSpace(recipe.result.itemType) >= recipe.result.count)
             .ToList();
         selectedRecipeIndex = selectedRecipeIndex > availableRecipes.Count - 1 ? 0 : selectedRecipeIndex;
 

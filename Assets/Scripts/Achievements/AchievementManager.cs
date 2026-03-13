@@ -16,7 +16,7 @@ public class AchievementManager : MonoBehaviour
         public string title;
         public string group;
         public int number;
-        public int blockTypeId;
+        public string blockTypeName;
         public string iconPath;
 
         public bool isUnlocked;

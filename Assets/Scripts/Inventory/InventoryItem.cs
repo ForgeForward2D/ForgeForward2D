@@ -2,16 +2,16 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class InventoryItem
+public class Item
 {
-    public ItemType Item;
-    public int Count;
+    public ItemType itemType;
+    public int count;
 
-    public InventoryItem(ItemType item, int count)
+    public Item(ItemType itemType, int count)
     {
-        this.Item = item;
-        this.Count = count;
+        this.itemType = itemType;
+        this.count = count;
     }
 
-    public bool IsFull => Count >= Item.MaxStackSize;
+    public bool IsFull => count >= itemType.maxStackSize;
 }

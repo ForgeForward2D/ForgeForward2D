@@ -15,12 +15,15 @@ public class TileMapManager : MonoBehaviour
 
     public void DrawBlock(BlockType blockType, Vector2Int position)
     {
+        Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
+
         if (blockType == null)
         {
-            blockType = BlockTypeRepository.GetBlockById(0); // Default to air block if null
+            wallTilemap.SetTile(tilePosition, null);
+            walkableTilemap.SetTile(tilePosition, null);
+            OnBlockChanged?.Invoke((null, position));
+            return;    
         }
-
-        Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
 
         if (blockType.walkable)
         {
@@ -32,7 +35,6 @@ public class TileMapManager : MonoBehaviour
             wallTilemap.SetTile(tilePosition, blockType.tile);
             walkableTilemap.SetTile(tilePosition, null);
         }
-
         OnBlockChanged?.Invoke((blockType, position));
     }
 

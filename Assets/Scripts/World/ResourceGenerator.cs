@@ -26,8 +26,7 @@ public class ResourceGenerator : MonoBehaviour
         BlockType block = brokenBlockInfo.blockType;
         Vector2Int position = brokenBlockInfo.position;
 
-        // Check if the broken block is regeneratable
-        if (block.respawnRate > 0)
+        if (block != null && block.respawnRate > 0)
         {
             // Start a coroutine to generate resources after the specified spawn rate
             StartCoroutine(RegenerateResourceAfterDelay(block, position));
@@ -36,6 +35,11 @@ public class ResourceGenerator : MonoBehaviour
 
     private IEnumerator RegenerateResourceAfterDelay(BlockType block, Vector2Int position)
     {
+        if (block == null)
+        {
+            Debug.LogError("BlockType is null. Cannot regenerate resource.");
+            yield break;
+        }
         Debug.Log("Started regeneration process for " + block.displayName + " at " + position + " with respawn rate of " + block.respawnRate + " seconds.");
         while (true)
         {
@@ -45,9 +49,10 @@ public class ResourceGenerator : MonoBehaviour
             Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerController.GetPosition());
 
             BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(cellPosition);
+            BlockType replacementBlock = block.replacementBlock;
+
             // if current block does not equal the old block's replacementBlock
-            int currentBlockId = currentBlock == null ? 0 : currentBlock.id;
-            if (currentBlockId == block.replacementBlockId)
+            if (currentBlock == replacementBlock)
             {
                 if (cellPosition != playerCellPosition)
                 {
@@ -62,7 +67,7 @@ public class ResourceGenerator : MonoBehaviour
             }
             else
             {
-                Debug.Log("Skipping regeneration of " + block.displayName + " at " + cellPosition + " because block at cell position (id: " + currentBlockId + ") does not equal the replacement block (id: " + block.replacementBlockId + ").");
+                Debug.Log("Skipping regeneration of " + block.displayName + " at " + cellPosition + " because block at cell position (" + currentBlock.displayName + ") does not equal the replacement block (" + block.replacementBlock.displayName + ").");
                 break;
             }
         }

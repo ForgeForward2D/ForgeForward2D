@@ -57,8 +57,8 @@ public class AchievementPopupManager : MonoBehaviour
             AchievementManager.Achievement currentAch = achievementQueue.Dequeue();
 
             titleText.text = currentAch.title;
-            BlockType type = BlockTypeRepository.GetBlockById(currentAch.blockTypeId);
-            string blockName = (type != null) ? type.displayName : "Unknown Block";
+            BlockType type = BlockTypeRepository.GetBlockByName(currentAch.blockTypeName);
+            string blockName = (type != null) ? type.displayName : "Air";
 
             iconImage.sprite = defaultIcon;
 

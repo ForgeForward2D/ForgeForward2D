@@ -5,16 +5,16 @@ using UnityEngine;
 public abstract class ItemContainer : MonoBehaviour
 {
     [SerializeField] protected int capacity;
-    protected InventoryItem[] items;
+    protected Item[] items;
 
     public event Action OnContentChanged;
 
     protected virtual void Awake()
     {
-        items = new InventoryItem[capacity];
+        items = new Item[capacity];
     }
 
-    public InventoryItem[] GetItems() => items;
+    public Item[] GetItems() => items;
 
     protected void NotifyContentsChanged() => OnContentChanged?.Invoke();
 }

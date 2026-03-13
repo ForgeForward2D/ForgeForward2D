@@ -24,7 +24,7 @@ public class AchievementSlotUI : MonoBehaviour
 
         titleText.text = data.title;
 
-        BlockType type = BlockTypeRepository.GetBlockById(data.blockTypeId);
+        BlockType type = BlockTypeRepository.GetBlockByName(data.blockTypeName);
         string blockName = (type != null) ? type.displayName : "Unknown Block";
 
         descriptionText.text = data.GetDescription(blockName);

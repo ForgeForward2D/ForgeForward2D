@@ -40,7 +40,7 @@ public class CraftingInput : MonoBehaviour
         if(playerInventory.TryCraft(selectedRecipe))
         {
             craftingTableUI.RefreshUI();
-            Debug.Log("Crafting succeeded: " + selectedRecipe.result.Item.DisplayName);
+            Debug.Log("Crafting succeeded: " + selectedRecipe.result.itemType.displayName);
         }
     }
 

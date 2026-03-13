@@ -2229,7 +2229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolHotbar
   capacity: 5
-  startingItemIds: 0000000000000000000000000000000000000000
+  startingTools:
+  - {fileID: 11400000, guid: f51b2755c075b450a99bd0ff3ac4c8c5, type: 2}
   SelectedIndex: 0
 --- !u!1001 &968510751
 PrefabInstance:

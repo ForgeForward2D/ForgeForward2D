@@ -7,7 +7,7 @@ public class InventorySlotUI : MonoBehaviour
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI countText;
 
-    public void UpdateSlot(InventoryItem item)
+    public void UpdateSlot(Item item)
     {
         if (item == null)
         {
@@ -15,9 +15,9 @@ public class InventorySlotUI : MonoBehaviour
             return;
         }
 
-        iconImage.sprite = item.Item.Icon;
+        iconImage.sprite = item.itemType.icon;
         iconImage.color = Color.white;
-        countText.text = item.Count > 1 ? item.Count.ToString() : string.Empty;
+        countText.text = item.count > 1 ? item.count.ToString() : string.Empty;
     }
 
     public void UpdateSlotWithString(ItemType itemType, string s)
@@ -28,7 +28,7 @@ public class InventorySlotUI : MonoBehaviour
             return;
         }
 
-        iconImage.sprite = itemType.Icon;
+        iconImage.sprite = itemType.icon;
         iconImage.color = Color.white;
         countText.text = s;
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ToolHotbar : ItemContainer
 {
-    [SerializeField] private int[] startingItemIds;
+    [SerializeField] private Tool[] startingTools;
 
     public int SelectedIndex = 0;
 
@@ -11,23 +11,15 @@ public class ToolHotbar : ItemContainer
 
     private void Start()
     {
-        int count = Mathf.Min(capacity, startingItemIds.Length);
+        int count = Mathf.Min(capacity, startingTools.Length);
 
         for (int i = 0; i < count; i++)
         {
-            int itemId = startingItemIds[i];
+            Tool tool = startingTools[i];
 
-            if (itemId != 0)
+            if (tool != null)
             {
-                ItemType data = ItemTypeRepository.GetItemById(itemId);
-                if (data != null)
-                {
-                    items[i] = new InventoryItem(data, 1);
-                }
-                else
-                {
-                    Debug.LogWarning($"No item found for ID {itemId} in ToolHotbar starting items.");
-                }
+                items[i] = new Item(tool, 1);
             }
         }
         OnSelectionChanged?.Invoke();
@@ -46,7 +38,7 @@ public class ToolHotbar : ItemContainer
     public Tool GetSelectedTool()
     {
 
-        ItemType item = items[SelectedIndex]?.Item;
+        ItemType item = items[SelectedIndex]?.itemType;
 
         if (item == null)
         {
@@ -57,7 +49,7 @@ public class ToolHotbar : ItemContainer
         {
             return tool;
         }
-        return ItemTypeRepository.GetToolById(item.Id);
+        return ItemTypeRepository.GetDefaultTool();
     }
 
     public bool TryAddTool(Tool tool)
@@ -80,17 +72,17 @@ public class ToolHotbar : ItemContainer
         }
         if (items[index] == null)
         {
-            items[index] = new InventoryItem(tool, 1);
+            items[index] = new Item(tool, 1);
             NotifyContentsChanged();
             return true;
         }
-        if (((Tool)items[index].Item).tier < tool.tier)
+        if (((Tool)items[index].itemType).tier < tool.tier)
         {
-            items[index] = new InventoryItem(tool, 1);
+            items[index] = new Item(tool, 1);
             NotifyContentsChanged();
             return true;
         }
-        Debug.LogWarning("Slot "+index+" in ToolHotbar is already occupied by a tool of equal or higher tier. Cannot add tool "+tool.DisplayName+" (ID: "+tool.Id+").");
+        Debug.LogWarning("Slot "+index+" in ToolHotbar is already occupied by a tool of equal or higher tier. Cannot add tool "+tool.displayName+".");
         return false;
     }
     public bool Contains(Tool tool)
@@ -98,7 +90,7 @@ public class ToolHotbar : ItemContainer
         if (tool == null) return false;
         foreach (var item in items)
         {
-            if (item != null && item.Item.Id == tool.Id)
+            if (item != null && item.itemType == tool)
             {
                 return true;
             }
@@ -127,7 +119,7 @@ public class ToolHotbar : ItemContainer
         {
             return true;
         }
-        if (((Tool)items[index].Item).tier < tool.tier)
+        if (((Tool)items[index].itemType).tier < tool.tier)
         {
             return true;
         }

@@ -84,7 +84,8 @@ public class BlockBreakingManager : MonoBehaviour
 
 
         // Progress formula:
-        float deltaProgress = Time.deltaTime * gameConfig.player_breaking_speed * efficiency / currentTargetBlock.hardness;
+        float hardness = currentTargetBlock == null ? 1f : currentTargetBlock.hardness;
+        float deltaProgress = Time.deltaTime * gameConfig.player_breaking_speed * efficiency / hardness;
         breakProgress += deltaProgress;
 
         if (breakProgress >= 1f)
@@ -132,7 +133,7 @@ public class BlockBreakingManager : MonoBehaviour
 
     private void TriggerBreak( )
     {
-        BlockType replacementBlock = BlockTypeRepository.GetBlockById(currentTargetBlock.replacementBlockId);
+        BlockType replacementBlock = currentTargetBlock.replacementBlock; 
         OnBlockBroken?.Invoke((currentTargetBlock, currentTargetPos));
         tileMapManager.DrawBlock(replacementBlock, currentTargetPos);
         CancelBreaking();
