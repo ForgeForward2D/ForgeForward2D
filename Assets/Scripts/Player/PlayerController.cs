@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     // Block breaking mechanic
     [SerializeField] TileMapManager tileMapManager;
 
+    [SerializeField] private ResourceInventoryUI resourceInventoryUI;
+    [SerializeField] private AchievementUI achievementUI;
+
     // State
     private Vector2 moveInput;
     private Vector2Int moveDirection;
@@ -20,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private Animator myAnimator;
     public Transform characterModel;
 
-    [SerializeField] private ResourceInventoryUI resourceInventoryUI;
     [SerializeField] private CraftingTableUI craftingTableUI;
 
     public bool IsHoldingAttack { get; private set; }
@@ -85,8 +87,7 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-
-        if ((resourceInventoryUI != null && resourceInventoryUI.IsOpen) || (craftingTableUI != null && craftingTableUI.IsOpen))
+        if ((resourceInventoryUI != null && resourceInventoryUI.IsOpen) || (craftingTableUI != null && craftingTableUI.IsOpen) || (achievementUI != null && achievementUI.IsOpen))
         {
             IsHoldingAttack = false;
             return;
@@ -126,6 +127,12 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase != InputActionPhase.Performed) return;
 
+        if (achievementUI != null && achievementUI.IsOpen)
+        {
+            Debug.Log("Cannot open Inventory: Achievements are currently open!");
+            return;
+        }
+
         if (resourceInventoryUI != null)
         {
             resourceInventoryUI.SetActive(false);
@@ -143,9 +150,9 @@ public class PlayerController : MonoBehaviour
         if (context.phase != InputActionPhase.Performed) return;
 
         if (craftingTableUI != null && craftingTableUI.IsOpen)
-         {
-             return;
-         }
+        {
+            return;
+        }
 
         if (resourceInventoryUI != null)
         {
@@ -158,5 +165,35 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("ResourceInventoryUI reference is missing in Player!");
         }
 
+    }
+
+    public void Achievements(InputAction.CallbackContext context)
+    {
+        if (context.phase != InputActionPhase.Performed) return;
+
+        if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
+        {
+            Debug.Log("Cannot open Achievements: Inventory is currently open!");
+            return;
+        }
+
+        if (achievementUI != null)
+        {
+            achievementUI.Toggle();
+            Debug.Log("Achievement UI toggled");
+        }
+        else
+        {
+            Debug.LogWarning("AchievementUI reference is missing in Player!");
+        }
+    }
+
+    public void OnScrollAchievements(InputAction.CallbackContext context)
+    {
+        if (achievementUI != null && achievementUI.IsOpen)
+        {
+            float value = context.ReadValue<float>();
+            achievementUI.SetScrollInput(value);
+        }
     }
 }

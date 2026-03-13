@@ -35,9 +35,11 @@ public class ResourceInventory : ItemContainer
     {
         if (itemType == null) return false;
 
-        if (itemType is Tool tool) {
-            Debug.Assert(amount==1, $"Attempted to {amount} tools {tool.DisplayName} (ID: {tool.Id}) to ResourceInventory. Only one can be added at a time.");
-            if (toolHotbar == null) {
+        if (itemType is Tool tool)
+        {
+            Debug.Assert(amount == 1, $"Attempted to {amount} tools {tool.DisplayName} (ID: {tool.Id}) to ResourceInventory. Only one can be added at a time.");
+            if (toolHotbar == null)
+            {
                 Debug.LogError($"ToolHotbar reference is missing in ResourceInventory.");
                 return false;
             }
@@ -51,7 +53,8 @@ public class ResourceInventory : ItemContainer
             {
                 int space = items[i].Item.MaxStackSize - items[i].Count;
 
-                if (remaining <= space) {
+                if (remaining <= space)
+                {
                     items[i].Count += remaining;
                     NotifyContentsChanged();
                     return true;
@@ -67,7 +70,8 @@ public class ResourceInventory : ItemContainer
             if (items[i] == null)
             {
                 remaining -= itemType.MaxStackSize;
-                if (remaining <= 0) {
+                if (remaining <= 0)
+                {
                     items[i] = new InventoryItem(itemType, itemType.MaxStackSize + remaining);
                     NotifyContentsChanged();
                     return true;
@@ -84,8 +88,9 @@ public class ResourceInventory : ItemContainer
         if (CountItem(itemType) < amount)
             return false;
 
-        if (itemType is Tool tool) {
-            Debug.LogError("Attempting to remove a tool " + tool.DisplayName + " (ID: "+tool.Id+") but this should not happen");
+        if (itemType is Tool tool)
+        {
+            Debug.LogError("Attempting to remove a tool " + tool.DisplayName + " (ID: " + tool.Id + ") but this should not happen");
             return false;
         }
 
@@ -94,15 +99,19 @@ public class ResourceInventory : ItemContainer
         {
             if (items[i] != null && items[i].Item.Id == itemType.Id)
             {
-                if (items[i].Count <= remaining) {
+                if (items[i].Count <= remaining)
+                {
                     remaining -= items[i].Count;
                     items[i] = null;
-                    if (remaining == 0) {
+                    if (remaining == 0)
+                    {
                         NotifyContentsChanged();
                         return true;
                     }
 
-                } else {
+                }
+                else
+                {
                     items[i].Count -= remaining;
                     remaining = 0;
                     NotifyContentsChanged();
@@ -117,31 +126,34 @@ public class ResourceInventory : ItemContainer
     public bool TryCraft(CraftingRecipe recipe)
     {
         // Checks if any ingredient has more required (Item2) than available (Item3)
-        if (ComputeAvailability(recipe).Exists(x => x.Item3 < x.Item2)) {
+        if (ComputeAvailability(recipe).Exists(x => x.Item3 < x.Item2))
+        {
             Debug.Log("Cannot craft " + recipe.result.Item.DisplayName + ": not enough ingredients.");
             return false;
         }
         // Check if there is not enough free space for the result item.
-        if (CountFreeSpace(recipe.result.Item) < recipe.result.Count) {
+        if (CountFreeSpace(recipe.result.Item) < recipe.result.Count)
+        {
             Debug.Log("Cannot craft " + recipe.result.Item.DisplayName + ": not enough inventory space.");
             return false;
         }
 
         foreach (var ingredient in recipe.ingredients)
         {
-            bool result = TryRemoveItem(ingredient.Item, ingredient.Count);
-            Debug.Assert(result, $"Failed to remove ingredient {ingredient.Item.DisplayName} x{ingredient.Count} for crafting {recipe.result.Item.DisplayName}. This should not happen since availability was checked.");
+            bool removeSuccess = TryRemoveItem(ingredient.Item, ingredient.Count);
+            Debug.Assert(removeSuccess, $"Failed to remove ingredient {ingredient.Item.DisplayName} x{ingredient.Count} for crafting {recipe.result.Item.DisplayName}. This should not happen since availability was checked.");
         }
 
-        bool result = TryAddItem(recipe.result.Item, recipe.result.Count);
-        Debug.Assert(result, $"Failed to add crafted item {recipe.result.Item.DisplayName} x{recipe.result.Count} to inventory. This should not happen since free space was checked.");
-        return result;
+        bool addSuccess = TryAddItem(recipe.result.Item, recipe.result.Count);
+        Debug.Assert(addSuccess, $"Failed to add crafted item {recipe.result.Item.DisplayName} x{recipe.result.Count} to inventory. This should not happen since free space was checked.");
+        return addSuccess;
     }
 
     public int CountFreeSpace(ItemType itemType)
     {
         if (itemType == null) return 0;
-        if (itemType is Tool) {
+        if (itemType is Tool)
+        {
             return toolHotbar.CanAdd((Tool)itemType) ? 1 : 0;
         }
 
@@ -163,7 +175,8 @@ public class ResourceInventory : ItemContainer
     public int CountItem(ItemType itemType)
     {
         if (itemType == null) return 0;
-        if (itemType is Tool) {
+        if (itemType is Tool)
+        {
             return toolHotbar.Contains((Tool)itemType) ? 1 : 0;
         }
         int totalCount = 0;
@@ -180,7 +193,8 @@ public class ResourceInventory : ItemContainer
     public List<(ItemType, int, int)> ComputeAvailability(CraftingRecipe recipe)
     {
 
-        List<(ItemType, int, int)> availabilityList = recipe.ingredients.Select(ingredient => {
+        List<(ItemType, int, int)> availabilityList = recipe.ingredients.Select(ingredient =>
+        {
             ItemType itemType = ingredient.Item;
             int requiredAmount = ingredient.Count;
             int availableAmount = CountItem(itemType);

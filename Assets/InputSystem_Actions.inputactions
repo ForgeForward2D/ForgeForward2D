@@ -122,6 +122,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Achievements",
+                    "type": "Button",
+                    "id": "e529b92f-71d1-4a81-bdce-0ba0f20c899d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ScrollAchievements",
+                    "type": "Value",
+                    "id": "1e9ee1ee-a68c-4a37-a9f5-3cc1d12645ef",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -608,6 +626,50 @@
                     "action": "HotbarScroll",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "532d5995-5b72-49e0-b6db-adbf3630bd9e",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Achievements",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "ba0f17dd-86a5-4af2-b9ab-30dfdd7d6597",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollAchievements",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "edb00fe2-3bfd-45f9-b93e-3f7c1a4c315b",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollAchievements",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "cca046c5-c7aa-4cd5-8fc8-2102d4628c09",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollAchievements",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
