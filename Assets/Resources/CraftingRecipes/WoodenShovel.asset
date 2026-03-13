@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f548d71a4a4c5da896f8e2a90090e, type: 3}
   m_Name: WoodenShovel
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
-  id: 4
   ingredients:
-  - Item: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
-    Count: 1
+  - itemType: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
+    count: 1
   result:
-    Item: {fileID: 11400000, guid: 9379cda7204094cb887b55ca53448f7c, type: 2}
-    Count: 1
+    itemType: {fileID: 11400000, guid: 9379cda7204094cb887b55ca53448f7c, type: 2}
+    count: 1

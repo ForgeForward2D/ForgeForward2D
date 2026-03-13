@@ -5,37 +5,9 @@ using UnityEngine;
 
 public class AchievementManager : MonoBehaviour
 {
-    [SerializeField] private string templatePath = "Achievements/achievements";
-
     public static event Action<Achievement> OnAchievementUnlocked;
 
-    [Serializable]
-    public class Achievement
-    {
-        public string id;
-        public string title;
-        public string group;
-        public int number;
-        public string blockTypeName;
-        public string iconPath;
-
-        public bool isUnlocked;
-        public int currentProgress;
-
-        public string GetDescription(string blockName)
-        {
-            return $"Break {number} blocks of {blockName}.";
-        }
-    }
-
-    [Serializable]
-    private class AchievementDataWrapper
-    {
-        public List<Achievement> achievements = new List<Achievement>();
-    }
-
-    private List<Achievement> achievementOrderedList = new List<Achievement>();
-    private Dictionary<string, Achievement> achievementLookup = new Dictionary<string, Achievement>();
+    private List<Achievement> achievementList = new List<Achievement>();
     private string savePath;
 
     private void Awake()
@@ -43,27 +15,27 @@ public class AchievementManager : MonoBehaviour
         LoadAchievementsFromTemplate();
     }
 
-    public void UnlockAchievement(string id)
+    public void UnlockAchievement(Achievement achievement)
     {
-        if (!achievementLookup.TryGetValue(id, out Achievement ach))
+        if (achievement == null)
         {
-            Debug.LogWarning($"Achievement ID '{id}' not found!");
+            Debug.LogWarning("Attempted to unlock a null achievement!");
             return;
         }
 
-        if (ach.isUnlocked) return;
+        if (achievement.isUnlocked) return;
 
-        ach.isUnlocked = true;
-        Debug.Log($"<color=green>Achievement Unlocked: {ach.title}</color>");
+        achievement.isUnlocked = true;
+        Debug.Log($"<color=green>Achievement Unlocked: {achievement.title}</color>");
 
-        OnAchievementUnlocked?.Invoke(ach);
+        OnAchievementUnlocked?.Invoke(achievement);
     }
 
     private void LoadAchievementsFromTemplate()
     {
-        TextAsset template = Resources.Load<TextAsset>(templatePath);
+        Achievement[] achievements = Resources.LoadAll<Achievement>("Achievements");
 
-        if (template != null)
+        if (achievements != null)
         {
             AchievementDataWrapper wrapper = JsonUtility.FromJson<AchievementDataWrapper>(template.text);
             if (wrapper?.achievements != null)
@@ -76,17 +48,14 @@ public class AchievementManager : MonoBehaviour
             Debug.LogError("No achievement template found in Resources!");
         }
 
-        achievementLookup.Clear();
-        foreach (Achievement ach in achievementOrderedList)
+        foreach (Achievement ach in achievementList)
         {
             ach.isUnlocked = false;
             ach.currentProgress = 0;
-
-            achievementLookup[ach.id] = ach;
         }
 
-        Debug.Log($"{achievementOrderedList.Count} achievements loaded.");
+        Debug.Log($"{achievementList.Count} achievements loaded.");
     }
 
-    public IEnumerable<Achievement> GetAchievements() => achievementOrderedList;
+    public List<Achievement> GetAchievements() => achievementList;
 }

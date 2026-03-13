@@ -22,12 +22,12 @@ MonoBehaviour:
   toolType: 5
   minimumToolTier: 0
   lootDrops:
-  - itemType: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
+  - Item: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
     amount: 5
     chance: 1
-  - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
+  - Item: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
     amount: 2
     chance: 0.5
-  - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
+  - Item: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
     amount: 1
     chance: 0.1

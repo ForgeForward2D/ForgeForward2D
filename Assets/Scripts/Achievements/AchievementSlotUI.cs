@@ -14,37 +14,23 @@ public class AchievementSlotUI : MonoBehaviour
 
     [SerializeField] private Sprite defaultIcon;
 
-    public void Setup(AchievementManager.Achievement data)
+    public void Setup(Achievement achievement)
     {
-        if (data == null)
+        if (achievement == null)
         {
-            Debug.LogWarning("AchievementSlotUI: Attempted to setup with null data.");
+            Debug.LogWarning("AchievementSlotUI: Attempted to setup with null achievement.");
             return;
         }
 
-        titleText.text = data.title;
+        titleText.text = achievement.title;
 
-        BlockType type = BlockTypeRepository.GetBlockByName(data.blockTypeName);
+        BlockType type = achievement.blockType;
         string blockName = (type != null) ? type.displayName : "Unknown Block";
 
-        descriptionText.text = data.GetDescription(blockName);
+        descriptionText.text = achievement.GetDescription(blockName);
 
-        iconImage.sprite = defaultIcon;
+        iconImage.sprite = achievement.icon ?? defaultIcon;
 
-        if (!string.IsNullOrEmpty(data.iconPath))
-        {
-            Sprite[] icons = Resources.LoadAll<Sprite>(data.iconPath);
-
-            if (icons != null && icons.Length > 0)
-            {
-                iconImage.sprite = icons[0];
-            }
-            else
-            {
-                Debug.LogWarning($"AchievementSlotUI: Icon not found at 'Resources/{data.iconPath}' for achievement '{data.id}'");
-            }
-        }
-
-        background.color = data.isUnlocked ? unlockedColor : lockedColor;
+        background.color = achievement.isUnlocked ? unlockedColor : lockedColor;
     }
 }

@@ -43,7 +43,7 @@ public class AchievementUI : MonoBehaviour
         currentScrollInput = value;
     }
 
-    private void HandleAchievementUnlocked(AchievementManager.Achievement ach)
+    private void HandleAchievementUnlocked(Achievement ach)
     {
         RefreshUI();
     }

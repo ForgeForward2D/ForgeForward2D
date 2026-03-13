@@ -15,7 +15,7 @@ public class AchievementPopupManager : MonoBehaviour
 
     [SerializeField] private Sprite defaultIcon;
 
-    private Queue<AchievementManager.Achievement> achievementQueue = new Queue<AchievementManager.Achievement>();
+    private Queue<Achievement> achievementQueue = new Queue<Achievement>();
     private bool isShowingPopup = false;
 
     private void OnEnable()
@@ -38,9 +38,9 @@ public class AchievementPopupManager : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private void HandleAchievementUnlocked(AchievementManager.Achievement ach)
+    private void HandleAchievementUnlocked(Achievement achievement)
     {
-        achievementQueue.Enqueue(ach);
+        achievementQueue.Enqueue(achievement);
 
         if (!isShowingPopup && gameObject.activeInHierarchy)
         {
@@ -54,27 +54,13 @@ public class AchievementPopupManager : MonoBehaviour
 
         while (achievementQueue.Count > 0)
         {
-            AchievementManager.Achievement currentAch = achievementQueue.Dequeue();
+            Achievement currentAchievement = achievementQueue.Dequeue();
 
-            titleText.text = currentAch.title;
-            BlockType type = BlockTypeRepository.GetBlockByName(currentAch.blockTypeName);
+            titleText.text = currentAchievement.title;
+            BlockType type = currentAchievement.blockType;
             string blockName = (type != null) ? type.displayName : "Air";
 
-            iconImage.sprite = defaultIcon;
-
-            if (!string.IsNullOrEmpty(currentAch.iconPath))
-            {
-                Sprite[] icons = Resources.LoadAll<Sprite>(currentAch.iconPath);
-
-                if (icons != null && icons.Length > 0)
-                {
-                    iconImage.sprite = icons[0];
-                }
-                else
-                {
-                    Debug.LogWarning($"AchievementPopupManager: Icon not found at 'Resources/{currentAch.iconPath}' for achievement '{currentAch.id}'");
-                }
-            }
+            iconImage.sprite = currentAchievement.icon ?? defaultIcon;
 
             yield return StartCoroutine(FadePopup(0f, 1f));
 
