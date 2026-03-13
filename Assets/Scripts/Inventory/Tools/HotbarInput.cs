@@ -27,7 +27,7 @@ public class HotbarInput : MonoBehaviour
 
         int size = toolHotbar.GetItems().Length;
         int step = scrollValue.y > 0 ? -1 : 1;
-        
+
         int nextIndex = (toolHotbar.SelectedIndex + step + size) % size;
         toolHotbar.ChangeSelectedSlot(nextIndex);
     }

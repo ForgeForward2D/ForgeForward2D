@@ -13,10 +13,10 @@ public class CraftingInput : MonoBehaviour
 
     // The move input is repurposed for recipe selection when the crafting table UI is open
     public void Move(InputAction.CallbackContext context)
-    {   
+    {
         if (!context.performed || craftingTableUI == null || !craftingTableUI.IsOpen)
             return;
-        
+
         Vector2 input = context.ReadValue<Vector2>();
 
         if (input.y > 0f)

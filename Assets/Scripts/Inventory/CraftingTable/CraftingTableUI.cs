@@ -27,7 +27,7 @@ public class CraftingTableUI : MonoBehaviour
         if (active == visualPanel.activeSelf) return;
 
         visualPanel.SetActive(active);
-        if (active) 
+        if (active)
             RefreshUI();
         Time.timeScale = active ? 0f : 1f;
     }
@@ -62,7 +62,7 @@ public class CraftingTableUI : MonoBehaviour
         // Wrap around the recipe index using c# remainder operator (there is no built in modulo operator)
         selectedRecipeIndex %= availableRecipes.Count;
         selectedRecipeIndex += availableRecipes.Count;
-        selectedRecipeIndex %= availableRecipes.Count; 
+        selectedRecipeIndex %= availableRecipes.Count;
 
         RefreshUI();
     }

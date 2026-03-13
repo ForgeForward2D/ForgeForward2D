@@ -54,7 +54,7 @@ public class ResourceInventory : ItemContainer
                 if (remaining <= space) {
                     items[i].Count += remaining;
                     NotifyContentsChanged();
-                    return true; 
+                    return true;
                 }
 
                 items[i].Count = items[i].Item.MaxStackSize;
@@ -88,7 +88,7 @@ public class ResourceInventory : ItemContainer
             Debug.LogError("Attempting to remove a tool " + tool.DisplayName + " (ID: "+tool.Id+") but this should not happen");
             return false;
         }
-        
+
         int remaining = amount;
         for (int i = 0; i < items.Length; i++)
         {
@@ -96,12 +96,12 @@ public class ResourceInventory : ItemContainer
             {
                 if (items[i].Count <= remaining) {
                     remaining -= items[i].Count;
-                    items[i] = null;   
+                    items[i] = null;
                     if (remaining == 0) {
                         NotifyContentsChanged();
                         return true;
                     }
-                        
+
                 } else {
                     items[i].Count -= remaining;
                     remaining = 0;
@@ -115,7 +115,7 @@ public class ResourceInventory : ItemContainer
     }
 
     public bool TryCraft(CraftingRecipe recipe)
-    {   
+    {
         // Checks if any ingredient has more required (Item2) than available (Item3)
         if (ComputeAvailability(recipe).Exists(x => x.Item3 < x.Item2)) {
             Debug.Log("Cannot craft " + recipe.result.Item.DisplayName + ": not enough ingredients.");
@@ -133,7 +133,9 @@ public class ResourceInventory : ItemContainer
             Debug.Assert(result, $"Failed to remove ingredient {ingredient.Item.DisplayName} x{ingredient.Count} for crafting {recipe.result.Item.DisplayName}. This should not happen since availability was checked.");
         }
 
-        return TryAddItem(recipe.result.Item, recipe.result.Count);
+        bool result = TryAddItem(recipe.result.Item, recipe.result.Count);
+        Debug.Assert(result, $"Failed to add crafted item {recipe.result.Item.DisplayName} x{recipe.result.Count} to inventory. This should not happen since free space was checked.");
+        return result;
     }
 
     public int CountFreeSpace(ItemType itemType)
@@ -153,7 +155,7 @@ public class ResourceInventory : ItemContainer
             else if (items[i].Item.Id == itemType.Id)
             {
                 freeSpace += itemType.MaxStackSize - items[i].Count;
-            } 
+            }
         }
         return freeSpace;
     }
@@ -188,5 +190,5 @@ public class ResourceInventory : ItemContainer
         return availabilityList;
     }
 
-    
+
 }
