@@ -34,6 +34,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "f2791fcd-75ac-424c-aec2-cfe9827b9f10",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Crouch",
                     "type": "Button",
                     "id": "27c5f898-bc57-4ee1-8800-db469aca5fe3",
@@ -82,6 +91,15 @@
                     "name": "Inventory",
                     "type": "Button",
                     "id": "2af769e4-6c3b-47cb-9613-ae017e2f6edd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "eb68c28a-54a3-472a-afde-9e9f366762df",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -340,6 +358,28 @@
                 },
                 {
                     "name": "",
+                    "id": "4bffd6b6-0d31-4b7c-b74d-d41d3002b8c3",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc066e84-813d-4abe-81c9-084fc08e7d36",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "cbac6039-9c09-46a1-b5f2-4e5124ccb5ed",
                     "path": "<Keyboard>/2",
                     "interactions": "",
@@ -472,34 +512,23 @@
                 },
                 {
                     "name": "",
-                    "id": "1aea7dbd-d7c5-4bc2-b0cc-ca53da74ee4c",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fd693400-c4f6-4bce-93ba-e95bfd6aa68f",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9430451d-a278-42b8-b51d-c12a3ff68638",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a29d164-89d4-47c3-bbdb-b8bd471278af",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -20,6 +20,19 @@ public class InventorySlotUI : MonoBehaviour
         countText.text = item.Count > 1 ? item.Count.ToString() : string.Empty;
     }
 
+    public void UpdateSlotWithString(ItemType itemType, string s)
+    {
+        if (itemType == null)
+        {
+            ClearSlot();
+            return;
+        }
+
+        iconImage.sprite = itemType.Icon;
+        iconImage.color = Color.white;
+        countText.text = s;
+    }
+
     public void ClearSlot()
     {
         iconImage.sprite = null;
