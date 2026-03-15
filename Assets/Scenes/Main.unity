@@ -177,6 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19686d01131e64d91a1cc6ba886f3feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
+  uiPage: 0
 --- !u!114 &889089763
 MonoBehaviour:
   m_ObjectHideFlags: 0

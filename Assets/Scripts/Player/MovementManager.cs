@@ -22,6 +22,7 @@ public class MovementManager : MonoBehaviour
         playerAnimator = GetComponentInChildren<Animator>();
 
         InputManager.OnMoveInput += HandleMoveInput;
+        UIManager.OnUpdatePage += HandleUpdatePage;
     }
 
     private void HandleMoveInput((UIPage, Vector2) data) 
@@ -35,6 +36,16 @@ public class MovementManager : MonoBehaviour
         else
         {
             moveInput = Vector2.zero;
+            playerAnimator.SetBool("isMoving", false);
+        }
+    }
+
+    private void HandleUpdatePage(UIPage page)
+    {
+        if (page != UIPage.None)
+        {
+            moveInput = Vector2.zero;
+            playerAnimator.SetBool("isMoving", false);
         }
     }
 

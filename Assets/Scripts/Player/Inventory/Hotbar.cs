@@ -59,6 +59,9 @@ public class HotBar : InventoryComponent<Tool>
     {
         var (uiPage, delta) = data;
         int index = selectedIndex + delta;
+        index %= tools.Count;
+        index += tools.Count;
+        index %= tools.Count;
         SetSelectedSlot((uiPage, index));
     }
     

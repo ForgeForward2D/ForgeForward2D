@@ -30,6 +30,7 @@ public class BlockBreakingManager : MonoBehaviour
         currentTool = ItemTypeRepository.GetDefaultTool();
 
         InputManager.OnAttackUpdate += HandleAttackInput;
+        UIManager.OnUpdatePage += HandleUpdatePage;
         HotBar.OnHotBarUpdate += HandleHotBarUpdate;
         TileMapManager.OnBlockChanged += HandleBlockChanged;
     }
@@ -56,6 +57,14 @@ public class BlockBreakingManager : MonoBehaviour
             isPlayerHoldingAttack = attackStatus;
         }
         else 
+        {
+            isPlayerHoldingAttack = false;
+        }
+    }
+    
+    private void HandleUpdatePage(UIPage page)
+    {
+        if (page != UIPage.None)
         {
             isPlayerHoldingAttack = false;
         }

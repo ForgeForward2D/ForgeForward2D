@@ -12,7 +12,9 @@ public enum UIPage
 
 public class InputManager : MonoBehaviour
 {
-    private UIPage uiPage = UIPage.None;
+    [SerializeField] GameConfig gameConfig;
+    [Header("Debugging")]
+    [SerializeField] private UIPage uiPage = UIPage.None;
 
     private void Awake()
     {
@@ -88,15 +90,26 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private float scrollAccumulator = 0f;
+
     public void HotBarScroll(InputAction.CallbackContext context)
     {
-        // TODO: reduce speed
+        // Use .performed or .started depending on your Input Action settings
         if (!context.performed) return;
 
         Vector2 scrollValue = context.ReadValue<Vector2>();
+        scrollAccumulator += scrollValue.y;
 
-        if (scrollValue.y == 0f) return;
-        int step = scrollValue.y > 0 ? -1 : 1;
-        OnHotBarScroll?.Invoke((uiPage, step));
+        // Only step if we've scrolled past the threshold
+        if (Mathf.Abs(scrollAccumulator) >= gameConfig.scrollThreshold)
+        {
+            // Determine direction
+            int step = scrollAccumulator > 0 ? -1 : 1;
+            
+            // Reset accumulator (or subtract threshold to allow "fast" scrolling)
+            scrollAccumulator = 0f; 
+
+            OnHotBarScroll?.Invoke((uiPage, step));
+        }
     }
 }
