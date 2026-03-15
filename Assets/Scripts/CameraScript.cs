@@ -11,7 +11,6 @@ public class CameraScript : MonoBehaviour
 
     [SerializeField] PixelPerfectCamera pixelPerfectCamera;
 
-    [SerializeField] TileMapManager tileMapManager;
 
 
     public int camera_height;
@@ -26,7 +25,7 @@ public class CameraScript : MonoBehaviour
         GetComponent<Camera>().orthographicSize = camera_height / 2f;
         GetComponent<Camera>().aspect = gameConfig.camera_aspect;
 
-        mapBounds = tileMapManager.GetBounds();
+        mapBounds = TileMapManager.Instance.GetBounds();
     }
 
     void LateUpdate()

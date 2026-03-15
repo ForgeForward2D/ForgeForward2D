@@ -1,17 +1,28 @@
-
 using System;
-
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TileMapManager : MonoBehaviour
 {
-    [SerializeField] Tilemap wallTilemap;
-    [SerializeField] Tilemap walkableTilemap;
-    [SerializeField] Tilemap animationTilemap;
+    public static TileMapManager Instance { get; private set; }
+
+    [SerializeField] private Tilemap wallTilemap;
+    [SerializeField] private Tilemap walkableTilemap;
+    [SerializeField] private Tilemap animationTilemap;
 
     public static Action<(BlockType, Vector2Int)> OnBlockChanged;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("Multiple TileMapManager instances detected. Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     public void DrawBlock(BlockType blockType, Vector2Int position)
     {
@@ -22,7 +33,7 @@ public class TileMapManager : MonoBehaviour
             wallTilemap.SetTile(tilePosition, null);
             walkableTilemap.SetTile(tilePosition, null);
             OnBlockChanged?.Invoke((null, position));
-            return;    
+            return;
         }
 
         if (blockType.walkable)
@@ -35,6 +46,7 @@ public class TileMapManager : MonoBehaviour
             wallTilemap.SetTile(tilePosition, blockType.tile);
             walkableTilemap.SetTile(tilePosition, null);
         }
+
         OnBlockChanged?.Invoke((blockType, position));
     }
 
@@ -50,7 +62,11 @@ public class TileMapManager : MonoBehaviour
         Vector3Int cellPosition = wallTilemap.WorldToCell(worldPosition);
 
         Debug.Assert(cellPosition.z == 0, "Expected cell position z to be 0 but got " + cellPosition.z);
-        Debug.Assert(walkableTilemap.WorldToCell(worldPosition) == cellPosition, "Expected both tilemaps to return the same cell position for the same world position, but got " + walkableTilemap.WorldToCell(worldPosition) + " and " + cellPosition);
+        Debug.Assert(
+            walkableTilemap.WorldToCell(worldPosition) == cellPosition,
+            "Expected both tilemaps to return the same cell position but got "
+            + walkableTilemap.WorldToCell(worldPosition) + " and " + cellPosition
+        );
 
         return new Vector2Int(cellPosition.x, cellPosition.y);
     }
@@ -58,6 +74,7 @@ public class TileMapManager : MonoBehaviour
     public BlockType GetBlockTypeAtPosition(Vector2Int position)
     {
         Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
+
         TileBase wallTile = wallTilemap.GetTile(tilePosition);
         if (wallTile != null)
         {
@@ -72,6 +89,7 @@ public class TileMapManager : MonoBehaviour
                 Debug.Log($"No block found for wall tile at {position}");
             }
         }
+
         TileBase walkableTile = walkableTilemap.GetTile(tilePosition);
         if (walkableTile != null)
         {
@@ -86,6 +104,7 @@ public class TileMapManager : MonoBehaviour
                 Debug.Log($"No block found for walkable tile at {position}");
             }
         }
+
         return null;
     }
 

@@ -47,7 +47,7 @@ public static class ItemTypeRepository
 
         if (!toolNameLookup.TryGetValue(name, out Tool tool))
         {
-            Debug.LogWarning($"No tool found for name {name} in ToolHotbar.");
+            Debug.LogWarning($"No tool found for name {name} in HotBar.");
             return GetDefaultTool(); // Return a default "empty" tool
         }
         return tool;

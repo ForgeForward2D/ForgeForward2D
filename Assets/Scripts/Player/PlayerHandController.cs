@@ -2,38 +2,30 @@ using UnityEngine;
 
 public class PlayerHandController : MonoBehaviour
 {
-    [SerializeField] private ToolHotbar toolHotbar;
     [SerializeField] private Transform socketRightHand;
 
     private GameObject currentHandItem;
 
     private void OnEnable()
     {
-        if (toolHotbar != null)
-        {
-            toolHotbar.OnSelectionChanged += UpdateHandItem;
-            toolHotbar.OnContentChanged += UpdateHandItem;
-        }
+        HotBar.OnHotBarUpdate += UpdateHandItem; 
     }
 
     private void OnDisable()
     {
-        if (toolHotbar != null)
-        {
-            toolHotbar.OnSelectionChanged -= UpdateHandItem;
-            toolHotbar.OnContentChanged -= UpdateHandItem;
-        }
+        HotBar.OnHotBarUpdate -= UpdateHandItem;
     }
 
-    private void UpdateHandItem()
+    private void UpdateHandItem(HotBar hotBar)
     {
+
         if (currentHandItem != null)
         {
             Destroy(currentHandItem);
             currentHandItem = null;
         }
 
-        Tool selected = toolHotbar.GetSelectedTool();
+        Tool selected = hotBar.GetSelectedTool();
 
         if (selected == null || selected.prefab == null)
             return;

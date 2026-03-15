@@ -6,34 +6,38 @@ public class BlockBreakingManager : MonoBehaviour
     public static event Action<(BlockType, Vector2Int)> OnBlockBroken;
 
     [SerializeField] private GameConfig gameConfig;
-    [SerializeField] private PlayerController playerController;
-    [SerializeField] private TileMapManager tileMapManager;
-    [SerializeField] private ToolHotbar toolHotbar;
+    [SerializeField] private Animator playerAnimator;
+
+    [Header("Debugging")]
+    [SerializeField] private MovementManager movementManager;
+    [SerializeField] private Transform playerTransform;
 
     public Tool currentTool;
 
+    private bool isPlayerHoldingAttack=false;
     private bool isBreaking = false;
     private float breakProgress = 0f;
     private Vector2Int currentTargetPos;
     private BlockType currentTargetBlock;
     private DateTime lastProgressUpdateTime;
 
-    void OnEnable()
+    private void Awake()
     {
+        movementManager = GetComponent<MovementManager>();
+        playerTransform = GetComponent<Transform>();
+
         lastProgressUpdateTime = DateTime.Now;
-        toolHotbar.OnSelectionChanged += HandleSelectionChanged;
+        currentTool = ItemTypeRepository.GetDefaultTool();
+
+        InputManager.OnAttackUpdate += HandleAttackInput;
+        HotBar.OnHotBarUpdate += HandleHotBarUpdate;
         TileMapManager.OnBlockChanged += HandleBlockChanged;
     }
 
-    void OnDisable()
-    {
-        toolHotbar.OnSelectionChanged -= HandleSelectionChanged;
-        TileMapManager.OnBlockChanged -= HandleBlockChanged;
-    }
 
     void Update()
     {
-        if (playerController.IsHoldingAttack)
+        if (isPlayerHoldingAttack)
         {
             HandleBreaking();
         }
@@ -43,9 +47,23 @@ public class BlockBreakingManager : MonoBehaviour
         }
     }
 
-    private void HandleSelectionChanged()
+    private void HandleAttackInput((UIPage, bool) data)
     {
-        currentTool = toolHotbar.GetSelectedTool();
+        var (uiPage, attackStatus) = data;
+
+        if (uiPage == UIPage.None) 
+        {
+            isPlayerHoldingAttack = attackStatus;
+        }
+        else 
+        {
+            isPlayerHoldingAttack = false;
+        }
+    }
+
+    private void HandleHotBarUpdate(HotBar hotBar)
+    {
+        currentTool = hotBar.GetSelectedTool();
     }
 
     private void HandleBlockChanged((BlockType blockType, Vector2Int position) blockInfo)
@@ -59,13 +77,15 @@ public class BlockBreakingManager : MonoBehaviour
 
     private void HandleBreaking()
     {
-        Vector2Int targetPos = playerController.GetTargettingBlock();
+        Vector3 player3DPosition = playerTransform.position;
+        Vector2Int playerPosition = TileMapManager.Instance.PositionToCoordinate(player3DPosition);
+        Vector2Int targetPos = playerPosition + movementManager.GetMoveDirection();
         // If we moved to a new block, reset progress
         if (targetPos != currentTargetPos)
         {
-            tileMapManager.UpdateBlockBreakingProgress(currentTargetPos, 0);
+            TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
             currentTargetPos = targetPos;
-            currentTargetBlock = tileMapManager.GetBlockTypeAtPosition(currentTargetPos);
+            currentTargetBlock = TileMapManager.Instance.GetBlockTypeAtPosition(currentTargetPos);
             breakProgress = 0f;
         }
 
@@ -80,7 +100,7 @@ public class BlockBreakingManager : MonoBehaviour
         }
 
         isBreaking = true;
-        playerController.SetBreakingAnimation(true);
+        playerAnimator.SetBool("isBreaking", isBreaking);
 
 
         // Progress formula:
@@ -102,12 +122,13 @@ public class BlockBreakingManager : MonoBehaviour
         if (stage != previousStage && timeSinceLastUpdate >= gameConfig.block_breaking_animation_min_update_interval) {
 
             lastProgressUpdateTime = DateTime.Now;
-            tileMapManager.UpdateBlockBreakingProgress(currentTargetPos, stage);
+            TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, stage);
         }
     }
 
     public float CalculateEfficiency()
     {
+        if (currentTool == null) currentTool = ItemTypeRepository.GetDefaultTool();
         if (currentTargetBlock == null || !currentTargetBlock.breakable) return 0.0f;
 
         // If the block doesn't require a specific tool, every tool is efficient
@@ -135,15 +156,15 @@ public class BlockBreakingManager : MonoBehaviour
     {
         BlockType replacementBlock = currentTargetBlock.replacementBlock; 
         OnBlockBroken?.Invoke((currentTargetBlock, currentTargetPos));
-        tileMapManager.DrawBlock(replacementBlock, currentTargetPos);
+        TileMapManager.Instance.DrawBlock(replacementBlock, currentTargetPos);
         CancelBreaking();
     }
 
     private void CancelBreaking()
     {
-        tileMapManager.UpdateBlockBreakingProgress(currentTargetPos, 0);
+        TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
         isBreaking = false;
-        playerController.SetBreakingAnimation(false);
+        playerAnimator.SetBool("isBreaking", isBreaking);
         breakProgress = 0f;
     }
 }

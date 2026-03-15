@@ -22,7 +22,7 @@ public class BlockType : ScriptableObject
     public LootDrop[] lootDrops;
 }
 
-[System.Serializable]
+[Serializable]
 public struct LootDrop
 {
     public ItemType itemType;

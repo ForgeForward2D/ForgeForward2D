@@ -7,7 +7,6 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(TileMapManager))]
 public class ResourceGenerator : MonoBehaviour
 {
-    [SerializeField] private PlayerController playerController;
     private TileMapManager tileMapManager;
 
     private void OnEnable()
@@ -46,7 +45,9 @@ public class ResourceGenerator : MonoBehaviour
             yield return new WaitForSeconds(block.respawnRate);
 
             Vector2Int cellPosition = position;
-            Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerController.GetPosition());
+            // TODO: get Player position
+            // Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerController.GetPosition());
+            Vector2Int playerCellPosition = Vector2Int.zero;
 
             BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(cellPosition);
             BlockType replacementBlock = block.replacementBlock;
@@ -67,7 +68,7 @@ public class ResourceGenerator : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Skipping regeneration of {block.displayName} at {cellPosition} because block at cell position ({currentBlock.displayName}) does not equal the replacement block ({block.replacementBlock.displayName}).");
+                Debug.Log($"Skipping regeneration of {block.displayName} at {cellPosition} because block at cell position ({currentBlock?.displayName}) does not equal the replacement block ({block.replacementBlock?.displayName}).");
                 break;
             }
         }
