@@ -64,8 +64,7 @@ public class TileMapManager : MonoBehaviour
         Debug.Assert(cellPosition.z == 0, "Expected cell position z to be 0 but got " + cellPosition.z);
         Debug.Assert(
             walkableTilemap.WorldToCell(worldPosition) == cellPosition,
-            "Expected both tilemaps to return the same cell position but got "
-            + walkableTilemap.WorldToCell(worldPosition) + " and " + cellPosition
+            $"Expected both tilemaps to return the same cell position but got {walkableTilemap.WorldToCell(worldPosition)} and {cellPosition}"
         );
 
         return new Vector2Int(cellPosition.x, cellPosition.y);

@@ -14,9 +14,11 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetSceneByName(sceneName).isLoaded)
         {
-            Debug.Log("Scene " + sceneName + " already loaded, skipping loading.");
+            Debug.Log($"Scene {sceneName} already loaded, skipping loading.");
             return;
-        } else {
+        }
+        else
+        {
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
     }
@@ -25,5 +27,5 @@ public class GameManager : MonoBehaviour
 // Allow record to be used
 namespace System.Runtime.CompilerServices
 {
-    internal static class IsExternalInit {}
+    internal static class IsExternalInit { }
 }
