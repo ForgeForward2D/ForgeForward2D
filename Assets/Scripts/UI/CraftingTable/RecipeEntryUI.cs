@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RecipeEntryUI : UIComponent<CraftingRecipePreview> 
+public class RecipeEntryUI : UIComponent<CraftingRecipePreview>
 {
     [SerializeField] private List<UIComponentBase> childrenView;
     public void Start()

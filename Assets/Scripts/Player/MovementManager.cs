@@ -25,9 +25,9 @@ public class MovementManager : MonoBehaviour
         UIManager.OnUpdatePage += HandleUpdatePage;
     }
 
-    private void HandleMoveInput((UIPage, Vector2) data) 
+    private void HandleMoveInput((UIPage, bool, Vector2) data)
     {
-        var (uiPage, input) = data;
+        var (uiPage, performed, input) = data;
         if (uiPage == UIPage.None)
         {
             moveInput = input;
@@ -70,7 +70,7 @@ public class MovementManager : MonoBehaviour
         }
     }
 
-    public Vector2Int GetMoveDirection() 
+    public Vector2Int GetMoveDirection()
     {
         return moveDirection ;
     }

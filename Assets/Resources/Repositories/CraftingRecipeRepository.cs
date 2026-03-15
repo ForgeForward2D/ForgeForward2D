@@ -12,7 +12,7 @@ public static class CraftingRecipeRepository
     {
         var craftingRecipes = Resources.LoadAll<CraftingRecipe>("CraftingRecipes");
         recipes = craftingRecipes.ToList();
-        Debug.Log($"Initialized CraftingRecipeRepository with {recipes.Count} recipes.");  
+        Debug.Log($"Initialized CraftingRecipeRepository with {recipes.Count} recipes.");
     }
 
     public static List<CraftingRecipe>GetAllRecipes()

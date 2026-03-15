@@ -32,7 +32,7 @@ public static class ItemTypeRepository
 
         Debug.Log($"Initialized ItemTypeRepository with {totalItems} items ({itemTypes.Length} items, {toolTypes.Length} tools).");
     }
-    
+
     public static ItemType GetItemByName(string name)
     {
         if (nameLookup == null)

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class ResourceInventory : InventoryComponent<ItemType> 
+public class ResourceInventory : InventoryComponent<ItemType>
 {
     [SerializeField] int capacity = 21;
 
@@ -43,8 +43,7 @@ public class ResourceInventory : InventoryComponent<ItemType>
         {
             if (UnityEngine.Random.value <= drop.chance)
             {
-                Item dropItem = new Item(drop.itemType, drop.amount);
-                ((InventoryComponent<ItemType>)this).TryAdd(dropItem);
+                AddItemOfType(drop.itemType, drop.amount);
             }
         }
     }
@@ -59,6 +58,7 @@ public class ResourceInventory : InventoryComponent<ItemType>
         OnResourceInventoryUpdate?.Invoke(this);
     }
 
+
     public int CountElements(ItemType itemType)
     {
         if (itemType == null) return 0;
@@ -71,7 +71,7 @@ public class ResourceInventory : InventoryComponent<ItemType>
             }
         }
         return count;
-    } 
+    }
 
     public int CountFreeSpace(ItemType itemType)
     {
@@ -90,12 +90,12 @@ public class ResourceInventory : InventoryComponent<ItemType>
             }
         }
         return freeSpace;
-    } 
+    }
 
     public void AddItemOfType(ItemType itemType, int amount)
     {
         Debug.Assert(itemType != null, "Try adding null item. This was checked previously");
-        
+
         int remaining = amount;
         for (int i = 0; i < items.Count; i++)
         {
@@ -106,6 +106,7 @@ public class ResourceInventory : InventoryComponent<ItemType>
                 if (remaining <= space)
                 {
                     items[i].count += remaining;
+                    OnResourceInventoryUpdate?.Invoke(this);
                     return;
                 }
 
@@ -122,18 +123,20 @@ public class ResourceInventory : InventoryComponent<ItemType>
                 if (remaining <= itemType.maxStackSize)
                 {
                     items[i] = new Item(itemType, remaining);
+                    OnResourceInventoryUpdate?.Invoke(this);
                     return;
                 }
                 items[i] = new Item(itemType, itemType.maxStackSize);
             }
         }
         Debug.LogWarning($"Failed to add {amount} of {itemType.displayName} to ResourceInventory. Not enough space.");
+        OnResourceInventoryUpdate?.Invoke(this);
     }
 
     public void RemoveItemOfType(ItemType itemType, int amount)
     {
         Debug.Assert(itemType != null, "Try adding null item. This was checked previously");
-        
+
         int remaining = amount;
         // Loop in reverse to avoid fragmentation
         for (int i = items.Count - 1; i >= 0; i--)
@@ -146,6 +149,7 @@ public class ResourceInventory : InventoryComponent<ItemType>
                     items[i] = null;
                     if (remaining == 0)
                     {
+                        OnResourceInventoryUpdate?.Invoke(this);
                         return;
                     }
 
@@ -154,11 +158,13 @@ public class ResourceInventory : InventoryComponent<ItemType>
                 {
                     items[i].count -= remaining;
                     remaining = 0;
+                    OnResourceInventoryUpdate?.Invoke(this);
                     return;
                 }
             }
         }
         Debug.LogError($"Failed to remove {amount} of {itemType.displayName} from ResourceInventory. This should not happen since availability was checked.");
+        OnResourceInventoryUpdate?.Invoke(this);
     }
 
 

@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
     {
         InputManager.OnUIChangeInput += ProcessNavigationRequest;
         PlayerInteractionManager.OnInteraction += HandleInteraction;
-    }    
+    }
 
     private void ProcessNavigationRequest(UIPage currentPage, UIPage requestedPage)
     {
@@ -29,13 +29,13 @@ public class UIManager : MonoBehaviour
         // If no page is open, open the page
         if (currentPage == UIPage.None)
         {
-            return requestedPage; 
+            return requestedPage;
         }
 
         // If exit was requested, exit
         if (requestedPage == UIPage.None)
         {
-            return UIPage.None; 
+            return UIPage.None;
         }
 
         // If the open page was requested again, toggle
@@ -46,14 +46,14 @@ public class UIManager : MonoBehaviour
 
         // Do nothing
         return currentPage;
-    } 
+    }
 
     private void SetPage(UIPage page)
     {
         resourceInventoryUI.SetActive(page == UIPage.Inventory);
         craftingTableUI.SetActive(page == UIPage.Crafting);
 
-        bool open = page != UIPage.None; 
+        bool open = page != UIPage.None;
         Time.timeScale = open ? 0f : 1f;
         OnUpdatePage?.Invoke(page);
     }
@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
 
         if (blockType == craftingTableBlockType)
         {
-            ProcessNavigationRequest(uiPage, UIPage.Crafting); 
+            ProcessNavigationRequest(uiPage, UIPage.Crafting);
         }
 
     }

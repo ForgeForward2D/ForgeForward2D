@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
         LoadSceneIfNotLoaded("World");
         LoadSceneIfNotLoaded("Player");
         LoadSceneIfNotLoaded("UI");
-    } 
+    }
 
     void LoadSceneIfNotLoaded(string sceneName)
     {

@@ -1,20 +1,20 @@
 using System;
 using UnityEngine;
 
-public interface InventoryComponent<Type> 
+public interface InventoryComponent<Type>
 {
     public void NotifyInventoryUpdate();
 
     public int CountElements(Type type);
     public int CountFreeSpace(Type type);
 
-    public bool TryAdd(Item item) 
+    public bool TryAdd(Item item)
     {
         if (item == null || item.itemType == null)
         {
             Debug.LogWarning("Try add invalid item");
             return false;
-        } 
+        }
         if (item.itemType is Type type)
         {
             // add as may items as possible, even if the space is not enough

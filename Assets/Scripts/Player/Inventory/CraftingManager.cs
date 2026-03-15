@@ -13,10 +13,10 @@ public class CraftingManager
     [Header("Debugging")]
     [SerializeField] private List<CraftingRecipe> allRecipes = new List<CraftingRecipe>();
     [SerializeField] private List<CraftingRecipe> availableRecipes = new List<CraftingRecipe>();
-    
+
     public static event Action<CraftingManager> OnCraftingManagerUpdate;
 
-    public void Start() 
+    public void Start()
     {
         allRecipes = CraftingRecipeRepository.GetAllRecipes();
         UpdateAvailableRecipes();
@@ -29,7 +29,7 @@ public class CraftingManager
     private void HandleInventoryUpdate(InventoryManager inventoryManager)
     {
         this.inventoryManager = inventoryManager;
-        UpdateAvailableRecipes();      
+        UpdateAvailableRecipes();
     }
 
     private void HandleRequestRefresh()
@@ -37,17 +37,20 @@ public class CraftingManager
         OnCraftingManagerUpdate?.Invoke(this);
     }
 
-    private void HandleMovementInput((UIPage, Vector2) data)
+    private void HandleMovementInput((UIPage, bool, Vector2) data)
     {
-        var (uiPage, movementInput) = data;
+        var (uiPage, performed, movementInput) = data;
 
         if (uiPage != UIPage.Crafting)
             return;
 
+        if (!performed)
+            return;
+
         if (movementInput.y == 0)
             return;
-        
-        int delta = movementInput.y > 0 ? 1 : -1;
+
+        int delta = movementInput.y > 0 ? -1 : 1;
 
         selectedRecipeIndex += delta;
         selectedRecipeIndex %= availableRecipes.Count;
@@ -63,8 +66,30 @@ public class CraftingManager
 
         if (uiPage != UIPage.Crafting || !click)
             return;
-        
-        Debug.Log("TODO: Crafting");
+
+        CraftingRecipe recipe = availableRecipes[selectedRecipeIndex];
+        if (TryCraft(recipe))
+        {
+            Debug.Log($"Successfully crafted {recipe.result.count} {recipe.result.itemType.displayName}");
+        }
+        else
+        {
+            Debug.Log($"Could not craft {recipe.result.count} {recipe.result.itemType.displayName}");
+        }
+    }
+
+    private bool TryCraft(CraftingRecipe recipe)
+    {
+        CraftingRecipePreview availabilities = ComputePreview(recipe);
+        bool anyNotAvailable = availabilities.ingredients.Any(ingredient => ingredient.available < ingredient.required.count);
+        if (anyNotAvailable) return false;
+
+        foreach (var ingredient in availabilities.ingredients)
+        {
+            inventoryManager.RemoveItemOfType(ingredient.required.itemType, ingredient.required.count);
+        }
+        inventoryManager.AddItemOfType(recipe.result.itemType, recipe.result.count);
+        return  true;
     }
 
     private void UpdateAvailableRecipes()
@@ -72,9 +97,17 @@ public class CraftingManager
         availableRecipes = CraftingRecipeRepository.GetAllRecipes()
             .Where(recipe => inventoryManager.CountFreeSpace(recipe.result.itemType) >= recipe.result.count)
             .ToList();
+        if (selectedRecipeIndex >= availableRecipes.Count)
+        {
+            if (availableRecipes.Count <= 1)
+                selectedRecipeIndex = 0;
+            else
+                selectedRecipeIndex %= availableRecipes.Count;
+        }
+        OnCraftingManagerUpdate?.Invoke(this);
     }
 
-    public int GetSelectedRecipeIndex() 
+    public int GetSelectedRecipeIndex()
     {
         return selectedRecipeIndex;
     }
@@ -113,21 +146,7 @@ public class CraftingManager
     {
         return availableRecipes != null && availableRecipes.Count > 0 ? availableRecipes[selectedRecipeIndex] : null;
     }
-    
-}
-
-public class CraftingRecipePreview
-{
-    public List<(Item required, int available)> ingredients;
-    public Item result;
-
-    public CraftingRecipePreview(List<(Item,int)> ingredients, Item result)
-    {
-        this.ingredients = ingredients;
-        this.result = result;
-    }
-
-
-
 
 }
+
+public record CraftingRecipePreview(List<(Item required, int available)> ingredients, Item result);

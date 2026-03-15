@@ -108,6 +108,18 @@ public class TileMapManager : MonoBehaviour
         return null;
     }
 
+    public bool IsOccupied(Vector2Int pos)
+    {
+        Vector3Int cell = new Vector3Int(pos.x, pos.y, 0);
+        Vector3 center = wallTilemap.GetCellCenterWorld(cell);
+
+        Vector2 size = wallTilemap.cellSize * 0.9f;
+
+        LayerMask mask = ~(1 << wallTilemap.gameObject.layer);
+
+        return Physics2D.OverlapBox(center, size, 0f, mask) != null;
+    }
+
     public (int, int, int, int) GetBounds()
     {
         walkableTilemap.CompressBounds();

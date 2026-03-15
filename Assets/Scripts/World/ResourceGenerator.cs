@@ -44,31 +44,26 @@ public class ResourceGenerator : MonoBehaviour
         {
             yield return new WaitForSeconds(block.respawnRate);
 
-            Vector2Int cellPosition = position;
-            // TODO: get Player position
-            // Vector2Int playerCellPosition = tileMapManager.PositionToCoordinate(playerController.GetPosition());
-            Vector2Int playerCellPosition = Vector2Int.zero;
-
-            BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(cellPosition);
+            BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(position);
             BlockType replacementBlock = block.replacementBlock;
 
             // if current block does not equal the old block's replacementBlock
             if (currentBlock == replacementBlock)
             {
-                if (cellPosition != playerCellPosition)
+                if (!tileMapManager.IsOccupied(position))
                 {
-                    tileMapManager.DrawBlock(block, cellPosition);
-                    Debug.Log($"Generated {block.displayName} at {cellPosition} after delay of {block.respawnRate} seconds.");
+                    tileMapManager.DrawBlock(block, position);
+                    Debug.Log($"Generated {block.displayName} at {position} after delay of {block.respawnRate} seconds.");
                     break;
                 }
                 else
                 {
-                    Debug.Log($"Skipping regeneration of {block.displayName} at {cellPosition} because player is too close (distance: {Vector2Int.Distance(cellPosition, playerCellPosition)}).");
+                    Debug.Log($"Skipping regeneration of {block.displayName} at {position} because tile is occupied");
                 }
             }
             else
             {
-                Debug.Log($"Skipping regeneration of {block.displayName} at {cellPosition} because block at cell position ({currentBlock?.displayName}) does not equal the replacement block ({block.replacementBlock?.displayName}).");
+                Debug.Log($"Skipping regeneration of {block.displayName} at {position} because block at cell position ({currentBlock?.displayName}) does not equal the replacement block ({block.replacementBlock?.displayName}).");
                 break;
             }
         }

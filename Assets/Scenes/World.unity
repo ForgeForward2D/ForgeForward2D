@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 4579424347775246927}
   - component: {fileID: 3019561882642584167}
   - component: {fileID: 672237593530260148}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Walkable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 2848041237808614774}
   - component: {fileID: 7023219003204521883}
   - component: {fileID: 8161546190386264299}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1330,7 +1330,7 @@ GameObject:
   - component: {fileID: 1818264595682014080}
   - component: {fileID: 8421946597684521387}
   - component: {fileID: 190012768907446256}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1434,7 +1434,7 @@ GameObject:
   - component: {fileID: 8732432593242641620}
   - component: {fileID: 1916282898747536962}
   - component: {fileID: 6279659080290006369}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16644,7 +16644,7 @@ GameObject:
   - component: {fileID: 8028785563696857025}
   - component: {fileID: 1300875036997624091}
   - component: {fileID: 8096002128955671483}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16790,7 +16790,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e8b037bb609b4e48bf0dd9aab71899e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceGenerator
-  playerController: {fileID: 0}
 --- !u!19719996 &8732432593242641620
 TilemapCollider2D:
   m_ObjectHideFlags: 0

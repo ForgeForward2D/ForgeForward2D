@@ -4,10 +4,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CraftingTableUI : UIComponent<CraftingManager> 
+public class CraftingTableUI : UIComponent<CraftingManager>
 {
     public static event Action RequestRefresh;
-    public void OnEnable() 
+    public void OnEnable()
     {
         CraftingManager.OnCraftingManagerUpdate += RefreshUI;
         RequestRefresh?.Invoke();
@@ -18,9 +18,9 @@ public class CraftingTableUI : UIComponent<CraftingManager>
         CraftingManager.OnCraftingManagerUpdate -= RefreshUI;
     }
 
-    public override void RefreshUI(CraftingManager craftingManager) 
+    public override void RefreshUI(CraftingManager craftingManager)
     {
-        List<UIComponentBase> children = GetChildren(); 
+        List<UIComponentBase> children = GetChildren();
         List<CraftingRecipePreview> recipePreviews = craftingManager.GetPreviews(children.Count);
         int selectedRecipeIndex = craftingManager.GetSelectedRecipeIndex();
         for (int i = 0; i < children.Count; i++)

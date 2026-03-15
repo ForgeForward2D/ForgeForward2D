@@ -8,7 +8,7 @@ public class PlayerHandController : MonoBehaviour
 
     private void OnEnable()
     {
-        HotBar.OnHotBarUpdate += UpdateHandItem; 
+        HotBar.OnHotBarUpdate += UpdateHandItem;
     }
 
     private void OnDisable()

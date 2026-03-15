@@ -26,12 +26,12 @@ public class InputManager : MonoBehaviour
         this.uiPage = uiPage;
     }
 
-    public static event Action<(UIPage, Vector2)> OnMoveInput;
+    public static event Action<(UIPage, bool, Vector2)> OnMoveInput;
     public void Move(InputAction.CallbackContext context)
     {
-        // if (context.phase != InputActionPhase.Performed) return;
+        bool performed = context.phase == InputActionPhase.Performed;
         Vector2 input = context.ReadValue<Vector2>();
-        OnMoveInput?.Invoke((uiPage, input));
+        OnMoveInput?.Invoke((uiPage, performed, input));
     }
 
     public static event Action<(UIPage, bool)> OnAttackUpdate;
@@ -56,7 +56,7 @@ public class InputManager : MonoBehaviour
         OnInteractionInput?.Invoke(uiPage);
     }
 
-    // UI 
+    // UI
     public static event Action<UIPage, UIPage> OnUIChangeInput;
     public void Escape(InputAction.CallbackContext context)
     {
@@ -105,9 +105,9 @@ public class InputManager : MonoBehaviour
         {
             // Determine direction
             int step = scrollAccumulator > 0 ? -1 : 1;
-            
+
             // Reset accumulator (or subtract threshold to allow "fast" scrolling)
-            scrollAccumulator = 0f; 
+            scrollAccumulator = 0f;
 
             OnHotBarScroll?.Invoke((uiPage, step));
         }

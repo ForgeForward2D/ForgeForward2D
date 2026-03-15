@@ -22,7 +22,7 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
     {
         OnInventoryUpdate?.Invoke(this);
     }
-    
+
     public int CountElements(ItemType type)
     {
         if (type is Tool tool)
@@ -30,7 +30,7 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
             return hotBar.CountElements(tool);
         }
         return resourceInventory.CountElements(type);
-    } 
+    }
 
     public int CountFreeSpace(ItemType type)
     {
@@ -39,7 +39,7 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
             return hotBar.CountFreeSpace(tool);
         }
         return resourceInventory.CountFreeSpace(type);
-    } 
+    }
 
     public void AddItemOfType(ItemType type, int count)
     {
@@ -47,10 +47,11 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
         {
             hotBar.AddItemOfType(tool, count);
         }
-        else 
+        else
         {
             resourceInventory.AddItemOfType(type, count);
         }
+        NotifyInventoryUpdate();
     }
 
     public void RemoveItemOfType(ItemType type, int count)
@@ -63,5 +64,6 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
         {
             resourceInventory.RemoveItemOfType(type, count);
         }
+        NotifyInventoryUpdate();
     }
 }

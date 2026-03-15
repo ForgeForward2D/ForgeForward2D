@@ -24,11 +24,11 @@ public abstract class UIComponent<T> : UIComponentBase
 {
     private List<UIComponentBase> children;
 
-    public List<UIComponentBase> GetChildren() 
+    public List<UIComponentBase> GetChildren()
     {
         if (children == null)
         {
-            children = new List<UIComponentBase>(GetComponentsInChildren<UIComponentBase>()) 
+            children = new List<UIComponentBase>(GetComponentsInChildren<UIComponentBase>())
                 .Where(child => child.transform.parent == this.transform)
                 .ToList();
             Debug.Assert(children != null, "Children null after init");
@@ -51,7 +51,7 @@ public abstract class UIComponent<T> : UIComponentBase
             {
                 Debug.LogWarning($"Received null state for {gameObject.name}, but {typeof(T)} is a Value Type and cannot be null.");
             }
-            return; 
+            return;
         }
 
         if (state is T t)

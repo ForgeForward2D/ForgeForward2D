@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HotBarUI : UIComponent<HotBar> 
+public class HotBarUI : UIComponent<HotBar>
 {
     [SerializeField] private RectTransform selectionHighlight;
     private List<RectTransform> slotTransforms = new List<RectTransform>();
@@ -12,7 +12,7 @@ public class HotBarUI : UIComponent<HotBar>
     public void Start()
     {
         Debug.Log("HotBarUI setup");
-        List<UIComponentBase> children = GetChildren(); 
+        List<UIComponentBase> children = GetChildren();
         slotTransforms.Clear();
         foreach (var child in children)
         {
@@ -21,7 +21,7 @@ public class HotBarUI : UIComponent<HotBar>
                 slotTransforms.Add(child.GetComponent<RectTransform>());
             }
         }
-        
+
         // Make the slot transform have the correct values for the initial refresh
         Canvas.ForceUpdateCanvases();
 
@@ -31,7 +31,7 @@ public class HotBarUI : UIComponent<HotBar>
 
     public override void RefreshUI(HotBar hotBar)
     {
-        List<UIComponentBase> children = GetChildren(); 
+        List<UIComponentBase> children = GetChildren();
         List<Tool> currentTools = hotBar.GetCurrentTools();
         if (children.Count != currentTools.Count)
             Debug.LogError($"Error in hot bar Refresh: got {currentTools.Count} tools for {children.Count} slots");
@@ -53,7 +53,7 @@ public class HotBarUI : UIComponent<HotBar>
                 selectionHighlight.position = targetSlot.position;
                 selectionHighlight.sizeDelta = targetSlot.sizeDelta + new Vector2(10, 10);
             }
-            else 
+            else
             {
                 Debug.LogWarning("Could not set selection highlight");
             }

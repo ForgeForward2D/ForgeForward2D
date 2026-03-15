@@ -27,7 +27,7 @@ public class ItemSlotUI : UIComponent<ItemWithText>
 
         iconImage.sprite = item.itemType.icon;
         iconImage.color = Color.white;
-        
+
         countText.text = text;
     }
 }

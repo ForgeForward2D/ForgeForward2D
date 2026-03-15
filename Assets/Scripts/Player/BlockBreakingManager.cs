@@ -52,16 +52,16 @@ public class BlockBreakingManager : MonoBehaviour
     {
         var (uiPage, attackStatus) = data;
 
-        if (uiPage == UIPage.None) 
+        if (uiPage == UIPage.None)
         {
             isPlayerHoldingAttack = attackStatus;
         }
-        else 
+        else
         {
             isPlayerHoldingAttack = false;
         }
     }
-    
+
     private void HandleUpdatePage(UIPage page)
     {
         if (page != UIPage.None)
@@ -163,7 +163,7 @@ public class BlockBreakingManager : MonoBehaviour
 
     private void TriggerBreak( )
     {
-        BlockType replacementBlock = currentTargetBlock.replacementBlock; 
+        BlockType replacementBlock = currentTargetBlock.replacementBlock;
         OnBlockBroken?.Invoke((currentTargetBlock, currentTargetPos));
         TileMapManager.Instance.DrawBlock(replacementBlock, currentTargetPos);
         CancelBreaking();

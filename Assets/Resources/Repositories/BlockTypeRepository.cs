@@ -42,7 +42,7 @@ public static class BlockTypeRepository
     {
         if (tileLookup == null)
             Initialize();
-        
+
         tileLookup.TryGetValue(tile, out BlockType block);
         return block;
     }

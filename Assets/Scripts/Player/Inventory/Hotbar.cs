@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class HotBar : InventoryComponent<Tool> 
+public class HotBar : InventoryComponent<Tool>
 {
     [SerializeField] private List<Tool> tools;
 
@@ -20,7 +20,7 @@ public class HotBar : InventoryComponent<Tool>
         HotBarUI.RequestRefresh += HandleRequestRefresh;
         InputManager.OnHotBarSelected += SetSelectedSlot;
         InputManager.OnHotBarScroll += ChangeSelectedSlot;
-        
+
         toolTypes = new List<ToolType>((ToolType[]) Enum.GetValues(typeof(ToolType)));
         toolTypes.Remove(ToolType.None);
 
@@ -64,13 +64,13 @@ public class HotBar : InventoryComponent<Tool>
         index %= tools.Count;
         SetSelectedSlot((uiPage, index));
     }
-    
+
     public List<Tool> GetCurrentTools()
     {
         return tools;
     }
 
-    public int GetSelectedIndex() 
+    public int GetSelectedIndex()
     {
         return selectedIndex;
     }
@@ -97,7 +97,7 @@ public class HotBar : InventoryComponent<Tool>
     public void NotifyInventoryUpdate()
     {
         OnHotBarUpdate?.Invoke(this);
-    } 
+    }
 
     public int CountElements(Tool tool)
     {
@@ -106,7 +106,7 @@ public class HotBar : InventoryComponent<Tool>
         if (index < 0 || index >= tools.Count) return 0;
         bool contains = tools[index] == tool;
         return contains ? 1 : 0;
-    } 
+    }
 
     public int CountFreeSpace(Tool tool)
     {
@@ -115,13 +115,13 @@ public class HotBar : InventoryComponent<Tool>
         if (index < 0 || index >= tools.Count) return 0;
         bool replaceable = tools[index] == null || tools[index].tier < tool.tier;
         return replaceable ? 1 : 0;
-    } 
+    }
 
     public void AddItemOfType(Tool tool, int count)
     {
         Debug.Assert(tool != null, "Try adding null tool. This was checked previously");
         Debug.Assert(count == 1, "Tools should always have amount of 1");
-        
+
         int index = ToolTypeToIndex(tool.type);
         if (index < 0 || index >= tools.Count)
         {
@@ -134,8 +134,9 @@ public class HotBar : InventoryComponent<Tool>
             Debug.LogWarning($"Can not add {tool.displayName}, because there is no free space ({tools[index].displayName} is there)");
             return;
         }
-        
+
         tools[index] = tool;
+        OnHotBarUpdate?.Invoke(this);
     }
 
     public void RemoveItemOfType(Tool tool, int count)
@@ -155,8 +156,9 @@ public class HotBar : InventoryComponent<Tool>
             Debug.LogWarning($"Can not remove {tool.displayName}, because its not in the hot bar");
             return;
         }
-        
+
         tools[index] = null;
+        OnHotBarUpdate?.Invoke(this);
     }
 
 }
