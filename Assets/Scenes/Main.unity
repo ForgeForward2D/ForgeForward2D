@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 889089761}
   - component: {fileID: 889089762}
   - component: {fileID: 889089763}
+  - component: {fileID: 889089764}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -377,6 +378,20 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &889089764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889089759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c945857b6d564af6bf60275b71a884d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AchievementManager
+  achievements: []
+  selectedIndex: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -287,8 +287,8 @@ GameObject:
   - component: {fileID: 3781436681431153940}
   - component: {fileID: 2758339086715984942}
   - component: {fileID: 2247789805815083844}
-  - component: {fileID: 5994604951964303957}
   - component: {fileID: 766385223281742542}
+  - component: {fileID: 2689573434222776811}
   m_Layer: 5
   m_Name: AchievementSlot
   m_TagString: Untagged
@@ -355,25 +355,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5994604951964303957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7297891190809251424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c33eff0478509f43add11de9dd92037, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AchievementSlotUI
-  titleText: {fileID: 4972382029774009362}
-  descriptionText: {fileID: 9166852120079804887}
-  background: {fileID: 2247789805815083844}
-  iconImage: {fileID: 2599785384011431642}
-  unlockedColor: {r: 0, g: 0.78431374, b: 0.05882353, a: 0.78431374}
-  lockedColor: {r: 0.37254903, g: 0.37254903, b: 0.37254903, a: 0.78431374}
-  defaultIcon: {fileID: 0}
 --- !u!114 &766385223281742542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +381,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2689573434222776811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7297891190809251424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf4fc0d9db7344ed800e9ddb7817b07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AchievementSlotUI
+  titleText: {fileID: 4972382029774009362}
+  descriptionText: {fileID: 9166852120079804887}
+  background: {fileID: 2247789805815083844}
+  iconImage: {fileID: 2599785384011431642}
+  unlockedColor: {r: 1, g: 0.8, b: 0, a: 0.5}
+  lockedColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.5}
 --- !u!1 &8901049597109878101
 GameObject:
   m_ObjectHideFlags: 0

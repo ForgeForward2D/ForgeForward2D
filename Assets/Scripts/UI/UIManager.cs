@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private CraftingTableUI craftingTableUI;
     [SerializeField] private BlockType craftingTableBlockType;
+    
+    [SerializeField] private AchievementUI achievementUI;
 
     public static event Action<UIPage> OnUpdatePage;
 
@@ -52,6 +54,7 @@ public class UIManager : MonoBehaviour
     {
         resourceInventoryUI.SetActive(page == UIPage.Inventory);
         craftingTableUI.SetActive(page == UIPage.Crafting);
+        achievementUI.SetActive(page == UIPage.Achievements);
 
         bool open = page != UIPage.None;
         Time.timeScale = open ? 0f : 1f;

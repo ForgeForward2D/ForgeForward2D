@@ -17,5 +17,5 @@ MonoBehaviour:
   blockType: {fileID: 11400000, guid: 7f3076a83042c40aaa8fa8ba50068c68, type: 2}
   numberOfBlocks: 10
   icon: {fileID: -205425986, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
-  isUnlocked: 1
-  currentProgress: 3
+  isUnlocked: 0
+  currentProgress: 1
