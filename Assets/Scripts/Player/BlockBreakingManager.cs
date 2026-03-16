@@ -27,7 +27,6 @@ public class BlockBreakingManager : MonoBehaviour
         playerTransform = GetComponent<Transform>();
 
         lastProgressUpdateTime = DateTime.Now;
-        currentTool = ItemTypeRepository.GetDefaultTool();
 
         InputManager.OnAttackUpdate += HandleAttackInput;
         UIManager.OnUpdatePage += HandleUpdatePage;
@@ -137,28 +136,31 @@ public class BlockBreakingManager : MonoBehaviour
 
     public float CalculateEfficiency()
     {
-        if (currentTool == null) currentTool = ItemTypeRepository.GetDefaultTool();
         if (currentTargetBlock == null || !currentTargetBlock.breakable) return 0.0f;
+
+        float efficiency = currentTool == null ? 1f : currentTool.efficiency;
+        ToolType toolType = currentTool == null ? ToolType.None : currentTool.type;
+        ToolTier toolTier = currentTool == null ? ToolTier.None : currentTool.tier;
 
         // If the block doesn't require a specific tool, every tool is efficient
         if (currentTargetBlock.toolType == ToolType.None)
         {
-            return currentTool.efficiency;
+            return efficiency;
         }
 
         // Wrong tool type: Same as no tool
-        if (currentTargetBlock.toolType != currentTool.type)
+        if (currentTargetBlock.toolType != toolType)
         {
             return currentTargetBlock.minimumToolTier == ToolTier.None ? 1.0f : 0.0f;
         }
 
-        if (currentTool.tier < currentTargetBlock.minimumToolTier)
+        if (toolTier < currentTargetBlock.minimumToolTier)
         {
             // Tool is not good enough to break the block
             return 0.0f;
         }
 
-        return currentTool.efficiency;
+        return efficiency;
     }
 
     private void TriggerBreak( )

@@ -50,10 +50,8 @@ public class AchievementManager : MonoBehaviour
 
         // Skip one row (equal to 4 achievements)
         selectedIndex += delta * 4;
-        selectedIndex %= achievements.Count;
-        selectedIndex += achievements.Count;
-        selectedIndex %= achievements.Count;
-
+        selectedIndex = (selectedIndex % achievements.Count + achievements.Count) % achievements.Count;
+        
         OnAchievementManagerUpdate?.Invoke(this);
     }
 

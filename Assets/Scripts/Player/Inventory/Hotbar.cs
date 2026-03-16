@@ -59,9 +59,8 @@ public class HotBar : InventoryComponent<Tool>
     {
         var (uiPage, delta) = data;
         int index = selectedIndex + delta;
-        index %= tools.Count;
-        index += tools.Count;
-        index %= tools.Count;
+        index = (index % tools.Count + tools.Count) % tools.Count;
+
         SetSelectedSlot((uiPage, index));
     }
 
@@ -77,8 +76,8 @@ public class HotBar : InventoryComponent<Tool>
 
     public Tool GetSelectedTool()
     {
-        if (tools == null || tools.Count <= selectedIndex)
-            return ItemTypeRepository.GetDefaultTool(); // Return a default "empty" tool
+        if (tools == null || selectedIndex < 0 || selectedIndex >= tools.Count)
+            return null;
         return tools[selectedIndex];
     }
 

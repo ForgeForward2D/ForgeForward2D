@@ -18,7 +18,7 @@ public class CraftingManager
 
     public void Start()
     {
-        allRecipes = CraftingRecipeRepository.GetAllRecipes();
+        allRecipes = new List<CraftingRecipe>(Resources.LoadAll<CraftingRecipe>("CraftingRecipes"));
         UpdateAvailableRecipes();
         inventoryManager.OnInventoryUpdate += HandleInventoryUpdate;
         CraftingTableUI.RequestRefresh += HandleRequestRefresh;
@@ -53,10 +53,8 @@ public class CraftingManager
         int delta = movementInput.y > 0 ? -1 : 1;
 
         selectedRecipeIndex += delta;
-        selectedRecipeIndex %= availableRecipes.Count;
-        selectedRecipeIndex += availableRecipes.Count;
-        selectedRecipeIndex %= availableRecipes.Count;
-
+        selectedRecipeIndex = (selectedRecipeIndex % availableRecipes.Count + availableRecipes.Count) % availableRecipes.Count;
+        
         OnCraftingManagerUpdate?.Invoke(this);
     }
 
@@ -94,7 +92,7 @@ public class CraftingManager
 
     private void UpdateAvailableRecipes()
     {
-        availableRecipes = CraftingRecipeRepository.GetAllRecipes()
+        availableRecipes = allRecipes
             .Where(recipe => inventoryManager.CountFreeSpace(recipe.result.itemType) >= recipe.result.count)
             .ToList();
         if (selectedRecipeIndex >= availableRecipes.Count)
