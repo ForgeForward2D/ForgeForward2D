@@ -21,7 +21,7 @@ public class HotBar : InventoryComponent<Tool>
         InputManager.OnHotBarSelected += SetSelectedSlot;
         InputManager.OnHotBarScroll += ChangeSelectedSlot;
 
-        toolTypes = new List<ToolType>((ToolType[]) Enum.GetValues(typeof(ToolType)));
+        toolTypes = new List<ToolType>((ToolType[])Enum.GetValues(typeof(ToolType)));
         toolTypes.Remove(ToolType.None);
 
         int startingToolCount = tools == null ? 0 : tools.Count;
