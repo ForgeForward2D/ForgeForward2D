@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Tool : ItemType
 {
-    [SerializeField] public ToolType type;
-    [SerializeField] public ToolTier tier;
-    [SerializeField] public float efficiency = 1f;
+    public ToolType type;
+    public ToolTier tier;
+    public float efficiency = 1f;
+    public GameObject prefab;
 }
 
 public enum ToolType

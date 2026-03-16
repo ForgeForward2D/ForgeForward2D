@@ -10,15 +10,15 @@ public class AchievementPopupManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image iconImage;
 
+    [Header("Settings")]
     [SerializeField] private float displayDuration = 3f;
     [SerializeField] private float fadeDuration = 0.5f;
 
-    [SerializeField] private Sprite defaultIcon;
 
-    private Queue<AchievementManager.Achievement> achievementQueue = new Queue<AchievementManager.Achievement>();
+    private Queue<Achievement> achievementQueue = new Queue<Achievement>();
     private bool isShowingPopup = false;
 
-    private void OnEnable()
+    private void Awake()
     {
         AchievementManager.OnAchievementUnlocked += HandleAchievementUnlocked;
 
@@ -29,18 +29,10 @@ public class AchievementPopupManager : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        AchievementManager.OnAchievementUnlocked -= HandleAchievementUnlocked;
-
-        isShowingPopup = false;
-        if (popupCanvasGroup != null) popupCanvasGroup.alpha = 0f;
-        StopAllCoroutines();
-    }
-
-    private void HandleAchievementUnlocked(AchievementManager.Achievement ach)
+    private void HandleAchievementUnlocked(Achievement ach)
     {
         achievementQueue.Enqueue(ach);
+        Debug.Log($"Added achievment to queue {ach.title}, {achievementQueue.Count}");
 
         if (!isShowingPopup && gameObject.activeInHierarchy)
         {
@@ -50,31 +42,19 @@ public class AchievementPopupManager : MonoBehaviour
 
     private IEnumerator ProcessPopupQueue()
     {
+        Debug.Log($"Start processing achievement queue {achievementQueue.Count}");
         isShowingPopup = true;
 
         while (achievementQueue.Count > 0)
         {
-            AchievementManager.Achievement currentAch = achievementQueue.Dequeue();
+            Achievement currentAch = achievementQueue.Dequeue();
+            Debug.Log($"Processing: {currentAch.title}");
 
             titleText.text = currentAch.title;
-            BlockType type = BlockTypeRepository.GetBlockById(currentAch.blockTypeId);
+            BlockType type = currentAch.blockType;
             string blockName = (type != null) ? type.displayName : "Unknown Block";
 
-            iconImage.sprite = defaultIcon;
-
-            if (!string.IsNullOrEmpty(currentAch.iconPath))
-            {
-                Sprite[] icons = Resources.LoadAll<Sprite>(currentAch.iconPath);
-
-                if (icons != null && icons.Length > 0)
-                {
-                    iconImage.sprite = icons[0];
-                }
-                else
-                {
-                    Debug.LogWarning($"AchievementPopupManager: Icon not found at 'Resources/{currentAch.iconPath}' for achievement '{currentAch.id}'");
-                }
-            }
+            iconImage.sprite = currentAch.icon;
 
             yield return StartCoroutine(FadePopup(0f, 1f));
 

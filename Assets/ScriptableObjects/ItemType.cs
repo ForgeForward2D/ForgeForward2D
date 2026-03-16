@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class ItemType : ScriptableObject
 {
-    [SerializeField] public int Id;
-    [SerializeField] public string DisplayName;
-    [SerializeField] public int MaxStackSize = 64;
-    [SerializeField] public Sprite Icon;
-    [SerializeField] public GameObject Prefab;
+    public string displayName;
+    public int maxStackSize = 64;
+    public Sprite icon;
 }

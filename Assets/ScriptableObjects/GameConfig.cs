@@ -9,4 +9,5 @@ public class GameConfig : ScriptableObject
     public float player_speed;
     public float player_breaking_speed;
     public float block_breaking_animation_min_update_interval;
+    public float scrollThreshold;
 }
