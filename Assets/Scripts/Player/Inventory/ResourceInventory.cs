@@ -6,12 +6,12 @@ using UnityEngine;
 [Serializable]
 public class ResourceInventory : InventoryComponent<ItemType>
 {
+    public static event Action<ResourceInventory> OnResourceInventoryUpdate;
+
     [SerializeField] int capacity = 21;
 
     [Header("Debugging")]
     [SerializeField] private List<Item> items;
-
-    public static event Action<ResourceInventory> OnResourceInventoryUpdate;
 
     public void Start()
     {

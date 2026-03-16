@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteractionManager : MonoBehaviour
 {
+    public static event Action<(UIPage, BlockType, Vector2Int)> OnInteraction;
+    
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
     [SerializeField] private Transform playerTransform;
@@ -13,10 +15,10 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         movementManager = GetComponent<MovementManager>();
         playerTransform = GetComponent<Transform>();
+
         InputManager.OnInteractionInput += HandleInteractionInput;
     }
 
-    public static event Action<(UIPage, BlockType, Vector2Int)> OnInteraction;
     public void HandleInteractionInput(UIPage uiPage)
     {
         Vector3 player3DPosition = playerTransform.position;

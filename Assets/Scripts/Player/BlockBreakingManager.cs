@@ -11,9 +11,8 @@ public class BlockBreakingManager : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
     [SerializeField] private Transform playerTransform;
-
-    public Tool currentTool;
-
+    [SerializeField] private Tool currentTool;
+    
     private bool isPlayerHoldingAttack=false;
     private bool isBreaking = false;
     private float breakProgress = 0f;
@@ -33,7 +32,6 @@ public class BlockBreakingManager : MonoBehaviour
         HotBar.OnHotBarUpdate += HandleHotBarUpdate;
         TileMapManager.OnBlockChanged += HandleBlockChanged;
     }
-
 
     void Update()
     {

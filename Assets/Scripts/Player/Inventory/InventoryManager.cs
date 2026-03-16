@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
 {
+    public event Action<InventoryManager> OnInventoryUpdate;
+
+    [Header("Debugging")]
     [SerializeField] public ResourceInventory resourceInventory = new ResourceInventory();
     [SerializeField] public HotBar hotBar = new HotBar();
     [SerializeField] public CraftingManager craftingManager = new CraftingManager();
-
-    public event Action<InventoryManager> OnInventoryUpdate;
 
     private void Start()
     {

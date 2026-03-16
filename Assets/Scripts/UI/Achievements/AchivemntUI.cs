@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class AchievementUI : UIComponent<AchievementManager>
 {
     public static event Action RequestRefresh;
+
     public void OnEnable()
     {
         AchievementManager.OnAchievementManagerUpdate += RefreshUI;

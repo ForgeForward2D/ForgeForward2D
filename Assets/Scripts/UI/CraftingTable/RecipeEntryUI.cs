@@ -5,12 +5,6 @@ using UnityEngine.UI;
 
 public class RecipeEntryUI : UIComponent<CraftingRecipePreview>
 {
-    [SerializeField] private List<UIComponentBase> childrenView;
-    public void Start()
-    {
-        childrenView = GetChildren();
-    }
-
     public override void RefreshUI(CraftingRecipePreview recipePreview)
     {
         List<UIComponentBase> children = GetChildren();

@@ -6,16 +6,12 @@ using UnityEngine.U2D;
 public class CameraScript : MonoBehaviour
 {
     [SerializeField] GameConfig gameConfig;
-
     [SerializeField] Transform playerTransform;
-
     [SerializeField] PixelPerfectCamera pixelPerfectCamera;
 
-
-
-    public int camera_height;
-
-    private (int xMin, int xMax, int yMin, int yMax) mapBounds;
+    [Header("Debugging")]
+    [SerializeField] private int camera_height;
+    [SerializeField] private (int xMin, int xMax, int yMin, int yMax) mapBounds;
 
     void Start()
     {

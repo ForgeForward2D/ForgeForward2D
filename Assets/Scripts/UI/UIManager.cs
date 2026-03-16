@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private ResourceInventoryUI resourceInventoryUI;
+    public static event Action<UIPage> OnUpdatePage;
 
+    [SerializeField] private ResourceInventoryUI resourceInventoryUI;
     [SerializeField] private CraftingTableUI craftingTableUI;
     [SerializeField] private BlockType craftingTableBlockType;
-    
     [SerializeField] private AchievementUI achievementUI;
-
-    public static event Action<UIPage> OnUpdatePage;
 
     void Awake()
     {

@@ -12,7 +12,8 @@ public enum UIPage
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] GameConfig gameConfig;
+    [SerializeField] private GameConfig gameConfig;
+
     [Header("Debugging")]
     [SerializeField] private UIPage uiPage = UIPage.None;
 

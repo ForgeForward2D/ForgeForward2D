@@ -8,13 +8,11 @@ public class MovementManager : MonoBehaviour
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private Transform characterModel;
 
-    [Header("Debug")]
+    [Header("Debugging")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private Vector2Int moveDirection;
-
-    public bool IsHoldingAttack { get; private set; }
 
     public void Start()
     {
@@ -74,34 +72,4 @@ public class MovementManager : MonoBehaviour
     {
         return moveDirection ;
     }
-
-    // public void Achievements(InputAction.CallbackContext context)
-    // {
-    //     if (context.phase != InputActionPhase.Performed) return;
-
-    //     if (resourceInventoryUI != null && resourceInventoryUI.IsOpen)
-    //     {
-    //         Debug.Log("Cannot open Achievements: Inventory is currently open!");
-    //         return;
-    //     }
-
-    //     if (achievementUI != null)
-    //     {
-    //         achievementUI.Toggle();
-    //         Debug.Log("Achievement UI toggled");
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning("AchievementUI reference is missing in Player!");
-    //     }
-    // }
-
-    // public void OnScrollAchievements(InputAction.CallbackContext context)
-    // {
-    //     if (achievementUI != null && achievementUI.IsOpen)
-    //     {
-    //         float value = context.ReadValue<float>();
-    //         achievementUI.SetScrollInput(value);
-    //     }
-    // }
 }

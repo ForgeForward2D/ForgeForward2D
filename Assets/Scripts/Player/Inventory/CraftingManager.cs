@@ -7,14 +7,14 @@ using UnityEngine.UI;
 [Serializable]
 public class CraftingManager
 {
-    [SerializeField] private int selectedRecipeIndex = 0;
+    public static event Action<CraftingManager> OnCraftingManagerUpdate;
+
     [SerializeField] private InventoryManager inventoryManager;
 
     [Header("Debugging")]
-    [SerializeField] private List<CraftingRecipe> allRecipes = new List<CraftingRecipe>();
-    [SerializeField] private List<CraftingRecipe> availableRecipes = new List<CraftingRecipe>();
-
-    public static event Action<CraftingManager> OnCraftingManagerUpdate;
+    [SerializeField] private List<CraftingRecipe> allRecipes; 
+    [SerializeField] private List<CraftingRecipe> availableRecipes;
+    [SerializeField] private int selectedRecipeIndex = 0;
 
     public void Start()
     {

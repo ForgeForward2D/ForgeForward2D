@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class AchievementSlotUI : UIComponent<Achievement>
 {
-    [Header("References")]
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Image background;

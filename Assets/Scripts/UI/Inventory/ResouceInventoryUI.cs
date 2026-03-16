@@ -5,6 +5,7 @@ using UnityEngine;
 public class ResourceInventoryUI : UIComponent<ResourceInventory>
 {
     public static event Action RequestRefresh;
+
     public void OnEnable()
     {
         ResourceInventory.OnResourceInventoryUpdate += RefreshUI;

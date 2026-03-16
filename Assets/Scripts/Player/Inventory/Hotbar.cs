@@ -6,13 +6,13 @@ using UnityEngine;
 [Serializable]
 public class HotBar : InventoryComponent<Tool>
 {
+    public static event Action<HotBar> OnHotBarUpdate;
+
     [SerializeField] private List<Tool> tools;
 
     [Header("Debugging")]
-    [SerializeField] private int selectedIndex = 0;
     [SerializeField] private List<ToolType> toolTypes;
-
-    public static event Action<HotBar> OnHotBarUpdate;
+    [SerializeField] private int selectedIndex = 0;
 
     // Initialize hot bar
     public void Start()
@@ -146,13 +146,13 @@ public class HotBar : InventoryComponent<Tool>
         int index = ToolTypeToIndex(tool.type);
         if (index < 0 || index >= tools.Count)
         {
-            Debug.LogWarning($"Can not remove {tool.displayName}, because its index is invalid (0<={index}<{tools.Count})");
+            Debug.LogError($"Can not remove {tool.displayName}, because its index is invalid (0<={index}<{tools.Count})");
             return;
         }
 
         if (tools[index] != tool)
         {
-            Debug.LogWarning($"Can not remove {tool.displayName}, because its not in the hot bar");
+            Debug.LogError($"Can not remove {tool.displayName}, because its not in the hot bar");
             return;
         }
 

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CraftingTableUI : UIComponent<CraftingManager>
 {
     public static event Action RequestRefresh;
+
     public void OnEnable()
     {
         CraftingManager.OnCraftingManagerUpdate += RefreshUI;

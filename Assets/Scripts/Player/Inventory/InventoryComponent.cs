@@ -17,7 +17,7 @@ public interface InventoryComponent<Type>
         }
         if (item.itemType is Type type)
         {
-            // add as may items as possible, even if the space is not enough
+            // add as many items as possible stopping when space is full
             bool success = CountFreeSpace(type) >= item.count;
             AddItemOfType(type, item.count);
             NotifyInventoryUpdate();
@@ -39,7 +39,7 @@ public interface InventoryComponent<Type>
         if (item.itemType is Type type)
         {
             // only remove, if enough exists
-            if (CountFreeSpace(type) >= item.count)
+            if (CountElements(type) >= item.count)
             {
                 RemoveItemOfType(type, item.count);
                 NotifyInventoryUpdate();

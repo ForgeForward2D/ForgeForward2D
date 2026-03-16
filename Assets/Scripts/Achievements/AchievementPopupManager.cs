@@ -6,7 +6,6 @@ using TMPro;
 
 public class AchievementPopupManager : MonoBehaviour
 {
-    [Header("References")]
     [SerializeField] private CanvasGroup popupCanvasGroup;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image iconImage;

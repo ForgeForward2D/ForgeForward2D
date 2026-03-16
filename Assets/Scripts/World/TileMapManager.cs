@@ -10,6 +10,9 @@ public class TileMapManager : MonoBehaviour
     [SerializeField] private Tilemap walkableTilemap;
     [SerializeField] private Tilemap animationTilemap;
 
+    [Header("Settings")]
+    [SerializeField] private float hitBoxSize = 0.9f;
+
     public static Action<(BlockType, Vector2Int)> OnBlockChanged;
 
     private void Awake()
@@ -112,7 +115,7 @@ public class TileMapManager : MonoBehaviour
         Vector3Int cell = new Vector3Int(pos.x, pos.y, 0);
         Vector3 center = wallTilemap.GetCellCenterWorld(cell);
 
-        Vector2 size = wallTilemap.cellSize * 0.9f;
+        Vector2 size = wallTilemap.cellSize * hitBoxSize;
 
         LayerMask mask = ~(1 << wallTilemap.gameObject.layer);
 
