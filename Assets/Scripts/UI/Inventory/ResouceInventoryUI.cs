@@ -38,7 +38,7 @@ public class ResourceInventoryUI : UIComponent<ResourceInventory>
                 }
                 else
                 {
-                    Debug.LogError("Error instantiating new resource inventor item slot");
+                    Debug.LogError("Error instantiating new resource inventory item slot");
                 }
             }
         }
@@ -57,7 +57,7 @@ public class ResourceInventoryUI : UIComponent<ResourceInventory>
                     Destroy(childToRemove.gameObject);
                 }
             }
-        } 
+        }
 
         for (int i = 0; i < children.Count; i++)
         {
