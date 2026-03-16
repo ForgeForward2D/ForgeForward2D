@@ -97,20 +97,20 @@ public class ResourceInventory : InventoryComponent<ItemType>
         Debug.Assert(itemType != null, "Try adding null item. This was checked previously");
 
         int remaining = amount;
-        for (int i = 0; i < items.Count; i++)
+        foreach (var item in items)
         {
-            if (items[i] != null && items[i].itemType == itemType)
+            if (item != null && item.itemType == itemType)
             {
-                int space = items[i].itemType.maxStackSize - items[i].count;
+                int space = item.itemType.maxStackSize - item.count;
 
                 if (remaining <= space)
                 {
-                    items[i].count += remaining;
+                    item.count += remaining;
                     OnResourceInventoryUpdate?.Invoke(this);
                     return;
                 }
 
-                items[i].count = items[i].itemType.maxStackSize;
+                item.count = item.itemType.maxStackSize;
                 remaining -= space;
             }
         }
