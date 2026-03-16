@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerInteractionManager : MonoBehaviour
 {
     public static event Action<(UIPage, BlockType, Vector2Int)> OnInteraction;
-    
+
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
     [SerializeField] private Transform playerTransform;

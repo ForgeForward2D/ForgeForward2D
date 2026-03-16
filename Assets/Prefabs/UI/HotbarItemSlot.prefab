@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 3918583960037545455}
   - component: {fileID: 8860138596485031856}
   m_Layer: 5
-  m_Name: HotbarSlot
+  m_Name: HotbarItemSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

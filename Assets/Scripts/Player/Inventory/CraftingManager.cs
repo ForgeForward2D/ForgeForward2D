@@ -12,7 +12,7 @@ public class CraftingManager
     [SerializeField] private InventoryManager inventoryManager;
 
     [Header("Debugging")]
-    [SerializeField] private List<CraftingRecipe> allRecipes; 
+    [SerializeField] private List<CraftingRecipe> allRecipes;
     [SerializeField] private List<CraftingRecipe> availableRecipes;
     [SerializeField] private int selectedRecipeIndex = 0;
 
@@ -54,7 +54,7 @@ public class CraftingManager
 
         selectedRecipeIndex += delta;
         selectedRecipeIndex = (selectedRecipeIndex % availableRecipes.Count + availableRecipes.Count) % availableRecipes.Count;
-        
+
         OnCraftingManagerUpdate?.Invoke(this);
     }
 

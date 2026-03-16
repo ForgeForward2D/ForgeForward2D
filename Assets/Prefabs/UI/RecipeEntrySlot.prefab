@@ -107,13 +107,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4869492661423922281}
-  - {fileID: 6213684757605340037}
-  - {fileID: 6543379233888209441}
-  - {fileID: 3076998656410955242}
-  - {fileID: 631002154121210269}
+  - {fileID: 3429604394929165541}
+  - {fileID: 1002706502926141898}
+  - {fileID: 86541228057009549}
+  - {fileID: 2182027348076545198}
+  - {fileID: 7158882396521172532}
   - {fileID: 5874131632958133171}
-  - {fileID: 1328983346156402861}
+  - {fileID: 8253216291521275917}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5fb69ca1dbcf4f1682b3456528cbaf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecipeEntryUI
---- !u!1001 &318096494268422315
+--- !u!1001 &3183354238922013319
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -287,19 +287,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7658567800732723322, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
       propertyPath: m_Name
-      value: SmallInventorySlot (2)
+      value: CraftingTableItemSlot (5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
---- !u!224 &6543379233888209441 stripped
+--- !u!224 &8253216291521275917 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6819817272689398410, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
-  m_PrefabInstance: {fileID: 318096494268422315}
+  m_PrefabInstance: {fileID: 3183354238922013319}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &621403224069030159
+--- !u!1001 &4466917931078950078
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -389,19 +389,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7658567800732723322, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
       propertyPath: m_Name
-      value: SmallInventorySlot (1)
+      value: CraftingTableItemSlot (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
---- !u!224 &6213684757605340037 stripped
+--- !u!224 &7158882396521172532 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6819817272689398410, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
-  m_PrefabInstance: {fileID: 621403224069030159}
+  m_PrefabInstance: {fileID: 4466917931078950078}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2105206788431466211
+--- !u!1001 &4678331691141682724
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -491,19 +491,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7658567800732723322, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
       propertyPath: m_Name
-      value: SmallInventorySlot
+      value: CraftingTableItemSlot (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
---- !u!224 &4869492661423922281 stripped
+--- !u!224 &2182027348076545198 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6819817272689398410, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
-  m_PrefabInstance: {fileID: 2105206788431466211}
+  m_PrefabInstance: {fileID: 4678331691141682724}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &5536512611110513191
+--- !u!1001 &6002893602665700160
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -593,19 +593,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7658567800732723322, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
       propertyPath: m_Name
-      value: SmallInventorySlot (5)
+      value: CraftingTableItemSlot (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
---- !u!224 &1328983346156402861 stripped
+--- !u!224 &1002706502926141898 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6819817272689398410, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
-  m_PrefabInstance: {fileID: 5536512611110513191}
+  m_PrefabInstance: {fileID: 6002893602665700160}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6225415803376712471
+--- !u!1001 &6888167003001589511
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -695,19 +695,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7658567800732723322, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
       propertyPath: m_Name
-      value: SmallInventorySlot (4)
+      value: CraftingTableItemSlot (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
---- !u!224 &631002154121210269 stripped
+--- !u!224 &86541228057009549 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6819817272689398410, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
-  m_PrefabInstance: {fileID: 6225415803376712471}
+  m_PrefabInstance: {fileID: 6888167003001589511}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8365271744055033696
+--- !u!1001 &8159604069869454959
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -797,15 +797,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7658567800732723322, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
       propertyPath: m_Name
-      value: SmallInventorySlot (3)
+      value: CraftingTableItemSlot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
---- !u!224 &3076998656410955242 stripped
+--- !u!224 &3429604394929165541 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6819817272689398410, guid: b67342870b2a84a82a9cb525ef2da3bb, type: 3}
-  m_PrefabInstance: {fileID: 8365271744055033696}
+  m_PrefabInstance: {fileID: 8159604069869454959}
   m_PrefabAsset: {fileID: 0}

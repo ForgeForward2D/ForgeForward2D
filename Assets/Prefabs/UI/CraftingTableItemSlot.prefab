@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 5415137125572505238}
   - component: {fileID: 8614742079387870203}
   m_Layer: 5
-  m_Name: SmallInventorySlot
+  m_Name: CraftingTableItemSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

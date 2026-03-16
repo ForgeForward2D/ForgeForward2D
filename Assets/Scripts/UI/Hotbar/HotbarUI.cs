@@ -6,7 +6,7 @@ using UnityEngine;
 public class HotBarUI : UIComponent<HotBar>
 {
     public static event Action RequestRefresh;
-    
+
     [SerializeField] private RectTransform selectionHighlight;
     private List<RectTransform> slotTransforms = new List<RectTransform>();
 

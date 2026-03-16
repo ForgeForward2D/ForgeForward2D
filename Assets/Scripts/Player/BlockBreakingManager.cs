@@ -12,7 +12,7 @@ public class BlockBreakingManager : MonoBehaviour
     [SerializeField] private MovementManager movementManager;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Tool currentTool;
-    
+
     private bool isPlayerHoldingAttack=false;
     private bool isBreaking = false;
     private float breakProgress = 0f;

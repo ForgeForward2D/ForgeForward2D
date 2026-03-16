@@ -8,7 +8,7 @@ public class AchievementManager : MonoBehaviour
 {
     public static event Action<Achievement> OnAchievementUnlocked;
     public static event Action<AchievementManager> OnAchievementManagerUpdate;
-    
+
     [Header("Debugging")]
     [SerializeField] private List<Achievement> achievements = new List<Achievement>();
     [SerializeField] private int selectedIndex;
@@ -51,7 +51,7 @@ public class AchievementManager : MonoBehaviour
         // Skip one row (equal to 4 achievements)
         selectedIndex += delta * 4;
         selectedIndex = (selectedIndex % achievements.Count + achievements.Count) % achievements.Count;
-        
+
         OnAchievementManagerUpdate?.Invoke(this);
     }
 
@@ -82,7 +82,7 @@ public class AchievementManager : MonoBehaviour
         var (brokenBlock, _) = brokenBlockInfo;
 
         foreach (var achievement in achievements)
-        { 
+        {
             if (achievement.isUnlocked) continue;
 
             if (achievement.group == "collect_material")

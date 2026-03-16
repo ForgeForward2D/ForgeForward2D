@@ -700,13 +700,13 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 11400000, guid: fbf3dff69344c44d29af71a08ac36d95, type: 2}
     - {fileID: 11400000, guid: 9afff0717c93349fa87b9261d1fe48b2, type: 2}
-    selectedIndex: 0
     toolTypes: 
+    selectedIndex: 0
   craftingManager:
-    selectedRecipeIndex: 0
     inventoryManager: {fileID: 8655246054817101123}
     allRecipes: []
     availableRecipes: []
+    selectedRecipeIndex: 0
 --- !u!114 &8655246054817101124
 MonoBehaviour:
   m_ObjectHideFlags: 0

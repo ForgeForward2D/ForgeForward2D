@@ -16,14 +16,20 @@ public class AchievementSlotUI : UIComponent<Achievement>
 
     public override void RefreshUI(Achievement achievement)
     {
-        BlockType type = achievement.blockType;
-        string blockName = (type != null) ? type.displayName : "Unknown Block";
-
         titleText.text = achievement.title;
-        descriptionText.text = achievement.GetDescription(blockName);
-    
         iconImage.sprite = achievement.icon;
-
         background.color = achievement.isUnlocked ? unlockedColor : lockedColor;
+
+        string blockName = "Unknown Block";
+        if (achievement.blockType == null)
+        {
+            Debug.LogError($"Block Type not set for achievement {achievement.title}");
+        }
+        else
+        {
+            BlockType type = achievement.blockType;
+            blockName = (type != null) ? type.displayName : "Unknown Block";
+        }
+        descriptionText.text = achievement.GetDescription(blockName);
     }
 }
