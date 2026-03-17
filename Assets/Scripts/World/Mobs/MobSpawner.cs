@@ -100,7 +100,10 @@ public class MobSpawner : MonoBehaviour
     {
         for (int index = parent.childCount - 1; index >= 0; index--)
         {
-            Destroy(parent.GetChild(index).gameObject);
+            Transform child = parent.GetChild(index);
+            child.SetParent(null, true);
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
         }
     }
 
@@ -108,6 +111,8 @@ public class MobSpawner : MonoBehaviour
     {
         HashSet<Vector2Int> occupiedCoordinates = GetOccupiedMobCoordinates(parent);
         List<Vector2Int> coordinates = new();
+
+        spawnTilemap.CompressBounds();
         BoundsInt bounds = spawnTilemap.cellBounds;
 
         foreach (Vector3Int cell in bounds.allPositionsWithin)
