@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class MobSpawner : MonoBehaviour
 {
@@ -11,7 +10,6 @@ public class MobSpawner : MonoBehaviour
 
     [Header("Spawn Setup")]
     [SerializeField] private List<MobType> mobTypes = new();
-    [SerializeField] private Tilemap spawnTilemap;
     [SerializeField] private bool spawnOnStart = true;
     [SerializeField] private bool clearExistingMobsBeforeSpawn = true;
 
@@ -21,13 +19,6 @@ public class MobSpawner : MonoBehaviour
 
     private void Start()
     {
-        if (spawnTilemap == null)
-        {
-            Debug.LogError("MobSpawner requires an assigned spawn Tilemap reference.", this);
-            enabled = false;
-            return;
-        }
-
         if (spawnOnStart)
         {
             StartCoroutine(SpawnWhenReady());
@@ -68,13 +59,13 @@ public class MobSpawner : MonoBehaviour
 
         if (clearExistingMobsBeforeSpawn)
         {
-            ClearChildren(transform);
+            ClearChildren();
         }
 
         List<Vector2Int> availableCoordinates = GetAvailableSpawnCoordinates(transform);
         if (availableCoordinates.Count == 0)
         {
-            Debug.LogWarning("MobSpawner found no valid tile cells on the assigned spawn tilemap.", this);
+            Debug.LogWarning("MobSpawner found no valid spawn positions in the world.", this);
             return;
         }
 
@@ -93,14 +84,13 @@ public class MobSpawner : MonoBehaviour
 
             MobType selectedMobType = validMobTypes[Random.Range(0, validMobTypes.Count)];
             GameObject selectedPrefab = selectedMobType.prefab;
-            Vector3 spawnPosition = spawnTilemap.GetCellCenterWorld(new Vector3Int(coordinate.x, coordinate.y, 0));
+            Vector3 spawnPosition = TileMapManager.Instance.GetCellCenterWorld(coordinate);
             GameObject mobInstance = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, transform);
 
             MobController mobController = mobInstance.GetComponent<MobController>();
             if (mobController != null)
             {
                 mobController.SetMobType(selectedMobType);
-                mobController.ConfigureNavigation();
             }
             else
             {
@@ -133,11 +123,11 @@ public class MobSpawner : MonoBehaviour
         return validTypes;
     }
 
-    private static void ClearChildren(Transform parent)
+    private void ClearChildren()
     {
-        for (int index = parent.childCount - 1; index >= 0; index--)
+        for (int index = transform.childCount - 1; index >= 0; index--)
         {
-            Transform child = parent.GetChild(index);
+            Transform child = transform.GetChild(index);
             child.SetParent(null, true);
             child.gameObject.SetActive(false);
             Destroy(child.gameObject);
@@ -156,18 +146,13 @@ public class MobSpawner : MonoBehaviour
         HashSet<Vector2Int> occupiedCoordinates = GetOccupiedMobCoordinates(parent);
         List<Vector2Int> coordinates = new();
 
-        spawnTilemap.CompressBounds();
-        BoundsInt bounds = spawnTilemap.cellBounds;
+        (int xMin, int xMax, int yMin, int yMax) = tileMapManager.GetBounds();
 
-        for (int x = bounds.xMin; x < bounds.xMax; x++)
+        for (int x = xMin; x < xMax; x++)
         {
-            for (int y = bounds.yMin; y < bounds.yMax; y++)
+            for (int y = yMin; y < yMax; y++)
             {
                 Vector2Int coordinate = new Vector2Int(x, y);
-                if (!spawnTilemap.HasTile(new Vector3Int(x, y, 0)))
-                {
-                    continue;
-                }
 
                 if (!tileMapManager.Traversable(coordinate))
                 {
@@ -193,11 +178,12 @@ public class MobSpawner : MonoBehaviour
 
     private HashSet<Vector2Int> GetOccupiedMobCoordinates(Transform parent)
     {
+        TileMapManager tileMapManager = TileMapManager.Instance;
         HashSet<Vector2Int> occupied = new();
         for (int index = 0; index < parent.childCount; index++)
         {
-            Vector3Int cell = spawnTilemap.WorldToCell(parent.GetChild(index).position);
-            occupied.Add(new Vector2Int(cell.x, cell.y));
+            Vector2Int coordinate = tileMapManager.PositionToCoordinate(parent.GetChild(index).position);
+            occupied.Add(coordinate);
         }
 
         return occupied;
@@ -205,7 +191,7 @@ public class MobSpawner : MonoBehaviour
 
     private bool IsCellOccupied(Vector2Int coordinate, Transform parent)
     {
-        Vector3 worldCenter = spawnTilemap.GetCellCenterWorld(new Vector3Int(coordinate.x, coordinate.y, 0));
+        Vector3 worldCenter = TileMapManager.Instance.GetCellCenterWorld(coordinate);
         int count = Physics2D.OverlapPoint(worldCenter, OccupancyContactFilter, OccupancyResults);
         for (int index = 0; index < count; index++)
         {

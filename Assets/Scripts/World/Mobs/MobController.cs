@@ -9,19 +9,14 @@ public class MobController : MonoBehaviour
         Wandering,
     }
 
-    [Header("Settings")]
+    [Header("Reference")]
     [SerializeField] private MobType mobType;
-    [SerializeField] private float moveSpeed = 1.5f;
-    [SerializeField] private float directionCheckDistance = 0.45f;
-    [SerializeField] private Vector2 idleDurationRange = new Vector2(0.75f, 2f);
-    [SerializeField] private Vector2 walkDurationRange = new Vector2(1.5f, 4f);
 
     [Header("Debugging")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Vector2 moveDirection;
-    [SerializeField] private MobState currentState = MobState.Idle;
+    [SerializeField] private MobState currentState;
     [SerializeField] private float stateTimer;
-    [SerializeField] private TileMapManager tileMapManager;
 
     private static readonly Vector2[] WanderDirections =
     {
@@ -34,22 +29,15 @@ public class MobController : MonoBehaviour
     public Vector2 MoveDirection => moveDirection;
     public bool IsMoving => currentState == MobState.Wandering;
 
-    private float CurrentMoveSpeed => mobType != null ? mobType.moveSpeed : moveSpeed;
-    private float CurrentDirectionCheckDistance => mobType != null ? mobType.directionCheckDistance : directionCheckDistance;
-    private Vector2 CurrentIdleDurationRange => mobType != null ? mobType.idleDurationRange : idleDurationRange;
-    private Vector2 CurrentWalkDurationRange => mobType != null ? mobType.walkDurationRange : walkDurationRange;
-
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
-
     private void Start()
     {
-        tileMapManager = TileMapManager.Instance;
-        if (tileMapManager == null)
+        rb = GetComponent<Rigidbody2D>();
+        currentState = MobState.Idle;
+
+        if (mobType == null)
         {
-            Debug.LogWarning("MobController has no TileMapManager available at Start; movement will stay idle until configured.", this);
+            Debug.LogError("MobController requires a MobType to be assigned.", this);
+            enabled = false;
             return;
         }
 
@@ -58,13 +46,6 @@ public class MobController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (tileMapManager == null)
-        {
-            tileMapManager = TileMapManager.Instance;
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
-
         switch (currentState)
         {
             case MobState.Idle:
@@ -97,13 +78,13 @@ public class MobController : MonoBehaviour
             return;
         }
 
-        rb.linearVelocity = moveDirection * CurrentMoveSpeed;
+        rb.linearVelocity = moveDirection * mobType.moveSpeed;
     }
 
     private void EnterIdleState()
     {
         currentState = MobState.Idle;
-        stateTimer = Random.Range(CurrentIdleDurationRange.x, CurrentIdleDurationRange.y);
+        stateTimer = Random.Range(mobType.idleDurationRange.x, mobType.idleDurationRange.y);
     }
 
     private void EnterWanderState()
@@ -116,10 +97,10 @@ public class MobController : MonoBehaviour
         }
 
         currentState = MobState.Wandering;
-        stateTimer = Random.Range(CurrentWalkDurationRange.x, CurrentWalkDurationRange.y);
+        stateTimer = Random.Range(mobType.walkDurationRange.x, mobType.walkDurationRange.y);
     }
 
-    protected virtual Vector2 PickNextDirection()
+    private Vector2 PickNextDirection()
     {
         int startIndex = Random.Range(0, WanderDirections.Length);
         for (int index = 0; index < WanderDirections.Length; index++)
@@ -134,31 +115,17 @@ public class MobController : MonoBehaviour
         return Vector2.zero;
     }
 
-    protected virtual bool CanMoveInDirection(Vector2 direction)
+    private bool CanMoveInDirection(Vector2 direction)
     {
-        if (direction == Vector2.zero || tileMapManager == null)
+        if (direction == Vector2.zero)
         {
             return false;
         }
 
-        Vector3 lookAheadPosition = transform.position + (Vector3)(direction.normalized * CurrentDirectionCheckDistance);
-        return IsWalkable(lookAheadPosition);
-    }
-
-    private bool IsWalkable(Vector3 worldPosition)
-    {
-        Vector2Int cellPosition = tileMapManager.PositionToCoordinate(worldPosition);
+        Vector3 lookAheadPosition = transform.position + (Vector3)(direction.normalized * mobType.directionCheckDistance);
+        TileMapManager tileMapManager = TileMapManager.Instance;
+        Vector2Int cellPosition = tileMapManager.PositionToCoordinate(lookAheadPosition);
         return tileMapManager.Traversable(cellPosition);
-    }
-
-    public void ConfigureNavigation()
-    {
-        tileMapManager = TileMapManager.Instance;
-
-        if (tileMapManager != null)
-        {
-            EnterIdleState();
-        }
     }
 
     public void SetMobType(MobType type)

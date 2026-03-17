@@ -150,4 +150,10 @@ public class TileMapManager : MonoBehaviour
         TileBase destroyTile = DestroyTileRepository.GetDestroyTile(stage);
         animationTilemap.SetTile(tilePosition, destroyTile);
     }
+
+    public Vector3 GetCellCenterWorld(Vector2Int coordinate)
+    {
+        Vector3Int tilePosition = new Vector3Int(coordinate.x, coordinate.y, 0);
+        return walkableTilemap.GetCellCenterWorld(tilePosition);
+    }
 }

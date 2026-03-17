@@ -150,7 +150,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MobSpawner
   mobTypes:
   - {fileID: 11400000, guid: c2e482c1a7f7d6742b2e7d45be75cff7, type: 2}
-  spawnTilemap: {fileID: 1300875036997624091}
   spawnOnStart: 1
   clearExistingMobsBeforeSpawn: 1
   mobCount: 25
