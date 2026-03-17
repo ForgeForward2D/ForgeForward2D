@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,16 +10,17 @@ public class WorldGeneration : MonoBehaviour
 
     [SerializeField] Tilemap wallTilemap;
     [SerializeField] TileBase wallTile;
-
     [SerializeField] Tilemap walkableTilemap;
 
     [Header("World Generation")]
     [SerializeField] float noiseScale;
-    [SerializeField, Range(0f, 1f)] float woodChance;
-    [SerializeField, Range(0f, 1f)] float saplingChance;
-    [SerializeField, Range(0f, 1f)] float bigTreeChance;
 
     [SerializeField] int worldSeed;
+
+    [Header("Levels")]
+    [SerializeField] Level[] levels;
+
+    private TileMapManager tileMapManager;
 
     void Start()
     {
@@ -29,93 +31,11 @@ public class WorldGeneration : MonoBehaviour
         Debug.Log($"Using Seed {worldSeed}");
         Random.InitState(worldSeed);
 
-        TileMapManager tileMapManager = GetComponent<TileMapManager>();
+        tileMapManager = TileMapManager.Instance;
 
-        // Get initial bounds before generating terrain
-        (int xMin, int xMax, int yMin, int yMax) initialBounds = tileMapManager.GetBounds();
-
-        // Generate a 100x100 Perlin noise terrain to the left
-        int terrainWidth = 100;
-        int terrainHeight = 100;
-        int terrainStartX = initialBounds.xMin - terrainWidth;
-        int terrainStartY = initialBounds.yMin;
-
-        BlockType clayBlock = BlockTypeRepository.GetBlockById(9);
-        BlockType stoneBlock = BlockTypeRepository.GetBlockById(1);
-        BlockType waterBlock = BlockTypeRepository.GetBlockById(6);
-        BlockType diamondBlock = BlockTypeRepository.GetBlockById(3);
-        BlockType bricksBlock = BlockTypeRepository.GetBlockById(7);
-        BlockType woodBlock = BlockTypeRepository.GetBlockById(5);
-        BlockType saplingBlock = BlockTypeRepository.GetBlockById(4);
-
-        float noiseOffsetX = (worldSeed % 10000) + 0.5f;
-        float noiseOffsetY = (worldSeed / 10000 % 10000) + 0.5f;
-        HashSet<Vector2Int> treePositions = new HashSet<Vector2Int>();
-
-        for (int x = terrainStartX; x < terrainStartX + terrainWidth; x++)
+        foreach (var level in levels)
         {
-            for (int y = terrainStartY; y < terrainStartY + terrainHeight; y++)
-            {
-                float noiseValue = Mathf.PerlinNoise(
-                    (x + noiseOffsetX) * noiseScale,
-                    (y + noiseOffsetY) * noiseScale
-                );
-
-                Vector3Int tilePos = new Vector3Int(x, y, 0);
-
-                if (noiseValue < 0.15f)
-                {
-                    // water
-                    wallTilemap.SetTile(tilePos, waterBlock.tile);
-                }
-                else if (noiseValue < 0.2f)
-                {
-                    // clay
-                    wallTilemap.SetTile(tilePos, clayBlock.tile);
-                }
-                else if (noiseValue < 0.6f)
-                {
-                    // air / earth — randomly place wood or saplings
-                    float roll = Random.value;
-                    if (roll < woodChance && !IsAdjacentToTree(treePositions, x, y))
-                    {
-                        if (Random.value < bigTreeChance
-                            && x + 1 < terrainStartX + terrainWidth
-                            && y + 1 < terrainStartY + terrainHeight)
-                        {
-                            // Place a 2x2 tree
-                            PlaceWood(wallTilemap, woodBlock, treePositions, x, y);
-                            PlaceWood(wallTilemap, woodBlock, treePositions, x + 1, y);
-                            PlaceWood(wallTilemap, woodBlock, treePositions, x, y + 1);
-                            PlaceWood(wallTilemap, woodBlock, treePositions, x + 1, y + 1);
-                        }
-                        else
-                        {
-                            PlaceWood(wallTilemap, woodBlock, treePositions, x, y);
-                        }
-                    }
-                    else if (roll < woodChance + saplingChance && !IsAdjacentToTree(treePositions, x, y))
-                    {
-                        walkableTilemap.SetTile(tilePos, saplingBlock.tile);
-                        treePositions.Add(new Vector2Int(x, y));
-                    }
-                }
-                else if (noiseValue < 0.7f)
-                {
-                    // stone
-                    wallTilemap.SetTile(tilePos, stoneBlock.tile);
-                }
-                else if (noiseValue < 0.71f)
-                {
-                    // dia ore
-                    wallTilemap.SetTile(tilePos, diamondBlock.tile);
-                }
-                else
-                {
-                    // bricks
-                    wallTilemap.SetTile(tilePos, bricksBlock.tile);
-                }
-            }
+            generateLevel(level);
         }
 
         // Recalculate bounds after terrain generation
@@ -144,24 +64,108 @@ public class WorldGeneration : MonoBehaviour
         }
     }
 
-    bool IsAdjacentToTree(HashSet<Vector2Int> treePositions, int x, int y)
+    void generateLevel(Level level)
     {
-        for (int dx = -1; dx <= 1; dx++)
+        // (int xMin, int xMax, int yMin, int yMax) bounds = level.bounds;
+        Vector2Int startingPoint = level.startingPoint;
+        Vector2Int generationDirection = level.generationDirection;
+        int levelSize = level.levelSize;
+
+        PerlinMapping[] blockMapping = level.blockMapping.OrderBy(m => m.threshold).ToArray();
+
+        (int xMin, int xMax, int yMin, int yMax) initialBounds = tileMapManager.GetBounds();
+
+        float noiseOffsetX = (worldSeed % 10000) + 0.5f;
+        float noiseOffsetY = (worldSeed / 10000 % 10000) + 0.5f;
+        HashSet<Vector2Int> streuselPositions = new HashSet<Vector2Int>();
+
+        int xStart, xEnd, xStep;
+        if (generationDirection.x != 0)
         {
-            for (int dy = -1; dy <= 1; dy++)
+            xStart = startingPoint.x;
+            xEnd = startingPoint.x + generationDirection.x * levelSize;
+            xStep = generationDirection.x;
+        }
+        else
+        {
+            xStart = startingPoint.x;
+            xEnd = startingPoint.x + 1;
+            xStep = 1;
+        }
+
+        int yStart, yEnd, yStep;
+        if (generationDirection.y != 0)
+        {
+            yStart = startingPoint.y;
+            yEnd = startingPoint.y + generationDirection.y * levelSize;
+            yStep = generationDirection.y;
+        }
+        else
+        {
+            yStart = startingPoint.y;
+            yEnd = startingPoint.y + 1;
+            yStep = 1;
+        }
+
+        for (int x = xStart; xStep > 0 ? x < xEnd : x > xEnd; x += xStep)
+        {
+            for (int y = yStart; yStep > 0 ? y < yEnd : y > yEnd; y += yStep)
             {
-                if (dx == 0 && dy == 0) continue;
-                if (treePositions.Contains(new Vector2Int(x + dx, y + dy)))
-                    return true;
+                float noiseValue = Mathf.PerlinNoise(
+                    (x + noiseOffsetX) * noiseScale,
+                    (y + noiseOffsetY) * noiseScale
+                );
+                Debug.Log($"{noiseValue}");
+
+                Vector3Int tilePos = new Vector3Int(x, y, 0);
+
+                foreach (var perlinMapping in blockMapping)
+                {
+                    BlockType block = perlinMapping.block;
+                    float threshold = perlinMapping.threshold;
+                    Streusel streusel = perlinMapping.streusel;
+
+                    if (noiseValue < threshold)
+                    {
+                        if (streusel != null)
+                        {
+                            float roll = Random.value;
+                            if (roll < streusel.probability)
+                            {
+                                PlaceStreusel(wallTilemap, streusel.block, streuselPositions, x, y);
+                                break;
+                            }
+                        }
+                        if (block == null)
+                        {
+                            break;
+                        }
+                        wallTilemap.SetTile(tilePos, block.tile);
+                        break;
+                    }
+                }
             }
         }
-        return false;
     }
 
-    void PlaceWood(Tilemap tilemap, BlockType woodBlock, HashSet<Vector2Int> treePositions, int x, int y)
+    // bool IsAdjacentToStreusel(HashSet<Vector2Int> streuselPositions, int x, int y)
+    // {
+    //     for (int dx = -1; dx <= 1; dx++)
+    //     {
+    //         for (int dy = -1; dy <= 1; dy++)
+    //         {
+    //             if (dx == 0 && dy == 0) continue;
+    //             if (streuselPositions.Contains(new Vector2Int(x + dx, y + dy)))
+    //                 return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+
+    void PlaceStreusel(Tilemap tilemap, BlockType streuselBlock, HashSet<Vector2Int> streuselPositions, int x, int y)
     {
         Vector3Int tilePos = new Vector3Int(x, y, 0);
-        tilemap.SetTile(tilePos, woodBlock.tile);
-        treePositions.Add(new Vector2Int(x, y));
+        tilemap.SetTile(tilePos, streuselBlock.tile);
+        streuselPositions.Add(new Vector2Int(x, y));
     }
 }
