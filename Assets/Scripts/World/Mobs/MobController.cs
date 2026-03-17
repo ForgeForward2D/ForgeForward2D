@@ -27,6 +27,8 @@ public class MobController : MonoBehaviour
     [SerializeField] private MobState currentState = MobState.Idle;
     [SerializeField] private float stateTimer;
 
+    private bool isNavigationConfigured;
+
     private static readonly Vector2[] WanderDirections =
     {
         Vector2.up,
@@ -47,16 +49,22 @@ public class MobController : MonoBehaviour
     {
         if (walkableTilemap == null)
         {
-            Debug.LogError("MobController requires an assigned walkable Tilemap.", this);
-            enabled = false;
+            Debug.LogWarning("MobController has no walkable Tilemap assigned at Start; movement will stay idle until configured.", this);
             return;
         }
 
+        isNavigationConfigured = true;
         EnterIdleState();
     }
 
     private void FixedUpdate()
     {
+        if (walkableTilemap == null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         switch (currentState)
         {
             case MobState.Idle:
@@ -179,5 +187,11 @@ public class MobController : MonoBehaviour
     {
         walkableTilemap = walkable;
         blockedTilemap = blocked;
+
+        if (!isNavigationConfigured && walkableTilemap != null)
+        {
+            isNavigationConfigured = true;
+            EnterIdleState();
+        }
     }
 }

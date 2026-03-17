@@ -6,6 +6,9 @@ using UnityEngine.Tilemaps;
 
 public class MobSpawner : MonoBehaviour
 {
+    private static readonly Collider2D[] OccupancyResults = new Collider2D[8];
+    private static readonly ContactFilter2D OccupancyContactFilter = new ContactFilter2D();
+
     [Header("Spawn Setup")]
     [SerializeField] private List<GameObject> mobPrefabs = new();
     [SerializeField] private Transform mobContainer;
@@ -53,6 +56,12 @@ public class MobSpawner : MonoBehaviour
         }
 
         Transform parent = mobContainer != null ? mobContainer : transform;
+        List<GameObject> validMobPrefabs = GetValidMobPrefabs();
+        if (validMobPrefabs.Count == 0)
+        {
+            Debug.LogWarning("MobSpawner has no valid mob prefabs assigned.", this);
+            return;
+        }
 
         if (clearExistingMobsBeforeSpawn)
         {
@@ -79,7 +88,7 @@ public class MobSpawner : MonoBehaviour
             availableCoordinates[randomIndex] = availableCoordinates[availableCoordinates.Count - 1];
             availableCoordinates.RemoveAt(availableCoordinates.Count - 1);
 
-            GameObject selectedPrefab = mobPrefabs[Random.Range(0, mobPrefabs.Count)];
+            GameObject selectedPrefab = validMobPrefabs[Random.Range(0, validMobPrefabs.Count)];
             Vector3Int tilePosition = new Vector3Int(coordinate.x, coordinate.y, 0);
             Vector3 spawnPosition = spawnTilemap.GetCellCenterWorld(tilePosition);
             GameObject mobInstance = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, parent);
@@ -96,14 +105,48 @@ public class MobSpawner : MonoBehaviour
         }
     }
 
+    private List<GameObject> GetValidMobPrefabs()
+    {
+        List<GameObject> validPrefabs = new();
+        List<int> nullPrefabIndices = new();
+
+        for (int index = 0; index < mobPrefabs.Count; index++)
+        {
+            GameObject prefab = mobPrefabs[index];
+            if (prefab != null)
+            {
+                validPrefabs.Add(prefab);
+            }
+            else
+            {
+                nullPrefabIndices.Add(index);
+            }
+        }
+
+        if (nullPrefabIndices.Count > 0)
+        {
+            string nullSlots = string.Join(", ", nullPrefabIndices);
+            Debug.LogWarning($"MobSpawner has unassigned mob prefab slots at indices: {nullSlots}. These entries will be ignored.", this);
+        }
+
+        return validPrefabs;
+    }
+
     private static void ClearChildren(Transform parent)
     {
         for (int index = parent.childCount - 1; index >= 0; index--)
         {
             Transform child = parent.GetChild(index);
-            child.SetParent(null, true);
-            child.gameObject.SetActive(false);
-            Destroy(child.gameObject);
+            if (Application.isPlaying)
+            {
+                child.SetParent(null, true);
+                child.gameObject.SetActive(false);
+                Destroy(child.gameObject);
+            }
+            else
+            {
+                DestroyImmediate(child.gameObject);
+            }
         }
     }
 
@@ -123,6 +166,11 @@ public class MobSpawner : MonoBehaviour
             }
 
             if (blockedTilemap != null && blockedTilemap.HasTile(cell))
+            {
+                continue;
+            }
+
+            if (IsCellOccupiedByCollider(cell, parent))
             {
                 continue;
             }
@@ -149,6 +197,44 @@ public class MobSpawner : MonoBehaviour
         }
 
         return occupied;
+    }
+
+    private bool IsCellOccupiedByCollider(Vector3Int cell, Transform parent)
+    {
+        Vector3 worldCenter = spawnTilemap.GetCellCenterWorld(cell);
+        return IsWorldPositionOccupied(worldCenter, parent);
+    }
+
+    private bool IsWorldPositionOccupied(Vector3 worldPosition, Transform parent)
+    {
+        int count = Physics2D.OverlapPoint(worldPosition, OccupancyContactFilter, OccupancyResults);
+        for (int index = 0; index < count; index++)
+        {
+            Collider2D collider = OccupancyResults[index];
+            if (collider == null)
+            {
+                continue;
+            }
+
+            if (collider.isTrigger)
+            {
+                continue;
+            }
+
+            if (parent != null && collider.transform.IsChildOf(parent))
+            {
+                continue;
+            }
+
+            if (collider.transform == transform)
+            {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
 }
