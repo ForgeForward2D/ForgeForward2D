@@ -110,12 +110,6 @@ public class TileMapManager : MonoBehaviour
         return null;
     }
 
-    public bool Walkable(Vector2Int position)
-    {
-        BlockType blockType = GetBlockTypeAtPosition(position);
-        return blockType != null && blockType.walkable;
-    }
-
     public bool Traversable(Vector2Int position)
     {
         BlockType blockType = GetBlockTypeAtPosition(position);
