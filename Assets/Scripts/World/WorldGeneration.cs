@@ -120,7 +120,7 @@ public class WorldGeneration : MonoBehaviour
 
         // Recalculate bounds after terrain generation
         (int xMin, int xMax, int yMin, int yMax) mapBounds = tileMapManager.GetBounds();
-        Debug.Log("Set world borders to x: (" + mapBounds.xMin + ", " + mapBounds.xMax + "), y: (" + mapBounds.yMin + ", " + mapBounds.yMax + ")");
+        Debug.Log($"Set world borders to x: ({mapBounds.xMin}, {mapBounds.xMax}), y: ({mapBounds.yMin}, {mapBounds.yMax})");
 
         for (int y = mapBounds.yMin - 1; y <= mapBounds.yMax; y++)
         {
