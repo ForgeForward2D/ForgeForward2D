@@ -148,14 +148,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbca344a5b27a864089dda76e4fd7441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MobSpawner
-  mobPrefabs:
-  - {fileID: 2939615087842769253, guid: bf5b666682e8fee44b8c1c30c8c9882b, type: 3}
-  mobContainer: {fileID: 0}
+  mobTypes:
+  - {fileID: 11400000, guid: c2e482c1a7f7d6742b2e7d45be75cff7, type: 2}
   spawnTilemap: {fileID: 1300875036997624091}
-  blockedTilemap: {fileID: 7420243097569545091}
   spawnOnStart: 1
   clearExistingMobsBeforeSpawn: 1
-  mobCount: 20
+  mobCount: 25
   startupSpawnWaitFrames: 5
 --- !u!4 &245548429
 Transform:

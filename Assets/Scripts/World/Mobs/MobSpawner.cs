@@ -10,10 +10,8 @@ public class MobSpawner : MonoBehaviour
     private static readonly ContactFilter2D OccupancyContactFilter = new ContactFilter2D();
 
     [Header("Spawn Setup")]
-    [SerializeField] private List<GameObject> mobPrefabs = new();
-    [SerializeField] private Transform mobContainer;
+    [SerializeField] private List<MobType> mobTypes = new();
     [SerializeField] private Tilemap spawnTilemap;
-    [SerializeField] private Tilemap blockedTilemap;
     [SerializeField] private bool spawnOnStart = true;
     [SerializeField] private bool clearExistingMobsBeforeSpawn = true;
 
@@ -49,26 +47,31 @@ public class MobSpawner : MonoBehaviour
     [ContextMenu("Spawn Mobs")]
     public void SpawnMobs()
     {
-        if (mobPrefabs.Count == 0)
+        if (!Application.isPlaying)
         {
-            Debug.LogWarning("MobSpawner has no mob prefabs assigned.", this);
+            Debug.LogWarning("MobSpawner: 'Spawn Mobs' can only be used in Play Mode.", this);
             return;
         }
 
-        Transform parent = mobContainer != null ? mobContainer : transform;
-        List<GameObject> validMobPrefabs = GetValidMobPrefabs();
-        if (validMobPrefabs.Count == 0)
+        if (mobTypes.Count == 0)
         {
-            Debug.LogWarning("MobSpawner has no valid mob prefabs assigned.", this);
+            Debug.LogWarning("MobSpawner has no mob types assigned.", this);
+            return;
+        }
+
+        List<MobType> validMobTypes = GetValidMobTypes();
+        if (validMobTypes.Count == 0)
+        {
+            Debug.LogWarning("MobSpawner has no valid mob types assigned.", this);
             return;
         }
 
         if (clearExistingMobsBeforeSpawn)
         {
-            ClearChildren(parent);
+            ClearChildren(transform);
         }
 
-        List<Vector2Int> availableCoordinates = GetAvailableSpawnCoordinates(parent);
+        List<Vector2Int> availableCoordinates = GetAvailableSpawnCoordinates(transform);
         if (availableCoordinates.Count == 0)
         {
             Debug.LogWarning("MobSpawner found no valid tile cells on the assigned spawn tilemap.", this);
@@ -88,15 +91,16 @@ public class MobSpawner : MonoBehaviour
             availableCoordinates[randomIndex] = availableCoordinates[availableCoordinates.Count - 1];
             availableCoordinates.RemoveAt(availableCoordinates.Count - 1);
 
-            GameObject selectedPrefab = validMobPrefabs[Random.Range(0, validMobPrefabs.Count)];
-            Vector3Int tilePosition = new Vector3Int(coordinate.x, coordinate.y, 0);
-            Vector3 spawnPosition = spawnTilemap.GetCellCenterWorld(tilePosition);
-            GameObject mobInstance = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, parent);
+            MobType selectedMobType = validMobTypes[Random.Range(0, validMobTypes.Count)];
+            GameObject selectedPrefab = selectedMobType.prefab;
+            Vector3 spawnPosition = spawnTilemap.GetCellCenterWorld(new Vector3Int(coordinate.x, coordinate.y, 0));
+            GameObject mobInstance = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, transform);
 
             MobController mobController = mobInstance.GetComponent<MobController>();
             if (mobController != null)
             {
-                mobController.ConfigureNavigation(spawnTilemap, blockedTilemap);
+                mobController.SetMobType(selectedMobType);
+                mobController.ConfigureNavigation();
             }
             else
             {
@@ -105,31 +109,28 @@ public class MobSpawner : MonoBehaviour
         }
     }
 
-    private List<GameObject> GetValidMobPrefabs()
+    private List<MobType> GetValidMobTypes()
     {
-        List<GameObject> validPrefabs = new();
-        List<int> nullPrefabIndices = new();
+        List<MobType> validTypes = new();
 
-        for (int index = 0; index < mobPrefabs.Count; index++)
+        for (int index = 0; index < mobTypes.Count; index++)
         {
-            GameObject prefab = mobPrefabs[index];
-            if (prefab != null)
+            MobType type = mobTypes[index];
+            if (type == null)
             {
-                validPrefabs.Add(prefab);
+                continue;
             }
-            else
+
+            if (type.prefab == null)
             {
-                nullPrefabIndices.Add(index);
+                Debug.LogWarning($"MobSpawner mob type '{type.name}' has no prefab assigned and will be ignored.", type);
+                continue;
             }
+
+            validTypes.Add(type);
         }
 
-        if (nullPrefabIndices.Count > 0)
-        {
-            string nullSlots = string.Join(", ", nullPrefabIndices);
-            Debug.LogWarning($"MobSpawner has unassigned mob prefab slots at indices: {nullSlots}. These entries will be ignored.", this);
-        }
-
-        return validPrefabs;
+        return validTypes;
     }
 
     private static void ClearChildren(Transform parent)
@@ -137,51 +138,54 @@ public class MobSpawner : MonoBehaviour
         for (int index = parent.childCount - 1; index >= 0; index--)
         {
             Transform child = parent.GetChild(index);
-            if (Application.isPlaying)
-            {
-                child.SetParent(null, true);
-                child.gameObject.SetActive(false);
-                Destroy(child.gameObject);
-            }
-            else
-            {
-                DestroyImmediate(child.gameObject);
-            }
+            child.SetParent(null, true);
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
         }
     }
 
     private List<Vector2Int> GetAvailableSpawnCoordinates(Transform parent)
     {
+        TileMapManager tileMapManager = TileMapManager.Instance;
+        if (tileMapManager == null)
+        {
+            Debug.LogWarning("MobSpawner could not find TileMapManager instance for walkability checks.", this);
+            return new List<Vector2Int>();
+        }
+
         HashSet<Vector2Int> occupiedCoordinates = GetOccupiedMobCoordinates(parent);
         List<Vector2Int> coordinates = new();
 
         spawnTilemap.CompressBounds();
         BoundsInt bounds = spawnTilemap.cellBounds;
 
-        foreach (Vector3Int cell in bounds.allPositionsWithin)
+        for (int x = bounds.xMin; x < bounds.xMax; x++)
         {
-            if (!spawnTilemap.HasTile(cell))
+            for (int y = bounds.yMin; y < bounds.yMax; y++)
             {
-                continue;
-            }
+                Vector2Int coordinate = new Vector2Int(x, y);
+                if (!spawnTilemap.HasTile(new Vector3Int(x, y, 0)))
+                {
+                    continue;
+                }
 
-            if (blockedTilemap != null && blockedTilemap.HasTile(cell))
-            {
-                continue;
-            }
+                if (!tileMapManager.Traversable(coordinate))
+                {
+                    continue;
+                }
 
-            if (IsCellOccupiedByCollider(cell, parent))
-            {
-                continue;
-            }
+                if (IsCellOccupied(coordinate, parent))
+                {
+                    continue;
+                }
 
-            Vector2Int coordinate = new Vector2Int(cell.x, cell.y);
-            if (occupiedCoordinates.Contains(coordinate))
-            {
-                continue;
-            }
+                if (occupiedCoordinates.Contains(coordinate))
+                {
+                    continue;
+                }
 
-            coordinates.Add(coordinate);
+                coordinates.Add(coordinate);
+            }
         }
 
         return coordinates;
@@ -199,41 +203,19 @@ public class MobSpawner : MonoBehaviour
         return occupied;
     }
 
-    private bool IsCellOccupiedByCollider(Vector3Int cell, Transform parent)
+    private bool IsCellOccupied(Vector2Int coordinate, Transform parent)
     {
-        Vector3 worldCenter = spawnTilemap.GetCellCenterWorld(cell);
-        return IsWorldPositionOccupied(worldCenter, parent);
-    }
-
-    private bool IsWorldPositionOccupied(Vector3 worldPosition, Transform parent)
-    {
-        int count = Physics2D.OverlapPoint(worldPosition, OccupancyContactFilter, OccupancyResults);
+        Vector3 worldCenter = spawnTilemap.GetCellCenterWorld(new Vector3Int(coordinate.x, coordinate.y, 0));
+        int count = Physics2D.OverlapPoint(worldCenter, OccupancyContactFilter, OccupancyResults);
         for (int index = 0; index < count; index++)
         {
             Collider2D collider = OccupancyResults[index];
-            if (collider == null)
-            {
-                continue;
-            }
-
-            if (collider.isTrigger)
-            {
-                continue;
-            }
-
-            if (parent != null && collider.transform.IsChildOf(parent))
-            {
-                continue;
-            }
-
-            if (collider.transform == transform)
-            {
-                continue;
-            }
-
+            if (collider == null) { continue; }
+            if (collider.isTrigger) { continue; }
+            if (parent != null && collider.transform.IsChildOf(parent)) { continue; }
+            if (collider.transform == transform) { continue; }
             return true;
         }
-
         return false;
     }
 

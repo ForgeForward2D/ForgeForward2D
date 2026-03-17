@@ -110,6 +110,18 @@ public class TileMapManager : MonoBehaviour
         return null;
     }
 
+    public bool Walkable(Vector2Int position)
+    {
+        BlockType blockType = GetBlockTypeAtPosition(position);
+        return blockType != null && blockType.walkable;
+    }
+
+    public bool Traversable(Vector2Int position)
+    {
+        BlockType blockType = GetBlockTypeAtPosition(position);
+        return blockType == null || blockType.walkable;
+    }
+
     public bool IsOccupied(Vector2Int pos)
     {
         Vector3Int cell = new Vector3Int(pos.x, pos.y, 0);
