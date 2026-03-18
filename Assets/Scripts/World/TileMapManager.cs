@@ -73,6 +73,12 @@ public class TileMapManager : MonoBehaviour
         return new Vector2Int(cellPosition.x, cellPosition.y);
     }
 
+    public Vector3 CoordinateToPosition(Vector2Int coordinate)
+    {
+        Vector3Int tilePosition = new Vector3Int(coordinate.x, coordinate.y, 0);
+        return walkableTilemap.GetCellCenterWorld(tilePosition);
+    }
+
     public BlockType GetBlockTypeAtPosition(Vector2Int position)
     {
         Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
@@ -110,6 +116,12 @@ public class TileMapManager : MonoBehaviour
         return null;
     }
 
+    public bool Walkable(Vector2Int position)
+    {
+        BlockType blockType = GetBlockTypeAtPosition(position);
+        return blockType == null || blockType.walkable;
+    }
+
     public bool IsOccupied(Vector2Int pos)
     {
         Vector3Int cell = new Vector3Int(pos.x, pos.y, 0);
@@ -144,4 +156,5 @@ public class TileMapManager : MonoBehaviour
         TileBase destroyTile = DestroyTileRepository.GetDestroyTile(stage);
         animationTilemap.SetTile(tilePosition, destroyTile);
     }
+
 }
