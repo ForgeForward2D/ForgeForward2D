@@ -120,8 +120,17 @@ public class WorldManager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"Portal: player entered portal");
-        portalEntered = TileMapManager.Instance.PositionToCoordinate(other.transform.position);
+        if (!other.CompareTag("Player")) return;
+
+        Vector2Int currentTile = TileMapManager.Instance.PositionToCoordinate(other.transform.position);
+        TileBase tile = portalTilemap.GetTile(new Vector3Int(currentTile.x, currentTile.y, 0));
+        if (tile != null)
+        {
+            // player is already on a portal tile (probably just teleported here)
+            return;
+        }
+        Debug.Log($"Portal: player entered portal from {currentTile}");
+        portalEntered = currentTile;
     }
 
     void OnTriggerStay2D(Collider2D other)
