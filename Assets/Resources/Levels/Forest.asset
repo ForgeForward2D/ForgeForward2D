@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Forest
   m_EditorClassIdentifier: Assembly-CSharp::Level
   levelName: Forest
-  startingPoint: {x: -12, y: -100}
-  generationDirection: {x: -1, y: 1}
+  startingPoint: {x: -300, y: 0}
+  portalBlock: {fileID: 11400000, guid: ec20352a20e19486f9d3392da0faabe2, type: 2}
   levelSize: 200
   blockMapping:
   - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}

@@ -21,6 +21,7 @@ public class MovementManager : MonoBehaviour
 
         InputManager.OnMoveInput += HandleMoveInput;
         UIManager.OnUpdatePage += HandleUpdatePage;
+        WorldManager.OnPlayerTeleport += HandleTeleport;
     }
 
     private void HandleMoveInput((UIPage, bool, Vector2) data)
@@ -45,6 +46,11 @@ public class MovementManager : MonoBehaviour
             moveInput = Vector2.zero;
             playerAnimator.SetBool("isMoving", false);
         }
+    }
+
+    private void HandleTeleport(Vector3 destination)
+    {
+        transform.position = destination;
     }
 
     public void FixedUpdate()

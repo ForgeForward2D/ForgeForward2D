@@ -7,8 +7,9 @@ public class Level : ScriptableObject
 {
     public string levelName;
     public Vector2Int startingPoint;
-    public Vector2Int generationDirection; // TODO: make this a selection list from north, south, east, west
-    public int levelSize;
+    public BlockType portalBlock;
+    // public Vector2Int generationDirection; // TODO: make this a selection list from north, south, east, west
+    public int levelSize; // ~radius
     public (int xMin, int xMax, int yMin, int yMax) bounds;
     public PerlinMapping[] blockMapping;
 }

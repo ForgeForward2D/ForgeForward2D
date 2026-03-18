@@ -11,14 +11,17 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField] Tilemap wallTilemap;
     [SerializeField] TileBase wallTile;
     [SerializeField] Tilemap walkableTilemap;
+    [SerializeField] Tilemap animationTilemap;
+    [SerializeField] Tilemap portalTilemap;
 
     [Header("World Generation")]
     [SerializeField] float noiseScale;
+    [SerializeField] int borderWaves = 8;
 
     [SerializeField] int worldSeed;
 
     [Header("Levels")]
-    [SerializeField] Level[] levels;
+    [SerializeField] public Level[] levels;
 
     private TileMapManager tileMapManager;
 
@@ -33,12 +36,7 @@ public class WorldGeneration : MonoBehaviour
 
         tileMapManager = TileMapManager.Instance;
 
-        foreach (var level in levels)
-        {
-            generateLevel(level);
-        }
-
-        // Recalculate bounds after terrain generation
+        // Draw border around starter level
         (int xMin, int xMax, int yMin, int yMax) mapBounds = tileMapManager.GetBounds();
         Debug.Log($"Set world borders to x: ({mapBounds.xMin}, {mapBounds.xMax}), y: ({mapBounds.yMin}, {mapBounds.yMax})");
 
@@ -62,90 +60,133 @@ public class WorldGeneration : MonoBehaviour
                 backgroundTilemap.SetTile(new Vector3Int(x, y, 0), backgroundTile);
             }
         }
+
+        foreach (var level in levels)
+        {
+            generateLevel(level);
+        }
     }
 
     void generateLevel(Level level)
     {
-        // (int xMin, int xMax, int yMin, int yMax) bounds = level.bounds;
         Vector2Int startingPoint = level.startingPoint;
-        Vector2Int generationDirection = level.generationDirection;
         int levelSize = level.levelSize;
+        float baseRadius = levelSize / 2f;
 
         PerlinMapping[] blockMapping = level.blockMapping.OrderBy(m => m.threshold).ToArray();
-
-        (int xMin, int xMax, int yMin, int yMax) initialBounds = tileMapManager.GetBounds();
 
         float noiseOffsetX = (worldSeed % 10000) + 0.5f;
         float noiseOffsetY = (worldSeed / 10000 % 10000) + 0.5f;
         HashSet<Vector2Int> streuselPositions = new HashSet<Vector2Int>();
 
-        int xStart, xEnd, xStep;
-        if (generationDirection.x != 0)
+        // Generate random wave parameters for the irregular border
+        int N = borderWaves;
+        float[] amps = new float[N];
+        float[] phases = new float[N];
+        for (int i = 0; i < N; i++)
         {
-            xStart = startingPoint.x;
-            xEnd = startingPoint.x + generationDirection.x * levelSize;
-            xStep = generationDirection.x;
-        }
-        else
-        {
-            xStart = startingPoint.x;
-            xEnd = startingPoint.x + 1;
-            xStep = 1;
+            amps[i] = Random.Range(0f, 1f / (2f * N));
+            phases[i] = Random.Range(0f, 2f * Mathf.PI);
         }
 
-        int yStart, yEnd, yStep;
-        if (generationDirection.y != 0)
-        {
-            yStart = startingPoint.y;
-            yEnd = startingPoint.y + generationDirection.y * levelSize;
-            yStep = generationDirection.y;
-        }
-        else
-        {
-            yStart = startingPoint.y;
-            yEnd = startingPoint.y + 1;
-            yStep = 1;
-        }
+        // Precompute the border shape: for each tile, determine if inside
+        // Max normalized radius is 1 + sum(amps), scan area must cover the full possible extent
+        float maxAmpSum = 0f;
+        for (int i = 0; i < N; i++) maxAmpSum += amps[i];
+        int scanRadius = Mathf.CeilToInt(baseRadius * (1f + maxAmpSum)) + 2;
 
-        for (int x = xStart; xStep > 0 ? x < xEnd : x > xEnd; x += xStep)
+        int xStart = startingPoint.x - scanRadius;
+        int xEnd = startingPoint.x + scanRadius;
+        int yStart = startingPoint.y - scanRadius;
+        int yEnd = startingPoint.y + scanRadius;
+
+        HashSet<Vector2Int> interiorTiles = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> borderTiles = new HashSet<Vector2Int>();
+
+        for (int x = xStart; x <= xEnd; x++)
         {
-            for (int y = yStart; yStep > 0 ? y < yEnd : y > yEnd; y += yStep)
+            for (int y = yStart; y <= yEnd; y++)
             {
-                float noiseValue = Mathf.PerlinNoise(
-                    (x + noiseOffsetX) * noiseScale,
-                    (y + noiseOffsetY) * noiseScale
-                );
-                Debug.Log($"{noiseValue}");
+                float dx = x - startingPoint.x;
+                float dy = y - startingPoint.y;
+                float dist = Mathf.Sqrt(dx * dx + dy * dy);
+                float angle = Mathf.Atan2(dy, dx);
 
-                Vector3Int tilePos = new Vector3Int(x, y, 0);
-
-                foreach (var perlinMapping in blockMapping)
+                float normalizedRadius = 1f;
+                for (int i = 0; i < N; i++)
                 {
-                    BlockType block = perlinMapping.block;
-                    float threshold = perlinMapping.threshold;
-                    Streusel streusel = perlinMapping.streusel;
+                    normalizedRadius += amps[i] * Mathf.Cos((i + 1) * angle + phases[i]);
+                }
+                float radius = baseRadius * normalizedRadius;
 
-                    if (noiseValue < threshold)
-                    {
-                        if (streusel != null)
-                        {
-                            float roll = Random.value;
-                            if (roll < streusel.probability)
-                            {
-                                PlaceStreusel(wallTilemap, streusel.block, streuselPositions, x, y);
-                                break;
-                            }
-                        }
-                        if (block == null)
-                        {
-                            break;
-                        }
-                        wallTilemap.SetTile(tilePos, block.tile);
-                        break;
-                    }
+                if (dist < radius - 1f)
+                {
+                    interiorTiles.Add(new Vector2Int(x, y));
+                }
+                else if (dist < radius + 1f)
+                {
+                    borderTiles.Add(new Vector2Int(x, y));
                 }
             }
         }
+
+        // Remove border tiles that are also interior
+        borderTiles.ExceptWith(interiorTiles);
+
+        // Place interior tiles using Perlin noise
+        foreach (var tile in interiorTiles)
+        {
+            int x = tile.x;
+            int y = tile.y;
+
+            float noiseValue = Mathf.PerlinNoise(
+                (x + noiseOffsetX) * noiseScale,
+                (y + noiseOffsetY) * noiseScale
+            );
+
+            Vector3Int tilePos = new Vector3Int(x, y, 0);
+
+            foreach (var perlinMapping in blockMapping)
+            {
+                BlockType block = perlinMapping.block;
+                float threshold = perlinMapping.threshold;
+                Streusel streusel = perlinMapping.streusel;
+
+                if (noiseValue < threshold)
+                {
+                    if (streusel != null)
+                    {
+                        float roll = Random.value;
+                        if (roll < streusel.probability)
+                        {
+                            PlaceStreusel(wallTilemap, streusel.block, streuselPositions, x, y);
+                            break;
+                        }
+                    }
+                    if (block == null)
+                    {
+                        break;
+                    }
+                    wallTilemap.SetTile(tilePos, block.tile);
+                    break;
+                }
+            }
+
+            backgroundTilemap.SetTile(tilePos, backgroundTile);
+        }
+
+        // Place border wall tiles
+        foreach (var tile in borderTiles)
+        {
+            Vector3Int tilePos = new Vector3Int(tile.x, tile.y, 0);
+            wallTilemap.SetTile(tilePos, wallTile);
+        }
+
+        // Place portal at the level entry
+        Vector3Int entryPos = new Vector3Int(startingPoint.x, startingPoint.y, 0);
+        portalTilemap.SetTile(entryPos, level.portalBlock.tile);
+        wallTilemap.SetTile(entryPos, null);
+        backgroundTilemap.SetTile(entryPos, backgroundTile);
     }
 
     // bool IsAdjacentToStreusel(HashSet<Vector2Int> streuselPositions, int x, int y)
