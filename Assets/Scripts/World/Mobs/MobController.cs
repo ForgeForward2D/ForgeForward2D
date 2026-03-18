@@ -123,9 +123,8 @@ public class MobController : MonoBehaviour
         }
 
         Vector3 lookAheadPosition = transform.position + (Vector3)(direction.normalized * mobType.directionCheckDistance);
-        TileMapManager tileMapManager = TileMapManager.Instance;
-        Vector2Int cellPosition = tileMapManager.PositionToCoordinate(lookAheadPosition);
-        return tileMapManager.Traversable(cellPosition);
+        Vector2Int cellPosition = TileMapManager.Instance.PositionToCoordinate(lookAheadPosition);
+        return TileMapManager.Instance.Walkable(cellPosition);
     }
 
     public void SetMobType(MobType type)

@@ -73,6 +73,12 @@ public class TileMapManager : MonoBehaviour
         return new Vector2Int(cellPosition.x, cellPosition.y);
     }
 
+    public Vector3 CoordinateToPosition(Vector2Int coordinate)
+    {
+        Vector3Int tilePosition = new Vector3Int(coordinate.x, coordinate.y, 0);
+        return walkableTilemap.GetCellCenterWorld(tilePosition);
+    }
+
     public BlockType GetBlockTypeAtPosition(Vector2Int position)
     {
         Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
@@ -110,7 +116,7 @@ public class TileMapManager : MonoBehaviour
         return null;
     }
 
-    public bool Traversable(Vector2Int position)
+    public bool Walkable(Vector2Int position)
     {
         BlockType blockType = GetBlockTypeAtPosition(position);
         return blockType == null || blockType.walkable;
@@ -151,9 +157,4 @@ public class TileMapManager : MonoBehaviour
         animationTilemap.SetTile(tilePosition, destroyTile);
     }
 
-    public Vector3 GetCellCenterWorld(Vector2Int coordinate)
-    {
-        Vector3Int tilePosition = new Vector3Int(coordinate.x, coordinate.y, 0);
-        return walkableTilemap.GetCellCenterWorld(tilePosition);
-    }
 }

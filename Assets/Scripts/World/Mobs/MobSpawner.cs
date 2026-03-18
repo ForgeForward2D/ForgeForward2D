@@ -84,7 +84,7 @@ public class MobSpawner : MonoBehaviour
 
             MobType selectedMobType = validMobTypes[Random.Range(0, validMobTypes.Count)];
             GameObject selectedPrefab = selectedMobType.prefab;
-            Vector3 spawnPosition = TileMapManager.Instance.GetCellCenterWorld(coordinate);
+            Vector3 spawnPosition = TileMapManager.Instance.CoordinateToPosition(coordinate);
             GameObject mobInstance = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, transform);
 
             MobController mobController = mobInstance.GetComponent<MobController>();
@@ -136,17 +136,10 @@ public class MobSpawner : MonoBehaviour
 
     private List<Vector2Int> GetAvailableSpawnCoordinates(Transform parent)
     {
-        TileMapManager tileMapManager = TileMapManager.Instance;
-        if (tileMapManager == null)
-        {
-            Debug.LogWarning("MobSpawner could not find TileMapManager instance for walkability checks.", this);
-            return new List<Vector2Int>();
-        }
-
         HashSet<Vector2Int> occupiedCoordinates = GetOccupiedMobCoordinates(parent);
         List<Vector2Int> coordinates = new();
 
-        (int xMin, int xMax, int yMin, int yMax) = tileMapManager.GetBounds();
+        (int xMin, int xMax, int yMin, int yMax) = TileMapManager.Instance.GetBounds();
 
         for (int x = xMin; x < xMax; x++)
         {
@@ -154,7 +147,7 @@ public class MobSpawner : MonoBehaviour
             {
                 Vector2Int coordinate = new Vector2Int(x, y);
 
-                if (!tileMapManager.Traversable(coordinate))
+                if (!TileMapManager.Instance.Walkable(coordinate))
                 {
                     continue;
                 }
@@ -178,11 +171,10 @@ public class MobSpawner : MonoBehaviour
 
     private HashSet<Vector2Int> GetOccupiedMobCoordinates(Transform parent)
     {
-        TileMapManager tileMapManager = TileMapManager.Instance;
         HashSet<Vector2Int> occupied = new();
         for (int index = 0; index < parent.childCount; index++)
         {
-            Vector2Int coordinate = tileMapManager.PositionToCoordinate(parent.GetChild(index).position);
+            Vector2Int coordinate = TileMapManager.Instance.PositionToCoordinate(parent.GetChild(index).position);
             occupied.Add(coordinate);
         }
 
@@ -191,7 +183,7 @@ public class MobSpawner : MonoBehaviour
 
     private bool IsCellOccupied(Vector2Int coordinate, Transform parent)
     {
-        Vector3 worldCenter = TileMapManager.Instance.GetCellCenterWorld(coordinate);
+        Vector3 worldCenter = TileMapManager.Instance.CoordinateToPosition(coordinate);
         int count = Physics2D.OverlapPoint(worldCenter, OccupancyContactFilter, OccupancyResults);
         for (int index = 0; index < count; index++)
         {
