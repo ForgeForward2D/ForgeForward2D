@@ -11,8 +11,10 @@ public class BlockInfoUI : MonoBehaviour
     [SerializeField] private Image blockIcon;
 
     private MovementManager movementManager;
+    private Tool currentTool;
     private BlockType lastBlock;
     private Vector2Int lastDirection;
+    private Tool lastTool;
     private bool isPageOpen;
 
     private void Awake()
@@ -25,11 +27,13 @@ public class BlockInfoUI : MonoBehaviour
     private void OnEnable()
     {
         UIManager.OnUpdatePage += HandleUpdatePage;
+        HotBar.OnHotBarUpdate += HandleHotBarUpdate;
     }
 
     private void OnDisable()
     {
         UIManager.OnUpdatePage -= HandleUpdatePage;
+        HotBar.OnHotBarUpdate -= HandleHotBarUpdate;
     }
 
     private void HandleUpdatePage(UIPage page)
@@ -42,6 +46,11 @@ public class BlockInfoUI : MonoBehaviour
         }
     }
 
+    private void HandleHotBarUpdate(HotBar hotBar)
+    {
+        currentTool = hotBar.GetSelectedTool();
+    }
+
     private void Update()
     {
         if (isPageOpen) return;
@@ -51,9 +60,10 @@ public class BlockInfoUI : MonoBehaviour
         Vector2Int targetPos = playerPos + direction;
         BlockType block = TileMapManager.Instance.GetBlockTypeAtPosition(targetPos);
 
-        if (block == lastBlock && direction == lastDirection) return;
+        if (block == lastBlock && direction == lastDirection && currentTool == lastTool) return;
         lastBlock = block;
         lastDirection = direction;
+        lastTool = currentTool;
 
         bool isBreakable = block != null && block.breakable;
         bool isInteractable = block != null && block.interactable;
@@ -65,9 +75,26 @@ public class BlockInfoUI : MonoBehaviour
         }
 
         canvasGroup.alpha = 1f;
-        actionLabel.text = isBreakable ? "Mine" : "Interact";
+
+        if (isBreakable)
+            actionLabel.text = CanBreakWithCurrentTool(block) ? "Mine" : $"Needs {block.minimumToolTier} {block.toolType}";
+        else
+            actionLabel.text = "Interact";
 
         if (block.tile is Tile tile)
             blockIcon.sprite = tile.sprite;
+    }
+
+    private bool CanBreakWithCurrentTool(BlockType block)
+    {
+        if (block.toolType == ToolType.None) return true;
+
+        ToolType toolType = currentTool == null ? ToolType.None : currentTool.type;
+        ToolTier toolTier = currentTool == null ? ToolTier.None : currentTool.tier;
+
+        if (block.toolType != toolType)
+            return block.minimumToolTier == ToolTier.None;
+
+        return toolTier >= block.minimumToolTier;
     }
 }
