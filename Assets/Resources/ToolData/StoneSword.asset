@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f094bd8a31d5484b9393d7018ff19cd, type: 3}
-  m_Name: StonePickaxe
+  m_Name: StoneSword
   m_EditorClassIdentifier: Assembly-CSharp::Tool
-  displayName: Stone Pickaxe
+  displayName: Stone Sword
   maxStackSize: 1
-  icon: {fileID: 7943440995566245910, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 2
+  icon: {fileID: 2386527212258028570, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
+  type: 1
   tier: 2
   efficiency: 2
   prefab: {fileID: 3439744177779124437, guid: 4cc6a0e6978314af2b94f70ec745331d, type: 3}
