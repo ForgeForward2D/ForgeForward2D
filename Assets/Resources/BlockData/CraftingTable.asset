@@ -16,9 +16,10 @@ MonoBehaviour:
   tile: {fileID: 11400000, guid: 1b4a24749d3044b19bb24be3c0ebfa4e, type: 2}
   walkable: 0
   breakable: 0
+  interactable: 1
   hardness: 0
   respawnRate: 0
-  replacementBlockId: 0
+  replacementBlock: {fileID: 0}
   toolType: 0
   minimumToolTier: 0
   lootDrops: []
