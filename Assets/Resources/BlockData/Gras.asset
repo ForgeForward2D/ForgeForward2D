@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
   m_Name: Gras
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
-  displayName: Wood
+  displayName: Gras
   tile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
   walkable: 1
   breakable: 0
