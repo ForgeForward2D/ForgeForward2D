@@ -50,7 +50,8 @@ public class MovementManager : MonoBehaviour
 
     private void HandleTeleport(Vector3 destination)
     {
-        transform.position = destination;
+        rb.linearVelocity = Vector2.zero;
+        rb.position = destination;
     }
 
     public void FixedUpdate()
