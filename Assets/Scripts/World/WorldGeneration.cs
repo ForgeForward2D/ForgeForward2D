@@ -62,11 +62,11 @@ public class WorldGeneration : MonoBehaviour
 
         foreach (var level in levels)
         {
-            generateLevel(level);
+            GenerateLevel(level);
         }
     }
 
-    void generateLevel(Level level)
+    void GenerateLevel(Level level)
     {
         Vector2Int startingPoint = level.startingPoint;
         int levelSize = level.levelSize;
@@ -190,7 +190,6 @@ public class WorldGeneration : MonoBehaviour
             backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder.tile);
         }
 
-            backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder != null ? level.decorationAroundBorder.tile : backgroundTile);
         if (level.decorationAroundBorder != null)
         {
             foreach (var tile in decorationTiles)
@@ -199,6 +198,8 @@ public class WorldGeneration : MonoBehaviour
                 backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder.tile);
             }
         }
+
+        Debug.Assert(level.portalBlock != null, $"No portal block set for level {level.levelName}");
 
         // Place portal at the level entry
         Vector3Int entryPos = new Vector3Int(startingPoint.x, startingPoint.y, 0);

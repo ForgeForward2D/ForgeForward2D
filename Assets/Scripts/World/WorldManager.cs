@@ -37,6 +37,8 @@ public class WorldManager : MonoBehaviour
         // Link portals: levels sharing the same portalBlock are paired
         var portalBlocks = new List<BlockType>();
         var portalsByBlock = new Dictionary<BlockType, List<Vector2Int>>();
+        var colliderPositions = new HashSet<Vector2Int>();
+
         foreach (var level in levels)
         {
             if (level.portalBlock == null)
@@ -52,9 +54,13 @@ public class WorldManager : MonoBehaviour
             }
             portalsByBlock[level.portalBlock].Add(level.startingPoint);
 
-            CreateColliderAroundPortal(level.startingPoint);
+            if (colliderPositions.Add(level.startingPoint))
+            {
+                CreateColliderAroundPortal(level.startingPoint);
+            }
         }
         // search the portal map for portalBlocks and add the portals respectively to the portalsByBlock dict
+        portalTilemap.CompressBounds();
         BoundsInt bounds = portalTilemap.cellBounds;
         foreach (Vector3Int cellPos in bounds.allPositionsWithin)
         {
@@ -70,12 +76,20 @@ public class WorldManager : MonoBehaviour
                 portalsByBlock[blockType].Add(pos);
             }
 
-            CreateColliderAroundPortal(pos);
+            if (colliderPositions.Add(pos))
+            {
+                CreateColliderAroundPortal(pos);
+            }
         }
 
         foreach (var pair in portalsByBlock)
         {
             var positions = pair.Value;
+            if (positions.Count < 2)
+            {
+                Debug.LogWarning($"Portal: every portal-network should have at least 2 portals (for portal: {pair.Key.displayName}");
+                continue;
+            }
             for (int i = 0; i < positions.Count; i++)
             {
                 Vector2Int destination = positions[(i + 1) % positions.Count];
@@ -125,7 +139,6 @@ public class WorldManager : MonoBehaviour
             return;
         }
         TileBase portalTile = portalTilemap.GetTile(new Vector3Int(tile.x, tile.y, 0));
-        Debug.Log($"Portal: tile={tile}, portalTile={portalTile}");
 
         if (portalTile == null)
         {
