@@ -189,20 +189,6 @@ public class WorldGeneration : MonoBehaviour
         backgroundTilemap.SetTile(entryPos, backgroundTile);
     }
 
-    // bool IsAdjacentToStreusel(HashSet<Vector2Int> streuselPositions, int x, int y)
-    // {
-    //     for (int dx = -1; dx <= 1; dx++)
-    //     {
-    //         for (int dy = -1; dy <= 1; dy++)
-    //         {
-    //             if (dx == 0 && dy == 0) continue;
-    //             if (streuselPositions.Contains(new Vector2Int(x + dx, y + dy)))
-    //                 return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
     void PlaceStreusel(Tilemap tilemap, BlockType streuselBlock, HashSet<Vector2Int> streuselPositions, int x, int y)
     {
         Vector3Int tilePos = new Vector3Int(x, y, 0);
