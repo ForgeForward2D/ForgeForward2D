@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DiamondPickaxe
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
   ingredients:
-  - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
+  - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
     count: 5
-  - itemType: {fileID: 11400000, guid: 5c615efe183264d13abf1bafeea04f1c, type: 2}
+  - itemType: {fileID: 11400000, guid: 4e86ef1fb98bb4060b93620d0c52dbf9, type: 2}
     count: 1
   result:
-    itemType: {fileID: 11400000, guid: f8a822c7649df465fa2692818678a6a7, type: 2}
+    itemType: {fileID: 11400000, guid: 39789d95b52ce480bbfa983024eca90d, type: 2}
     count: 1

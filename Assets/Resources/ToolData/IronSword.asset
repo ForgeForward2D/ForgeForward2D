@@ -18,4 +18,4 @@ MonoBehaviour:
   type: 1
   tier: 3
   efficiency: 3
-  prefab: {fileID: 3439744177779124437, guid: 4cc6a0e6978314af2b94f70ec745331d, type: 3}
+  prefab: {fileID: 3439744177779124437, guid: 93ec32f485a3d4d41a759f734574709f, type: 3}

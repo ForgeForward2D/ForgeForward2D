@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DiamondSword
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
   ingredients:
-  - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
+  - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
     count: 3
-  - itemType: {fileID: 11400000, guid: 5c615efe183264d13abf1bafeea04f1c, type: 2}
+  - itemType: {fileID: 11400000, guid: 4e86ef1fb98bb4060b93620d0c52dbf9, type: 2}
     count: 3
   result:
-    itemType: {fileID: 11400000, guid: ccdace465e29c475ab2e20aecce3c034, type: 2}
+    itemType: {fileID: 11400000, guid: 916b631c99f9c429788b9141ce528ec9, type: 2}
     count: 1

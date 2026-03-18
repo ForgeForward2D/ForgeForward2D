@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DiamondShovel
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
   ingredients:
-  - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
+  - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
     count: 5
-  - itemType: {fileID: 11400000, guid: 5c615efe183264d13abf1bafeea04f1c, type: 2}
+  - itemType: {fileID: 11400000, guid: 4e86ef1fb98bb4060b93620d0c52dbf9, type: 2}
     count: 1
   result:
-    itemType: {fileID: 11400000, guid: e68d61e05df9c499db759555013c15ed, type: 2}
+    itemType: {fileID: 11400000, guid: 0c1a9219261944acd94a226d677aa13a, type: 2}
     count: 1
