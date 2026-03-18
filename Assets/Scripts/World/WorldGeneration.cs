@@ -10,10 +10,7 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField] Tilemap backgroundTilemap;
     [SerializeField] TileBase backgroundTile;
 
-    [SerializeField] Tilemap wallTilemap;
-    [SerializeField] TileBase wallTile;
-    [SerializeField] Tilemap walkableTilemap;
-    [SerializeField] Tilemap animationTilemap;
+    [SerializeField] BlockType wallBlock;
     [SerializeField] Tilemap portalTilemap;
 
     [Header("World Generation")]
@@ -45,16 +42,16 @@ public class WorldGeneration : MonoBehaviour
         for (int y = mapBounds.yMin - 1; y <= mapBounds.yMax; y++)
         {
             // Left wall
-            wallTilemap.SetTile(new Vector3Int(mapBounds.xMin - 1, y, 0), wallTile);
+            tileMapManager.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMin - 1, y));
             // Right wall
-            wallTilemap.SetTile(new Vector3Int(mapBounds.xMax, y, 0), wallTile);
+            tileMapManager.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMax, y));
         }
         for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
         {
             // Bottom wall
-            wallTilemap.SetTile(new Vector3Int(x, mapBounds.yMin - 1, 0), wallTile);
+            tileMapManager.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMin - 1));
             // Top wall
-            wallTilemap.SetTile(new Vector3Int(x, mapBounds.yMax, 0), wallTile);
+            tileMapManager.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMax));
 
             for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
             {
@@ -169,7 +166,7 @@ public class WorldGeneration : MonoBehaviour
                         float roll = Random.value;
                         if (roll < streusel.probability)
                         {
-                            PlaceStreusel(wallTilemap, streusel.block, streuselPositions, x, y);
+                            PlaceStreusel(streusel.block, streuselPositions, new Vector2Int(x, y));
                             break;
                         }
                     }
@@ -177,7 +174,7 @@ public class WorldGeneration : MonoBehaviour
                     {
                         break;
                     }
-                    wallTilemap.SetTile(tilePos, block.tile);
+                    tileMapManager.DrawBlock(block, new Vector2Int(x, y));
                     break;
                 }
             }
@@ -189,7 +186,7 @@ public class WorldGeneration : MonoBehaviour
         foreach (var tile in borderTiles)
         {
             Vector3Int tilePos = new Vector3Int(tile.x, tile.y, 0);
-            wallTilemap.SetTile(tilePos, level.borderBlock.tile);
+            tileMapManager.DrawBlock(level.borderBlock, tile);
             backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder.tile);
         }
 
@@ -206,14 +203,13 @@ public class WorldGeneration : MonoBehaviour
         // Place portal at the level entry
         Vector3Int entryPos = new Vector3Int(startingPoint.x, startingPoint.y, 0);
         portalTilemap.SetTile(entryPos, level.portalBlock.tile);
-        wallTilemap.SetTile(entryPos, null);
+        tileMapManager.DrawBlock(null, startingPoint);
         backgroundTilemap.SetTile(entryPos, backgroundTile);
     }
 
-    void PlaceStreusel(Tilemap tilemap, BlockType streuselBlock, HashSet<Vector2Int> streuselPositions, int x, int y)
+    void PlaceStreusel(BlockType streuselBlock, HashSet<Vector2Int> streuselPositions, Vector2Int pos)
     {
-        Vector3Int tilePos = new Vector3Int(x, y, 0);
-        tilemap.SetTile(tilePos, streuselBlock.tile);
-        streuselPositions.Add(new Vector2Int(x, y));
+        tileMapManager.DrawBlock(streuselBlock, pos);
+        streuselPositions.Add(pos);
     }
 }

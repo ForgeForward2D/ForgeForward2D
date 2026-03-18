@@ -387,10 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldGeneration
   backgroundTilemap: {fileID: 1300875036997624091}
   backgroundTile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
-  wallTilemap: {fileID: 7420243097569545091}
-  wallTile: {fileID: 11400000, guid: ee7d1a0ea644b470b89a16b08493263a, type: 2}
-  walkableTilemap: {fileID: 3019561882642584167}
-  animationTilemap: {fileID: 0}
+  wallBlock: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
   portalTilemap: {fileID: 806137335}
   noiseScale: 0.15
   borderWaves: 8

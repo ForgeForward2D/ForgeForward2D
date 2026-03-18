@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gras
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Wood
-  tile: {fileID: 11400000, guid: 34679800c8b7d40348f033a9acf6a93e, type: 2}
+  tile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
   walkable: 1
   breakable: 0
   hardness: 0
