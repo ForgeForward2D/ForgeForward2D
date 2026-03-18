@@ -5,7 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class WorldGeneration : MonoBehaviour
 {
-    const float BORDER_WIDTH_CONSTANT = 0.6f;
 
     [SerializeField] Tilemap backgroundTilemap;
     [SerializeField] TileBase backgroundTile;
@@ -13,16 +12,14 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField] BlockType wallBlock;
     [SerializeField] Tilemap portalTilemap;
 
-    [Header("World Generation")]
+    [Header("Settings")]
     [SerializeField] float noiseScale;
     [SerializeField] int borderWaves = 8;
+    [SerializeField] float borderWidth = 0.6f;
 
     [SerializeField] int worldSeed;
 
-    [Header("Levels")]
     [SerializeField] public Level[] levels;
-
-    private TileMapManager tileMapManager;
 
     void Start()
     {
@@ -33,25 +30,23 @@ public class WorldGeneration : MonoBehaviour
         Debug.Log($"Using Seed {worldSeed}");
         Random.InitState(worldSeed);
 
-        tileMapManager = TileMapManager.Instance;
-
         // Draw border around starter level
-        (int xMin, int xMax, int yMin, int yMax) mapBounds = tileMapManager.GetBounds();
+        (int xMin, int xMax, int yMin, int yMax) mapBounds = TileMapManager.Instance.GetBounds();
         Debug.Log($"Set world borders to x: ({mapBounds.xMin}, {mapBounds.xMax}), y: ({mapBounds.yMin}, {mapBounds.yMax})");
 
         for (int y = mapBounds.yMin - 1; y <= mapBounds.yMax; y++)
         {
             // Left wall
-            tileMapManager.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMin - 1, y));
+            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMin - 1, y));
             // Right wall
-            tileMapManager.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMax, y));
+            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMax, y));
         }
         for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
         {
             // Bottom wall
-            tileMapManager.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMin - 1));
+            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMin - 1));
             // Top wall
-            tileMapManager.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMax));
+            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMax));
 
             for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
             {
@@ -101,8 +96,8 @@ public class WorldGeneration : MonoBehaviour
 
         HashSet<Vector2Int> interiorTiles = new HashSet<Vector2Int>();
         HashSet<Vector2Int> borderTiles = new HashSet<Vector2Int>();
-        HashSet<Vector2Int> decorationTiles = new HashSet<Vector2Int>();
-        int decorationThickness = 10;
+        HashSet<Vector2Int> paddingTiles = new HashSet<Vector2Int>();
+        int paddingThickness = 10;
 
         for (int x = xStart; x <= xEnd; x++)
         {
@@ -120,25 +115,20 @@ public class WorldGeneration : MonoBehaviour
                 }
                 float radius = baseRadius * normalizedRadius;
 
-                if (dist < radius - BORDER_WIDTH_CONSTANT)
+                if (dist < radius - borderWidth)
                 {
                     interiorTiles.Add(new Vector2Int(x, y));
                 }
-                else if (dist < radius + BORDER_WIDTH_CONSTANT)
+                else if (dist < radius + borderWidth)
                 {
                     borderTiles.Add(new Vector2Int(x, y));
                 }
-                else if (dist < radius + BORDER_WIDTH_CONSTANT + decorationThickness)
+                else if (dist < radius + borderWidth + paddingThickness)
                 {
-                    decorationTiles.Add(new Vector2Int(x, y));
+                    paddingTiles.Add(new Vector2Int(x, y));
                 }
             }
         }
-
-        // Remove border tiles that are also interior
-        borderTiles.ExceptWith(interiorTiles);
-        decorationTiles.ExceptWith(interiorTiles);
-        decorationTiles.ExceptWith(borderTiles);
 
         // Place interior tiles using Perlin noise
         foreach (var tile in interiorTiles)
@@ -174,7 +164,7 @@ public class WorldGeneration : MonoBehaviour
                     {
                         break;
                     }
-                    tileMapManager.DrawBlock(block, new Vector2Int(x, y));
+                    TileMapManager.Instance.DrawBlock(block, new Vector2Int(x, y));
                     break;
                 }
             }
@@ -186,16 +176,16 @@ public class WorldGeneration : MonoBehaviour
         foreach (var tile in borderTiles)
         {
             Vector3Int tilePos = new Vector3Int(tile.x, tile.y, 0);
-            tileMapManager.DrawBlock(level.borderBlock, tile);
-            backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder.tile);
+            TileMapManager.Instance.DrawBlock(level.wallBlock, tile);
+            backgroundTilemap.SetTile(tilePos, level.paddingBlock.tile);
         }
 
-        if (level.decorationAroundBorder != null)
+        if (level.paddingBlock != null)
         {
-            foreach (var tile in decorationTiles)
+            foreach (var tile in paddingTiles)
             {
                 Vector3Int tilePos = new Vector3Int(tile.x, tile.y, 0);
-                backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder.tile);
+                backgroundTilemap.SetTile(tilePos, level.paddingBlock.tile);
             }
         }
 
@@ -204,13 +194,13 @@ public class WorldGeneration : MonoBehaviour
         // Place portal at the level entry
         Vector3Int entryPos = new Vector3Int(startingPoint.x, startingPoint.y, 0);
         portalTilemap.SetTile(entryPos, level.portalBlock.tile);
-        tileMapManager.DrawBlock(null, startingPoint);
+        TileMapManager.Instance.DrawBlock(null, startingPoint);
         backgroundTilemap.SetTile(entryPos, backgroundTile);
     }
 
     void PlaceStreusel(BlockType streuselBlock, HashSet<Vector2Int> streuselPositions, Vector2Int pos)
     {
-        tileMapManager.DrawBlock(streuselBlock, pos);
+        TileMapManager.Instance.DrawBlock(streuselBlock, pos);
         streuselPositions.Add(pos);
     }
 }

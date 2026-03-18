@@ -89,7 +89,7 @@ public class TileMapManager : MonoBehaviour
             BlockType blockType = BlockTypeRepository.GetBlockByTile(wallTile);
             if (blockType != null)
             {
-                Debug.Assert(!blockType.walkable);
+                Debug.Assert(!blockType.walkable, $"No block assigned to wallTile {wallTile}");
                 return blockType;
             }
             else
