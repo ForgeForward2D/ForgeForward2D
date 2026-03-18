@@ -70,6 +70,6 @@ public class MovementManager : MonoBehaviour
 
     public Vector2Int GetMoveDirection()
     {
-        return moveDirection ;
+        return moveDirection;
     }
 }
