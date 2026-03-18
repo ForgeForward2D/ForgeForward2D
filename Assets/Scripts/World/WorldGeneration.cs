@@ -190,7 +190,7 @@ public class WorldGeneration : MonoBehaviour
             backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder.tile);
         }
 
-        // Place decoration blocks around the level
+            backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder != null ? level.decorationAroundBorder.tile : backgroundTile);
         if (level.decorationAroundBorder != null)
         {
             foreach (var tile in decorationTiles)
