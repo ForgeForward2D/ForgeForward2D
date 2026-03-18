@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
+  m_Name: IronOre
+  m_EditorClassIdentifier: Assembly-CSharp::BlockType
+  displayName: IronOre
+  tile: {fileID: 11400000, guid: b619084e3fcf04580865ac2e0eba880f, type: 2}
+  walkable: 0
+  breakable: 1
+  hardness: 2
+  respawnRate: 5
+  replacementBlock: {fileID: 11400000, guid: 327832cc0a49e4e278c2333aa3750657, type: 2}
+  toolType: 2
+  minimumToolTier: 1
+  lootDrops:
+  - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
+    amount: 1
+    chance: 1
+  - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
+    amount: 1
+    chance: 0.5
+  - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
+    amount: 1
+    chance: 0.25

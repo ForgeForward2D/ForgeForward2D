@@ -6,17 +6,12 @@ using UnityEngine.U2D;
 public class CameraScript : MonoBehaviour
 {
     [SerializeField] GameConfig gameConfig;
-
     [SerializeField] Transform playerTransform;
-
     [SerializeField] PixelPerfectCamera pixelPerfectCamera;
 
-    [SerializeField] TileMapManager tileMapManager;
-
-
-    public int camera_height;
-
-    private (int xMin, int xMax, int yMin, int yMax) mapBounds;
+    [Header("Debugging")]
+    [SerializeField] private int camera_height;
+    [SerializeField] private (int xMin, int xMax, int yMin, int yMax) mapBounds;
 
     void Start()
     {
@@ -26,7 +21,7 @@ public class CameraScript : MonoBehaviour
         GetComponent<Camera>().orthographicSize = camera_height / 2f;
         GetComponent<Camera>().aspect = gameConfig.camera_aspect;
 
-        mapBounds = tileMapManager.GetBounds();
+        mapBounds = TileMapManager.Instance.GetBounds();
     }
 
     void LateUpdate()
