@@ -20,8 +20,16 @@ public class BlockInfoUI : MonoBehaviour
         movementManager = FindFirstObjectByType<MovementManager>();
         canvasGroup.alpha = 0f;
         canvasGroup.blocksRaycasts = false;
+    }
 
+    private void OnEnable()
+    {
         UIManager.OnUpdatePage += HandleUpdatePage;
+    }
+
+    private void OnDisable()
+    {
+        UIManager.OnUpdatePage -= HandleUpdatePage;
     }
 
     private void HandleUpdatePage(UIPage page)
