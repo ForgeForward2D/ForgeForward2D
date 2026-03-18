@@ -15,6 +15,8 @@ MonoBehaviour:
   levelName: Forest
   startingPoint: {x: -300, y: 0}
   portalBlock: {fileID: 11400000, guid: ec20352a20e19486f9d3392da0faabe2, type: 2}
+  borderBlock: {fileID: 11400000, guid: 2eefb98cc63694ea680a898046976a94, type: 2}
+  decorationAroundBorder: {fileID: 11400000, guid: 8bf922cd80d1c4deebad3205719b8086, type: 2}
   levelSize: 200
   blockMapping:
   - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}

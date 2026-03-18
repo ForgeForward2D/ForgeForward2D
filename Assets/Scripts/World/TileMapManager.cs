@@ -104,7 +104,7 @@ public class TileMapManager : MonoBehaviour
             BlockType blockType = BlockTypeRepository.GetBlockByTile(walkableTile);
             if (blockType != null)
             {
-                Debug.Assert(blockType.walkable);
+                Debug.Assert(blockType.walkable, $"walkable tilemap contains block that is not walkable: {blockType.displayName}");
                 return blockType;
             }
             else

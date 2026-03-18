@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class WorldGeneration : MonoBehaviour
 {
+    const float BORDER_WIDTH_CONSTANT = 0.6f;
+
     [SerializeField] Tilemap backgroundTilemap;
     [SerializeField] TileBase backgroundTile;
 
@@ -93,7 +95,7 @@ public class WorldGeneration : MonoBehaviour
         // Max normalized radius is 1 + sum(amps), scan area must cover the full possible extent
         float maxAmpSum = 0f;
         for (int i = 0; i < N; i++) maxAmpSum += amps[i];
-        int scanRadius = Mathf.CeilToInt(baseRadius * (1f + maxAmpSum)) + 2;
+        int scanRadius = Mathf.CeilToInt(baseRadius * (1f + maxAmpSum)) + 2 + 10;
 
         int xStart = startingPoint.x - scanRadius;
         int xEnd = startingPoint.x + scanRadius;
@@ -102,6 +104,8 @@ public class WorldGeneration : MonoBehaviour
 
         HashSet<Vector2Int> interiorTiles = new HashSet<Vector2Int>();
         HashSet<Vector2Int> borderTiles = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> decorationTiles = new HashSet<Vector2Int>();
+        int decorationThickness = 10;
 
         for (int x = xStart; x <= xEnd; x++)
         {
@@ -119,19 +123,25 @@ public class WorldGeneration : MonoBehaviour
                 }
                 float radius = baseRadius * normalizedRadius;
 
-                if (dist < radius - 1f)
+                if (dist < radius - BORDER_WIDTH_CONSTANT)
                 {
                     interiorTiles.Add(new Vector2Int(x, y));
                 }
-                else if (dist < radius + 1f)
+                else if (dist < radius + BORDER_WIDTH_CONSTANT)
                 {
                     borderTiles.Add(new Vector2Int(x, y));
+                }
+                else if (dist < radius + BORDER_WIDTH_CONSTANT + decorationThickness)
+                {
+                    decorationTiles.Add(new Vector2Int(x, y));
                 }
             }
         }
 
         // Remove border tiles that are also interior
         borderTiles.ExceptWith(interiorTiles);
+        decorationTiles.ExceptWith(interiorTiles);
+        decorationTiles.ExceptWith(borderTiles);
 
         // Place interior tiles using Perlin noise
         foreach (var tile in interiorTiles)
@@ -179,7 +189,18 @@ public class WorldGeneration : MonoBehaviour
         foreach (var tile in borderTiles)
         {
             Vector3Int tilePos = new Vector3Int(tile.x, tile.y, 0);
-            wallTilemap.SetTile(tilePos, wallTile);
+            wallTilemap.SetTile(tilePos, level.borderBlock.tile);
+            backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder.tile);
+        }
+
+        // Place decoration blocks around the level
+        if (level.decorationAroundBorder != null)
+        {
+            foreach (var tile in decorationTiles)
+            {
+                Vector3Int tilePos = new Vector3Int(tile.x, tile.y, 0);
+                backgroundTilemap.SetTile(tilePos, level.decorationAroundBorder.tile);
+            }
         }
 
         // Place portal at the level entry
