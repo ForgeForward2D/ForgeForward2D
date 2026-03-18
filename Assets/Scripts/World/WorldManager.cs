@@ -12,10 +12,8 @@ public class WorldManager : MonoBehaviour
     private Level[] levels;
 
     private Dictionary<Vector2Int, Vector2Int> portalDestinations = new Dictionary<Vector2Int, Vector2Int>();
-    private float portalTimer;
     private Vector2Int currentPortalTile;
     private Vector2Int portalEntered;
-    private float teleportCooldown;
 
     void Start()
     {
@@ -87,26 +85,6 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    // void Update()
-    // {
-    //     if (!onPortal)
-    //         return;
-
-    //     portalTimer += Time.deltaTime;
-
-    //     if (portalTimer >= 2f)
-    //     {
-    //         if (portalDestinations.TryGetValue(currentPortalTile, out Vector2Int destination))
-    //         {
-    //             Vector3 worldPos = portalTilemap.GetCellCenterWorld(new Vector3Int(destination.x, destination.y, 0));
-    //             OnPlayerTeleport?.Invoke(worldPos);
-    //             Debug.Log($"Portal: teleported player to {destination}");
-    //         }
-    //         onPortal = false;
-    //         portalTimer = 0f;
-    //     }
-    // }
-
     void CreateColliderAroundPortal(Vector2Int portalPos)
     {
         Vector3Int cellPos = new Vector3Int(portalPos.x, portalPos.y, 0);
@@ -135,12 +113,6 @@ public class WorldManager : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (teleportCooldown > 0f)
-        {
-            teleportCooldown -= Time.deltaTime;
-            return;
-        }
-
         if (!other.CompareTag("Player"))
         {
             Debug.Log($"Portal: stopped — collider is not tagged Player");
@@ -167,7 +139,6 @@ public class WorldManager : MonoBehaviour
             Vector3 worldPos = portalTilemap.GetCellCenterWorld(new Vector3Int(destination.x, destination.y, 0));
             OnPlayerTeleport?.Invoke(worldPos);
             Debug.Log($"Portal: teleported player to {destination}");
-            teleportCooldown = 1f;
             portalEntered = new Vector2Int(Int32.MinValue, Int32.MinValue);
         }
         else
