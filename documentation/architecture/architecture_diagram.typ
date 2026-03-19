@@ -376,6 +376,7 @@
       //   marker(purple), [Inventory],
       marker(fuchsia), [Method call],
       marker(green), [Events],
+      marker(orange), [Description],
     )
 
   ]),
