@@ -1,11 +1,11 @@
+#import "@preview/fletcher:0.5.8": (
+  diagram as _diagram, edge as _edge, node as _node,
+)
+
 #set page(
   height: auto,
   width: auto,
-  flipped: true,
   margin: 20pt,
-)
-#import "@preview/fletcher:0.5.8": (
-  diagram as _diagram, edge as _edge, node as _node,
 )
 
 #show raw: it => highlight(fill: gray.lighten(70%), it)

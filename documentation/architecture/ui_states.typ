@@ -1,4 +1,11 @@
-#import "@preview/fletcher:0.5.8": diagram as _diagram, edge as _edge, node as _node
+#import "@preview/fletcher:0.5.8": (
+  diagram as _diagram, edge as _edge, node as _node,
+)
+#set page(
+  height: auto,
+  width: auto,
+  margin: 20pt,
+)
 
 #let edge(start, end, ..args) = _edge(
   start,
