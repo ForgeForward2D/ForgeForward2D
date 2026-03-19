@@ -101,7 +101,10 @@ public class WorldGeneration : MonoBehaviour
         // Max normalized radius is 1 + sum(amps), scan area must cover the full possible extent
         float maxAmpSum = 0f;
         for (int i = 0; i < N; i++) maxAmpSum += amps[i];
-        int scanRadius = Mathf.CeilToInt(baseRadius * (1f + maxAmpSum)) + 2 + 10;
+
+        Camera cam = Camera.main;
+        int paddingThickness = Mathf.CeilToInt(Mathf.Max(cam.orthographicSize * 2f * cam.aspect, cam.orthographicSize * 2f));
+        int scanRadius = Mathf.CeilToInt(baseRadius * (1f + maxAmpSum)) + 2 + paddingThickness;
 
         int xStart = startingPoint.x - scanRadius;
         int xEnd = startingPoint.x + scanRadius;
@@ -111,7 +114,6 @@ public class WorldGeneration : MonoBehaviour
         HashSet<Vector2Int> interiorTiles = new HashSet<Vector2Int>();
         HashSet<Vector2Int> borderTiles = new HashSet<Vector2Int>();
         HashSet<Vector2Int> paddingTiles = new HashSet<Vector2Int>();
-        int paddingThickness = 10;
 
         for (int x = xStart; x <= xEnd; x++)
         {
