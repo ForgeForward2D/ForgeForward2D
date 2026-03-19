@@ -188,6 +188,8 @@ public class WorldGeneration : MonoBehaviour
             backgroundTilemap.SetTile(tilePos, backgroundTile);
         }
 
+        TileMapManager.Instance.RegisterSpawnablePositions(interiorTiles);
+
         // Place border wall tiles
         foreach (var tile in borderTiles)
         {

@@ -343,6 +343,7 @@ MonoBehaviour:
   wallTilemap: {fileID: 7420243097569545091}
   walkableTilemap: {fileID: 3019561882642584167}
   animationTilemap: {fileID: 7023219003204521883}
+  backgroundTilemap: {fileID: 1300875036997624091}
   hitBoxSize: 0.9
 --- !u!50 &1916282898747536962
 Rigidbody2D:

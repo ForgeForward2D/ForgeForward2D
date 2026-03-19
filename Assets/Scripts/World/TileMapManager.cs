@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,11 +11,27 @@ public class TileMapManager : MonoBehaviour
     [SerializeField] private Tilemap wallTilemap;
     [SerializeField] private Tilemap walkableTilemap;
     [SerializeField] private Tilemap animationTilemap;
+    [SerializeField] private Tilemap backgroundTilemap;
 
     [Header("Settings")]
     [SerializeField] private float hitBoxSize = 0.9f;
 
     public static Action<(BlockType, Vector2Int)> OnBlockChanged;
+
+    private readonly HashSet<Vector2Int> spawnablePositions = new();
+
+    public void RegisterSpawnablePositions(IEnumerable<Vector2Int> positions)
+    {
+        foreach (var pos in positions)
+        {
+            spawnablePositions.Add(pos);
+        }
+    }
+
+    public List<Vector2Int> GetSpawnablePositions()
+    {
+        return new List<Vector2Int>(spawnablePositions);
+    }
 
     private void Awake()
     {
