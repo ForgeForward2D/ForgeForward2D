@@ -19,11 +19,11 @@ public class PerlinMapping
 {
     public BlockType block;
     [Range(0f, 1f)] public float threshold;
-    public Streusel streusel;
+    public Detail detail;
 }
 
 [Serializable]
-public class Streusel
+public class Detail
 {
     public BlockType block;
     [Range(0f, 1f)] public float probability;

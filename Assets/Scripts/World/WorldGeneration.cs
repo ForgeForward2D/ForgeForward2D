@@ -71,7 +71,7 @@ public class WorldGeneration : MonoBehaviour
 
         float noiseOffsetX = (worldSeed % 10000) + 0.5f;
         float noiseOffsetY = (worldSeed / 10000 % 10000) + 0.5f;
-        HashSet<Vector2Int> streuselPositions = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> detailPositions = new HashSet<Vector2Int>();
 
         // Generate random wave parameters for the irregular border
         int N = borderWaves;
@@ -147,16 +147,16 @@ public class WorldGeneration : MonoBehaviour
             {
                 BlockType block = perlinMapping.block;
                 float threshold = perlinMapping.threshold;
-                Streusel streusel = perlinMapping.streusel;
+                Detail detail = perlinMapping.detail;
 
                 if (noiseValue < threshold)
                 {
-                    if (streusel != null)
+                    if (detail != null)
                     {
                         float roll = Random.value;
-                        if (roll < streusel.probability)
+                        if (roll < detail.probability)
                         {
-                            PlaceStreusel(streusel.block, streuselPositions, new Vector2Int(x, y));
+                            PlaceDetail(detail.block, detailPositions, new Vector2Int(x, y));
                             break;
                         }
                     }
@@ -198,9 +198,9 @@ public class WorldGeneration : MonoBehaviour
         backgroundTilemap.SetTile(entryPos, backgroundTile);
     }
 
-    void PlaceStreusel(BlockType streuselBlock, HashSet<Vector2Int> streuselPositions, Vector2Int pos)
+    void PlaceDetail(BlockType detailBlock, HashSet<Vector2Int> detailPositions, Vector2Int pos)
     {
-        TileMapManager.Instance.DrawBlock(streuselBlock, pos);
-        streuselPositions.Add(pos);
+        TileMapManager.Instance.DrawBlock(detailBlock, pos);
+        detailPositions.Add(pos);
     }
 }
