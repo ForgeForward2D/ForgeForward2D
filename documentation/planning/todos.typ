@@ -32,6 +32,28 @@
   text(
     fill: black.lighten(40%),
     size: text.size * 80%,
+  )[TODOs unitl Friday, 27.03.]
+}
+- write blog article Leon
+- implement "mob steals resources" logic todo
+- implement mob-attack logic todo
+- implement mob-interaction logic for communication todo
+- levels:
+  - add more achievements (maybe second type of achievements, e.g. craft 100 times) todo
+  - design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds todo
+  - limited vision todo
+  - create more levels: mine, deep mine, end/stronghold/ the endboss's house todo
+- implement game analytics todo
+- #optional[adapt walk-animation speed to walk speed]
+- #optional[tool animations]
+- #optional[modular 3D tool presets (change blade based on material)]
+
+#pagebreak(weak: true)
+= Next Steps
+#context {
+  text(
+    fill: black.lighten(40%),
+    size: text.size * 80%,
   )[TODOs unitl Friday, 20.03.]
 }
 - write blog article Leon
