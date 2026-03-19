@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class MovementManager : MonoBehaviour
 {
+    public static event Action<Vector2Int> OnTargetPositionChanged;
+
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private Transform characterModel;
 
@@ -13,6 +15,8 @@ public class MovementManager : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private Vector2Int moveDirection;
+
+    private Vector2Int previousTargetPosition;
 
     public void Start()
     {
@@ -63,6 +67,8 @@ public class MovementManager : MonoBehaviour
         float absX = Mathf.Abs(moveInput.x);
         float absY = Mathf.Abs(moveInput.y);
 
+        Vector2Int previousDirection = moveDirection;
+
         if (absX > absY)
         {
             moveDirection = moveInput.x > 0 ? Vector2Int.right : Vector2Int.left;
@@ -73,10 +79,23 @@ public class MovementManager : MonoBehaviour
             moveDirection = moveInput.y > 0 ? Vector2Int.up : Vector2Int.down;
             characterModel.localRotation = Quaternion.Euler(0f, moveInput.y < 0 ? 0f : 180f, 0f);
         }
+
+        Vector2Int targetPosition = GetTargetPosition();
+        if (targetPosition != previousTargetPosition)
+        {
+            previousTargetPosition = targetPosition;
+            OnTargetPositionChanged?.Invoke(targetPosition);
+        }
     }
 
     public Vector2Int GetMoveDirection()
     {
         return moveDirection;
+    }
+
+    public Vector2Int GetTargetPosition()
+    {
+        Vector2Int playerPos = TileMapManager.Instance.PositionToCoordinate(transform.position);
+        return playerPos + moveDirection;
     }
 }

@@ -11,6 +11,7 @@ public class BlockType : ScriptableObject
 
     public bool walkable;
     public bool breakable;
+    public bool interactable;
     public float hardness;
 
     public int respawnRate;
