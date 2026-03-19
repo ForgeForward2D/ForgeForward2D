@@ -47,10 +47,16 @@
   spacing: (150pt, 50pt),
 )
 
-#let diagram-box(..args) = box(stroke: 1pt, inset: 1em)[#diagram(..args)]
+#let diagram-box(..args, title: none) = box(stroke: 1pt, inset: 1em)[
+  #if title != none {
+    heading(title)
+  }
+  #diagram(..args)
+]
 
 
 #diagram-box(
+  title: [Movement],
   input((-1, 0), <inputmanager>, label: [WASD]),
   node((0, 0), [Input Manager], name: <inputmanager>),
   event(
@@ -106,6 +112,7 @@
 )
 
 #diagram-box(
+  title: [Attack],
   input((-1, 0), <inputmanager>, label: [_left click_ / J]),
   node((0, 0), [Input Manager], name: <inputmanager>),
   node((0, 2), [CraftingTable UI#desc[Refresh UI]], name: <craftingui>),
@@ -269,6 +276,7 @@
 )
 
 #diagram-box(
+  title: [Interact],
   node((0, 0), [Input Manager], name: <inputmanager>),
 
   node(
@@ -336,6 +344,7 @@
 )
 
 #diagram-box(
+  title: [Hotbar],
   node((0, 0), [Input Manger], name: <inputmanager>),
 
   node((1, 0), [Hotbar#desc[Update Index]], name: <hotbar>),
