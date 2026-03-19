@@ -67,7 +67,21 @@ public class WorldGeneration : MonoBehaviour
         int levelSize = level.levelSize;
         float baseRadius = levelSize / 2f;
 
-        PerlinMapping[] blockMapping = level.blockMapping.OrderBy(m => m.threshold).ToArray();
+        PerlinMapping[] blockMapping = level.blockMapping;
+        bool isSorted = true;
+        for (int i = 1; i < blockMapping.Length; i++)
+        {
+            if (blockMapping[i].threshold < blockMapping[i - 1].threshold)
+            {
+                isSorted = false;
+                break;
+            }
+        }
+        if (!isSorted)
+        {
+            Debug.LogWarning($"Level '{level.levelName}': blockMapping is not sorted by threshold. Sorting automatically.");
+            blockMapping = blockMapping.OrderBy(m => m.threshold).ToArray();
+        }
 
         float noiseOffsetX = (worldSeed % 10000) + 0.5f;
         float noiseOffsetY = (worldSeed / 10000 % 10000) + 0.5f;
