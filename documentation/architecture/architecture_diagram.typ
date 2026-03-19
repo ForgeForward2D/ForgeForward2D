@@ -167,7 +167,7 @@
     <blockbreakingmanager>,
     label-anchor: "north",
   ),
-  event(<onattackinput>, <craftingmanager>, label: [TODO], corner: left),
+  event(<onattackinput>, <craftingmanager>, corner: left),
 
   event(<tilemapmanager>, <blockbreakingmanager>, label: [OnBlock\ Changed]),
 
