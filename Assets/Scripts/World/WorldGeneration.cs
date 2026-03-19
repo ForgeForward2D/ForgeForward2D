@@ -10,7 +10,8 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField] TileBase backgroundTile;
 
     [SerializeField] BlockType wallBlock;
-    [SerializeField] Tilemap portalTilemap;
+
+    [SerializeField] Tilemap foregroundTilemap;
 
     [Header("Settings")]
     [SerializeField] float noiseScale;
@@ -206,7 +207,7 @@ public class WorldGeneration : MonoBehaviour
 
         // Place portal at the level entry
         Vector3Int entryPos = new Vector3Int(startingPoint.x, startingPoint.y, 0);
-        portalTilemap.SetTile(entryPos, level.portalBlock.tile);
+        foregroundTilemap.SetTile(entryPos, level.portalBlock.tile);
         TileMapManager.Instance.DrawBlock(null, startingPoint);
         backgroundTilemap.SetTile(entryPos, backgroundTile);
     }

@@ -7,7 +7,7 @@ public class WorldManager : MonoBehaviour
 {
     public static event Action<Vector3> OnPlayerTeleport;
 
-    [SerializeField] private Tilemap portalTilemap;
+    [SerializeField] private Tilemap foregroundTilemap;
     [SerializeField] private WorldGeneration worldGeneration;
     private Level[] levels;
 
@@ -60,11 +60,11 @@ public class WorldManager : MonoBehaviour
             }
         }
         // search the portal map for portalBlocks and add the portals respectively to the portalsByBlock dict
-        portalTilemap.CompressBounds();
-        BoundsInt bounds = portalTilemap.cellBounds;
+        foregroundTilemap.CompressBounds();
+        BoundsInt bounds = foregroundTilemap.cellBounds;
         foreach (Vector3Int cellPos in bounds.allPositionsWithin)
         {
-            TileBase tile = portalTilemap.GetTile(cellPos);
+            TileBase tile = foregroundTilemap.GetTile(cellPos);
             if (tile == null) continue;
 
             BlockType blockType = BlockTypeRepository.GetBlockByTile(tile);
@@ -102,12 +102,12 @@ public class WorldManager : MonoBehaviour
     void CreateColliderAroundPortal(Vector2Int portalPos)
     {
         Vector3Int cellPos = new Vector3Int(portalPos.x, portalPos.y, 0);
-        Vector3 worldCenter = portalTilemap.GetCellCenterWorld(cellPos);
+        Vector3 worldCenter = foregroundTilemap.GetCellCenterWorld(cellPos);
         Vector3 localCenter = transform.InverseTransformPoint(worldCenter);
         BoxCollider2D collider = gameObject.AddComponent<BoxCollider2D>();
         collider.isTrigger = true;
         collider.offset = new Vector2(localCenter.x, localCenter.y);
-        collider.size = portalTilemap.cellSize;
+        collider.size = foregroundTilemap.cellSize;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -115,7 +115,7 @@ public class WorldManager : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         Vector2Int currentTile = TileMapManager.Instance.PositionToCoordinate(other.transform.position);
-        TileBase tile = portalTilemap.GetTile(new Vector3Int(currentTile.x, currentTile.y, 0));
+        TileBase tile = foregroundTilemap.GetTile(new Vector3Int(currentTile.x, currentTile.y, 0));
         if (tile != null)
         {
             // player is already on a portal tile (probably just teleported here)
@@ -138,7 +138,7 @@ public class WorldManager : MonoBehaviour
         {
             return;
         }
-        TileBase portalTile = portalTilemap.GetTile(new Vector3Int(tile.x, tile.y, 0));
+        TileBase portalTile = foregroundTilemap.GetTile(new Vector3Int(tile.x, tile.y, 0));
 
         if (portalTile == null)
         {
@@ -149,7 +149,7 @@ public class WorldManager : MonoBehaviour
         currentPortalTile = tile;
         if (portalDestinations.TryGetValue(currentPortalTile, out Vector2Int destination))
         {
-            Vector3 worldPos = portalTilemap.GetCellCenterWorld(new Vector3Int(destination.x, destination.y, 0));
+            Vector3 worldPos = foregroundTilemap.GetCellCenterWorld(new Vector3Int(destination.x, destination.y, 0));
             OnPlayerTeleport?.Invoke(worldPos);
             Debug.Log($"Portal: teleported player to {destination}");
             portalEntered = new Vector2Int(Int32.MinValue, Int32.MinValue);
