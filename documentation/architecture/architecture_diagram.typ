@@ -24,6 +24,8 @@
 #let shift = 20pt
 #let bend = 15deg
 
+#let desc = it => [\ #text(size: 8pt, fill: orange, it)]
+
 #let edge = _edge.with(marks: "-|>", label-sep: 0pt)
 #let input(..args, label: none) = edge(..args, stroke: red, label: if label
   != none { text(fill: red, label) })
@@ -43,13 +45,12 @@
 #let diagram = _diagram.with(
   node-stroke: 1pt,
   spacing: (150pt, 50pt),
-  debug: true,
 )
 
+#let diagram-box(..args) = box(stroke: 1pt, inset: 1em)[#diagram(..args)]
 
 
-
-#diagram(
+#diagram-box(
   input((-1, 0), <inputmanager>, label: [WASD]),
   node((0, 0), [Input Manager], name: <inputmanager>),
   event(
@@ -60,14 +61,22 @@
 
   node((0.5, 0), stroke: none, name: <onmoveinput>),
 
-  node((1, 0), [Movement Manager], name: <movementmanager>),
+  node((1, 0), [Movement Manager#desc[Set velocity]], name: <movementmanager>),
   event(<onmoveinput>, <movementmanager>),
-  node((1, 1), [Achievement Manager], name: <achievementmanager>),
+  node(
+    (1, 1),
+    [Achievement Manager#desc[Update selected index]],
+    name: <achievementmanager>,
+  ),
   event(<onmoveinput>, <achievementmanager>, corner: left),
-  node((1, 2), [Crafting Manager], name: <craftingmanager>),
+  node(
+    (1, 2),
+    [Crafting Manager#desc[Update selected index]],
+    name: <craftingmanager>,
+  ),
   event(<onmoveinput>, <craftingmanager>, corner: left),
 
-  node((2, 1), [Achievement UI], name: <achievementui>),
+  node((2, 1), [Achievement UI#desc[Refresh UI]], name: <achievementui>),
   event(
     <achievementmanager>,
     <achievementui>,
@@ -81,7 +90,7 @@
     bend: bend,
   ),
 
-  node((2, 2), [CraftingTable UI], name: <craftingui>),
+  node((2, 2), [CraftingTable UI#desc[Refresh UI]], name: <craftingui>),
   event(
     <craftingmanager>,
     <craftingui>,
@@ -96,26 +105,46 @@
   ),
 )
 
-#diagram(
+#diagram-box(
   input((-1, 0), <inputmanager>, label: [_left click_ / J]),
   node((0, 0), [Input Manager], name: <inputmanager>),
-  node((0, 2), [CraftingTable UI], name: <craftingui>),
+  node((0, 2), [CraftingTable UI#desc[Refresh UI]], name: <craftingui>),
 
-  node((1, 0), [BlockBreaking Manager], name: <blockbreakingmanager>),
+  node(
+    (1, 0),
+    [BlockBreaking Manager#desc[Manage Block Breaking Process]],
+    name: <blockbreakingmanager>,
+  ),
   node((1, 1), [TileMap Manager], name: <tilemapmanager>),
   node((1, 2), [Crafting Manager], name: <craftingmanager>),
   node((1, 3), [Inventory Manager], name: <inventorymanager>),
 
-  node((2, 0), [Achievement Manager], name: <achievementmanager>),
-  node((2, 1), [Resource Generator], name: <resourcegenerator>),
+  node(
+    (2, 0),
+    [Achievement Manager#desc[Track Broken Blocks]],
+    name: <achievementmanager>,
+  ),
+  node(
+    (2, 1),
+    [Resource Generator#desc[Regenerate Resource]],
+    name: <resourcegenerator>,
+  ),
   node((2, 2), [Resource Inventory], name: <resourceinventory>),
   node((2, 3), [Hotbar], name: <hotbar>),
 
   node((3, 0), [Achievement Popup Manager], name: <achievementpopupmanager>),
-  node((3, 1), [Achievement UI], name: <achievementui>),
-  node((3, 2), [Resource Inventory UI], name: <resourceinventoryui>),
-  node((3, 3), [Hotbar UI], name: <hotbarui>),
-  node((3, 4), [PlayerHand Controller], name: <playerhandcontroller>),
+  node((3, 1), [Achievement UI#desc[Refresh UI]], name: <achievementui>),
+  node(
+    (3, 2),
+    [Resource Inventory UI#desc[Refresh UI]],
+    name: <resourceinventoryui>,
+  ),
+  node((3, 3), [Hotbar UI#desc[Refresh UI]], name: <hotbarui>),
+  node(
+    (3, 4),
+    [PlayerHand Controller#desc[Refresh UI]],
+    name: <playerhandcontroller>,
+  ),
 
   node((0.5, 0), stroke: none, name: <onattackinput>),
 
@@ -239,16 +268,28 @@
   event(<onupdate>, <playerhandcontroller>, corner: left),
 )
 
-#diagram(
+#diagram-box(
   node((0, 0), [Input Manager], name: <inputmanager>),
 
-  node((1, 0), [PlayerInteraction Manager], name: <playerinteractionmanager>),
+  node(
+    (1, 0),
+    [PlayerInteraction Manager#desc[Find Block For Interaction]],
+    name: <playerinteractionmanager>,
+  ),
   node((1, 1), [TileMap Manager], name: <tilemapmanager>),
 
   node((2, 0), [UI Manager], name: <uimanager>),
 
-  node((3, 0), [BlockBreaking Manager], name: <blockbreakingmanager>),
-  node((3, 1), [Movement Manager], name: <movementmanager>),
+  node(
+    (3, 0),
+    [BlockBreaking Manager#desc[Cancel Breaking]],
+    name: <blockbreakingmanager>,
+  ),
+  node(
+    (3, 1),
+    [Movement Manager#desc[Cancel Walking + Animation]],
+    name: <movementmanager>,
+  ),
 
   input((-1, 0), <inputmanager>, label: [_right click_ / K], shift: 10pt),
   input(
@@ -294,13 +335,17 @@
   event(<onupdatepage>, (2.5, -1), (0, -1), <inputmanager>),
 )
 
-#diagram(
+#diagram-box(
   node((0, 0), [Input Manger], name: <inputmanager>),
 
-  node((1, 0), [Hotbar], name: <hotbar>),
+  node((1, 0), [Hotbar#desc[Update Index]], name: <hotbar>),
 
-  node((2, 0), [Hotbar UI], name: <hotbarui>),
-  node((2, 1), [PlayerHand Controller], name: <playerhandcontroller>),
+  node((2, 0), [Hotbar UI#desc[Update UI]], name: <hotbarui>),
+  node(
+    (2, 1),
+    [PlayerHand Controller#desc[Change Hand hold Object]],
+    name: <playerhandcontroller>,
+  ),
 
   input(
     (-1, 0),
