@@ -1,9 +1,9 @@
 using UnityEngine;
 using System;
 
-public class BlockInfoManager : MonoBehaviour
+public class TargetBlockInfoManager : MonoBehaviour
 {
-    public static event Action<BlockInfoManager> OnBlockInfoUpdate;
+    public static event Action<TargetBlockInfoManager> OnBlockInfoUpdate;
 
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
@@ -17,8 +17,7 @@ public class BlockInfoManager : MonoBehaviour
         movementManager = GetComponent<MovementManager>();
         HotBar.OnHotBarUpdate += HandleHotBarUpdate;
         UIManager.OnUpdatePage += HandleUpdatePage;
-        MovementManager.OnMoveDirectionChanged += HandleMoveDirectionChanged;
-        MovementManager.OnTilePositionChanged += HandleTilePositionChanged;
+        MovementManager.OnTargetPositionChanged += HandleTargetPositionChanged;
         TileMapManager.OnBlockChanged += HandleBlockChanged;
     }
 
@@ -38,20 +37,14 @@ public class BlockInfoManager : MonoBehaviour
         }
     }
 
-    private void HandleMoveDirectionChanged(Vector2Int _)
-    {
-        Refresh();
-    }
-
-    private void HandleTilePositionChanged(Vector2Int _)
+    private void HandleTargetPositionChanged(Vector2Int _)
     {
         Refresh();
     }
 
     private void HandleBlockChanged((BlockType blockType, Vector2Int position) blockInfo)
     {
-        Vector2Int playerPos = TileMapManager.Instance.PositionToCoordinate(movementManager.transform.position);
-        if (blockInfo.position == playerPos + movementManager.GetMoveDirection())
+        if (blockInfo.position == movementManager.GetTargetPosition())
             Refresh();
     }
 
@@ -59,7 +52,7 @@ public class BlockInfoManager : MonoBehaviour
     {
         if (isPageOpen) return;
 
-        currentBlock = movementManager.GetTargetBlock();
+        currentBlock = TileMapManager.Instance.GetBlockTypeAtPosition(movementManager.GetTargetPosition());
         bool hasAction = currentBlock != null && (currentBlock.breakable || currentBlock.interactable);
         OnBlockInfoUpdate?.Invoke(hasAction ? this : null);
     }

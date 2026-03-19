@@ -5,8 +5,7 @@ using UnityEngine.InputSystem;
 
 public class MovementManager : MonoBehaviour
 {
-    public static event Action<Vector2Int> OnMoveDirectionChanged;
-    public static event Action<Vector2Int> OnTilePositionChanged;
+    public static event Action<Vector2Int> OnTargetPositionChanged;
 
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private Transform characterModel;
@@ -17,7 +16,7 @@ public class MovementManager : MonoBehaviour
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private Vector2Int moveDirection;
 
-    private Vector2Int lastTilePos;
+    private Vector2Int previousTargetPosition;
 
     public void Start()
     {
@@ -74,14 +73,11 @@ public class MovementManager : MonoBehaviour
             characterModel.localRotation = Quaternion.Euler(0f, moveInput.y < 0 ? 0f : 180f, 0f);
         }
 
-        if (moveDirection != previousDirection)
-            OnMoveDirectionChanged?.Invoke(moveDirection);
-
-        Vector2Int tilePos = TileMapManager.Instance.PositionToCoordinate(transform.position);
-        if (tilePos != lastTilePos)
+        Vector2Int targetPosition = GetTargetPosition();
+        if (targetPosition != previousTargetPosition)
         {
-            lastTilePos = tilePos;
-            OnTilePositionChanged?.Invoke(tilePos);
+            previousTargetPosition = targetPosition;
+            OnTargetPositionChanged?.Invoke(targetPosition);
         }
     }
 
@@ -90,9 +86,9 @@ public class MovementManager : MonoBehaviour
         return moveDirection;
     }
 
-    public BlockType GetTargetBlock()
+    public Vector2Int GetTargetPosition()
     {
         Vector2Int playerPos = TileMapManager.Instance.PositionToCoordinate(transform.position);
-        return TileMapManager.Instance.GetBlockTypeAtPosition(playerPos + moveDirection);
+        return playerPos + moveDirection;
     }
 }

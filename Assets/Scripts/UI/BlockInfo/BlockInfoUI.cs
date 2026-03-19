@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class BlockInfoUI : UIComponent<BlockInfoManager>
+public class BlockInfoUI : UIComponent<TargetBlockInfoManager>
 {
     [Header("References")]
     [SerializeField] private CanvasGroup canvasGroup;
@@ -13,10 +13,10 @@ public class BlockInfoUI : UIComponent<BlockInfoManager>
     {
         canvasGroup.alpha = 0f;
         canvasGroup.blocksRaycasts = false;
-        BlockInfoManager.OnBlockInfoUpdate += RefreshUI;
+        TargetBlockInfoManager.OnBlockInfoUpdate += RefreshUI;
     }
 
-    public override void RefreshUI(BlockInfoManager manager)
+    public override void RefreshUI(TargetBlockInfoManager manager)
     {
         if (manager == null)
         {
