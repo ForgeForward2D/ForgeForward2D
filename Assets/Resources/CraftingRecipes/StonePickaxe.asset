@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb8f548d71a4a4c5da896f8e2a90090e, type: 3}
+  m_Name: StonePickaxe
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
+  ingredients:
+  - itemType: {fileID: 11400000, guid: e20d3d99a6b413346b430aa823cbdd11, type: 2}
+    count: 5
+  - itemType: {fileID: 11400000, guid: 8b68d1c5bff35400f9549a9b2afb0f8f, type: 2}
+    count: 1
+  result:
+    itemType: {fileID: 11400000, guid: 6b18fe8fd5e784e24ac67f4c1e176bf6, type: 2}
+    count: 1
