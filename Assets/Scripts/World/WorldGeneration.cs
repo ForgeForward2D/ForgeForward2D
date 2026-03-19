@@ -85,7 +85,6 @@ public class WorldGeneration : MonoBehaviour
 
         float noiseOffsetX = (worldSeed % 10000) + 0.5f;
         float noiseOffsetY = (worldSeed / 10000 % 10000) + 0.5f;
-        HashSet<Vector2Int> detailPositions = new HashSet<Vector2Int>();
 
         // Generate random wave parameters for the irregular border
         int N = borderWaves;
@@ -170,7 +169,7 @@ public class WorldGeneration : MonoBehaviour
                         float roll = Random.value;
                         if (roll < detail.probability)
                         {
-                            PlaceDetail(detail.block, detailPositions, new Vector2Int(x, y));
+                            PlaceDetail(detail.block, new Vector2Int(x, y));
                             break;
                         }
                     }
@@ -212,9 +211,8 @@ public class WorldGeneration : MonoBehaviour
         backgroundTilemap.SetTile(entryPos, backgroundTile);
     }
 
-    void PlaceDetail(BlockType detailBlock, HashSet<Vector2Int> detailPositions, Vector2Int pos)
+    void PlaceDetail(BlockType detailBlock, Vector2Int pos)
     {
         TileMapManager.Instance.DrawBlock(detailBlock, pos);
-        detailPositions.Add(pos);
     }
 }
