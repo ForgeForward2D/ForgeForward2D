@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2939615087842769253}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -96,8 +96,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.75, y: 0.75}
+  m_Offset: {x: 0.011804402, y: -0.24789447}
+  m_Size: {x: 0.65556395, y: 0.65556395}
   m_Direction: 0
 --- !u!114 &7561439709022178175
 MonoBehaviour:
@@ -111,14 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c9c6e611b388442b16d36a10529416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MobController
+  mobType: {fileID: 0}
   rb: {fileID: 9082670591747480178}
-  visualRoot: {fileID: 6402252699438342591}
-  walkableTilemap: {fileID: 0}
-  blockedTilemap: {fileID: 0}
-  moveSpeed: 2
-  directionCheckDistance: 0.5
-  idleDurationRange: {x: 0.5, y: 3}
-  walkDurationRange: {x: 1, y: 3}
   moveDirection: {x: 0, y: 0}
   currentState: 0
   stateTimer: 0
@@ -203,7 +197,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 3b1b417dc8f424ccca2c12334206881f, type: 3}
+  m_Sprite: {fileID: 174818235, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

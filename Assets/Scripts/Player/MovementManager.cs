@@ -25,6 +25,7 @@ public class MovementManager : MonoBehaviour
 
         InputManager.OnMoveInput += HandleMoveInput;
         UIManager.OnUpdatePage += HandleUpdatePage;
+        PortalManager.OnPlayerTeleport += HandleTeleport;
     }
 
     private void HandleMoveInput((UIPage, bool, Vector2) data)
@@ -49,6 +50,12 @@ public class MovementManager : MonoBehaviour
             moveInput = Vector2.zero;
             playerAnimator.SetBool("isMoving", false);
         }
+    }
+
+    private void HandleTeleport(Vector3 destination)
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.position = destination;
     }
 
     public void FixedUpdate()
