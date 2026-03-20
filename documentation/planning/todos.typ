@@ -32,21 +32,49 @@
   text(
     fill: black.lighten(40%),
     size: text.size * 80%,
+  )[TODOs unitl Friday, 27.03.]
+}
+- write blog article Leon
+- prepare presentation Tim
+- implement "mob steals resources" logic Tim + Leon
+- implement mob-spwan logic: giving an NPC resources reduces mob spawn rate Sinan + Nils
+- implement "mob following player" logic -> pathfinding Leon
+- implement NPC-interaction logic for communication Nils
+- levels:
+  - add more achievements (maybe second type of achievements, e.g. craft 100 times) Tim
+  - #optional[design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds]
+  - #optional[limited vision]
+  - create more levels: mine, deep mine, end/stronghold/ the endboss's house Sinan (CCO)
+  - design sprites for portals, loot boxes Nils
+  - design mob sprites (1 x hostile, 1 x villager/fairy) Sinan
+- crafting recipe sorting Leon
+- anvil for tools Leon
+- implement game analytics Tim
+- publish game logic Tim
+- #optional[adapt walk-animation speed to walk speed]
+- #optional[tool animations]
+
+#pagebreak(weak: true)
+= Next Steps
+#context {
+  text(
+    fill: black.lighten(40%),
+    size: text.size * 80%,
   )[TODOs unitl Friday, 20.03.]
 }
 - write blog article Leon
 // - adapt walk-animation speed to walk speed todo
-- refactor Tim
-- treasures hidden in Lehm blocks Leon
-- small icon on how to interact with the targeted block Nils
+- #strike[refactor Tim]
+- #strike[treasures hidden in Lehm blocks Leon]
+- #strike[small icon on how to interact with the targeted block Nils]
 - levels: Leon + Sinan
-  - write world creation logic for forest, mine, ...
+  - #strike[write world creation logic for forest, mine, ...]
   - add second layer
   - design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds
-  - level/world switching logic, door/portal etc.
+  - #strike[level/world switching logic, door/portal etc.]
   - limited vision
-- think of storyline and progression system #math.arrow create a plan (figma/excalidraw) Leon + Sinan
-- add mobs (that only run around for now) Nils
+- #strike[think of storyline and progression system #math.arrow create a plan (figma/excalidraw) Leon + Sinan]
+- #strike[add mobs (that only run around for now) Nils]
 - #optional[tool animations Sinan]
 - #optional[modular 3D tool presets (change blade based on material)]
 
@@ -64,13 +92,13 @@
 - add tool animation (as alternative to attack) Sinan
 - #strike[add tool logic (block has _tool_ and _hardness_ attribute #math.arrow calculate mineability and speed) Tim]
 - #strike[add `crafting table` and `anvil` as interactable blocks with crafting logic:\ crafting recipes as JSON or similar Tim]
-- #optional[add mobs (that only run around for now)]
+- #strike[#optional[add mobs (that only run around for now)]]
 - #strike[add loot-tables for blocks Leon]
 - #strike[add treasures Leon]
 - #strike[add more materials Leon]
 - #strike[add achievements (only the screen and a json/... template for achievements) Nils]
 - #strike[add achievements logic Nils]
-- #optional[implement level creation-logic Sinan]
+- #strike[#optional[implement level creation-logic Sinan]]
 - #optional[Add background music]
 - #optional[Add sound effects for block break etc.]
 
@@ -88,7 +116,7 @@
 - weather conditions like fog where you cant see the whole map so that would make it a bit harder to find stuff
   - torch for more viewing distance
   - craft sth like blitz in pokemon where you can then see the whole map?
-- achievements
+- #strike[achievements]
 - upgradable tool #math.arrow enchantments
   - man könnte auch so 2x2 enchantments hinzufügen (also dass man statt 1x1 2x2 abbauen kann)
 - mobs disturbing you from mining
@@ -128,4 +156,4 @@
       [every tool has a hardness (only block with lower or equal hardness can be broken)],
       [blocks don't break if used with tool that is not hard enough],
     )]]
-- #optional[draw architecture diagram]
+- #strike[#optional[draw architecture diagram]]

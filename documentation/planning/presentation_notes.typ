@@ -11,6 +11,26 @@
   ), column-gutter: 1em, row-gutter: 0.5em, ..elements)
 #set heading(numbering: "1.1")
 
+#date[20.03.2026: Addictive Patterns]
+- ForgeForward2D: The game for endless mining, collecting, and exploring
+
+= Demo
+- #action[show game]
+- treasures
+- rare blocks in clay
+- loot tables
+- crafting recipes
+- interaction indicator
+- automatic world creation
+- MOBS
+
+#pagebreak(weak: true)
+= Big refactor
+- #action[show architecture diagram and explain]
+
+#pagebreak()
+
+
 #date[13.03.2026: Unity & Software Architecture]
 - ForgeForward2D: The game for endless mining, collecting, and exploring
 
