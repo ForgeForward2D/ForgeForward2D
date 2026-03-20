@@ -163,20 +163,25 @@ public class WorldGeneration : MonoBehaviour
             {
                 BlockType block = perlinMapping.block;
                 float threshold = perlinMapping.threshold;
-                Detail detail = perlinMapping.detail;
+                Detail[] details = perlinMapping.details;
 
                 if (noiseValue < threshold)
                 {
-                    if (detail != null)
+                    bool hasDetail = false;
+                    if (details.Length > 0)
                     {
                         float roll = Random.value;
-                        if (roll < detail.probability)
+                        foreach (var detail in details)
                         {
-                            PlaceDetail(detail.block, new Vector2Int(x, y));
-                            break;
+                            if (roll < detail.probability)
+                            {
+                                hasDetail = true;
+                                PlaceDetail(detail.block, new Vector2Int(x, y));
+                                break;
+                            }
                         }
                     }
-                    if (block == null)
+                    if (block == null || hasDetail)
                     {
                         break;
                     }

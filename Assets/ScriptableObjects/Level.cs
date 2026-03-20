@@ -20,7 +20,7 @@ public class PerlinMapping
 {
     public BlockType block;
     [Range(0f, 1f)] public float threshold;
-    public Detail detail;
+    public Detail[] details;
 }
 
 [Serializable]
