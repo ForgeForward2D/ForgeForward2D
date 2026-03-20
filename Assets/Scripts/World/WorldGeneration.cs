@@ -185,7 +185,7 @@ public class WorldGeneration : MonoBehaviour
                 }
             }
 
-            backgroundTilemap.SetTile(tilePos, backgroundTile);
+            backgroundTilemap.SetTile(tilePos, level.backgroundTile);
         }
 
         TileMapManager.Instance.RegisterSpawnablePositions(interiorTiles);
@@ -195,15 +195,15 @@ public class WorldGeneration : MonoBehaviour
         {
             Vector3Int tilePos = new Vector3Int(tile.x, tile.y, 0);
             TileMapManager.Instance.DrawBlock(level.wallBlock, tile);
-            backgroundTilemap.SetTile(tilePos, level.paddingBlock.tile);
+            backgroundTilemap.SetTile(tilePos, level.paddingTile);
         }
 
-        if (level.paddingBlock != null)
+        if (level.paddingTile != null)
         {
             foreach (var tile in paddingTiles)
             {
                 Vector3Int tilePos = new Vector3Int(tile.x, tile.y, 0);
-                backgroundTilemap.SetTile(tilePos, level.paddingBlock.tile);
+                backgroundTilemap.SetTile(tilePos, level.paddingTile);
             }
         }
 
@@ -213,7 +213,7 @@ public class WorldGeneration : MonoBehaviour
         Vector3Int entryPos = new Vector3Int(startingPoint.x, startingPoint.y, 0);
         foregroundTilemap.SetTile(entryPos, level.portalBlock.tile);
         TileMapManager.Instance.DrawBlock(null, startingPoint);
-        backgroundTilemap.SetTile(entryPos, backgroundTile);
+        backgroundTilemap.SetTile(entryPos, level.backgroundTile);
     }
 
     void PlaceDetail(BlockType detailBlock, Vector2Int pos)

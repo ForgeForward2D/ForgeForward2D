@@ -7,9 +7,10 @@ public class Level : ScriptableObject
 {
     public string levelName;
     public Vector2Int startingPoint;
+    public TileBase backgroundTile;
     public BlockType portalBlock;
     public BlockType wallBlock;
-    public BlockType paddingBlock;
+    public TileBase paddingTile;
     public int levelSize; // ~radius
     public PerlinMapping[] blockMapping;
 }
