@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6397b489f5441dcb369b1a6623f32c, type: 3}
+  m_Name: Mine
+  m_EditorClassIdentifier: Assembly-CSharp::Level
+  levelName: Mine
+  startingPoint: {x: 0, y: -300}
+  portalBlock: {fileID: 11400000, guid: 21e0976fe73f64292960b9dec5d6a372, type: 2}
+  wallBlock: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
+  paddingBlock: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
+  levelSize: 300
+  blockMapping:
+  - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
+    threshold: 0.132
+    detail:
+      block: {fileID: 0}
+      probability: 0
+  - block: {fileID: 11400000, guid: 327832cc0a49e4e278c2333aa3750657, type: 2}
+    threshold: 0.338
+    detail:
+      block: {fileID: 11400000, guid: cf30de75936df4afe8dfc7906a0eb2cf, type: 2}
+      probability: 0.1
+  - block: {fileID: 11400000, guid: 2496b2bb3a0e3476b9f6d598d58eb714, type: 2}
+    threshold: 0.831
+    detail:
+      block: {fileID: 0}
+      probability: 0
+  - block: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
+    threshold: 1
+    detail:
+      block: {fileID: 0}
+      probability: 0
