@@ -14,33 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Level
   levelName: Forest
   startingPoint: {x: -300, y: 0}
+  backgroundTile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
   portalBlock: {fileID: 11400000, guid: ec20352a20e19486f9d3392da0faabe2, type: 2}
   wallBlock: {fileID: 11400000, guid: 2eefb98cc63694ea680a898046976a94, type: 2}
-  paddingBlock: {fileID: 11400000, guid: 8bf922cd80d1c4deebad3205719b8086, type: 2}
+  paddingTile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
   levelSize: 200
   blockMapping:
   - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
     threshold: 0.132
-    detail:
-      block: {fileID: 0}
-      probability: 0
+    details: []
   - block: {fileID: 11400000, guid: 327832cc0a49e4e278c2333aa3750657, type: 2}
     threshold: 0.236
-    detail:
-      block: {fileID: 0}
-      probability: 0
+    details: []
   - block: {fileID: 0}
     threshold: 0.667
-    detail:
-      block: {fileID: 11400000, guid: 7f3076a83042c40aaa8fa8ba50068c68, type: 2}
+    details:
+    - block: {fileID: 11400000, guid: 7f3076a83042c40aaa8fa8ba50068c68, type: 2}
       probability: 0.05
   - block: {fileID: 11400000, guid: e7e5a10912c6540c994f3a48deab9599, type: 2}
     threshold: 0.85
-    detail:
-      block: {fileID: 0}
-      probability: 0
+    details: []
   - block: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
     threshold: 1
-    detail:
-      block: {fileID: 0}
-      probability: 0
+    details: []
