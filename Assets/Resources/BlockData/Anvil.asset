@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
+  m_Name: Anvil
+  m_EditorClassIdentifier: Assembly-CSharp::BlockType
+  displayName: Anvil
+  tile: {fileID: 11400000, guid: ea9f29743ca344d31a295d590de55650, type: 2}
+  walkable: 0
+  breakable: 0
+  interactable: 1
+  hardness: 0
+  respawnRate: 0
+  replacementBlock: {fileID: 0}
+  toolType: 0
+  minimumToolTier: 0
+  lootDrops: []
