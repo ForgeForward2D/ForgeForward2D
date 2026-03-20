@@ -16,6 +16,7 @@ MonoBehaviour:
   tile: {fileID: 11400000, guid: b0a8ff7ca237d4bfea096752a8b3857a, type: 2}
   walkable: 0
   breakable: 1
+  interactable: 0
   hardness: 3
   respawnRate: 0
   replacementBlock: {fileID: 0}
@@ -23,7 +24,7 @@ MonoBehaviour:
   minimumToolTier: 0
   lootDrops:
   - itemType: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
-    amount: 5
+    amount: 10
     chance: 1
   - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
     amount: 2
@@ -31,3 +32,6 @@ MonoBehaviour:
   - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
     amount: 1
     chance: 0.1
+  - itemType: {fileID: 11400000, guid: 8b68d1c5bff35400f9549a9b2afb0f8f, type: 2}
+    amount: 3
+    chance: 1
