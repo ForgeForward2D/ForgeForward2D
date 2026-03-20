@@ -25,7 +25,7 @@ public class MovementManager : MonoBehaviour
 
         InputManager.OnMoveInput += HandleMoveInput;
         UIManager.OnUpdatePage += HandleUpdatePage;
-        WorldManager.OnPlayerTeleport += HandleTeleport;
+        PortalManager.OnPlayerTeleport += HandleTeleport;
     }
 
     private void HandleMoveInput((UIPage, bool, Vector2) data)

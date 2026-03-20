@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class WorldManager : MonoBehaviour
+public class PortalManager : MonoBehaviour
 {
     public static event Action<Vector3> OnPlayerTeleport;
 
@@ -17,11 +17,11 @@ public class WorldManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("WorldManager: Start called");
+        Debug.Log("PortalManager: Start called");
 
         if (worldGeneration == null)
         {
-            Debug.LogError("WorldManager: worldGeneration is not assigned!");
+            Debug.LogError("PortalManager: worldGeneration is not assigned!");
             return;
         }
 
@@ -134,7 +134,7 @@ public class WorldManager : MonoBehaviour
         }
 
         Vector2Int tile = TileMapManager.Instance.PositionToCoordinate(other.transform.position);
-        if (!IsAdjacent(portalEntered, tile))
+        if (!IsAdjacent(portalEntered, tile) || (portalEntered.x == tile.x && portalEntered.y == tile.y))
         {
             return;
         }

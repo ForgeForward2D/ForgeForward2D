@@ -188,7 +188,7 @@ MonoBehaviour:
   noiseScale: 0.15
   borderWaves: 8
   borderWidth: 0.6
-  worldSeed: 0
+  worldSeed: 23692138
   levels:
   - {fileID: 11400000, guid: 29bb03460e7434338a5afcfd64434927, type: 2}
 --- !u!483693784 &672237593530260148
@@ -16916,7 +16916,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1035c4caabcc1470faa668461ba1d30d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WorldManager
+  m_EditorClassIdentifier: Assembly-CSharp::PortalManager
   foregroundTilemap: {fileID: 7023219003204521883}
   worldGeneration: {fileID: 190012768907446256}
 --- !u!114 &8421946597684521387
