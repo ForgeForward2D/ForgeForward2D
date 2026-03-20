@@ -18,12 +18,14 @@ public class TileMapManager : MonoBehaviour
 
     public static Action<(BlockType, Vector2Int)> OnBlockChanged;
 
+    private readonly HashSet<Vector2Int> registeredPositions = new();
     private readonly HashSet<Vector2Int> spawnablePositions = new();
 
     public void RegisterSpawnablePositions(IEnumerable<Vector2Int> positions)
     {
         foreach (var pos in positions)
         {
+            registeredPositions.Add(pos);
             spawnablePositions.Add(pos);
         }
     }
@@ -31,6 +33,16 @@ public class TileMapManager : MonoBehaviour
     public List<Vector2Int> GetSpawnablePositions()
     {
         return new List<Vector2Int>(spawnablePositions);
+    }
+
+    private void UpdateSpawnablePosition(Vector2Int position, bool walkable)
+    {
+        if (!registeredPositions.Contains(position)) return;
+
+        if (walkable)
+            spawnablePositions.Add(position);
+        else
+            spawnablePositions.Remove(position);
     }
 
     private void Awake()
@@ -53,6 +65,7 @@ public class TileMapManager : MonoBehaviour
         {
             wallTilemap.SetTile(tilePosition, null);
             walkableTilemap.SetTile(tilePosition, null);
+            UpdateSpawnablePosition(position, true);
             OnBlockChanged?.Invoke((null, position));
             return;
         }
@@ -61,11 +74,13 @@ public class TileMapManager : MonoBehaviour
         {
             wallTilemap.SetTile(tilePosition, null);
             walkableTilemap.SetTile(tilePosition, blockType.tile);
+            UpdateSpawnablePosition(position, true);
         }
         else
         {
             wallTilemap.SetTile(tilePosition, blockType.tile);
             walkableTilemap.SetTile(tilePosition, null);
+            UpdateSpawnablePosition(position, false);
         }
 
         OnBlockChanged?.Invoke((blockType, position));
@@ -76,6 +91,7 @@ public class TileMapManager : MonoBehaviour
         Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
         wallTilemap.SetTile(tilePosition, null);
         walkableTilemap.SetTile(tilePosition, null);
+        UpdateSpawnablePosition(position, true);
     }
 
     public Vector2Int PositionToCoordinate(Vector3 worldPosition)
