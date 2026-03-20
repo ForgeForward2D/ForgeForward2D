@@ -35,18 +35,24 @@
   )[TODOs unitl Friday, 27.03.]
 }
 - write blog article Leon
-- implement "mob steals resources" logic todo
-- implement mob-attack logic todo
-- implement mob-interaction logic for communication todo
+- prepare presentation Tim
+- implement "mob steals resources" logic Tim + Leon
+- implement mob-spwan logic: giving an NPC resources reduces mob spawn rate Sinan + Nils
+- implement "mob following player" logic -> pathfinding Leon
+- implement NPC-interaction logic for communication Nils
 - levels:
-  - add more achievements (maybe second type of achievements, e.g. craft 100 times) todo
-  - design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds todo
-  - limited vision todo
-  - create more levels: mine, deep mine, end/stronghold/ the endboss's house todo
-- implement game analytics todo
+  - add more achievements (maybe second type of achievements, e.g. craft 100 times) Tim
+  - #optional[design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds]
+  - #optional[limited vision]
+  - create more levels: mine, deep mine, end/stronghold/ the endboss's house Sinan (CCO)
+  - design sprites for portals, loot boxes Nils
+  - design mob sprites (1 x hostile, 1 x villager/fairy) Sinan
+- crafting recipe sorting Leon
+- anvil for tools Leon
+- implement game analytics Tim
+- publish game logic Tim
 - #optional[adapt walk-animation speed to walk speed]
 - #optional[tool animations]
-- #optional[modular 3D tool presets (change blade based on material)]
 
 #pagebreak(weak: true)
 = Next Steps
