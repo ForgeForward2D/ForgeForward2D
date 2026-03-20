@@ -181,10 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e08e852084c146139d6c49fe7d5bb51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldGeneration
-  backgroundTilemap: {fileID: 1300875036997624091}
   backgroundTile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
   wallBlock: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
-  foregroundTilemap: {fileID: 7023219003204521883}
   noiseScale: 0.15
   borderWaves: 20
   borderWidth: 0.6
@@ -343,7 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TileMapManager
   wallTilemap: {fileID: 7420243097569545091}
   walkableTilemap: {fileID: 3019561882642584167}
-  animationTilemap: {fileID: 7023219003204521883}
+  foregroundTilemap: {fileID: 7023219003204521883}
   backgroundTilemap: {fileID: 1300875036997624091}
   hitBoxSize: 0.9
 --- !u!50 &1916282898747536962
@@ -16932,7 +16930,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1035c4caabcc1470faa668461ba1d30d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalManager
-  foregroundTilemap: {fileID: 7023219003204521883}
   worldGeneration: {fileID: 190012768907446256}
 --- !u!114 &8421946597684521387
 MonoBehaviour:

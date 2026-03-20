@@ -10,8 +10,11 @@ public class TileMapManager : MonoBehaviour
 
     [SerializeField] private Tilemap wallTilemap;
     [SerializeField] private Tilemap walkableTilemap;
-    [SerializeField] private Tilemap animationTilemap;
+    [SerializeField] private Tilemap foregroundTilemap;
     [SerializeField] private Tilemap backgroundTilemap;
+
+    public Tilemap ForegroundTilemap => foregroundTilemap;
+    public Tilemap BackgroundTilemap => backgroundTilemap;
 
     [Header("Settings")]
     [SerializeField] private float hitBoxSize = 0.9f;
@@ -188,7 +191,7 @@ public class TileMapManager : MonoBehaviour
     {
         Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
         TileBase destroyTile = DestroyTileRepository.GetDestroyTile(stage);
-        animationTilemap.SetTile(tilePosition, destroyTile);
+        foregroundTilemap.SetTile(tilePosition, destroyTile);
     }
 
 }

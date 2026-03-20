@@ -8,8 +8,8 @@ public class PortalManager : MonoBehaviour
 {
     public static event Action<Vector3> OnPlayerTeleport;
 
-    [SerializeField] private Tilemap foregroundTilemap;
     [SerializeField] private WorldGeneration worldGeneration;
+    private Tilemap foregroundTilemap;
     private Level[] levels;
 
     private Dictionary<Vector2Int, Vector2Int> portalDestinations = new Dictionary<Vector2Int, Vector2Int>();
@@ -27,6 +27,7 @@ public class PortalManager : MonoBehaviour
         }
 
         levels = worldGeneration.levels;
+        foregroundTilemap = TileMapManager.Instance.ForegroundTilemap;
 
         // Link portals: levels sharing the same portalBlock are paired
         var portalBlocks = new List<BlockType>();

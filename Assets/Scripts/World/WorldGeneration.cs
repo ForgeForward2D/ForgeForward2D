@@ -6,12 +6,12 @@ using UnityEngine.Tilemaps;
 public class WorldGeneration : MonoBehaviour
 {
 
-    [SerializeField] Tilemap backgroundTilemap;
     [SerializeField] TileBase backgroundTile;
 
     [SerializeField] BlockType wallBlock;
 
-    [SerializeField] Tilemap foregroundTilemap;
+    private Tilemap backgroundTilemap;
+    private Tilemap foregroundTilemap;
 
     [Header("Settings")]
     [SerializeField] float noiseScale;
@@ -30,6 +30,9 @@ public class WorldGeneration : MonoBehaviour
         }
         Debug.Log($"Using Seed {worldSeed}");
         Random.InitState(worldSeed);
+
+        backgroundTilemap = TileMapManager.Instance.BackgroundTilemap;
+        foregroundTilemap = TileMapManager.Instance.ForegroundTilemap;
 
         // Draw border around starter level
         (int xMin, int xMax, int yMin, int yMax) mapBounds = TileMapManager.Instance.GetBounds();
