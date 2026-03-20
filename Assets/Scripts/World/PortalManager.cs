@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PortalManager : MonoBehaviour
 {
     public static event Action<Vector3> OnPlayerTeleport;
@@ -26,13 +27,6 @@ public class PortalManager : MonoBehaviour
         }
 
         levels = worldGeneration.levels;
-
-        // Ensure a static Rigidbody2D exists for trigger detection
-        if (GetComponent<Rigidbody2D>() == null)
-        {
-            var rb = gameObject.AddComponent<Rigidbody2D>();
-            rb.bodyType = RigidbodyType2D.Static;
-        }
 
         // Link portals: levels sharing the same portalBlock are paired
         var portalBlocks = new List<BlockType>();
