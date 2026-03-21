@@ -137,33 +137,27 @@ public class MobSpawner : MonoBehaviour
     private List<Vector2Int> GetAvailableSpawnCoordinates(Transform parent)
     {
         HashSet<Vector2Int> occupiedCoordinates = GetOccupiedMobCoordinates(parent);
+        List<Vector2Int> spawnablePositions = TileMapManager.Instance.GetSpawnablePositions();
         List<Vector2Int> coordinates = new();
 
-        (int xMin, int xMax, int yMin, int yMax) = TileMapManager.Instance.GetBounds();
-
-        for (int x = xMin; x < xMax; x++)
+        foreach (Vector2Int coordinate in spawnablePositions)
         {
-            for (int y = yMin; y < yMax; y++)
+            if (!TileMapManager.Instance.Walkable(coordinate))
             {
-                Vector2Int coordinate = new Vector2Int(x, y);
-
-                if (!TileMapManager.Instance.Walkable(coordinate))
-                {
-                    continue;
-                }
-
-                if (IsCellOccupied(coordinate, parent))
-                {
-                    continue;
-                }
-
-                if (occupiedCoordinates.Contains(coordinate))
-                {
-                    continue;
-                }
-
-                coordinates.Add(coordinate);
+                continue;
             }
+
+            if (IsCellOccupied(coordinate, parent))
+            {
+                continue;
+            }
+
+            if (occupiedCoordinates.Contains(coordinate))
+            {
+                continue;
+            }
+
+            coordinates.Add(coordinate);
         }
 
         return coordinates;

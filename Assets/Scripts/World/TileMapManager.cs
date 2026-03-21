@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,12 +10,43 @@ public class TileMapManager : MonoBehaviour
 
     [SerializeField] private Tilemap wallTilemap;
     [SerializeField] private Tilemap walkableTilemap;
-    [SerializeField] private Tilemap animationTilemap;
+    [SerializeField] private Tilemap foregroundTilemap;
+    [SerializeField] private Tilemap backgroundTilemap;
+
+    public Tilemap ForegroundTilemap => foregroundTilemap;
+    public Tilemap BackgroundTilemap => backgroundTilemap;
 
     [Header("Settings")]
     [SerializeField] private float hitBoxSize = 0.9f;
 
     public static Action<(BlockType, Vector2Int)> OnBlockChanged;
+
+    private readonly HashSet<Vector2Int> registeredPositions = new();
+    private readonly HashSet<Vector2Int> spawnablePositions = new();
+
+    public void RegisterSpawnablePositions(IEnumerable<Vector2Int> positions)
+    {
+        foreach (var pos in positions)
+        {
+            registeredPositions.Add(pos);
+            spawnablePositions.Add(pos);
+        }
+    }
+
+    public List<Vector2Int> GetSpawnablePositions()
+    {
+        return new List<Vector2Int>(spawnablePositions);
+    }
+
+    private void UpdateSpawnablePosition(Vector2Int position, bool walkable)
+    {
+        if (!registeredPositions.Contains(position)) return;
+
+        if (walkable)
+            spawnablePositions.Add(position);
+        else
+            spawnablePositions.Remove(position);
+    }
 
     private void Awake()
     {
@@ -35,6 +68,7 @@ public class TileMapManager : MonoBehaviour
         {
             wallTilemap.SetTile(tilePosition, null);
             walkableTilemap.SetTile(tilePosition, null);
+            UpdateSpawnablePosition(position, true);
             OnBlockChanged?.Invoke((null, position));
             return;
         }
@@ -43,11 +77,13 @@ public class TileMapManager : MonoBehaviour
         {
             wallTilemap.SetTile(tilePosition, null);
             walkableTilemap.SetTile(tilePosition, blockType.tile);
+            UpdateSpawnablePosition(position, true);
         }
         else
         {
             wallTilemap.SetTile(tilePosition, blockType.tile);
             walkableTilemap.SetTile(tilePosition, null);
+            UpdateSpawnablePosition(position, false);
         }
 
         OnBlockChanged?.Invoke((blockType, position));
@@ -58,6 +94,7 @@ public class TileMapManager : MonoBehaviour
         Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
         wallTilemap.SetTile(tilePosition, null);
         walkableTilemap.SetTile(tilePosition, null);
+        UpdateSpawnablePosition(position, true);
     }
 
     public Vector2Int PositionToCoordinate(Vector3 worldPosition)
@@ -89,7 +126,7 @@ public class TileMapManager : MonoBehaviour
             BlockType blockType = BlockTypeRepository.GetBlockByTile(wallTile);
             if (blockType != null)
             {
-                Debug.Assert(!blockType.walkable);
+                Debug.Assert(!blockType.walkable, $"No block assigned to wallTile {wallTile}");
                 return blockType;
             }
             else
@@ -104,7 +141,7 @@ public class TileMapManager : MonoBehaviour
             BlockType blockType = BlockTypeRepository.GetBlockByTile(walkableTile);
             if (blockType != null)
             {
-                Debug.Assert(blockType.walkable);
+                Debug.Assert(blockType.walkable, $"walkable tilemap contains block that is not walkable: {blockType.displayName}");
                 return blockType;
             }
             else
@@ -154,7 +191,7 @@ public class TileMapManager : MonoBehaviour
     {
         Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
         TileBase destroyTile = DestroyTileRepository.GetDestroyTile(stage);
-        animationTilemap.SetTile(tilePosition, destroyTile);
+        foregroundTilemap.SetTile(tilePosition, destroyTile);
     }
 
 }

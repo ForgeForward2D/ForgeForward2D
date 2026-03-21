@@ -89,7 +89,10 @@ public class BlockBreakingManager : MonoBehaviour
         // If we moved to a new block, reset progress
         if (targetPos != currentTargetPos)
         {
-            TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
+            if (breakProgress > 0f)
+            {
+                TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
+            }
             currentTargetPos = targetPos;
             currentTargetBlock = TileMapManager.Instance.GetBlockTypeAtPosition(currentTargetPos);
             breakProgress = 0f;
@@ -172,7 +175,10 @@ public class BlockBreakingManager : MonoBehaviour
 
     private void CancelBreaking()
     {
-        TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
+        if (breakProgress > 0f)
+        {
+            TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
+        }
         isBreaking = false;
         playerAnimator.SetBool("isBreaking", isBreaking);
         breakProgress = 0f;
