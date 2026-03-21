@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Anvil
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Anvil
-  tile: {fileID: 11400000, guid: ea9f29743ca344d31a295d590de55650, type: 2}
+  tile: {fileID: 11400000, guid: 4c70e10d202c39f45abae419282f9301, type: 2}
   walkable: 0
   breakable: 0
   interactable: 1
