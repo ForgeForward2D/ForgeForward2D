@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,6 +8,7 @@ public class MobController : MonoBehaviour
     {
         Idle,
         Wandering,
+        Chasing,
     }
 
     [Header("Reference")]
@@ -18,6 +20,13 @@ public class MobController : MonoBehaviour
     [SerializeField] private MobState currentState;
     [SerializeField] private float stateTimer;
 
+    [Header("Settings")]
+    [SerializeField] private float RepathInterval;
+
+    private Transform playerTransform;
+    private List<Vector2Int> chasePath = new();
+    private float repathTimer;
+
     private static readonly Vector2[] WanderDirections =
     {
         Vector2.up,
@@ -27,7 +36,7 @@ public class MobController : MonoBehaviour
     };
 
     public Vector2 MoveDirection => moveDirection;
-    public bool IsMoving => currentState == MobState.Wandering;
+    public bool IsMoving => currentState == MobState.Wandering || currentState == MobState.Chasing;
 
     private void Start()
     {
@@ -41,11 +50,28 @@ public class MobController : MonoBehaviour
             return;
         }
 
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+            playerTransform = playerObj.transform;
+        else
+            Debug.LogError($"Mob Controller: No player object found");
+
+
         EnterIdleState();
     }
 
     private void FixedUpdate()
     {
+        if (IsPlayerInRange())
+        {
+            if (currentState != MobState.Chasing)
+                EnterChaseState();
+        }
+        else if (currentState == MobState.Chasing)
+        {
+            EnterIdleState();
+        }
+
         switch (currentState)
         {
             case MobState.Idle:
@@ -53,6 +79,9 @@ public class MobController : MonoBehaviour
                 break;
             case MobState.Wandering:
                 UpdateWanderState();
+                break;
+            case MobState.Chasing:
+                UpdateChaseState();
                 break;
         }
     }
@@ -79,6 +108,55 @@ public class MobController : MonoBehaviour
         }
 
         rb.linearVelocity = moveDirection * mobType.moveSpeed;
+    }
+
+    private bool IsPlayerInRange()
+    {
+        float distance = Vector2.Distance(transform.position, playerTransform.position);
+        return distance <= (float)mobType.aggroRange;
+    }
+
+    private void EnterChaseState()
+    {
+        currentState = MobState.Chasing;
+        repathTimer = 0f;
+        chasePath.Clear();
+    }
+
+    private void UpdateChaseState()
+    {
+        repathTimer -= Time.fixedDeltaTime;
+        if (repathTimer <= 0f)
+        {
+            repathTimer = RepathInterval;
+            Vector2Int from = TileMapManager.Instance.PositionToCoordinate(transform.position);
+            Vector2Int to = TileMapManager.Instance.PositionToCoordinate(playerTransform.position);
+            chasePath = Pathfinder.FindPath(from, to);
+        }
+
+        if (chasePath.Count == 0)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        Vector3 nextWorldPos = TileMapManager.Instance.CoordinateToPosition(chasePath[0]);
+        Vector2 toNext = (Vector2)nextWorldPos - (Vector2)transform.position;
+
+        if (toNext.magnitude < 0.1f)
+        {
+            chasePath.RemoveAt(0);
+            if (chasePath.Count == 0)
+            {
+                rb.linearVelocity = Vector2.zero;
+                return;
+            }
+            nextWorldPos = TileMapManager.Instance.CoordinateToPosition(chasePath[0]);
+            toNext = (Vector2)nextWorldPos - (Vector2)transform.position;
+        }
+
+        moveDirection = toNext.normalized;
+        rb.linearVelocity = moveDirection * mobType.chaseSpeed;
     }
 
     private void EnterIdleState()
