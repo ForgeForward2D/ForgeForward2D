@@ -7,23 +7,32 @@ using UnityEngine.UI;
 [Serializable]
 public class CraftingManager
 {
-    public static event Action<CraftingManager> OnCraftingManagerUpdate;
+    public event Action<CraftingManager> OnCraftingManagerUpdate;
 
     [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private WorkbenchType workbenchType;
 
     [Header("Debugging")]
     [SerializeField] private List<CraftingRecipe> allRecipes;
     [SerializeField] private List<CraftingRecipe> availableRecipes;
     [SerializeField] private int selectedRecipeIndex = 0;
+    private bool active;
 
     public void Start()
     {
-        allRecipes = new List<CraftingRecipe>(Resources.LoadAll<CraftingRecipe>("CraftingRecipes"));
+        allRecipes = Resources.LoadAll<CraftingRecipe>("CraftingRecipes")
+            .Where(r => r.workbenchType == workbenchType)
+            .ToList();
         UpdateAvailableRecipes();
         inventoryManager.OnInventoryUpdate += HandleInventoryUpdate;
-        CraftingTableUI.RequestRefresh += HandleRequestRefresh;
         InputManager.OnMoveInput += HandleMovementInput;
         InputManager.OnAttackUpdate += HandleAttackUpdate;
+    }
+
+    public void SetActive(bool isActive)
+    {
+        active = isActive;
+        if (!active) selectedRecipeIndex = 0;
     }
 
     private void HandleInventoryUpdate(InventoryManager inventoryManager)
@@ -32,16 +41,16 @@ public class CraftingManager
         UpdateAvailableRecipes();
     }
 
-    private void HandleRequestRefresh()
+    public void RequestRefresh()
     {
         OnCraftingManagerUpdate?.Invoke(this);
     }
 
     private void HandleMovementInput((UIPage, bool, Vector2) data)
     {
-        var (uiPage, performed, movementInput) = data;
+        var (currentPage, performed, movementInput) = data;
 
-        if (uiPage != UIPage.Crafting)
+        if (currentPage != UIPage.Crafting || !active)
             return;
 
         if (!performed)
@@ -60,9 +69,9 @@ public class CraftingManager
 
     private void HandleAttackUpdate((UIPage, bool) data)
     {
-        var (uiPage, click) = data;
+        var (currentPage, click) = data;
 
-        if (uiPage != UIPage.Crafting || !click)
+        if (currentPage != UIPage.Crafting || !active || !click)
             return;
 
         CraftingRecipe recipe = availableRecipes[selectedRecipeIndex];

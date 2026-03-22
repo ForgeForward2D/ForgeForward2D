@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,17 +5,26 @@ using UnityEngine.UI;
 
 public class CraftingTableUI : UIComponent<CraftingManager>
 {
-    public static event Action RequestRefresh;
+    private CraftingManager craftingManager;
+
+    public void SetCraftingManager(CraftingManager manager)
+    {
+        craftingManager = manager;
+    }
 
     public void OnEnable()
     {
-        CraftingManager.OnCraftingManagerUpdate += RefreshUI;
-        RequestRefresh?.Invoke();
+        if (craftingManager == null) return;
+        craftingManager.SetActive(true);
+        craftingManager.OnCraftingManagerUpdate += RefreshUI;
+        craftingManager.RequestRefresh();
     }
 
     private void OnDisable()
     {
-        CraftingManager.OnCraftingManagerUpdate -= RefreshUI;
+        if (craftingManager == null) return;
+        craftingManager.SetActive(false);
+        craftingManager.OnCraftingManagerUpdate -= RefreshUI;
     }
 
     public override void RefreshUI(CraftingManager craftingManager)

@@ -703,8 +703,15 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 9afff0717c93349fa87b9261d1fe48b2, type: 2}
     toolTypes: 
     selectedIndex: 0
-  craftingManager:
+  craftingTableManager:
     inventoryManager: {fileID: 8655246054817101123}
+    workbenchType: 0
+    allRecipes: []
+    availableRecipes: []
+    selectedRecipeIndex: 0
+  anvilManager:
+    inventoryManager: {fileID: 8655246054817101123}
+    workbenchType: 1
     allRecipes: []
     availableRecipes: []
     selectedRecipeIndex: 0
