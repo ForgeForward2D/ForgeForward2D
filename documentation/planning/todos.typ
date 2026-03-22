@@ -62,7 +62,7 @@
     size: text.size * 80%,
   )[TODOs unitl Friday, 20.03.]
 }
-- write blog article Leon
+- #strike[write blog article Leon]
 // - adapt walk-animation speed to walk speed todo
 - #strike[refactor Tim]
 - #strike[treasures hidden in Lehm blocks Leon]
