@@ -16699,8 +16699,6 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 1222
     m_Data: {r: 1, g: 1, b: 1, a: 1}
-  - m_RefCount: 0
-    m_Data: {r: 6.9605e-41, g: 6.9605e-41, b: 6.9605e-41, a: 6.9605e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
