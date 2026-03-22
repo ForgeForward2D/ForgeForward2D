@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using TMPro;
 
@@ -35,8 +36,17 @@ public class BlockInfoUI : UIComponent<TargetBlockInfoManager>
 
         actionLabel.text = isBreakable ? "Mine" : "Interact";
 
-        Tool relevantTool = isBreakable ? manager.GetRelevantTool(block) : null;
-        blockIcon.sprite = relevantTool?.icon;
-        blockIcon.gameObject.SetActive(relevantTool != null);
+        if (isBreakable)
+        {
+            Tool relevantTool = manager.GetRelevantTool(block);
+            blockIcon.sprite = relevantTool?.icon;
+            blockIcon.gameObject.SetActive(relevantTool != null);
+        }
+        else
+        {
+            Sprite tileSprite = (block.tile as Tile)?.sprite;
+            blockIcon.sprite = tileSprite;
+            blockIcon.gameObject.SetActive(tileSprite != null);
+        }
     }
 }
