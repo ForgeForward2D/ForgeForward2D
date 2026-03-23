@@ -7,6 +7,8 @@ public class PlayerInteractionManager : MonoBehaviour
 {
     public static event Action<(UIPage, BlockType, Vector2Int)> OnInteraction;
 
+    private static int npcLayerMask;
+
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
     [SerializeField] private Transform playerTransform;
@@ -15,6 +17,7 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         movementManager = GetComponent<MovementManager>();
         playerTransform = GetComponent<Transform>();
+        npcLayerMask = LayerMask.GetMask("NPC");
 
         InputManager.OnInteractionInput += HandleInteractionInput;
     }
@@ -24,11 +27,24 @@ public class PlayerInteractionManager : MonoBehaviour
         Vector3 player3DPosition = playerTransform.position;
         Vector2Int playerPosition = TileMapManager.Instance.PositionToCoordinate(player3DPosition);
         Vector2Int targetPos = playerPosition + movementManager.GetMoveDirection();
+
+        Vector3 targetWorldPos = TileMapManager.Instance.CoordinateToPosition(targetPos);
+        Collider2D npcHit = Physics2D.OverlapPoint(targetWorldPos, npcLayerMask);
+        if (npcHit != null)
+        {
+            NpcController npc = npcHit.GetComponent<NpcController>();
+            if (npc != null)
+            {
+                Debug.Log($"Triggering NPC interaction with {npc.GetDisplayName()}");
+                npc.RaiseInteraction(uiPage);
+                return;
+            }
+        }
+
         BlockType blockType = TileMapManager.Instance.GetBlockTypeAtPosition(targetPos);
 
         Debug.Log($"Triggering interaction of {(blockType == null ? "Air" : blockType.displayName)}");
 
         OnInteraction?.Invoke((uiPage, blockType, targetPos));
     }
-
 }

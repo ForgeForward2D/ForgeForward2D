@@ -9,11 +9,17 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CraftingTableUI craftingTableUI;
     [SerializeField] private BlockType craftingTableBlockType;
     [SerializeField] private AchievementUI achievementUI;
+    [SerializeField] private DialogueUI dialogueUI;
+
+    [Header("Debugging")]
+    [SerializeField] private NpcController activeNpc;
 
     void Awake()
     {
         InputManager.OnUIChangeInput += ProcessNavigationRequest;
         PlayerInteractionManager.OnInteraction += HandleInteraction;
+        NpcController.OnNpcInteraction += HandleNpcInteraction;
+        NpcController.OnNpcInteractionEnd += HandleNpcInteractionEnd;
     }
 
     private void ProcessNavigationRequest(UIPage currentPage, UIPage requestedPage)
@@ -50,9 +56,17 @@ public class UIManager : MonoBehaviour
 
     private void SetPage(UIPage page)
     {
+        if (page != UIPage.Dialogue && activeNpc != null)
+        {
+            NpcController npc = activeNpc;
+            activeNpc = null;
+            npc.EndDialogue();
+        }
+
         resourceInventoryUI.SetActive(page == UIPage.Inventory);
         craftingTableUI.SetActive(page == UIPage.Crafting);
         achievementUI.SetActive(page == UIPage.Achievements);
+        dialogueUI.SetActive(page == UIPage.Dialogue);
 
         bool open = page != UIPage.None;
         Time.timeScale = open ? 0f : 1f;
@@ -67,6 +81,20 @@ public class UIManager : MonoBehaviour
         {
             ProcessNavigationRequest(uiPage, UIPage.Crafting);
         }
+    }
 
+    private void HandleNpcInteraction((UIPage uiPage, NpcController npc) data)
+    {
+        if (data.uiPage != UIPage.None) return;
+
+        activeNpc = data.npc;
+        SetPage(UIPage.Dialogue);
+        data.npc.BeginDialogue();
+    }
+
+    private void HandleNpcInteractionEnd()
+    {
+        activeNpc = null;
+        SetPage(UIPage.None);
     }
 }
