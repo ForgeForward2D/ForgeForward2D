@@ -21,7 +21,7 @@ public class MobController : MonoBehaviour
     [SerializeField] private float stateTimer;
 
     [Header("Settings")]
-    [SerializeField] private float RepathInterval;
+    [SerializeField] private float repathInterval = 0.3f;
 
     private Transform playerTransform;
     private List<Vector2Int> chasePath = new();
@@ -55,6 +55,11 @@ public class MobController : MonoBehaviour
             playerTransform = playerObj.transform;
         else
             Debug.LogError($"Mob Controller: No player object found");
+
+        if (repathInterval < 0.01f)
+        {
+            Debug.LogWarning($"repath interval is set to {repathInterval} which may cause performance issues. Consider using a value >= 0.3");
+        }
 
 
         EnterIdleState();
@@ -128,7 +133,7 @@ public class MobController : MonoBehaviour
         repathTimer -= Time.fixedDeltaTime;
         if (repathTimer <= 0f)
         {
-            repathTimer = RepathInterval;
+            repathTimer = repathInterval;
             Vector2Int from = TileMapManager.Instance.PositionToCoordinate(transform.position);
             Vector2Int to = TileMapManager.Instance.PositionToCoordinate(playerTransform.position);
             chasePath = Pathfinder.FindPath(from, to);

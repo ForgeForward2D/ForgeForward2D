@@ -16,20 +16,19 @@ public static class Pathfinder
         if (from == to) return new List<Vector2Int>();
 
         // A* with Manhattan heuristic
-        SortedList<float, Vector2Int> openList = new(new DuplicateKeyComparer());
+        MinHeap openList = new();
         Dictionary<Vector2Int, Vector2Int> cameFrom = new();
         Dictionary<Vector2Int, float> gScore = new();
 
         gScore[from] = 0f;
-        openList.Add(Heuristic(from, to), from);
+        openList.Push(Heuristic(from, to), from);
         cameFrom[from] = from;
 
         int nodesVisited = 0;
 
         while (openList.Count > 0)
         {
-            Vector2Int current = openList.Values[0];
-            openList.RemoveAt(0);
+            Vector2Int current = openList.Pop();
 
             if (current == to)
                 return ReconstructPath(cameFrom, from, to);
@@ -53,7 +52,7 @@ public static class Pathfinder
 
                 gScore[neighbor] = tentativeG;
                 cameFrom[neighbor] = current;
-                openList.Add(tentativeG + Heuristic(neighbor, to), neighbor);
+                openList.Push(tentativeG + Heuristic(neighbor, to), neighbor);
             }
         }
 
@@ -78,13 +77,59 @@ public static class Pathfinder
         return path;
     }
 
-    // SortedList doesn't allow duplicate keys; this comparer permits them.
-    private class DuplicateKeyComparer : IComparer<float>
+    /// <summary>Binary min-heap keyed by float priority. Push/Pop are O(log n).</summary>
+    private class MinHeap
     {
-        public int Compare(float x, float y)
+        private readonly List<(float priority, Vector2Int value)> _data = new();
+
+        public int Count => _data.Count;
+
+        public void Push(float priority, Vector2Int value)
         {
-            int result = x.CompareTo(y);
-            return result == 0 ? 1 : result;
+            _data.Add((priority, value));
+            SiftUp(_data.Count - 1);
+        }
+
+        public Vector2Int Pop()
+        {
+            var top = _data[0].value;
+            int last = _data.Count - 1;
+            _data[0] = _data[last];
+            _data.RemoveAt(last);
+            if (_data.Count > 0) SiftDown(0);
+            return top;
+        }
+
+        private void SiftUp(int i)
+        {
+            while (i > 0)
+            {
+                int parent = (i - 1) / 2;
+                if (_data[i].priority < _data[parent].priority)
+                {
+                    (_data[i], _data[parent]) = (_data[parent], _data[i]);
+                    i = parent;
+                }
+                else break;
+            }
+        }
+
+        private void SiftDown(int i)
+        {
+            int count = _data.Count;
+            while (true)
+            {
+                int smallest = i;
+                int left = 2 * i + 1;
+                int right = 2 * i + 2;
+                if (left < count && _data[left].priority < _data[smallest].priority)
+                    smallest = left;
+                if (right < count && _data[right].priority < _data[smallest].priority)
+                    smallest = right;
+                if (smallest == i) break;
+                (_data[i], _data[smallest]) = (_data[smallest], _data[i]);
+                i = smallest;
+            }
         }
     }
 }
