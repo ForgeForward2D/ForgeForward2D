@@ -19,7 +19,7 @@ public class LevelAchievement : Achievement
     {
         if (IsCompleted)
             return;
-            
+
         int currentCount = tracker.GetVisitedLevels().TryGetValue(level, out int visited) ? visited : 0;
 
         if (currentCount >= targetCount)

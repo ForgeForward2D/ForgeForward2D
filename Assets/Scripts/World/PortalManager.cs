@@ -146,10 +146,16 @@ public class PortalManager : MonoBehaviour
         if (portalDestinations.TryGetValue(currentPortalTile, out Vector2Int destination))
         {
             Vector3 worldPos = foregroundTilemap.GetCellCenterWorld(new Vector3Int(destination.x, destination.y, 0));
-            Level destinationLevel = portalLevels[destination];
-            OnPlayerTeleport?.Invoke((destinationLevel, worldPos));
-            string levelName = destinationLevel == null ? "Base" : destinationLevel.levelName;
-            Debug.Log($"Portal: teleported player to {destination} in level {levelName}");
+            if (portalLevels.TryGetValue(destination, out Level destinationLevel))
+            {
+                OnPlayerTeleport?.Invoke((destinationLevel, worldPos));
+                string levelName = destinationLevel == null ? "Base" : destinationLevel.levelName;
+                Debug.Log($"Portal: teleported player to {destination} in level {levelName}");
+            }
+            else
+            {
+                Debug.LogWarning($"Portal: teleported player to {destination} (no level found)");
+            }
             portalEntered = new Vector2Int(Int32.MinValue, Int32.MinValue);
         }
         else

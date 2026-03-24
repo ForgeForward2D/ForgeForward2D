@@ -30,8 +30,21 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Application ending after " + Time.time + " seconds");
 
-        string trackerContent = GetComponent<Tracker>().Dump();
-        string achievementContent = GetComponent<AchievementManager>().Dump();
+        Tracker tracker = GetComponent<Tracker>();
+        if (tracker == null)
+        {
+            Debug.LogWarning("No Tracker component found on GameManager, skipping data dump.");
+            return;
+        }
+        AchievementManager achievementManager = GetComponent<AchievementManager>();
+        if (achievementManager == null)
+        {
+            Debug.LogWarning("No AchievementManager component found on GameManager, skipping data dump.");
+            return;
+        }
+
+        string trackerContent = tracker.Dump();
+        string achievementContent = achievementManager.Dump();
 
         string currentTimeString = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
 
@@ -48,11 +61,11 @@ public class GameManager : MonoBehaviour
         {
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             File.WriteAllText(filePath, data);
-            Debug.Log($"Tracker data saved to {filePath}:1");
+            Debug.Log($"Tracker data saved to {filePath}");
         }
         catch (Exception e)
         {
-            Debug.LogWarning($"Failed writing tracker data to {filePath}:1 : {e}");
+            Debug.LogWarning($"Failed writing tracker data to {filePath} : {e}");
         }
     }
 }

@@ -59,14 +59,14 @@ public class AchievementManager : MonoBehaviour
     public void HandleTrackerUpdate(Tracker tracker)
     {
         foreach (var achievement in achievements)
-        { 
+        {
             if (achievement.IsCompleted)
                 continue;
             achievement.CheckCompletion(tracker);
             if (achievement.IsCompleted)
                 OnAchievementUnlocked?.Invoke(achievement);
         }
- 
+
     }
 
     public List<Achievement> GetAchievements()
@@ -78,7 +78,7 @@ public class AchievementManager : MonoBehaviour
     {
         return selectedIndex;
     }
-    
+
     public string Dump()
     {
         StringBuilder sb = new StringBuilder();
@@ -89,7 +89,7 @@ public class AchievementManager : MonoBehaviour
         {
             sb.AppendLine($"{achievement.completionTime.ToString("yyyy-MM-dd_HH:mm:ss")},{achievement.title},{achievement.GetDescription()},{achievement.visible}");
         }
-        
+
         foreach (var achievement in achievements.Where(a => !a.IsCompleted))
         {
             sb.AppendLine($"Not Completed,{achievement.title},{achievement.GetDescription()},{achievement.visible}");

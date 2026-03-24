@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Tracker : MonoBehaviour
 {
-    public static Action<Tracker> OnTrackerUpdate;
+    public static event Action<Tracker> OnTrackerUpdate;
 
     [Header("Debugging")]
     [SerializeField] private SerializableDictionary<BlockType, int> blockAttacks;
@@ -35,7 +35,7 @@ public class Tracker : MonoBehaviour
         CraftingManager.OnRecipeCrafted += HandleRecipeCrafted;
         PortalManager.OnPlayerTeleport += HandlePlayerTeleport;
     }
-       
+
     private void HandleAttackUpdate((UIPage, BlockType, Vector2Int, bool) data)
     {
         var (uiPage, blockType, targetPos, attackStatus) = data;
@@ -112,7 +112,7 @@ public class Tracker : MonoBehaviour
 
         if (level == null)
             return;
-        
+
         if (visitedLevels.ContainsKey(level))
             visitedLevels[level]++;
         else
@@ -173,6 +173,14 @@ public class Tracker : MonoBehaviour
             string keyName = $"{blockName} With {toolName}";
             sb.AppendLine($"BlockBrokenWithTool,{keyName},{kvp.Value}");
         }
+
+        foreach (var kvp in itemsCollected)
+            sb.AppendLine($"ItemCollected,{kvp.Key.displayName},{kvp.Value}");
+        foreach (var kvp in recipesCrafted)
+            sb.AppendLine($"RecipesCrafted,{kvp.Key.result.itemType.displayName},{kvp.Value}");
+        foreach (var kvp in visitedLevels)
+            sb.AppendLine($"VisitedLevel,{kvp.Key.levelName},{kvp.Value}");
+
         return sb.ToString();
     }
 }

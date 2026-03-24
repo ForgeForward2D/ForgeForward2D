@@ -16,7 +16,7 @@ public class CraftingAchievement : Achievement
     {
         if (IsCompleted)
             return;
-            
+
         int currentCount = tracker.GetRecipesCrafted().TryGetValue(recipe, out int crafted) ? crafted : 0;
 
         if (currentCount >= targetCount)
