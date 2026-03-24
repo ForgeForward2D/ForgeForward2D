@@ -20,7 +20,9 @@ public class CraftingManager
 
     public void Start()
     {
-        allRecipes = Resources.LoadAll<CraftingRecipe>("CraftingRecipes")
+        var allLoadedRecipes = Resources.LoadAll<CraftingRecipe>("CraftingRecipes");
+        SortRecipesByComplexity(allLoadedRecipes);
+        allRecipes = allLoadedRecipes
             .Where(r => r.workbenchType == workbenchType)
             .ToList();
         UpdateAvailableRecipes();
@@ -99,7 +101,7 @@ public class CraftingManager
             inventoryManager.RemoveItemOfType(ingredient.required.itemType, ingredient.required.count);
         }
         inventoryManager.AddItemOfType(recipe.result.itemType, recipe.result.count);
-        return  true;
+        return true;
     }
 
     private void UpdateAvailableRecipes()
@@ -125,7 +127,7 @@ public class CraftingManager
     public List<CraftingRecipePreview> GetPreviews(int max)
     {
         List<CraftingRecipePreview> previews = new List<CraftingRecipePreview>();
-        for (int i=0; i < max; i++)
+        for (int i = 0; i < max; i++)
         {
             if (i < availableRecipes.Count)
             {
@@ -155,6 +157,63 @@ public class CraftingManager
     public CraftingRecipe GetSelectedRecipe()
     {
         return availableRecipes != null && availableRecipes.Count > 0 ? availableRecipes[selectedRecipeIndex] : null;
+    }
+
+    private static void SortRecipesByComplexity(CraftingRecipe[] recipes)
+    {
+        // Step 1: Find all ItemTypes that are a result of some recipe
+        HashSet<ItemType> craftedItems = new();
+        foreach (var recipe in recipes)
+            craftedItems.Add(recipe.result.itemType);
+
+        // Collect all ItemTypes referenced as ingredients
+        Dictionary<ItemType, float> itemValue = new();
+        foreach (var recipe in recipes)
+            foreach (var ingredient in recipe.ingredients)
+                if (!craftedItems.Contains(ingredient.itemType))
+                    itemValue[ingredient.itemType] = 1f;
+
+        // Step 2: Fixed-point iteration over recipes
+        bool changed = true;
+        while (changed)
+        {
+            changed = false;
+            foreach (var recipe in recipes)
+            {
+                bool allValued = true;
+                float cost = 0f;
+                foreach (var ingredient in recipe.ingredients)
+                {
+                    if (itemValue.TryGetValue(ingredient.itemType, out float v))
+                        cost += v * ingredient.count;
+                    else
+                    {
+                        allValued = false;
+                        break;
+                    }
+                }
+
+                if (!allValued) continue;
+
+                float newValue = cost / recipe.result.count;
+                ItemType resultType = recipe.result.itemType;
+
+                if (!itemValue.TryGetValue(resultType, out float current) || newValue < current)
+                {
+                    itemValue[resultType] = newValue;
+                    changed = true;
+                }
+            }
+        }
+
+        System.Array.Sort(recipes, (a, b) =>
+        {
+            float va = itemValue.GetValueOrDefault(a.result.itemType, float.MaxValue);
+            float vb = itemValue.GetValueOrDefault(b.result.itemType, float.MaxValue);
+            int cmp = va.CompareTo(vb);
+            if (cmp != 0) return cmp;
+            return string.Compare(a.result.itemType.displayName, b.result.itemType.displayName, StringComparison.Ordinal);
+        });
     }
 
 }
