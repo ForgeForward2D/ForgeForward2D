@@ -18,14 +18,13 @@ public class AchievementManager : MonoBehaviour
         achievements = new List<Achievement>(Resources.LoadAll<Achievement>("Achievements"));
         foreach (var achievement in achievements)
         {
-            achievement.isUnlocked = false;
-            achievement.currentProgress = 0;
+            achievement.completionTime = default;
         }
         selectedIndex = 0;
 
         AchievementUI.RequestRefresh += HandleRequestRefresh;
-        BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
         InputManager.OnMoveInput += HandleMovementInput;
+        Tracker.OnTrackerUpdate += HandleTrackerUpdate;
     }
 
     private void HandleRequestRefresh()
@@ -55,15 +54,17 @@ public class AchievementManager : MonoBehaviour
         OnAchievementManagerUpdate?.Invoke(this);
     }
 
-    public void UnlockAchievement(Achievement achievement)
+    public void HandleTrackerUpdate(Tracker tracker)
     {
-        if (achievement.isUnlocked) return;
-
-        achievement.isUnlocked = true;
-        Debug.Log($"<color=green>Achievement Unlocked: {achievement.title}</color>");
-
-        OnAchievementUnlocked?.Invoke(achievement);
-        OnAchievementManagerUpdate?.Invoke(this);
+        foreach (var achievement in achievements)
+        { 
+            if (achievement.IsCompleted())
+                continue;
+            achievement.CheckCompletion(tracker);
+            if (achievement.IsCompleted())
+                OnAchievementUnlocked?.Invoke(achievement);
+        }
+ 
     }
 
     public List<Achievement> GetAchievements()
@@ -74,29 +75,5 @@ public class AchievementManager : MonoBehaviour
     public int GetSelectedIndex()
     {
         return selectedIndex;
-    }
-
-    // TODO: maybe split into tracker again
-    private void HandleBlockBroken((BlockType, Vector2Int) brokenBlockInfo)
-    {
-        var (brokenBlock, _) = brokenBlockInfo;
-
-        foreach (var achievement in achievements)
-        {
-            if (achievement.isUnlocked) continue;
-
-            if (achievement.group == "collect_material")
-            {
-                if (achievement.blockType == brokenBlock)
-                {
-                    achievement.currentProgress++;
-
-                    if (achievement.currentProgress >= achievement.numberOfBlocks)
-                    {
-                        UnlockAchievement(achievement);
-                    }
-                }
-            }
-        }
     }
 }

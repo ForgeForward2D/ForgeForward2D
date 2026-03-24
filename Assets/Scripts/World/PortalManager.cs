@@ -6,12 +6,13 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PortalManager : MonoBehaviour
 {
-    public static event Action<Vector3> OnPlayerTeleport;
+    public static event Action<(Level, Vector3)> OnPlayerTeleport;
 
     private WorldGeneration worldGeneration;
     private Tilemap foregroundTilemap;
     private Level[] levels;
 
+    private Dictionary<Vector2Int, Level> portalLevels = new Dictionary<Vector2Int, Level>();
     private Dictionary<Vector2Int, Vector2Int> portalDestinations = new Dictionary<Vector2Int, Vector2Int>();
     private Vector2Int currentPortalTile;
     private Vector2Int portalEntered;
@@ -49,6 +50,8 @@ public class PortalManager : MonoBehaviour
                 portalsByBlock[level.portalBlock] = new List<Vector2Int>();
             }
             portalsByBlock[level.portalBlock].Add(level.startingPoint);
+            portalLevels[level.startingPoint] = level;
+
 
             if (colliderPositions.Add(level.startingPoint))
             {
@@ -70,6 +73,7 @@ public class PortalManager : MonoBehaviour
             if (!portalsByBlock[blockType].Contains(pos))
             {
                 portalsByBlock[blockType].Add(pos);
+                portalLevels[pos] = null;
             }
 
             if (colliderPositions.Add(pos))
@@ -142,8 +146,10 @@ public class PortalManager : MonoBehaviour
         if (portalDestinations.TryGetValue(currentPortalTile, out Vector2Int destination))
         {
             Vector3 worldPos = foregroundTilemap.GetCellCenterWorld(new Vector3Int(destination.x, destination.y, 0));
-            OnPlayerTeleport?.Invoke(worldPos);
-            Debug.Log($"Portal: teleported player to {destination}");
+            Level destinationLevel = portalLevels[destination];
+            OnPlayerTeleport?.Invoke((destinationLevel, worldPos));
+            string levelName = destinationLevel == null ? "Base" : destinationLevel.levelName;
+            Debug.Log($"Portal: teleported player to {destination} in level {levelName}");
             portalEntered = new Vector2Int(Int32.MinValue, Int32.MinValue);
         }
         else

@@ -68,7 +68,7 @@ public class ResourceInventory : InventoryComponent<ItemType>
         return stolenItems;
     }
 
-    private void HandleBlockBroken((BlockType type, Vector2Int position) data)
+    private void HandleBlockBroken((BlockType type, Vector2Int position, Tool tool) data)
     {
         if (data.type == null)
         {
@@ -82,8 +82,13 @@ public class ResourceInventory : InventoryComponent<ItemType>
 
         foreach (var drop in data.type.lootDrops)
         {
-            if (UnityEngine.Random.value <= drop.chance)
+            if (drop.chance == 1f || UnityEngine.Random.value <= drop.chance)
             {
+                if (drop.itemType == null)
+                {
+                    Debug.LogWarning($"Null item type in loot drop for block {data.type.displayName}");
+                    continue;
+                }
                 AddItemOfType(drop.itemType, drop.amount);
             }
         }
@@ -93,12 +98,6 @@ public class ResourceInventory : InventoryComponent<ItemType>
     {
         return items;
     }
-
-    public void NotifyInventoryUpdate()
-    {
-        OnResourceInventoryUpdate?.Invoke(this);
-    }
-
 
     public int CountElements(ItemType itemType)
     {
@@ -148,6 +147,7 @@ public class ResourceInventory : InventoryComponent<ItemType>
                 {
                     item.count += remaining;
                     OnResourceInventoryUpdate?.Invoke(this);
+                    InventoryManager.NotifyItemCollected(new Item(itemType, amount));
                     return;
                 }
 
@@ -165,13 +165,16 @@ public class ResourceInventory : InventoryComponent<ItemType>
                 {
                     items[i] = new Item(itemType, remaining);
                     OnResourceInventoryUpdate?.Invoke(this);
+                    InventoryManager.NotifyItemCollected(new Item(itemType, amount));
                     return;
                 }
                 items[i] = new Item(itemType, itemType.maxStackSize);
+                remaining -= itemType.maxStackSize;
             }
         }
         Debug.LogWarning($"Failed to add {amount} of {itemType.displayName} to ResourceInventory. Not enough space.");
         OnResourceInventoryUpdate?.Invoke(this);
+        InventoryManager.NotifyItemCollected(new Item(itemType, amount - remaining));
     }
 
     public void RemoveItemOfType(ItemType itemType, int amount)

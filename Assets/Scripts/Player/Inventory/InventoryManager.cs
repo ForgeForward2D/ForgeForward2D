@@ -6,6 +6,7 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
 {
     public event Action<InventoryManager> OnInventoryUpdate;
+    public static event Action<Item> OnItemCollected;
 
     [Header("Debugging")]
     [SerializeField] public ResourceInventory resourceInventory = new ResourceInventory();
@@ -19,11 +20,19 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
         hotBar.Start();
         craftingTableManager.Start();
         anvilManager.Start();
+
+        ResourceInventory.OnResourceInventoryUpdate += NotifyInventoryUpdate;
+        HotBar.OnHotBarUpdate += NotifyInventoryUpdate;
     }
 
-    public void NotifyInventoryUpdate()
+    private void NotifyInventoryUpdate(object _)
     {
         OnInventoryUpdate?.Invoke(this);
+    }
+
+    public static void NotifyItemCollected(Item item)
+    {
+        OnItemCollected?.Invoke(item);
     }
 
     public int CountElements(ItemType type)
@@ -54,7 +63,6 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
         {
             resourceInventory.AddItemOfType(type, count);
         }
-        NotifyInventoryUpdate();
     }
 
     public void RemoveItemOfType(ItemType type, int count)
@@ -67,6 +75,5 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
         {
             resourceInventory.RemoveItemOfType(type, count);
         }
-        NotifyInventoryUpdate();
     }
 }

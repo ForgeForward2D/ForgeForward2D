@@ -20,7 +20,7 @@ public class ResourceGenerator : MonoBehaviour
         BlockBreakingManager.OnBlockBroken -= HandleBlockBroken;
     }
 
-    private void HandleBlockBroken((BlockType blockType, Vector2Int position) brokenBlockInfo)
+    private void HandleBlockBroken((BlockType blockType, Vector2Int position, Tool tool) brokenBlockInfo)
     {
         BlockType block = brokenBlockInfo.blockType;
         Vector2Int position = brokenBlockInfo.position;

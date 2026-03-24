@@ -3,7 +3,6 @@ using UnityEngine;
 
 public interface InventoryComponent<Type>
 {
-    public void NotifyInventoryUpdate();
 
     public int CountElements(Type type);
     public int CountFreeSpace(Type type);
@@ -20,7 +19,6 @@ public interface InventoryComponent<Type>
             // add as many items as possible stopping when space is full
             bool success = CountFreeSpace(type) >= item.count;
             AddItemOfType(type, item.count);
-            NotifyInventoryUpdate();
             return success;
         }
         Debug.LogWarning("Trying to add item of wrong type to inventory.");
@@ -42,7 +40,6 @@ public interface InventoryComponent<Type>
             if (CountElements(type) >= item.count)
             {
                 RemoveItemOfType(type, item.count);
-                NotifyInventoryUpdate();
                 return true;
             }
             Debug.LogWarning($"Failed to remove {item.count} {item.itemType.displayName}: Not enough in inventory");
