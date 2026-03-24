@@ -11,13 +11,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private BlockType anvilBlockType;
     [SerializeField] private AchievementUI achievementUI;
 
-    private InventoryManager inventoryManager;
+    private InventoryManager _inventoryManager;
+    private InventoryManager inventoryManager =>
+        _inventoryManager ??= FindAnyObjectByType<InventoryManager>();
 
     void Awake()
     {
         InputManager.OnUIChangeInput += ProcessNavigationRequest;
         PlayerInteractionManager.OnInteraction += HandleInteraction;
-        inventoryManager = FindAnyObjectByType<InventoryManager>();
     }
 
     private void ProcessNavigationRequest(UIPage currentPage, UIPage requestedPage)
@@ -69,15 +70,19 @@ public class UIManager : MonoBehaviour
 
         if (blockType == null) return;
 
+        CraftingManager manager = null;
+
         if (blockType == craftingTableBlockType)
-        {
-            craftingTableUI.SetCraftingManager(inventoryManager.craftingTableManager);
-            ProcessNavigationRequest(uiPage, UIPage.Crafting);
-        }
+            manager = inventoryManager.craftingTableManager;
         else if (blockType == anvilBlockType)
-        {
-            craftingTableUI.SetCraftingManager(inventoryManager.anvilManager);
-            ProcessNavigationRequest(uiPage, UIPage.Crafting);
-        }
+            manager = inventoryManager.anvilManager;
+
+        if (manager == null) return;
+
+        UIPage targetPage = GetTargetPage(uiPage, UIPage.Crafting);
+        if (targetPage == UIPage.Crafting)
+            craftingTableUI.SetCraftingManager(manager);
+
+        ProcessNavigationRequest(uiPage, UIPage.Crafting);
     }
 }

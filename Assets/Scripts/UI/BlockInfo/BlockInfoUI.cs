@@ -44,7 +44,7 @@ public class BlockInfoUI : UIComponent<TargetBlockInfoManager>
         }
         else
         {
-            Sprite tileSprite = (block.tile as Tile)?.sprite;
+            Sprite tileSprite = (block?.tile as Tile)?.sprite;
             blockIcon.sprite = tileSprite;
             blockIcon.gameObject.SetActive(tileSprite != null);
         }

@@ -9,7 +9,22 @@ public class CraftingTableUI : UIComponent<CraftingManager>
 
     public void SetCraftingManager(CraftingManager manager)
     {
+        if (craftingManager == manager) return;
+
+        if (isActiveAndEnabled && craftingManager != null)
+        {
+            craftingManager.SetActive(false);
+            craftingManager.OnCraftingManagerUpdate -= RefreshUI;
+        }
+
         craftingManager = manager;
+
+        if (isActiveAndEnabled && craftingManager != null)
+        {
+            craftingManager.SetActive(true);
+            craftingManager.OnCraftingManagerUpdate += RefreshUI;
+            craftingManager.RequestRefresh();
+        }
     }
 
     public void OnEnable()
