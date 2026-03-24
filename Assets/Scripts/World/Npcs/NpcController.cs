@@ -39,9 +39,12 @@ public class NpcController : MonoBehaviour
 
     private static string[] BuildPages(string[] lines)
     {
+        if (lines == null) return Array.Empty<string>();
+
         var result = new List<string>();
-        foreach (string line in lines)
+        foreach (string rawLine in lines)
         {
+            string line = rawLine ?? string.Empty;
             if (line.Length <= CharsPerPage)
             {
                 result.Add(line);
@@ -75,6 +78,12 @@ public class NpcController : MonoBehaviour
         if (npcType == null)
         {
             Debug.LogError($"NpcController on {gameObject.name} has no NpcType assigned.", this);
+            return;
+        }
+
+        if (pages == null || pages.Length == 0)
+        {
+            Debug.LogWarning($"NpcController on {gameObject.name} has no dialogue lines.", this);
             return;
         }
 

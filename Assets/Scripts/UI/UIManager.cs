@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private DialogueUI dialogueUI;
 
     [Header("Debugging")]
+    [SerializeField] private UIPage currentPage;
     [SerializeField] private NpcController activeNpc;
 
     void Awake()
@@ -56,6 +57,8 @@ public class UIManager : MonoBehaviour
 
     private void SetPage(UIPage page)
     {
+        currentPage = page;
+
         if (page != UIPage.Dialogue && activeNpc != null)
         {
             NpcController npc = activeNpc;
@@ -94,6 +97,8 @@ public class UIManager : MonoBehaviour
 
     private void HandleNpcInteractionEnd()
     {
+        if (currentPage != UIPage.Dialogue) return;
+
         activeNpc = null;
         SetPage(UIPage.None);
     }
