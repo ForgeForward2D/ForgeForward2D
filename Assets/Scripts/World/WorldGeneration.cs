@@ -15,6 +15,7 @@ public class WorldGeneration : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] float noiseScale;
+    [SerializeField] int portalClearRadius = 3;
     [SerializeField] int borderWaves = 8;
     [SerializeField] float borderWidth = 0.6f;
 
@@ -117,6 +118,7 @@ public class WorldGeneration : MonoBehaviour
         HashSet<Vector2Int> interiorTiles = new HashSet<Vector2Int>();
         HashSet<Vector2Int> borderTiles = new HashSet<Vector2Int>();
         HashSet<Vector2Int> paddingTiles = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> blockfreeTiles = new HashSet<Vector2Int>();
 
         for (int x = xStart; x <= xEnd; x++)
         {
@@ -125,6 +127,14 @@ public class WorldGeneration : MonoBehaviour
                 float dx = x - startingPoint.x;
                 float dy = y - startingPoint.y;
                 float dist = Mathf.Sqrt(dx * dx + dy * dy);
+
+                // No tiles around portal to prevent trapping the player inside
+                if (Mathf.Abs(dx) + Mathf.Abs(dy) < portalClearRadius)
+                {
+                    blockfreeTiles.Add(new Vector2Int(x, y));
+                    continue;
+                }
+
                 float angle = Mathf.Atan2(dy, dx);
 
                 float normalizedRadius = 1f;
@@ -147,6 +157,16 @@ public class WorldGeneration : MonoBehaviour
                     paddingTiles.Add(new Vector2Int(x, y));
                 }
             }
+        }
+
+        // Place blockfree tiles with background
+        foreach (var tile in blockfreeTiles)
+        {
+            int x = tile.x;
+            int y = tile.y;
+            Vector3Int tilePos = new Vector3Int(x, y, 0);
+
+            backgroundTilemap.SetTile(tilePos, level.backgroundTile);
         }
 
         // Place interior tiles using Perlin noise
@@ -222,6 +242,7 @@ public class WorldGeneration : MonoBehaviour
         foregroundTilemap.SetTile(entryPos, level.portalBlock.tile);
         TileMapManager.Instance.DrawBlock(null, startingPoint);
         backgroundTilemap.SetTile(entryPos, level.backgroundTile);
+
     }
 
     void PlaceDetail(BlockType detailBlock, Vector2Int pos)
