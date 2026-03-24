@@ -89,6 +89,7 @@ public class UIManager : MonoBehaviour
     private void HandleNpcInteraction((UIPage uiPage, NpcController npc) data)
     {
         if (data.uiPage != UIPage.None) return;
+        if (!data.npc.CanBeginDialogue()) return;
 
         activeNpc = data.npc;
         SetPage(UIPage.Dialogue);

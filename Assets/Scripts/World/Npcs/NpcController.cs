@@ -73,20 +73,25 @@ public class NpcController : MonoBehaviour
         AdvanceDialogue();
     }
 
-    public void BeginDialogue()
+    public bool CanBeginDialogue()
     {
         if (npcType == null)
         {
             Debug.LogError($"NpcController on {gameObject.name} has no NpcType assigned.", this);
-            return;
+            return false;
         }
 
         if (pages == null || pages.Length == 0)
         {
             Debug.LogWarning($"NpcController on {gameObject.name} has no dialogue lines.", this);
-            return;
+            return false;
         }
 
+        return true;
+    }
+
+    public void BeginDialogue()
+    {
         currentLineIndex = 0;
         inDialogue = true;
 
