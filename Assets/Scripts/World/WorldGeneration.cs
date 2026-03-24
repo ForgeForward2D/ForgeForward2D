@@ -9,6 +9,7 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField] TileBase backgroundTile;
 
     [SerializeField] BlockType wallBlock;
+    [SerializeField] BlockType paddingBlock;
 
     private Tilemap backgroundTilemap;
     private Tilemap foregroundTilemap;
@@ -24,6 +25,8 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField] public Level[] levels;
     [SerializeField] private MobSpawner mobSpawner;
 
+    private int paddingThickness;
+
     void Start()
     {
         if (worldSeed == 0)
@@ -36,9 +39,11 @@ public class WorldGeneration : MonoBehaviour
         backgroundTilemap = TileMapManager.Instance.BackgroundTilemap;
         foregroundTilemap = TileMapManager.Instance.ForegroundTilemap;
 
+        Camera cam = Camera.main;
+        paddingThickness = Mathf.CeilToInt(Mathf.Max(cam.orthographicSize * 2f * cam.aspect, cam.orthographicSize * 2f));
+
         // Draw border around starter level
         (int xMin, int xMax, int yMin, int yMax) mapBounds = TileMapManager.Instance.GetBounds();
-        Debug.Log($"Set world borders to x: ({mapBounds.xMin}, {mapBounds.xMax}), y: ({mapBounds.yMin}, {mapBounds.yMax})");
 
         for (int y = mapBounds.yMin - 1; y <= mapBounds.yMax; y++)
         {
@@ -58,6 +63,26 @@ public class WorldGeneration : MonoBehaviour
             {
                 // Background
                 backgroundTilemap.SetTile(new Vector3Int(x, y, 0), backgroundTile);
+            }
+        }
+
+        // Draw paddingBlocks around the starter level
+        int pxMin = mapBounds.xMin - 1 - paddingThickness;
+        int pxMax = mapBounds.xMax + paddingThickness;
+        int pyMin = mapBounds.yMin - 1 - paddingThickness;
+        int pyMax = mapBounds.yMax + paddingThickness;
+
+        for (int x = pxMin; x <= pxMax; x++)
+        {
+            for (int y = pyMin; y <= pyMax; y++)
+            {
+                bool outsideWall = x < mapBounds.xMin - 1 || x > mapBounds.xMax
+                                || y < mapBounds.yMin - 1 || y > mapBounds.yMax;
+                Debug.Log($"{x}, {y}: {outsideWall}");
+                if (outsideWall)
+                {
+                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), paddingBlock.tile);
+                }
             }
         }
 
@@ -112,8 +137,6 @@ public class WorldGeneration : MonoBehaviour
         float maxAmpSum = 0f;
         for (int i = 0; i < N; i++) maxAmpSum += amps[i];
 
-        Camera cam = Camera.main;
-        int paddingThickness = Mathf.CeilToInt(Mathf.Max(cam.orthographicSize * 2f * cam.aspect, cam.orthographicSize * 2f));
         int scanRadius = Mathf.CeilToInt(baseRadius * (1f + maxAmpSum)) + 2 + paddingThickness;
 
         int xStart = startingPoint.x - scanRadius;
