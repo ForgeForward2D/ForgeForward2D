@@ -22,6 +22,7 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField] int worldSeed;
 
     [SerializeField] public Level[] levels;
+    [SerializeField] private MobSpawner mobSpawner;
 
     void Start()
     {
@@ -64,6 +65,11 @@ public class WorldGeneration : MonoBehaviour
         {
             GenerateLevel(level);
         }
+
+        if (mobSpawner != null)
+            mobSpawner.SetLevels(levels);
+        else
+            Debug.LogError($"No mob spawner set");
     }
 
     void GenerateLevel(Level level)
@@ -216,7 +222,7 @@ public class WorldGeneration : MonoBehaviour
             backgroundTilemap.SetTile(tilePos, level.backgroundTile);
         }
 
-        TileMapManager.Instance.RegisterSpawnablePositions(interiorTiles);
+        TileMapManager.Instance.RegisterSpawnablePositions(interiorTiles, level);
 
         // Place border wall tiles
         foreach (var tile in borderTiles)
