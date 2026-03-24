@@ -59,6 +59,9 @@ public class CraftingManager
         if (movementInput.y == 0)
             return;
 
+        if (availableRecipes.Count == 0)
+            return;
+
         int delta = movementInput.y > 0 ? -1 : 1;
 
         selectedRecipeIndex += delta;
