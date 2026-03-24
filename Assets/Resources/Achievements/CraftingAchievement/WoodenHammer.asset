@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f094bd8a31d5484b9393d7018ff19cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 02a20f5020f1a43bcb7ec5bcbc307d52, type: 3}
   m_Name: WoodenHammer
-  m_EditorClassIdentifier: Assembly-CSharp::Tool
-  displayName: Wooden Hammer
-  maxStackSize: 1
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingAchievement
+  title: You are ze Hammer!
+  visible: 1
   icon: {fileID: -2706983636478456882, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 5
-  tier: 1
-  efficiency: 2
-  prefab: {fileID: 2797784567886280337, guid: a483c27b2d5754bbe8525df9433c4241, type: 3}
+  recipe: {fileID: 11400000, guid: c9666042ccaa94c2ebae6df16baa977d, type: 2}
+  targetCount: 1

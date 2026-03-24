@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class AchievementManager : MonoBehaviour
@@ -75,5 +77,25 @@ public class AchievementManager : MonoBehaviour
     public int GetSelectedIndex()
     {
         return selectedIndex;
+    }
+    
+    public string Dump()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.AppendLine("CompletionTime,Title,Description,Visible");
+
+        foreach (var achievement in achievements.Where(a => a.IsCompleted).OrderBy(a => a.completionTime))
+        {
+            sb.AppendLine($"{achievement.completionTime.ToString("yyyy-MM-dd_HH:mm:ss")},{achievement.title},{achievement.GetDescription()},{achievement.visible}");
+        }
+        
+        foreach (var achievement in achievements.Where(a => !a.IsCompleted))
+        {
+            sb.AppendLine($"Not Completed,{achievement.title},{achievement.GetDescription()},{achievement.visible}");
+        }
+
+        Debug.Log($"Achievement data:\n{sb.ToString()}");
+        return sb.ToString();
     }
 }

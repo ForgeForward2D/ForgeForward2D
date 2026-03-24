@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02a20f5020f1a43bcb7ec5bcbc307d52, type: 3}
-  m_Name: YouAreZeHammer
+  m_Name: IronPickaxe
   m_EditorClassIdentifier: Assembly-CSharp::CraftingAchievement
-  title: You are ze Hammer!
+  title: Acquire Hardware
   visible: 1
-  icon: {fileID: -2706983636478456882, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  recipe: {fileID: 11400000, guid: c9666042ccaa94c2ebae6df16baa977d, type: 2}
+  icon: {fileID: -4065731190136991531, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
+  recipe: {fileID: 11400000, guid: cd0c97b2aad154cc5bce9938c092ca8a, type: 2}
   targetCount: 1

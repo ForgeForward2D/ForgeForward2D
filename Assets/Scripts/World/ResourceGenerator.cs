@@ -42,7 +42,7 @@ public class ResourceGenerator : MonoBehaviour
         Debug.Log($"Started regeneration process for {block.displayName} at {position} with respawn rate of {block.respawnRate} seconds.");
         while (true)
         {
-            yield return new WaitForSeconds(block.respawnRate);
+            yield return new WaitForSecondsRealtime(block.respawnRate);
 
             BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(position);
             BlockType replacementBlock = block.replacementBlock;

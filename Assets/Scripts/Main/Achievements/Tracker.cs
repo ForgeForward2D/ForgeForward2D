@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEngine;
 
 public class Tracker : MonoBehaviour
@@ -14,7 +16,6 @@ public class Tracker : MonoBehaviour
     [SerializeField] private SerializableDictionary<ItemType, int> itemsCollected;
     [SerializeField] private SerializableDictionary<CraftingRecipe, int> recipesCrafted;
     [SerializeField] private SerializableDictionary<Level, int> visitedLevels;
-    [SerializeField] private InventoryManager lastInventoryState;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class Tracker : MonoBehaviour
 
         InventoryManager.OnItemCollected += HandleItemCollected;
         CraftingManager.OnRecipeCrafted += HandleRecipeCrafted;
+        PortalManager.OnPlayerTeleport += HandlePlayerTeleport;
     }
        
     private void HandleAttackUpdate((UIPage, BlockType, Vector2Int, bool) data)
@@ -104,6 +106,20 @@ public class Tracker : MonoBehaviour
         OnTrackerUpdate?.Invoke(this);
     }
 
+    private void HandlePlayerTeleport((Level, Vector3) data)
+    {
+        var (level, destination) = data;
+
+        if (level == null)
+            return;
+        
+        if (visitedLevels.ContainsKey(level))
+            visitedLevels[level]++;
+        else
+            visitedLevels[level] = 1;
+        OnTrackerUpdate?.Invoke(this);
+    }
+
     public Dictionary<BlockType, int> GetBlockAttacks()
     {
         return blockAttacks;
@@ -134,11 +150,31 @@ public class Tracker : MonoBehaviour
         return recipesCrafted;
     }
 
-     public Dictionary<Level, int> GetVisitedLevels()
+    public Dictionary<Level, int> GetVisitedLevels()
     {
         return visitedLevels;
     }
 
+    public string Dump()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("TrackingType,KeyName,Count");
+
+        foreach (var kvp in blockAttacks)
+            sb.AppendLine($"BlockAttack,{kvp.Key.displayName},{kvp.Value}");
+        foreach (var kvp in blockInteractions)
+            sb.AppendLine($"BlockInteraction,{kvp.Key.displayName},{kvp.Value}");
+        foreach (var kvp in blocksBroken)
+            sb.AppendLine($"BlockBroken,{kvp.Key.displayName},{kvp.Value}");
+        foreach (var kvp in blocksBrokenWithTool)
+        {
+            string blockName = kvp.Key.blockType.displayName;
+            string toolName = kvp.Key.tool == null ? "Hand" : kvp.Key.tool.displayName;
+            string keyName = $"{blockName} With {toolName}";
+            sb.AppendLine($"BlockBrokenWithTool,{keyName},{kvp.Value}");
+        }
+        return sb.ToString();
+    }
 }
 
 [Serializable]

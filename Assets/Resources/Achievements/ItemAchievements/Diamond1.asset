@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a45c7459feb2c44c95e9e3334a4d479, type: 3}
-  m_Name: DiamondOre
-  m_EditorClassIdentifier: Assembly-CSharp::ItemType
-  displayName: Diamond Ore
-  maxStackSize: 64
+  m_Script: {fileID: 11500000, guid: 5b759e07b45d94063a36b7bd7f39bcd1, type: 3}
+  m_Name: Diamond1
+  m_EditorClassIdentifier: Assembly-CSharp::ItemAchievement
+  title: Diamonds
+  visible: 1
   icon: {fileID: 425945882, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
+  itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
+  targetCount: 1
