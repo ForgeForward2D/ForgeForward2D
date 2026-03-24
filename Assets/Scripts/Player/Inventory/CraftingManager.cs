@@ -34,7 +34,6 @@ public class CraftingManager
     public void SetActive(bool isActive)
     {
         active = isActive;
-        if (!active) selectedRecipeIndex = 0;
     }
 
     private void HandleInventoryUpdate(InventoryManager inventoryManager)
