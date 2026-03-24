@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Portal
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Portal
-  tile: {fileID: 11400000, guid: dffbfed8363113f47a3065710ca1bc1c, type: 2}
+  tile: {fileID: 11400000, guid: 0045185480e435643a927b4726f0edc9, type: 2}
   walkable: 0
   breakable: 0
   interactable: 0

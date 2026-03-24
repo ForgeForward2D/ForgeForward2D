@@ -3,8 +3,8 @@ guid: c9e40c789158b1845945461a7280dda8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3182691213418472637
-    second: DeepMine_0
+      213: 3702517833662339299
+    second: DeepMine_Portal_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DeepMine_0
+      name: DeepMine_Portal_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: db4a095cbc03b2c20800000000000000
-      internalID: 3182691213418472637
+      spriteID: 3e81ef95a5cf16330800000000000000
+      internalID: 3702517833662339299
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DeepMine_0: 3182691213418472637
+      DeepMine_Portal_0: 3702517833662339299
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
