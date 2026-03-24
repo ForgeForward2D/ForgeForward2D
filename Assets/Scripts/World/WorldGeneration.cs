@@ -92,7 +92,7 @@ public class WorldGeneration : MonoBehaviour
         }
 
         if (mobSpawner != null)
-            mobSpawner.SetLevels(levels);
+            mobSpawner.SetReady();
         else
             Debug.LogError($"No mob spawner set");
     }
@@ -271,7 +271,6 @@ public class WorldGeneration : MonoBehaviour
         foregroundTilemap.SetTile(entryPos, level.portalBlock.tile);
         TileMapManager.Instance.DrawBlock(null, startingPoint);
         backgroundTilemap.SetTile(entryPos, level.backgroundTile);
-
     }
 
     void PlaceDetail(BlockType detailBlock, Vector2Int pos)
