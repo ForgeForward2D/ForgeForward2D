@@ -23,7 +23,7 @@ public class BlockAchievement : Achievement
 
     public override void CheckCompletion(Tracker tracker)
     {
-        if (IsCompleted())
+        if (IsCompleted)
             return;
 
         int currentCount = type switch

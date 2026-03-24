@@ -58,10 +58,10 @@ public class AchievementManager : MonoBehaviour
     {
         foreach (var achievement in achievements)
         { 
-            if (achievement.IsCompleted())
+            if (achievement.IsCompleted)
                 continue;
             achievement.CheckCompletion(tracker);
-            if (achievement.IsCompleted())
+            if (achievement.IsCompleted)
                 OnAchievementUnlocked?.Invoke(achievement);
         }
  

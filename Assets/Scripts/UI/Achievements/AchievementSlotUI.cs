@@ -19,6 +19,6 @@ public class AchievementSlotUI : UIComponent<Achievement>
         titleText.text = achievement.title;
         descriptionText.text = achievement.GetDescription();
         iconImage.sprite = achievement.icon;
-        background.color = achievement.IsCompleted() ? unlockedColor : lockedColor;
+        background.color = achievement.IsCompleted ? unlockedColor : lockedColor;
     }
 }

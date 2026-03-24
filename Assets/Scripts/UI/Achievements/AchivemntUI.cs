@@ -24,19 +24,36 @@ public class AchievementUI : UIComponent<AchievementManager>
         List<UIComponentBase> children = GetChildren();
         List<Achievement> achievements = achievementManager.GetAchievements();
         int selectedIndex = achievementManager.GetSelectedIndex();
+        int childIndex = 0;
 
-        for (int i = 0; i < children.Count; i++)
+        Debug.Log($"Refreshing achievement UI with {achievements.Count} achievements, selected index {selectedIndex} (Slots: {children.Count})");
+
+        for (int i = 0; i < achievements.Count; i++)
         {
-            if (i < achievements.Count)
+            if (childIndex >= children.Count)
             {
-                Debug.Assert(children[i] is AchievementSlotUI, $"Child of AchievementUI at index {i} is not a AchievementSlotUI");
-                children[i].SetActive(true);
-                children[i].RefreshUIDynamic(achievements[(selectedIndex + i) % achievements.Count]);
+                Debug.Log($"No more achievement slots available to display achievements, stopping at index {i}");
+                break;
             }
-            else
+
+            Achievement achievement = achievements[(selectedIndex + i) % achievements.Count];
+
+            if (!achievement.visible)
             {
-                children[i].SetActive(false);
+                Debug.Log($"Skipping achievement {achievement.title} at index {(selectedIndex + i) % achievements.Count} because it is not visible");
+                continue;
             }
+
+            Debug.Assert(children[childIndex] is AchievementSlotUI, $"Child of AchievementUI at index {childIndex} is not a AchievementSlotUI");
+            Debug.Log($"Refreshing achievement slot {childIndex} with achievement {achievement.title} (index {(selectedIndex + i) % achievements.Count})");
+            children[childIndex].SetActive(true);
+            children[childIndex].RefreshUIDynamic(achievement);
+            childIndex++;
+        }
+
+        for (; childIndex < children.Count; childIndex++)
+        {
+            children[childIndex].SetActive(false);
         }
     }
 }

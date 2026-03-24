@@ -14,7 +14,7 @@ public class ItemAchievement : Achievement
 
     public override void CheckCompletion(Tracker tracker)
     {
-        if (IsCompleted())
+        if (IsCompleted)
             return;
             
         int currentCount = tracker.GetItemsCollected().TryGetValue(itemType, out int obtained) ? obtained : 0;

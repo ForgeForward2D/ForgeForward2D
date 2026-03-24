@@ -14,7 +14,7 @@ public class CraftingAchievement : Achievement
 
     public override void CheckCompletion(Tracker tracker)
     {
-        if (IsCompleted())
+        if (IsCompleted)
             return;
             
         int currentCount = tracker.GetRecipesCrafted().TryGetValue(recipe, out int crafted) ? crafted : 0;
