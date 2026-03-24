@@ -8,7 +8,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ResourceInventoryUI resourceInventoryUI;
     [SerializeField] private CraftingTableUI craftingTableUI;
     [SerializeField] private BlockType craftingTableBlockType;
+    [SerializeField] private BlockType anvilBlockType;
     [SerializeField] private AchievementUI achievementUI;
+
+    private InventoryManager _inventoryManager;
+    private InventoryManager inventoryManager =>
+        _inventoryManager ??= FindAnyObjectByType<InventoryManager>();
 
     void Awake()
     {
@@ -63,10 +68,21 @@ public class UIManager : MonoBehaviour
     {
         var (uiPage, blockType, position) = data;
 
-        if (blockType == craftingTableBlockType)
-        {
-            ProcessNavigationRequest(uiPage, UIPage.Crafting);
-        }
+        if (blockType == null) return;
 
+        CraftingManager manager = null;
+
+        if (blockType == craftingTableBlockType)
+            manager = inventoryManager.craftingTableManager;
+        else if (blockType == anvilBlockType)
+            manager = inventoryManager.anvilManager;
+
+        if (manager == null) return;
+
+        UIPage targetPage = GetTargetPage(uiPage, UIPage.Crafting);
+        if (targetPage == UIPage.Crafting)
+            craftingTableUI.SetCraftingManager(manager);
+
+        ProcessNavigationRequest(uiPage, UIPage.Crafting);
     }
 }
