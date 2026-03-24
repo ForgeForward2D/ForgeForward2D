@@ -10,13 +10,15 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
     [Header("Debugging")]
     [SerializeField] public ResourceInventory resourceInventory = new ResourceInventory();
     [SerializeField] public HotBar hotBar = new HotBar();
-    [SerializeField] public CraftingManager craftingManager = new CraftingManager();
+    [SerializeField] public CraftingManager craftingTableManager = new CraftingManager();
+    [SerializeField] public CraftingManager anvilManager = new CraftingManager();
 
     private void Start()
     {
         resourceInventory.Start();
         hotBar.Start();
-        craftingManager.Start();
+        craftingTableManager.Start();
+        anvilManager.Start();
     }
 
     public void NotifyInventoryUpdate()

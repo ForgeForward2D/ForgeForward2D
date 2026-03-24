@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f548d71a4a4c5da896f8e2a90090e, type: 3}
   m_Name: DiamondSword
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
+  workbenchType: 1
   ingredients:
   - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
     count: 3
