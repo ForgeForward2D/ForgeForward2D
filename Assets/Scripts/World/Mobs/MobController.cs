@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class MobController : MonoBehaviour
         Chasing,
     }
 
+    public static event Func<int, MobType, List<Item>> OnMobStealItems;
+
     [Header("Reference")]
     [SerializeField] private MobType mobType;
 
@@ -23,9 +26,13 @@ public class MobController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float repathInterval = 0.3f;
 
+
     private Transform playerTransform;
     private List<Vector2Int> chasePath = new();
     private float repathTimer;
+    private float stealTimer;
+    private float consumeTimer;
+    private List<Item> inventory = new();
 
     private static Vector2[] WanderDirections =
     {
@@ -66,7 +73,18 @@ public class MobController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsPlayerInRange())
+        if (!IsHungry())
+        {
+            consumeTimer += Time.fixedDeltaTime;
+            float consumeInterval = 60f / mobType.itemsConsumedPerMin;
+            if (consumeTimer >= consumeInterval)
+            {
+                Consume();
+                consumeTimer = 0f;
+            }
+        }
+
+        if (IsHungry() && IsPlayerInRange())
         {
             if (currentState != MobState.Chasing)
                 EnterChaseState();
@@ -100,6 +118,7 @@ public class MobController : MonoBehaviour
     {
         currentState = MobState.Chasing;
         repathTimer = 0f;
+        stealTimer = 0f;
         chasePath.Clear();
     }
 
@@ -112,6 +131,30 @@ public class MobController : MonoBehaviour
             Vector2Int source = TileMapManager.Instance.PositionToCoordinate(transform.position);
             Vector2Int destination = TileMapManager.Instance.PositionToCoordinate(playerTransform.position);
             chasePath = Pathfinder.FindPath(source, destination);
+        }
+
+        if (mobType.stealsResources)
+        {
+            float dist = Vector2.Distance(transform.position, playerTransform.position);
+            if (dist <= mobType.stealRange)
+            {
+                stealTimer += Time.fixedDeltaTime;
+                if (stealTimer >= mobType.stealInterval)
+                {
+                    int count = UnityEngine.Random.Range(1, mobType.maxItemsStolen + 1);
+                    List<Item> stolen = OnMobStealItems?.Invoke(count, mobType);
+                    if (stolen != null)
+                    {
+                        foreach (Item item in stolen)
+                            AddToInventory(item);
+                    }
+                    stealTimer = 0f;
+                }
+            }
+            else
+            {
+                stealTimer = 0f;
+            }
         }
 
         if (chasePath.Count == 0)
@@ -142,7 +185,7 @@ public class MobController : MonoBehaviour
     private void EnterIdleState()
     {
         currentState = MobState.Idle;
-        stateTimer = Random.Range(mobType.idleDurationRange.x, mobType.idleDurationRange.y);
+        stateTimer = UnityEngine.Random.Range(mobType.idleDurationRange.x, mobType.idleDurationRange.y);
     }
 
     private void UpdateIdleState()
@@ -166,7 +209,7 @@ public class MobController : MonoBehaviour
         }
 
         currentState = MobState.Wandering;
-        stateTimer = Random.Range(mobType.walkDurationRange.x, mobType.walkDurationRange.y);
+        stateTimer = UnityEngine.Random.Range(mobType.walkDurationRange.x, mobType.walkDurationRange.y);
     }
 
     private void UpdateWanderState()
@@ -184,7 +227,7 @@ public class MobController : MonoBehaviour
 
     private Vector2 PickNextDirection()
     {
-        int startIndex = Random.Range(0, WanderDirections.Length);
+        int startIndex = UnityEngine.Random.Range(0, WanderDirections.Length);
         for (int index = 0; index < WanderDirections.Length; index++)
         {
             Vector2 candidate = WanderDirections[(startIndex + index) % WanderDirections.Length];
@@ -212,5 +255,36 @@ public class MobController : MonoBehaviour
     public void SetMobType(MobType type)
     {
         mobType = type;
+    }
+
+    private void Consume()
+    {
+        if (inventory.Count == 0) return;
+
+        Item last = inventory[inventory.Count - 1];
+        last.count--;
+        if (last.count <= 0)
+        {
+            inventory.RemoveAt(inventory.Count - 1);
+        }
+        Debug.Log($"{mobType.displayName} consumed 1 {last.itemType.displayName}");
+    }
+
+    private void AddToInventory(Item item)
+    {
+        foreach (Item existing in inventory)
+        {
+            if (existing.itemType == item.itemType)
+            {
+                existing.count += item.count;
+                return;
+            }
+        }
+        inventory.Add(new Item(item.itemType, item.count));
+    }
+
+    private bool IsHungry()
+    {
+        return inventory.Count == 0;
     }
 }

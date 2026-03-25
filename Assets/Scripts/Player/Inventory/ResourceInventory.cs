@@ -19,12 +19,53 @@ public class ResourceInventory : InventoryComponent<ItemType>
 
         ResourceInventoryUI.RequestRefresh += HandleRequestRefresh;
         BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
+        MobController.OnMobStealItems += HandleMobSteal;
     }
-
 
     private void HandleRequestRefresh()
     {
         OnResourceInventoryUpdate?.Invoke(this);
+    }
+
+    private List<Item> HandleMobSteal(int count, MobType mob)
+    {
+        List<int> occupiedSlots = new();
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i] != null && items[i].itemType != null)
+                occupiedSlots.Add(i);
+        }
+
+        List<Item> stolenItems = new();
+        if (occupiedSlots.Count == 0) return stolenItems;
+
+        int removed = 0;
+        while (removed < count && occupiedSlots.Count > 0)
+        {
+            int pick = UnityEngine.Random.Range(0, occupiedSlots.Count);
+            int slotIndex = occupiedSlots[pick];
+
+            ItemType stolenType = items[slotIndex].itemType;
+            Debug.Assert(items[slotIndex].count > 0, $"Trying to steal from slot {slotIndex} which has no items. This should not happen since we check for occupied slots.");
+            items[slotIndex].count--;
+            if (items[slotIndex].count == 0)
+            {
+                items[slotIndex] = null;
+                occupiedSlots.RemoveAt(pick);
+            }
+
+            Item existing = stolenItems.Find(item => item.itemType == stolenType);
+            if (existing != null)
+                existing.count++;
+            else
+                stolenItems.Add(new Item(stolenType, 1));
+
+            removed++;
+        }
+
+        Debug.Log($"{mob.displayName} stole {removed} items from the player: {string.Join(", ", stolenItems.Select(item => $"{item.count} {item.itemType.displayName}"))}");
+
+        return stolenItems;
     }
 
     private void HandleBlockBroken((BlockType type, Vector2Int position) data)
