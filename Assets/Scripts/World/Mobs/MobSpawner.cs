@@ -10,12 +10,10 @@ public class MobSpawner : MonoBehaviour
 
     [SerializeField] private bool spawnOnStart = true;
     [SerializeField] private bool clearExistingMobsBeforeSpawn = true;
-    private Level[] levels;
     private bool ready = false;
 
     public void SetReady()
     {
-        this.levels = FindAnyObjectByType<WorldGeneration>().Levels;
         this.ready = true;
     }
 
@@ -45,6 +43,8 @@ public class MobSpawner : MonoBehaviour
             Debug.LogWarning("MobSpawner: 'Spawn Mobs' can only be used in Play Mode.", this);
             return;
         }
+
+        var levels = FindAnyObjectByType<WorldGeneration>().Levels;
 
         if (levels == null || levels.Length == 0)
         {
@@ -134,10 +134,9 @@ public class MobSpawner : MonoBehaviour
         List<MobSpawnEntry> valid = new();
         foreach (var entry in entries)
         {
-            if (entry.mobType == null) continue;
-            if (entry.mobType.prefab == null)
+            if (entry.mobType == null || entry.mobType.prefab == null)
             {
-                Debug.LogWarning($"MobSpawnEntry mob type '{entry.mobType.name}' has no prefab assigned and will be ignored.", entry.mobType);
+                Debug.LogWarning($"MobSpawnEntry for mob type '{(entry.mobType == null ? "null" : entry.mobType.name)}' is invalid.");
                 continue;
             }
             valid.Add(entry);

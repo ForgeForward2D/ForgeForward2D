@@ -8,15 +8,15 @@ public class WorldGeneration : MonoBehaviour
 
     [SerializeField] TileBase backgroundTile;
 
-    [SerializeField] BlockType wallBlock;
-    [SerializeField] BlockType paddingBlock;
+    [SerializeField] BlockType baseWallBlock;
+    [SerializeField] BlockType basePaddingBlock;
 
     private Tilemap backgroundTilemap;
     private Tilemap foregroundTilemap;
 
     [Header("Settings")]
     [SerializeField] float noiseScale;
-    [SerializeField] int portalClearRadius = 3;
+    [SerializeField] float portalClearRadius;
     [SerializeField] int borderWaves = 8;
     [SerializeField] float borderWidth = 0.6f;
 
@@ -49,16 +49,16 @@ public class WorldGeneration : MonoBehaviour
         for (int y = mapBounds.yMin - 1; y <= mapBounds.yMax; y++)
         {
             // Left wall
-            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMin - 1, y));
+            TileMapManager.Instance.DrawBlock(baseWallBlock, new Vector2Int(mapBounds.xMin - 1, y));
             // Right wall
-            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMax, y));
+            TileMapManager.Instance.DrawBlock(baseWallBlock, new Vector2Int(mapBounds.xMax, y));
         }
         for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
         {
             // Bottom wall
-            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMin - 1));
+            TileMapManager.Instance.DrawBlock(baseWallBlock, new Vector2Int(x, mapBounds.yMin - 1));
             // Top wall
-            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMax));
+            TileMapManager.Instance.DrawBlock(baseWallBlock, new Vector2Int(x, mapBounds.yMax));
 
             for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
             {
@@ -81,7 +81,7 @@ public class WorldGeneration : MonoBehaviour
                                 || y < mapBounds.yMin - 1 || y > mapBounds.yMax;
                 if (outsideWall)
                 {
-                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), paddingBlock.tile);
+                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), basePaddingBlock.tile);
                 }
             }
         }
@@ -158,7 +158,7 @@ public class WorldGeneration : MonoBehaviour
                 float dist = Mathf.Sqrt(dx * dx + dy * dy);
 
                 // No tiles around portal to prevent trapping the player inside
-                if (Mathf.Abs(dx) + Mathf.Abs(dy) < portalClearRadius)
+                if (dx * dx + dy * dy <= portalClearRadius * portalClearRadius)
                 {
                     blockfreeTiles.Add(new Vector2Int(x, y));
                     continue;
