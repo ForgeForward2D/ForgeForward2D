@@ -19,12 +19,57 @@ public class ResourceInventory : InventoryComponent<ItemType>
 
         ResourceInventoryUI.RequestRefresh += HandleRequestRefresh;
         BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
+        MobController.OnMobStealItems += HandleMobSteal;
     }
 
+    public void OnDestroy()
+    {
+        ResourceInventoryUI.RequestRefresh -= HandleRequestRefresh;
+        BlockBreakingManager.OnBlockBroken -= HandleBlockBroken;
+        MobController.OnMobStealItems -= HandleMobSteal;
+    }
 
     private void HandleRequestRefresh()
     {
         OnResourceInventoryUpdate?.Invoke(this);
+    }
+
+    private List<Item> HandleMobSteal(int count, MobType mob)
+    {
+        List<int> occupiedSlots = new();
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i] != null && items[i].itemType != null)
+                occupiedSlots.Add(i);
+        }
+
+        List<Item> stolenItems = new();
+        if (occupiedSlots.Count == 0) return stolenItems;
+
+        int removed = 0;
+        while (removed < count && occupiedSlots.Count > 0)
+        {
+            int pick = UnityEngine.Random.Range(0, occupiedSlots.Count);
+            int slotIndex = occupiedSlots[pick];
+
+            ItemType stolenType = items[slotIndex].itemType;
+            Debug.Log($"Mob {mob.displayName} stole 1 {stolenType.displayName} from player");
+            RemoveItemOfType(stolenType, 1);
+
+            Item existing = stolenItems.Find(item => item.itemType == stolenType);
+            if (existing != null)
+                existing.count++;
+            else
+                stolenItems.Add(new Item(stolenType, 1));
+
+            if (items[slotIndex] == null || items[slotIndex].itemType == null)
+                occupiedSlots.RemoveAt(pick);
+
+            removed++;
+        }
+
+        OnResourceInventoryUpdate?.Invoke(this);
+        return stolenItems;
     }
 
     private void HandleBlockBroken((BlockType type, Vector2Int position) data)

@@ -21,6 +21,11 @@ public class InventoryManager : MonoBehaviour, InventoryComponent<ItemType>
         anvilManager.Start();
     }
 
+    private void OnDestroy()
+    {
+        resourceInventory.OnDestroy();
+    }
+
     public void NotifyInventoryUpdate()
     {
         OnInventoryUpdate?.Invoke(this);
