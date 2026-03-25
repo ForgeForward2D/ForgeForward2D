@@ -8,14 +8,14 @@ public class MobSpawner : MonoBehaviour
     private static Collider2D[] OccupancyResults = new Collider2D[8];
     private static ContactFilter2D OccupancyContactFilter = new ContactFilter2D();
 
-    [Header("Spawn Setup")]
-    [SerializeField] private List<MobType> mobTypes = new();
     [SerializeField] private bool spawnOnStart = true;
     [SerializeField] private bool clearExistingMobsBeforeSpawn = true;
+    private bool ready = false;
 
-    [Header("Spawn Settings")]
-    [SerializeField] private int mobCount = 4;
-    [SerializeField] private int startupSpawnWaitFrames = 5;
+    public void SetReady()
+    {
+        this.ready = true;
+    }
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class MobSpawner : MonoBehaviour
 
     private IEnumerator SpawnWhenReady()
     {
-        for (int frame = 0; frame < startupSpawnWaitFrames; frame++)
+        while (!ready)
         {
             yield return null;
         }
@@ -44,16 +44,11 @@ public class MobSpawner : MonoBehaviour
             return;
         }
 
-        if (mobTypes.Count == 0)
-        {
-            Debug.LogWarning("MobSpawner has no mob types assigned.", this);
-            return;
-        }
+        var levels = FindAnyObjectByType<WorldGeneration>().Levels;
 
-        List<MobType> validMobTypes = GetValidMobTypes();
-        if (validMobTypes.Count == 0)
+        if (levels == null || levels.Length == 0)
         {
-            Debug.LogWarning("MobSpawner has no valid mob types assigned.", this);
+            Debug.LogWarning("MobSpawner has no levels assigned.", this);
             return;
         }
 
@@ -62,18 +57,40 @@ public class MobSpawner : MonoBehaviour
             ClearChildren();
         }
 
-        List<Vector2Int> availableCoordinates = GetAvailableSpawnCoordinates(transform);
-        if (availableCoordinates.Count == 0)
+        foreach (Level level in levels)
         {
-            Debug.LogWarning("MobSpawner found no valid spawn positions in the world.", this);
+            SpawnMobsForLevel(level);
+        }
+    }
+
+    private void SpawnMobsForLevel(Level level)
+    {
+        if (level.mobSpawns == null || level.mobSpawns.Length == 0)
+            return;
+
+        List<MobSpawnEntry> validEntries = GetValidSpawnEntries(level.mobSpawns);
+        if (validEntries.Count == 0)
+        {
+            Debug.LogWarning($"Level '{level.levelName}' has no valid mob spawn entries.", level);
             return;
         }
 
-        for (int index = 0; index < mobCount; index++)
+        float totalWeight = 0f;
+        foreach (var entry in validEntries)
+            totalWeight += entry.spawnWeight;
+
+        List<Vector2Int> availableCoordinates = GetAvailableSpawnCoordinates(level);
+        if (availableCoordinates.Count == 0)
+        {
+            Debug.LogWarning($"Level '{level.levelName}' has no valid spawn positions.", level);
+            return;
+        }
+
+        for (int index = 0; index < level.mobCount; index++)
         {
             if (availableCoordinates.Count == 0)
             {
-                Debug.LogWarning("MobSpawner could not find any more valid spawn positions.", this);
+                Debug.LogWarning($"Level '{level.levelName}' ran out of spawn positions after {index} mobs.", level);
                 break;
             }
 
@@ -82,7 +99,7 @@ public class MobSpawner : MonoBehaviour
             availableCoordinates[randomIndex] = availableCoordinates[availableCoordinates.Count - 1];
             availableCoordinates.RemoveAt(availableCoordinates.Count - 1);
 
-            MobType selectedMobType = validMobTypes[Random.Range(0, validMobTypes.Count)];
+            MobType selectedMobType = PickWeighted(validEntries, totalWeight);
             GameObject selectedPrefab = selectedMobType.prefab;
             Vector3 spawnPosition = TileMapManager.Instance.CoordinateToPosition(coordinate);
             GameObject mobInstance = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, transform);
@@ -99,28 +116,32 @@ public class MobSpawner : MonoBehaviour
         }
     }
 
-    private List<MobType> GetValidMobTypes()
+    private static MobType PickWeighted(List<MobSpawnEntry> entries, float totalWeight)
     {
-        List<MobType> validTypes = new();
-
-        for (int index = 0; index < mobTypes.Count; index++)
+        float roll = Random.Range(0f, totalWeight);
+        float cumulative = 0f;
+        for (int i = 0; i < entries.Count; i++)
         {
-            MobType type = mobTypes[index];
-            if (type == null)
-            {
-                continue;
-            }
-
-            if (type.prefab == null)
-            {
-                Debug.LogWarning($"MobSpawner mob type '{type.name}' has no prefab assigned and will be ignored.", type);
-                continue;
-            }
-
-            validTypes.Add(type);
+            cumulative += entries[i].spawnWeight;
+            if (roll < cumulative)
+                return entries[i].mobType;
         }
+        return entries[entries.Count - 1].mobType;
+    }
 
-        return validTypes;
+    private List<MobSpawnEntry> GetValidSpawnEntries(MobSpawnEntry[] entries)
+    {
+        List<MobSpawnEntry> valid = new();
+        foreach (var entry in entries)
+        {
+            if (entry.mobType == null || entry.mobType.prefab == null)
+            {
+                Debug.LogWarning($"MobSpawnEntry for mob type '{(entry.mobType == null ? "null" : entry.mobType.name)}' is invalid.");
+                continue;
+            }
+            valid.Add(entry);
+        }
+        return valid;
     }
 
     private void ClearChildren()
@@ -134,10 +155,10 @@ public class MobSpawner : MonoBehaviour
         }
     }
 
-    private List<Vector2Int> GetAvailableSpawnCoordinates(Transform parent)
+    private List<Vector2Int> GetAvailableSpawnCoordinates(Level level)
     {
-        HashSet<Vector2Int> occupiedCoordinates = GetOccupiedMobCoordinates(parent);
-        List<Vector2Int> spawnablePositions = TileMapManager.Instance.GetSpawnablePositions();
+        HashSet<Vector2Int> occupiedCoordinates = GetOccupiedMobCoordinates(transform);
+        List<Vector2Int> spawnablePositions = TileMapManager.Instance.GetSpawnablePositions(level);
         List<Vector2Int> coordinates = new();
 
         foreach (Vector2Int coordinate in spawnablePositions)
@@ -147,7 +168,7 @@ public class MobSpawner : MonoBehaviour
                 continue;
             }
 
-            if (IsCellOccupied(coordinate, parent))
+            if (IsCellOccupied(coordinate, transform))
             {
                 continue;
             }

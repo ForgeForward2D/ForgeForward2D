@@ -23,18 +23,43 @@ public class TileMapManager : MonoBehaviour
 
     private HashSet<Vector2Int> registeredPositions = new();
     private HashSet<Vector2Int> spawnablePositions = new();
+    private Dictionary<Level, HashSet<Vector2Int>> levelPositions = new();
 
-    public void RegisterSpawnablePositions(IEnumerable<Vector2Int> positions)
+    public void RegisterSpawnablePositions(IEnumerable<Vector2Int> positions, Level level)
     {
         foreach (var pos in positions)
         {
             registeredPositions.Add(pos);
             spawnablePositions.Add(pos);
         }
+
+
+        if (!levelPositions.TryGetValue(level, out var set))
+        {
+            set = new HashSet<Vector2Int>();
+            levelPositions[level] = set;
+        }
+        foreach (var pos in positions)
+            set.Add(pos);
     }
 
     public List<Vector2Int> GetSpawnablePositions()
     {
+        return new List<Vector2Int>(spawnablePositions);
+    }
+
+    public List<Vector2Int> GetSpawnablePositions(Level level)
+    {
+        if (level != null && levelPositions.TryGetValue(level, out var set))
+        {
+            List<Vector2Int> result = new();
+            foreach (var pos in set)
+            {
+                if (spawnablePositions.Contains(pos))
+                    result.Add(pos);
+            }
+            return result;
+        }
         return new List<Vector2Int>(spawnablePositions);
     }
 

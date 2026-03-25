@@ -36,3 +36,7 @@ MonoBehaviour:
   - block: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
     threshold: 1
     details: []
+  mobCount: 20
+  mobSpawns:
+  - mobType: {fileID: 11400000, guid: c2e482c1a7f7d6742b2e7d45be75cff7, type: 2}
+    spawnWeight: 1
