@@ -28,9 +28,9 @@ public class Tracker : MonoBehaviour
         recipesCrafted = new SerializableDictionary<CraftingRecipe, int>();
         visitedLevels = new SerializableDictionary<Level, int>();
         visitedUIs = new SerializableDictionary<UIPage, int>();
-    
+
         PlayerInteractionManager.OnAttackUpdate += HandleAttackUpdate;
-        PlayerInteractionManager.OnInteraction += HandleInteraction;
+        PlayerInteractionManager.OnBlockInteraction += HandleInteraction;
         BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
 
         InventoryManager.OnItemCollected += HandleItemCollected;
