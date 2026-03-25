@@ -48,7 +48,7 @@ public class AchievementUI : UIComponent<AchievementManager>
             if (!achievement.visible)
                 continue;
 
-            Debug.Assert(children[childIndex] is AchievementSlotUI, $"Child of AchievementUI at index {childIndex} is not a AchievementSlotUI");
+            Debug.Assert(children[childIndex] is AchievementSlotUI, $"Child of AchievementUI at index {childIndex} is not an AchievementSlotUI");
             children[childIndex].SetActive(true);
             children[childIndex].RefreshUIDynamic(achievement);
             childIndex++;
