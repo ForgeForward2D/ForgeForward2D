@@ -15,6 +15,8 @@ MonoBehaviour:
   displayName: DefaultMob
   prefab: {fileID: 2939615087842769253, guid: bf5b666682e8fee44b8c1c30c8c9882b, type: 3}
   moveSpeed: 1.5
+  chaseSpeed: 2.5
+  aggroRange: 5
   directionCheckDistance: 0.45
   idleDurationRange: {x: 0.75, y: 2}
   walkDurationRange: {x: 1.5, y: 4}

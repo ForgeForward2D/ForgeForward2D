@@ -13,7 +13,7 @@ public class BlockBreakingManager : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Tool currentTool;
 
-    private bool isPlayerHoldingAttack=false;
+    private bool isPlayerHoldingAttack = false;
     private bool isBreaking = false;
     private float breakProgress = 0f;
     private Vector2Int currentTargetPos;
@@ -89,14 +89,17 @@ public class BlockBreakingManager : MonoBehaviour
         // If we moved to a new block, reset progress
         if (targetPos != currentTargetPos)
         {
-            TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
+            if (breakProgress > 0f)
+            {
+                TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
+            }
             currentTargetPos = targetPos;
             currentTargetBlock = TileMapManager.Instance.GetBlockTypeAtPosition(currentTargetPos);
             breakProgress = 0f;
         }
 
 
-        float efficiency = CalculateEfficiency();
+        float efficiency = CalculateEfficiency(currentTargetBlock, currentTool);
 
         // Block not breakable with current tool
         if (efficiency <= 0f)
@@ -125,14 +128,15 @@ public class BlockBreakingManager : MonoBehaviour
 
         float timeSinceLastUpdate = (float)(DateTime.Now - lastProgressUpdateTime).TotalSeconds;
 
-        if (stage != previousStage && timeSinceLastUpdate >= gameConfig.block_breaking_animation_min_update_interval) {
+        if (stage != previousStage && timeSinceLastUpdate >= gameConfig.block_breaking_animation_min_update_interval)
+        {
 
             lastProgressUpdateTime = DateTime.Now;
             TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, stage);
         }
     }
 
-    public float CalculateEfficiency()
+    public static float CalculateEfficiency(BlockType currentTargetBlock, Tool currentTool)
     {
         if (currentTargetBlock == null || !currentTargetBlock.breakable) return 0.0f;
 
@@ -161,7 +165,7 @@ public class BlockBreakingManager : MonoBehaviour
         return efficiency;
     }
 
-    private void TriggerBreak( )
+    private void TriggerBreak()
     {
         BlockType replacementBlock = currentTargetBlock.replacementBlock;
         OnBlockBroken?.Invoke((currentTargetBlock, currentTargetPos));
@@ -171,7 +175,10 @@ public class BlockBreakingManager : MonoBehaviour
 
     private void CancelBreaking()
     {
-        TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
+        if (breakProgress > 0f)
+        {
+            TileMapManager.Instance.UpdateBlockBreakingProgress(currentTargetPos, 0);
+        }
         isBreaking = false;
         playerAnimator.SetBool("isBreaking", isBreaking);
         breakProgress = 0f;

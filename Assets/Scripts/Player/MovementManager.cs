@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class MovementManager : MonoBehaviour
 {
+    public static event Action<Vector2Int> OnTargetPositionChanged;
+
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private Transform characterModel;
 
@@ -14,6 +16,8 @@ public class MovementManager : MonoBehaviour
     [SerializeField] private Vector2 moveInput;
     [SerializeField] private Vector2Int moveDirection;
 
+    private Vector2Int previousTargetPosition;
+
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,6 +25,7 @@ public class MovementManager : MonoBehaviour
 
         InputManager.OnMoveInput += HandleMoveInput;
         UIManager.OnUpdatePage += HandleUpdatePage;
+        PortalManager.OnPlayerTeleport += HandleTeleport;
     }
 
     private void HandleMoveInput((UIPage, bool, Vector2) data)
@@ -47,6 +52,12 @@ public class MovementManager : MonoBehaviour
         }
     }
 
+    private void HandleTeleport(Vector3 destination)
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.position = destination;
+    }
+
     public void FixedUpdate()
     {
         // Handle movement
@@ -55,6 +66,8 @@ public class MovementManager : MonoBehaviour
         // Handle sprite flipping and movement direction
         float absX = Mathf.Abs(moveInput.x);
         float absY = Mathf.Abs(moveInput.y);
+
+        Vector2Int previousDirection = moveDirection;
 
         if (absX > absY)
         {
@@ -66,10 +79,23 @@ public class MovementManager : MonoBehaviour
             moveDirection = moveInput.y > 0 ? Vector2Int.up : Vector2Int.down;
             characterModel.localRotation = Quaternion.Euler(0f, moveInput.y < 0 ? 0f : 180f, 0f);
         }
+
+        Vector2Int targetPosition = GetTargetPosition();
+        if (targetPosition != previousTargetPosition)
+        {
+            previousTargetPosition = targetPosition;
+            OnTargetPositionChanged?.Invoke(targetPosition);
+        }
     }
 
     public Vector2Int GetMoveDirection()
     {
-        return moveDirection ;
+        return moveDirection;
+    }
+
+    public Vector2Int GetTargetPosition()
+    {
+        Vector2Int playerPos = TileMapManager.Instance.PositionToCoordinate(transform.position);
+        return playerPos + moveDirection;
     }
 }

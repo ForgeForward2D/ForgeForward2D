@@ -26,6 +26,7 @@ ForgeForward2D: The game for endless mining, collecting, and exploring
 = Analytics
 - #action[show analytics and explain a bit]
 
+#pagebreak(weak: true)
 #date[20.03.2026: Addictive Patterns]
 - ForgeForward2D: The game for endless mining, collecting, and exploring
 
@@ -44,7 +45,6 @@ ForgeForward2D: The game for endless mining, collecting, and exploring
 - #action[show architecture diagram and explain]
 
 #pagebreak()
-
 #date[13.03.2026: Unity & Software Architecture]
 - ForgeForward2D: The game for endless mining, collecting, and exploring
 
