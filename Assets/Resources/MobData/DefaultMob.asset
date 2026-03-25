@@ -18,10 +18,10 @@ MonoBehaviour:
   chaseSpeed: 2.5
   aggroRange: 5
   stealsResources: 1
-  stealRange: 0.5
+  stealRange: 1
   stealInterval: 3
   maxItemsStolen: 3
   itemsConsumedPerMin: 10
-  directionCheckDistance: 0.45
+  directionCheckDistance: 0.3
   idleDurationRange: {x: 0.75, y: 2}
   walkDurationRange: {x: 1.5, y: 4}
