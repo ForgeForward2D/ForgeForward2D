@@ -21,6 +21,21 @@ public class BlockType : ScriptableObject
     public ToolTier minimumToolTier;
 
     public LootDrop[] lootDrops;
+
+    private void OnValidate()
+    {
+        Debug.Assert(!string.IsNullOrEmpty(displayName), $"BlockType '{name}' has no displayName.");
+        Debug.Assert(tile != null, $"BlockType '{name}' has no tile assigned.");
+
+        if (lootDrops != null)
+        {
+            for (int i = 0; i < lootDrops.Length; i++)
+            {
+                Debug.Assert(lootDrops[i].itemType != null, $"BlockType '{name}': lootDrop[{i}] has no itemType assigned.");
+                Debug.Assert(lootDrops[i].amount > 0, $"BlockType '{name}': lootDrop[{i}] has non-positive amount.");
+            }
+        }
+    }
 }
 
 [Serializable]

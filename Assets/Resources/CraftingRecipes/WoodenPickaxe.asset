@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f548d71a4a4c5da896f8e2a90090e, type: 3}
   m_Name: WoodenPickaxe
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
+  workbenchType: 1
   ingredients:
   - itemType: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
     count: 3
