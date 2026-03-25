@@ -12,6 +12,8 @@ public class MobController : MonoBehaviour
         Chasing,
     }
 
+    public static event Func<int, MobType, List<Item>> OnMobStealItems;
+
     [Header("Reference")]
     [SerializeField] private MobType mobType;
 
@@ -25,14 +27,12 @@ public class MobController : MonoBehaviour
     [SerializeField] private float repathInterval = 0.3f;
 
 
-
     private Transform playerTransform;
     private List<Vector2Int> chasePath = new();
     private float repathTimer;
     private float stealTimer;
     private float consumeTimer;
     private List<Item> inventory = new();
-    public static event Func<int, MobType, List<Item>> OnMobStealItems;
 
     private static Vector2[] WanderDirections =
     {

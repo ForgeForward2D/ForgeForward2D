@@ -22,13 +22,6 @@ public class ResourceInventory : InventoryComponent<ItemType>
         MobController.OnMobStealItems += HandleMobSteal;
     }
 
-    public void OnDestroy()
-    {
-        ResourceInventoryUI.RequestRefresh -= HandleRequestRefresh;
-        BlockBreakingManager.OnBlockBroken -= HandleBlockBroken;
-        MobController.OnMobStealItems -= HandleMobSteal;
-    }
-
     private void HandleRequestRefresh()
     {
         OnResourceInventoryUpdate?.Invoke(this);
@@ -53,8 +46,13 @@ public class ResourceInventory : InventoryComponent<ItemType>
             int slotIndex = occupiedSlots[pick];
 
             ItemType stolenType = items[slotIndex].itemType;
-            Debug.Log($"Mob {mob.displayName} stole 1 {stolenType.displayName} from player");
-            RemoveItemOfType(stolenType, 1);
+            Debug.Assert(items[slotIndex].count > 0, $"Trying to steal from slot {slotIndex} which has no items. This should not happen since we check for occupied slots.");
+            items[slotIndex].count--;
+            if (items[slotIndex].count == 0)
+            {
+                items[slotIndex] = null;
+                occupiedSlots.RemoveAt(pick);
+            }
 
             Item existing = stolenItems.Find(item => item.itemType == stolenType);
             if (existing != null)
@@ -62,13 +60,11 @@ public class ResourceInventory : InventoryComponent<ItemType>
             else
                 stolenItems.Add(new Item(stolenType, 1));
 
-            if (items[slotIndex] == null || items[slotIndex].itemType == null)
-                occupiedSlots.RemoveAt(pick);
-
             removed++;
         }
 
-        OnResourceInventoryUpdate?.Invoke(this);
+        Debug.Log($"{mob.displayName} stole {removed} items from the player: {string.Join(", ", stolenItems.Select(item => $"{item.count} {item.itemType.displayName}"))}");
+
         return stolenItems;
     }
 
