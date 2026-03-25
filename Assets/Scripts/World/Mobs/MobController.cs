@@ -27,7 +27,7 @@ public class MobController : MonoBehaviour
     private List<Vector2Int> chasePath = new();
     private float repathTimer;
 
-    private static readonly Vector2[] WanderDirections =
+    private static Vector2[] WanderDirections =
     {
         Vector2.up,
         Vector2.right,
@@ -61,7 +61,6 @@ public class MobController : MonoBehaviour
             Debug.LogWarning($"repath interval is set to {repathInterval} which may cause performance issues. Consider using a value >= 0.3");
         }
 
-
         EnterIdleState();
     }
 
@@ -91,34 +90,10 @@ public class MobController : MonoBehaviour
         }
     }
 
-    private void UpdateIdleState()
-    {
-        rb.linearVelocity = Vector2.zero;
-        stateTimer -= Time.fixedDeltaTime;
-
-        if (stateTimer <= 0f)
-        {
-            EnterWanderState();
-        }
-    }
-
-    private void UpdateWanderState()
-    {
-        stateTimer -= Time.fixedDeltaTime;
-
-        if (stateTimer <= 0f || !CanMoveInDirection(moveDirection))
-        {
-            EnterIdleState();
-            return;
-        }
-
-        rb.linearVelocity = moveDirection * mobType.moveSpeed;
-    }
-
     private bool IsPlayerInRange()
     {
         float distance = Vector2.Distance(transform.position, playerTransform.position);
-        return distance <= (float)mobType.aggroRange;
+        return distance <= mobType.aggroRange;
     }
 
     private void EnterChaseState()
@@ -134,9 +109,9 @@ public class MobController : MonoBehaviour
         if (repathTimer <= 0f)
         {
             repathTimer = repathInterval;
-            Vector2Int from = TileMapManager.Instance.PositionToCoordinate(transform.position);
-            Vector2Int to = TileMapManager.Instance.PositionToCoordinate(playerTransform.position);
-            chasePath = Pathfinder.FindPath(from, to);
+            Vector2Int source = TileMapManager.Instance.PositionToCoordinate(transform.position);
+            Vector2Int destination = TileMapManager.Instance.PositionToCoordinate(playerTransform.position);
+            chasePath = Pathfinder.FindPath(source, destination);
         }
 
         if (chasePath.Count == 0)
@@ -170,6 +145,17 @@ public class MobController : MonoBehaviour
         stateTimer = Random.Range(mobType.idleDurationRange.x, mobType.idleDurationRange.y);
     }
 
+    private void UpdateIdleState()
+    {
+        rb.linearVelocity = Vector2.zero;
+        stateTimer -= Time.fixedDeltaTime;
+
+        if (stateTimer <= 0f)
+        {
+            EnterWanderState();
+        }
+    }
+
     private void EnterWanderState()
     {
         moveDirection = PickNextDirection();
@@ -181,6 +167,19 @@ public class MobController : MonoBehaviour
 
         currentState = MobState.Wandering;
         stateTimer = Random.Range(mobType.walkDurationRange.x, mobType.walkDurationRange.y);
+    }
+
+    private void UpdateWanderState()
+    {
+        stateTimer -= Time.fixedDeltaTime;
+
+        if (stateTimer <= 0f || !CanMoveInDirection(moveDirection))
+        {
+            EnterIdleState();
+            return;
+        }
+
+        rb.linearVelocity = moveDirection * mobType.moveSpeed;
     }
 
     private Vector2 PickNextDirection()
