@@ -29,9 +29,9 @@ MonoBehaviour:
     - block: {fileID: 11400000, guid: cf30de75936df4afe8dfc7906a0eb2cf, type: 2}
       probability: 0.2
     - block: {fileID: 11400000, guid: f6d8f3ab302f5461ab56d92eece3e0a1, type: 2}
-      probability: 0.2175
+      probability: 0.205
   - block: {fileID: 0}
-    threshold: 0.8
+    threshold: 0.75
     details: []
   - block: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
     threshold: 1
