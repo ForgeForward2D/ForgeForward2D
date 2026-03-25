@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mineshaft
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Mineshaft
-  tile: {fileID: 11400000, guid: 3855ac715166048b39ac326e7eb15f42, type: 2}
+  tile: {fileID: 11400000, guid: a44cc509f61916e4e894b286b9556355, type: 2}
   walkable: 0
   breakable: 0
   interactable: 0

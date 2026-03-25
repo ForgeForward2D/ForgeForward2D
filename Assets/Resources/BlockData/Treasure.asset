@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Treasure
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Treasure
-  tile: {fileID: 11400000, guid: b0a8ff7ca237d4bfea096752a8b3857a, type: 2}
+  tile: {fileID: 11400000, guid: 8d0b98a850aad314ab25973aed4e0c78, type: 2}
   walkable: 0
   breakable: 1
+  interactable: 0
   hardness: 3
   respawnRate: 0
   replacementBlock: {fileID: 0}
