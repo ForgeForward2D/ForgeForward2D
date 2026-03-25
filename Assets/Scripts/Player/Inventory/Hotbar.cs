@@ -93,11 +93,6 @@ public class HotBar : InventoryComponent<Tool>
         return -1;
     }
 
-    public void NotifyInventoryUpdate()
-    {
-        OnHotBarUpdate?.Invoke(this);
-    }
-
     public int CountElements(Tool tool)
     {
         if (tool == null) return 0;
@@ -136,6 +131,7 @@ public class HotBar : InventoryComponent<Tool>
 
         tools[index] = tool;
         OnHotBarUpdate?.Invoke(this);
+        InventoryManager.NotifyItemCollected(new Item(tool, 1));
     }
 
     public void RemoveItemOfType(Tool tool, int count)

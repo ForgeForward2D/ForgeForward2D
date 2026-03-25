@@ -3,7 +3,7 @@ using System;
 
 public class BlockBreakingManager : MonoBehaviour
 {
-    public static event Action<(BlockType, Vector2Int)> OnBlockBroken;
+    public static event Action<(BlockType, Vector2Int, Tool)> OnBlockBroken;
 
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private Animator playerAnimator;
@@ -27,7 +27,7 @@ public class BlockBreakingManager : MonoBehaviour
 
         lastProgressUpdateTime = DateTime.Now;
 
-        InputManager.OnAttackUpdate += HandleAttackInput;
+        PlayerInteractionManager.OnAttackUpdate += HandleAttackUpdate;
         UIManager.OnUpdatePage += HandleUpdatePage;
         HotBar.OnHotBarUpdate += HandleHotBarUpdate;
         TileMapManager.OnBlockChanged += HandleBlockChanged;
@@ -45,9 +45,9 @@ public class BlockBreakingManager : MonoBehaviour
         }
     }
 
-    private void HandleAttackInput((UIPage, bool) data)
+    private void HandleAttackUpdate((UIPage, BlockType, Vector2Int, bool) data)
     {
-        var (uiPage, attackStatus) = data;
+        var (uiPage, blockType, targetPos, attackStatus) = data;
 
         if (uiPage == UIPage.None)
         {
@@ -168,7 +168,7 @@ public class BlockBreakingManager : MonoBehaviour
     private void TriggerBreak()
     {
         BlockType replacementBlock = currentTargetBlock.replacementBlock;
-        OnBlockBroken?.Invoke((currentTargetBlock, currentTargetPos));
+        OnBlockBroken?.Invoke((currentTargetBlock, currentTargetPos, currentTool));
         TileMapManager.Instance.DrawBlock(replacementBlock, currentTargetPos);
         CancelBreaking();
     }

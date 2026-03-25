@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b759e07b45d94063a36b7bd7f39bcd1, type: 3}
+  m_Name: Iron1
+  m_EditorClassIdentifier: Assembly-CSharp::ItemAchievement
+  title: Rustacean
+  visible: 1
+  icon: {fileID: -7785027520232016205, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
+  itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
+  targetCount: 1

@@ -20,7 +20,7 @@ public class ResourceGenerator : MonoBehaviour
         BlockBreakingManager.OnBlockBroken -= HandleBlockBroken;
     }
 
-    private void HandleBlockBroken((BlockType blockType, Vector2Int position) brokenBlockInfo)
+    private void HandleBlockBroken((BlockType blockType, Vector2Int position, Tool tool) brokenBlockInfo)
     {
         BlockType block = brokenBlockInfo.blockType;
         Vector2Int position = brokenBlockInfo.position;
@@ -42,7 +42,7 @@ public class ResourceGenerator : MonoBehaviour
         Debug.Log($"Started regeneration process for {block.displayName} at {position} with respawn rate of {block.respawnRate} seconds.");
         while (true)
         {
-            yield return new WaitForSeconds(block.respawnRate);
+            yield return new WaitForSecondsRealtime(block.respawnRate);
 
             BlockType currentBlock = tileMapManager.GetBlockTypeAtPosition(position);
             BlockType replacementBlock = block.replacementBlock;

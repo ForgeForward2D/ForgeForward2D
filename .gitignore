@@ -106,3 +106,5 @@ planning_documents/*.svg
 
 # Apple's .DS_Store
 .DS_Store
+
+Assets/Analytics/data/*
