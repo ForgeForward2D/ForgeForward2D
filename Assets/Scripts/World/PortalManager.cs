@@ -124,10 +124,7 @@ public class PortalManager : MonoBehaviour
     void OnTriggerStay2D(Collider2D other)
     {
         if (!other.CompareTag("Player"))
-        {
-            Debug.Log($"Portal: stopped — collider is not tagged Player");
             return;
-        }
 
         Vector2Int tile = TileMapManager.Instance.PositionToCoordinate(other.transform.position);
         if (!IsAdjacent(portalEntered, tile) || (portalEntered.x == tile.x && portalEntered.y == tile.y))
