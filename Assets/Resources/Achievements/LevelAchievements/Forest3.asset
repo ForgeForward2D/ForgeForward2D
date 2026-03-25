@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dfbc3bd8e7a14f958ff2a5d81cdb77d, type: 3}
-  m_Name: Lumberjack
-  m_EditorClassIdentifier: Assembly-CSharp::Achievement
-  title: Lumberjack
-  group: collect_material
-  blockType: {fileID: 11400000, guid: 7f3076a83042c40aaa8fa8ba50068c68, type: 2}
-  numberOfBlocks: 10
+  m_Script: {fileID: 11500000, guid: c883fd855f0d947b798502b506ad2117, type: 3}
+  m_Name: Forest3
+  m_EditorClassIdentifier: Assembly-CSharp::LevelAchievement
+  title: Traveler
+  visible: 1
   icon: {fileID: -205425986, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
-  isUnlocked: 0
-  currentProgress: 1
+  level: {fileID: 11400000, guid: 29bb03460e7434338a5afcfd64434927, type: 2}
+  targetCount: 3

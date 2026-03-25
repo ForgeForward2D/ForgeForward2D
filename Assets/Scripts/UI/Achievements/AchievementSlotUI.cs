@@ -11,25 +11,25 @@ public class AchievementSlotUI : UIComponent<Achievement>
     [SerializeField] private Image iconImage;
 
     [Header("Settings")]
-    [SerializeField] private Color unlockedColor = new Color(1f, 0.8f, 0f, 0.5f);
+    [SerializeField] private Color unlockedColor = new Color(0f, 1f, 0f, 0.5f);
     [SerializeField] private Color lockedColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
 
     public override void RefreshUI(Achievement achievement)
     {
-        titleText.text = achievement.title;
-        iconImage.sprite = achievement.icon;
-        background.color = achievement.isUnlocked ? unlockedColor : lockedColor;
+        if (achievement == null)
+        {
+            titleText.text = "";
+            descriptionText.text = "";
+            iconImage.sprite = null;
+            iconImage.color = new Color(1f, 1f, 1f, 0f);
+            background.color = lockedColor;
+            return;
+        }
 
-        string blockName = "Unknown Block";
-        if (achievement.blockType == null)
-        {
-            Debug.LogError($"Block Type not set for achievement {achievement.title}");
-        }
-        else
-        {
-            BlockType type = achievement.blockType;
-            blockName = (type != null) ? type.displayName : "Unknown Block";
-        }
-        descriptionText.text = achievement.GetDescription(blockName);
+        titleText.text = achievement.title;
+        descriptionText.text = achievement.GetDescription();
+        iconImage.sprite = achievement.icon;
+        iconImage.color = Color.white;
+        background.color = achievement.IsCompleted ? unlockedColor : lockedColor;
     }
 }

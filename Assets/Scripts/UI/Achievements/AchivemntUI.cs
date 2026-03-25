@@ -24,19 +24,39 @@ public class AchievementUI : UIComponent<AchievementManager>
         List<UIComponentBase> children = GetChildren();
         List<Achievement> achievements = achievementManager.GetAchievements();
         int selectedIndex = achievementManager.GetSelectedIndex();
+        int childIndex = 0;
 
-        for (int i = 0; i < children.Count; i++)
+        int achievementWrappingPoint = achievements.Count + 4 - achievements.Count % 4; // Round up to nearest multiple of 4
+
+        for (int i = 0; i < achievementWrappingPoint; i++)
         {
-            if (i < achievements.Count)
+            if (childIndex >= children.Count)
+                break;
+
+            int achievementIndex = (selectedIndex + i) % achievementWrappingPoint;
+
+            if (achievementIndex >= achievements.Count)
             {
-                Debug.Assert(children[i] is AchievementSlotUI, $"Child of AchievementUI at index {i} is not a AchievementSlotUI");
-                children[i].SetActive(true);
-                children[i].RefreshUIDynamic(achievements[(selectedIndex + i) % achievements.Count]);
+                children[childIndex].SetActive(true);
+                children[childIndex].RefreshUIDynamic(null);
+                childIndex++;
+                continue;
             }
-            else
-            {
-                children[i].SetActive(false);
-            }
+
+            Achievement achievement = achievements[achievementIndex];
+
+            if (!achievement.visible)
+                continue;
+
+            Debug.Assert(children[childIndex] is AchievementSlotUI, $"Child of AchievementUI at index {childIndex} is not an AchievementSlotUI");
+            children[childIndex].SetActive(true);
+            children[childIndex].RefreshUIDynamic(achievement);
+            childIndex++;
+        }
+
+        for (; childIndex < children.Count; childIndex++)
+        {
+            children[childIndex].SetActive(false);
         }
     }
 }

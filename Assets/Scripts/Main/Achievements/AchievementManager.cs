@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class AchievementManager : MonoBehaviour
@@ -18,14 +20,13 @@ public class AchievementManager : MonoBehaviour
         achievements = new List<Achievement>(Resources.LoadAll<Achievement>("Achievements"));
         foreach (var achievement in achievements)
         {
-            achievement.isUnlocked = false;
-            achievement.currentProgress = 0;
+            achievement.completionTime = default;
         }
         selectedIndex = 0;
 
         AchievementUI.RequestRefresh += HandleRequestRefresh;
-        BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
         InputManager.OnMoveInput += HandleMovementInput;
+        Tracker.OnTrackerUpdate += HandleTrackerUpdate;
     }
 
     private void HandleRequestRefresh()
@@ -47,23 +48,28 @@ public class AchievementManager : MonoBehaviour
             return;
 
         int delta = movementInput.y > 0 ? -1 : 1;
+        
+        // Round up to nearest multiple of 4
+        int achievementWrappingPoint = achievements.Count - achievements.Count % 4 + (achievements.Count % 4 == 0 ? 0 : 4);
 
         // Skip one row (equal to 4 achievements)
         selectedIndex += delta * 4;
-        selectedIndex = (selectedIndex % achievements.Count + achievements.Count) % achievements.Count;
+        selectedIndex = (selectedIndex % achievementWrappingPoint + achievementWrappingPoint) % achievementWrappingPoint;
 
         OnAchievementManagerUpdate?.Invoke(this);
     }
 
-    public void UnlockAchievement(Achievement achievement)
+    public void HandleTrackerUpdate(Tracker tracker)
     {
-        if (achievement.isUnlocked) return;
+        foreach (var achievement in achievements)
+        {
+            if (achievement.IsCompleted)
+                continue;
+            achievement.CheckCompletion(tracker);
+            if (achievement.IsCompleted)
+                OnAchievementUnlocked?.Invoke(achievement);
+        }
 
-        achievement.isUnlocked = true;
-        Debug.Log($"<color=green>Achievement Unlocked: {achievement.title}</color>");
-
-        OnAchievementUnlocked?.Invoke(achievement);
-        OnAchievementManagerUpdate?.Invoke(this);
     }
 
     public List<Achievement> GetAchievements()
@@ -76,27 +82,23 @@ public class AchievementManager : MonoBehaviour
         return selectedIndex;
     }
 
-    // TODO: maybe split into tracker again
-    private void HandleBlockBroken((BlockType, Vector2Int) brokenBlockInfo)
+    public string Dump()
     {
-        var (brokenBlock, _) = brokenBlockInfo;
+        StringBuilder sb = new StringBuilder();
 
-        foreach (var achievement in achievements)
+        sb.AppendLine("CompletionTime,Title,Description,Visible");
+
+        foreach (var achievement in achievements.Where(a => a.IsCompleted).OrderBy(a => a.completionTime))
         {
-            if (achievement.isUnlocked) continue;
-
-            if (achievement.group == "collect_material")
-            {
-                if (achievement.blockType == brokenBlock)
-                {
-                    achievement.currentProgress++;
-
-                    if (achievement.currentProgress >= achievement.numberOfBlocks)
-                    {
-                        UnlockAchievement(achievement);
-                    }
-                }
-            }
+            sb.AppendLine($"{achievement.completionTime.ToString("yyyy-MM-dd'T'HH-mm-ss")},{achievement.title},{achievement.GetDescription()},{achievement.visible}");
         }
+
+        foreach (var achievement in achievements.Where(a => !a.IsCompleted))
+        {
+            sb.AppendLine($"Not Completed,{achievement.title},{achievement.GetDescription()},{achievement.visible}");
+        }
+
+        Debug.Log($"Achievement data:\n{sb.ToString()}");
+        return sb.ToString();
     }
 }

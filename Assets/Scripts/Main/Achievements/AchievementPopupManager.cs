@@ -51,9 +51,6 @@ public class AchievementPopupManager : MonoBehaviour
             Debug.Log($"Processing: {currentAch.title}");
 
             titleText.text = currentAch.title;
-            BlockType type = currentAch.blockType;
-            string blockName = (type != null) ? type.displayName : "Unknown Block";
-
             iconImage.sprite = currentAch.icon;
 
             yield return StartCoroutine(FadePopup(0f, 1f));

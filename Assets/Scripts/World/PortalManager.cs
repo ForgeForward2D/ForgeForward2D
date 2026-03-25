@@ -6,12 +6,13 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PortalManager : MonoBehaviour
 {
-    public static event Action<Vector3> OnPlayerTeleport;
+    public static event Action<(Level, Vector3)> OnPlayerTeleport;
 
-    [SerializeField] private WorldGeneration worldGeneration;
+    private WorldGeneration worldGeneration;
     private Tilemap foregroundTilemap;
     private Level[] levels;
 
+    private Dictionary<Vector2Int, Level> portalLevels = new Dictionary<Vector2Int, Level>();
     private Dictionary<Vector2Int, Vector2Int> portalDestinations = new Dictionary<Vector2Int, Vector2Int>();
     private Vector2Int currentPortalTile;
     private Vector2Int portalEntered;
@@ -20,13 +21,14 @@ public class PortalManager : MonoBehaviour
     {
         Debug.Log("PortalManager: Start called");
 
+        worldGeneration = FindAnyObjectByType<WorldGeneration>();
         if (worldGeneration == null)
         {
             Debug.LogError("PortalManager: worldGeneration is not assigned!");
             return;
         }
 
-        levels = worldGeneration.levels;
+        levels = worldGeneration.Levels;
         foregroundTilemap = TileMapManager.Instance.ForegroundTilemap;
 
         // Link portals: levels sharing the same portalBlock are paired
@@ -48,6 +50,8 @@ public class PortalManager : MonoBehaviour
                 portalsByBlock[level.portalBlock] = new List<Vector2Int>();
             }
             portalsByBlock[level.portalBlock].Add(level.startingPoint);
+            portalLevels[level.startingPoint] = level;
+
 
             if (colliderPositions.Add(level.startingPoint))
             {
@@ -69,6 +73,7 @@ public class PortalManager : MonoBehaviour
             if (!portalsByBlock[blockType].Contains(pos))
             {
                 portalsByBlock[blockType].Add(pos);
+                portalLevels[pos] = null;
             }
 
             if (colliderPositions.Add(pos))
@@ -116,17 +121,13 @@ public class PortalManager : MonoBehaviour
             // player is already on a portal tile (probably just teleported here)
             return;
         }
-        Debug.Log($"Portal: player entered portal from {currentTile}");
         portalEntered = currentTile;
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
         if (!other.CompareTag("Player"))
-        {
-            Debug.Log($"Portal: stopped — collider is not tagged Player");
             return;
-        }
 
         Vector2Int tile = TileMapManager.Instance.PositionToCoordinate(other.transform.position);
         if (!IsAdjacent(portalEntered, tile) || (portalEntered.x == tile.x && portalEntered.y == tile.y))
@@ -137,7 +138,7 @@ public class PortalManager : MonoBehaviour
 
         if (portalTile == null)
         {
-            Debug.Log($"Portal: stopped — no portal tile at {tile}");
+            Debug.LogWarning($"Portal: stopped — no portal tile at {tile}");
             return;
         }
 
@@ -145,13 +146,21 @@ public class PortalManager : MonoBehaviour
         if (portalDestinations.TryGetValue(currentPortalTile, out Vector2Int destination))
         {
             Vector3 worldPos = foregroundTilemap.GetCellCenterWorld(new Vector3Int(destination.x, destination.y, 0));
-            OnPlayerTeleport?.Invoke(worldPos);
-            Debug.Log($"Portal: teleported player to {destination}");
+            if (portalLevels.TryGetValue(destination, out Level destinationLevel))
+            {
+                OnPlayerTeleport?.Invoke((destinationLevel, worldPos));
+                string levelName = destinationLevel == null ? "Base" : destinationLevel.levelName;
+                Debug.Log($"Portal: teleported player to {destination} in level {levelName}");
+            }
+            else
+            {
+                Debug.LogWarning($"Portal: teleported player to {destination} (no level found)");
+            }
             portalEntered = new Vector2Int(Int32.MinValue, Int32.MinValue);
         }
         else
         {
-            Debug.Log($"Portal: stopped — no destination mapped for tile {currentPortalTile}");
+            Debug.LogWarning($"Portal: stopped — no destination mapped for tile {currentPortalTile}");
         }
     }
 
@@ -159,8 +168,6 @@ public class PortalManager : MonoBehaviour
     {
         if (!other.CompareTag("Player"))
             return;
-
-        Debug.Log($"Portal: player exited portal at {currentPortalTile}");
         portalEntered = new Vector2Int(Int32.MinValue, Int32.MinValue);
     }
 
