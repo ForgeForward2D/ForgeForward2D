@@ -32,25 +32,46 @@
   text(
     fill: black.lighten(40%),
     size: text.size * 80%,
+  )[TODOs unitl Friday, 10.04.]
+}
+- write blog article Leon
+- implement mob-spwan logic: giving an NPC resources reduces mob spawn rate Sinan + Nils
+- implement NPC-interaction logic for communication Nils
+- finish fairy dialogues to round the game Sinan + Nils
+- analyze statistics and implement at least one of the findings Tim
+- levels:
+  - finish starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds todo
+  - limited vision Leon
+  - create more levels: mine, deep mine, end/stronghold/ the endboss's house Sinan
+  - design mob sprites (1 x hostile, 1 x villager/fairy) Sinan
+- #optional[adapt walk-animation speed to walk speed]
+- #optional[tool animations (3D tool designs) Sinan]
+
+#pagebreak(weak: true)
+= Next Steps
+#context {
+  text(
+    fill: black.lighten(40%),
+    size: text.size * 80%,
   )[TODOs unitl Friday, 27.03.]
 }
 - write blog article Leon
 - prepare presentation Tim
-- implement "mob steals resources" logic Tim + Leon
+- #strike[implement "mob steals resources" logic Tim + Leon]
 - implement mob-spwan logic: giving an NPC resources reduces mob spawn rate Sinan + Nils
-- implement "mob following player" logic -> pathfinding Leon
+- #strike[implement "mob following player" logic -> pathfinding Leon]
 - implement NPC-interaction logic for communication Nils
 - levels:
-  - add more achievements (maybe second type of achievements, e.g. craft 100 times) Tim
+  - #strike[add more achievements (maybe second type of achievements, e.g. craft 100 times) Tim]
   - #optional[design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds]
   - #optional[limited vision]
   - create more levels: mine, deep mine, end/stronghold/ the endboss's house Sinan (CCO)
-  - design sprites for portals, loot boxes Nils
+  - #strike[design sprites for portals, loot boxes Nils]
   - design mob sprites (1 x hostile, 1 x villager/fairy) Sinan
-- crafting recipe sorting Leon
-- anvil for tools Leon
-- implement game analytics Tim
-- publish game logic Tim
+- #strike[crafting recipe sorting Leon]
+- #strike[anvil for tools Leon]
+- #strike[implement game analytics Tim]
+- #strike[publish game logic Tim]
 - #optional[adapt walk-animation speed to walk speed]
 - #optional[tool animations]
 
