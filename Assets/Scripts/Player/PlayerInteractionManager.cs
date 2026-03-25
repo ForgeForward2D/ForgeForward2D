@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteractionManager : MonoBehaviour
 {
-    public static event Action<(UIPage, BlockType, Vector2Int)> OnInteraction;
+    public static event Action<(UIPage, BlockType, Vector2Int)> OnBlockInteraction;
 
     private static int npcLayerMask;
 
@@ -33,10 +33,14 @@ public class PlayerInteractionManager : MonoBehaviour
         if (npcHit != null)
         {
             NpcController npc = npcHit.GetComponent<NpcController>();
-            if (npc != null)
+            if (npc == null)
+            {
+                Debug.LogWarning("Hit an object on the NPC layer that doesn't have an NpcController component.");
+            }
+            else
             {
                 Debug.Log($"Triggering NPC interaction with {npc.GetDisplayName()}");
-                npc.RaiseInteraction(uiPage);
+                npc.HandleInteraction(uiPage);
                 return;
             }
         }
@@ -45,6 +49,6 @@ public class PlayerInteractionManager : MonoBehaviour
 
         Debug.Log($"Triggering interaction of {(blockType == null ? "Air" : blockType.displayName)}");
 
-        OnInteraction?.Invoke((uiPage, blockType, targetPos));
+        OnBlockInteraction?.Invoke((uiPage, blockType, targetPos));
     }
 }

@@ -5882,7 +5882,7 @@ MonoBehaviour:
   anvilBlockType: {fileID: 11400000, guid: c2c993a08e4954766863f78243af87e0, type: 2}
   achievementUI: {fileID: 5581477280228682724}
   dialogueUI: {fileID: 501272991}
-  activeNpc: {fileID: 0}
+  currentPage: 0
 --- !u!225 &8048600016208810261
 CanvasGroup:
   m_ObjectHideFlags: 0

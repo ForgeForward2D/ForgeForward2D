@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Debugging")]
     [SerializeField] private UIPage currentPage;
-    [SerializeField] private NpcController activeNpc;
 
     private InventoryManager _inventoryManager;
     private InventoryManager inventoryManager =>
@@ -23,9 +22,8 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         InputManager.OnUIChangeInput += ProcessNavigationRequest;
-        PlayerInteractionManager.OnInteraction += HandleInteraction;
-        NpcController.OnNpcInteraction += HandleNpcInteraction;
-        NpcController.OnNpcInteractionEnd += HandleNpcInteractionEnd;
+        PlayerInteractionManager.OnBlockInteraction += HandleInteraction;
+        NpcController.OnSetDialogueUIActive += HandleSetDialogueUIActive;
     }
 
     private void ProcessNavigationRequest(UIPage currentPage, UIPage requestedPage)
@@ -64,13 +62,6 @@ public class UIManager : MonoBehaviour
     {
         currentPage = page;
 
-        if (page != UIPage.Dialogue && activeNpc != null)
-        {
-            NpcController npc = activeNpc;
-            activeNpc = null;
-            npc.EndDialogue();
-        }
-
         resourceInventoryUI.SetActive(page == UIPage.Inventory);
         craftingTableUI.SetActive(page == UIPage.Crafting);
         achievementUI.SetActive(page == UIPage.Achievements);
@@ -103,21 +94,8 @@ public class UIManager : MonoBehaviour
         ProcessNavigationRequest(uiPage, UIPage.Crafting);
     }
 
-    private void HandleNpcInteraction((UIPage uiPage, NpcController npc) data)
+    private void HandleSetDialogueUIActive(bool isActive)
     {
-        if (data.uiPage != UIPage.None) return;
-        if (!data.npc.CanBeginDialogue()) return;
-
-        activeNpc = data.npc;
-        SetPage(UIPage.Dialogue);
-        data.npc.BeginDialogue();
-    }
-
-    private void HandleNpcInteractionEnd()
-    {
-        if (currentPage != UIPage.Dialogue) return;
-
-        activeNpc = null;
-        SetPage(UIPage.None);
+        ProcessNavigationRequest(currentPage, isActive ? UIPage.Dialogue : UIPage.None);
     }
 }

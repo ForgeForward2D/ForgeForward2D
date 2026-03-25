@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class NpcController : MonoBehaviour
 {
-    public static event Action<(UIPage, NpcController)> OnNpcInteraction;
-    public static event Action<DialogueState> OnNpcDialogueAdvance;
-    public static event Action OnNpcInteractionEnd;
+    public static event Action<bool> OnSetDialogueUIActive;
+    public static event Action<NpcController> OnNpcControllerUpdate;
 
     private const int CharsPerPage = 200;
 
@@ -16,7 +15,6 @@ public class NpcController : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int currentLineIndex;
-    [SerializeField] private bool inDialogue;
 
     private string[] pages;
 
@@ -28,16 +26,9 @@ public class NpcController : MonoBehaviour
 
         if (npcType != null)
             pages = BuildPages(npcType.dialogueLines);
-
-        InputManager.OnInteractionInput += HandleInteractionInput;
     }
 
-    private void OnDestroy()
-    {
-        InputManager.OnInteractionInput -= HandleInteractionInput;
-    }
-
-    private static string[] BuildPages(string[] lines)
+    private string[] BuildPages(string[] lines)
     {
         if (lines == null) return Array.Empty<string>();
 
@@ -65,15 +56,7 @@ public class NpcController : MonoBehaviour
         return result.ToArray();
     }
 
-    private void HandleInteractionInput(UIPage uiPage)
-    {
-        if (!inDialogue) return;
-        if (uiPage != UIPage.Dialogue) return;
-
-        AdvanceDialogue();
-    }
-
-    public bool CanBeginDialogue()
+    private bool CanBeginDialogue()
     {
         if (npcType == null)
         {
@@ -90,57 +73,37 @@ public class NpcController : MonoBehaviour
         return true;
     }
 
-    public void BeginDialogue()
+    public void HandleInteraction(UIPage uiPage)
     {
-        currentLineIndex = 0;
-        inDialogue = true;
-
-        Debug.Log($"Beginning dialogue with {npcType.displayName}");
-        OnNpcDialogueAdvance?.Invoke(BuildCurrentState());
-    }
-
-    private void AdvanceDialogue()
-    {
-        currentLineIndex++;
-
-        if (currentLineIndex >= pages.Length)
+        if (uiPage == UIPage.None)
         {
-            EndDialogue();
-            return;
+            // Not active
+            if (!CanBeginDialogue())
+            {
+                Debug.LogWarning($"Cannot begin dialogue with {GetDisplayName()}. Check previous warnings for details.");
+                return;
+            }
+            currentLineIndex = 0;
+            OnSetDialogueUIActive?.Invoke(true);
         }
-
-        Debug.Log($"Dialogue advancing to line {currentLineIndex}: {pages[currentLineIndex]}");
-        OnNpcDialogueAdvance?.Invoke(BuildCurrentState());
-    }
-
-    public void EndDialogue()
-    {
-        if (!inDialogue) return;
-
-        inDialogue = false;
-        currentLineIndex = 0;
-        Debug.Log($"Ending dialogue with {npcType.displayName}");
-        OnNpcInteractionEnd?.Invoke();
-    }
-
-    private DialogueState BuildCurrentState()
-    {
-        return new DialogueState(
-            npcType.displayName,
-            pages[currentLineIndex],
-            currentLineIndex,
-            pages.Length,
-            npcType.characterSprite
-        );
-    }
-
-    public void RaiseInteraction(UIPage uiPage)
-    {
-        OnNpcInteraction?.Invoke((uiPage, this));
+        else if (uiPage == UIPage.Dialogue)
+        {
+            currentLineIndex++;
+            if (currentLineIndex == pages.Length)
+            {
+                OnSetDialogueUIActive?.Invoke(false);
+                return;
+            }
+        }
+        OnNpcControllerUpdate?.Invoke(this); 
     }
 
     public string GetDisplayName()
     {
         return npcType != null ? npcType.displayName : gameObject.name;
     }
+    public string CurrentLine => pages != null && currentLineIndex < pages.Length ? pages[currentLineIndex] : string.Empty;
+    public int LineIndex => currentLineIndex;
+    public int TotalLines => pages != null ? pages.Length : 0;
+    public Sprite CharacterSprite => npcType != null ? npcType.characterSprite : null;
 }

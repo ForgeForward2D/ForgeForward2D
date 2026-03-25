@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueUI : UIComponent<DialogueState>
+public class DialogueUI : UIComponent<NpcController>
 {
     [Header("References")]
     [SerializeField] private TextMeshProUGUI npcNameText;
@@ -12,17 +12,17 @@ public class DialogueUI : UIComponent<DialogueState>
 
     public void OnEnable()
     {
-        NpcController.OnNpcDialogueAdvance += RefreshUI;
+        NpcController.OnNpcControllerUpdate += RefreshUI;
     }
 
     private void OnDisable()
     {
-        NpcController.OnNpcDialogueAdvance -= RefreshUI;
+        NpcController.OnNpcControllerUpdate -= RefreshUI;
     }
 
-    public override void RefreshUI(DialogueState state)
+    public override void RefreshUI(NpcController state)
     {
-        npcNameText.text = state.NpcName;
+        npcNameText.text = state.GetDisplayName();
         dialogueLineText.text = state.CurrentLine;
         progressText.text = $"{state.LineIndex + 1} / {state.TotalLines}";
         characterImage.sprite = state.CharacterSprite;
