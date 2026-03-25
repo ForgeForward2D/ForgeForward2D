@@ -16,6 +16,7 @@ MonoBehaviour:
   tile: {fileID: 11400000, guid: bfe5784f0f5f7418c9a9e1160d581e8f, type: 2}
   walkable: 0
   breakable: 1
+  interactable: 0
   hardness: 1
   respawnRate: 0
   replacementBlock: {fileID: 0}
@@ -31,9 +32,6 @@ MonoBehaviour:
   - itemType: {fileID: 11400000, guid: 0b2e6f9af4b464a95acd05be280cfcae, type: 2}
     amount: 1
     chance: 0.25
-  - itemType: {fileID: 0}
-    amount: 1
-    chance: 0.1
   - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
     amount: 1
     chance: 0.01

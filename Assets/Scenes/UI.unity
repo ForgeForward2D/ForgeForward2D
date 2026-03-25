@@ -5101,6 +5101,7 @@ MonoBehaviour:
   resourceInventoryUI: {fileID: 8096248128561484489}
   craftingTableUI: {fileID: 1866693337966000895}
   craftingTableBlockType: {fileID: 11400000, guid: 89f83da8992794179af136d4c2564c87, type: 2}
+  anvilBlockType: {fileID: 11400000, guid: c2c993a08e4954766863f78243af87e0, type: 2}
   achievementUI: {fileID: 5581477280228682724}
 --- !u!225 &8048600016208810261
 CanvasGroup:
