@@ -49,9 +49,11 @@ public class AchievementManager : MonoBehaviour
 
         int delta = movementInput.y > 0 ? -1 : 1;
 
+        int achievementWrappingPoint = achievements.Count + 4 - achievements.Count % 4; // Round up to nearest multiple of 4
+
         // Skip one row (equal to 4 achievements)
         selectedIndex += delta * 4;
-        selectedIndex = (selectedIndex % achievements.Count + achievements.Count) % achievements.Count;
+        selectedIndex = (selectedIndex % achievementWrappingPoint + achievementWrappingPoint) % achievementWrappingPoint;
 
         OnAchievementManagerUpdate?.Invoke(this);
     }
@@ -87,7 +89,7 @@ public class AchievementManager : MonoBehaviour
 
         foreach (var achievement in achievements.Where(a => a.IsCompleted).OrderBy(a => a.completionTime))
         {
-            sb.AppendLine($"{achievement.completionTime.ToString("yyyy-MM-dd_HH:mm:ss")},{achievement.title},{achievement.GetDescription()},{achievement.visible}");
+            sb.AppendLine($"{achievement.completionTime.ToString("yyyy-MM-dd'T'HH-mm-ss")},{achievement.title},{achievement.GetDescription()},{achievement.visible}");
         }
 
         foreach (var achievement in achievements.Where(a => !a.IsCompleted))

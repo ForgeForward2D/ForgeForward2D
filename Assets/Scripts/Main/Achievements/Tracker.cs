@@ -16,6 +16,7 @@ public class Tracker : MonoBehaviour
     [SerializeField] private SerializableDictionary<ItemType, int> itemsCollected;
     [SerializeField] private SerializableDictionary<CraftingRecipe, int> recipesCrafted;
     [SerializeField] private SerializableDictionary<Level, int> visitedLevels;
+    [SerializeField] private SerializableDictionary<UIPage, int> visitedUIs;
 
     private void Awake()
     {
@@ -26,7 +27,8 @@ public class Tracker : MonoBehaviour
         itemsCollected = new SerializableDictionary<ItemType, int>();
         recipesCrafted = new SerializableDictionary<CraftingRecipe, int>();
         visitedLevels = new SerializableDictionary<Level, int>();
-
+        visitedUIs = new SerializableDictionary<UIPage, int>();
+    
         PlayerInteractionManager.OnAttackUpdate += HandleAttackUpdate;
         PlayerInteractionManager.OnInteraction += HandleInteraction;
         BlockBreakingManager.OnBlockBroken += HandleBlockBroken;
@@ -34,6 +36,7 @@ public class Tracker : MonoBehaviour
         InventoryManager.OnItemCollected += HandleItemCollected;
         CraftingManager.OnRecipeCrafted += HandleRecipeCrafted;
         PortalManager.OnPlayerTeleport += HandlePlayerTeleport;
+        UIManager.OnUpdatePage += HandlePageUpdate;
     }
 
     private void HandleAttackUpdate((UIPage, BlockType, Vector2Int, bool) data)
@@ -120,6 +123,18 @@ public class Tracker : MonoBehaviour
         OnTrackerUpdate?.Invoke(this);
     }
 
+    private void HandlePageUpdate(UIPage page)
+    {
+        if (page == UIPage.None)
+            return;
+
+        if (visitedUIs.ContainsKey(page))
+            visitedUIs[page]++;
+        else
+            visitedUIs[page] = 1;
+        OnTrackerUpdate?.Invoke(this);
+    }
+
     public Dictionary<BlockType, int> GetBlockAttacks()
     {
         return blockAttacks;
@@ -180,6 +195,8 @@ public class Tracker : MonoBehaviour
             sb.AppendLine($"RecipesCrafted,{kvp.Key.result.itemType.displayName},{kvp.Value}");
         foreach (var kvp in visitedLevels)
             sb.AppendLine($"VisitedLevel,{kvp.Key.levelName},{kvp.Value}");
+        foreach (var kvp in visitedUIs)
+            sb.AppendLine($"VisitedUI,{kvp.Key},{kvp.Value}");
 
         return sb.ToString();
     }

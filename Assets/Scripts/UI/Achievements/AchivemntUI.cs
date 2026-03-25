@@ -26,12 +26,25 @@ public class AchievementUI : UIComponent<AchievementManager>
         int selectedIndex = achievementManager.GetSelectedIndex();
         int childIndex = 0;
 
-        for (int i = 0; i < achievements.Count; i++)
+        int achievementWrappingPoint = achievements.Count + 4 - achievements.Count % 4; // Round up to nearest multiple of 4
+
+        for (int i = 0; i < achievementWrappingPoint; i++)
         {
             if (childIndex >= children.Count)
                 break;
 
-            Achievement achievement = achievements[(selectedIndex + i) % achievements.Count];
+            int achievementIndex = (selectedIndex + i) % achievementWrappingPoint;
+
+            if (achievementIndex >= achievements.Count)
+            {
+                children[childIndex].SetActive(true);
+                children[childIndex].RefreshUIDynamic(null);
+                childIndex++;
+                continue;
+            }
+
+            Achievement achievement = achievements[achievementIndex];
+
             if (!achievement.visible)
                 continue;
 

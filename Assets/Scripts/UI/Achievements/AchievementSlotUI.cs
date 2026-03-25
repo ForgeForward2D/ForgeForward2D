@@ -16,9 +16,20 @@ public class AchievementSlotUI : UIComponent<Achievement>
 
     public override void RefreshUI(Achievement achievement)
     {
+        if (achievement == null)
+        {
+            titleText.text = "";
+            descriptionText.text = "";
+            iconImage.sprite = null;
+            iconImage.color = new Color(1f, 1f, 1f, 0f);
+            background.color = lockedColor;
+            return;
+        }
+
         titleText.text = achievement.title;
         descriptionText.text = achievement.GetDescription();
         iconImage.sprite = achievement.icon;
+        iconImage.color = Color.white;
         background.color = achievement.IsCompleted ? unlockedColor : lockedColor;
     }
 }

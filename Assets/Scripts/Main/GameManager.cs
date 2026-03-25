@@ -6,8 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private Tracker tracker;
+    private AchievementManager achievementManager;
+    
     void Start()
     {
+        tracker = GetComponent<Tracker>();
+        if (tracker == null)
+        {
+            Debug.LogWarning("No Tracker component found on GameManager, tracking data will not be saved.");
+        }
+
+        achievementManager = GetComponent<AchievementManager>();
+        if (achievementManager == null)
+        {
+            Debug.LogWarning("No AchievementManager component found on GameManager, achievements will not be tracked.");
+        }
+
         LoadSceneIfNotLoaded("World");
         LoadSceneIfNotLoaded("Player");
         LoadSceneIfNotLoaded("UI");
@@ -30,23 +45,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Application ending after " + Time.time + " seconds");
 
-        Tracker tracker = GetComponent<Tracker>();
-        if (tracker == null)
-        {
-            Debug.LogWarning("No Tracker component found on GameManager, skipping data dump.");
-            return;
-        }
-        AchievementManager achievementManager = GetComponent<AchievementManager>();
-        if (achievementManager == null)
-        {
-            Debug.LogWarning("No AchievementManager component found on GameManager, skipping data dump.");
-            return;
-        }
 
-        string trackerContent = tracker.Dump();
-        string achievementContent = achievementManager.Dump();
+        string trackerContent = tracker == null ? "No Data found" : tracker.Dump();
+        string achievementContent = achievementManager == null ? "No Data found" : achievementManager.Dump();
 
-        string currentTimeString = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        string currentTimeString = DateTime.Now.ToString("yyyy-MM-dd'T'HH-mm-ss");
 
         TryWrite(Application.dataPath, currentTimeString, "tracking_data.csv", trackerContent);
         TryWrite(Application.persistentDataPath, currentTimeString, "tracking_data.csv", trackerContent);
@@ -61,11 +64,11 @@ public class GameManager : MonoBehaviour
         {
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             File.WriteAllText(filePath, data);
-            Debug.Log($"Tracker data saved to {filePath}");
+            Debug.Log($"Data saved to {filePath}");
         }
         catch (Exception e)
         {
-            Debug.LogWarning($"Failed writing tracker data to {filePath} : {e}");
+            Debug.LogWarning($"Failed writing data to {filePath} : {e}");
         }
     }
 }

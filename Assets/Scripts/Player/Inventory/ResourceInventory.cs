@@ -84,11 +84,6 @@ public class ResourceInventory : InventoryComponent<ItemType>
         {
             if (drop.chance == 1f || UnityEngine.Random.value <= drop.chance)
             {
-                if (drop.itemType == null)
-                {
-                    Debug.LogWarning($"Null item type in loot drop for block {data.type.displayName}");
-                    continue;
-                }
                 AddItemOfType(drop.itemType, drop.amount);
             }
         }
