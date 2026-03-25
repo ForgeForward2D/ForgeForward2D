@@ -117,7 +117,6 @@ public class PortalManager : MonoBehaviour
             // player is already on a portal tile (probably just teleported here)
             return;
         }
-        Debug.Log($"Portal: player entered portal from {currentTile}");
         portalEntered = currentTile;
     }
 
@@ -135,7 +134,7 @@ public class PortalManager : MonoBehaviour
 
         if (portalTile == null)
         {
-            Debug.Log($"Portal: stopped — no portal tile at {tile}");
+            Debug.LogWarning($"Portal: stopped — no portal tile at {tile}");
             return;
         }
 
@@ -149,7 +148,7 @@ public class PortalManager : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Portal: stopped — no destination mapped for tile {currentPortalTile}");
+            Debug.LogWarning($"Portal: stopped — no destination mapped for tile {currentPortalTile}");
         }
     }
 
@@ -157,8 +156,6 @@ public class PortalManager : MonoBehaviour
     {
         if (!other.CompareTag("Player"))
             return;
-
-        Debug.Log($"Portal: player exited portal at {currentPortalTile}");
         portalEntered = new Vector2Int(Int32.MinValue, Int32.MinValue);
     }
 
