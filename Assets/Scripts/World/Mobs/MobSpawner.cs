@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class MobSpawner : MonoBehaviour
 {
-    private static readonly Collider2D[] OccupancyResults = new Collider2D[8];
-    private static readonly ContactFilter2D OccupancyContactFilter = new ContactFilter2D();
+    private static Collider2D[] OccupancyResults = new Collider2D[8];
+    private static ContactFilter2D OccupancyContactFilter = new ContactFilter2D();
 
     [Header("Spawn Setup")]
     [SerializeField] private List<MobType> mobTypes = new();
