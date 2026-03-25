@@ -41,9 +41,9 @@ public class Tracker : MonoBehaviour
 
     private void HandleAttackUpdate((UIPage, BlockType, Vector2Int, bool) data)
     {
-        var (uiPage, blockType, targetPos, attackStatus) = data;
+        var (uiPage, blockType, targetPos, isAttacking) = data;
 
-        if (!attackStatus)
+        if (!isAttacking)
             return;
 
         if (blockType == null)

@@ -23,14 +23,14 @@ public class PlayerInteractionManager : MonoBehaviour
 
     public void HandleAttackUpdate((UIPage, bool) data)
     {
-        var (uiPage, attackStatus) = data;
+        var (uiPage, isAttacking) = data;
 
         Vector3 player3DPosition = playerTransform.position;
         Vector2Int playerPosition = TileMapManager.Instance.PositionToCoordinate(player3DPosition);
         Vector2Int targetPos = playerPosition + movementManager.GetMoveDirection();
         BlockType blockType = TileMapManager.Instance.GetBlockTypeAtPosition(targetPos);
 
-        OnAttackUpdate?.Invoke((uiPage, blockType, targetPos, attackStatus));
+        OnAttackUpdate?.Invoke((uiPage, blockType, targetPos, isAttacking));
     }
 
 
