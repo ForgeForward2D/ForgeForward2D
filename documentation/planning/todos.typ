@@ -35,6 +35,7 @@
   )[TODOs unitl Friday, 10.04.]
 }
 - write blog article Leon
+- implement tracker for mob-stealing Tim
 - implement mob-spwan logic: giving an NPC resources reduces mob spawn rate Sinan + Nils
 - implement NPC-interaction logic for communication Nils
 - finish fairy dialogues to round the game Sinan + Nils
