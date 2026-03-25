@@ -18,7 +18,7 @@ public class MobController : MonoBehaviour
     [SerializeField] private MobState currentState;
     [SerializeField] private float stateTimer;
 
-    private static readonly Vector2[] WanderDirections =
+    private static Vector2[] WanderDirections =
     {
         Vector2.up,
         Vector2.right,

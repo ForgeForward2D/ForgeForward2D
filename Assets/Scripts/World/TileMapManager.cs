@@ -21,9 +21,9 @@ public class TileMapManager : MonoBehaviour
 
     public static Action<(BlockType, Vector2Int)> OnBlockChanged;
 
-    private readonly HashSet<Vector2Int> registeredPositions = new();
-    private readonly HashSet<Vector2Int> spawnablePositions = new();
-    private readonly Dictionary<Level, HashSet<Vector2Int>> levelPositions = new();
+    private HashSet<Vector2Int> registeredPositions = new();
+    private HashSet<Vector2Int> spawnablePositions = new();
+    private Dictionary<Level, HashSet<Vector2Int>> levelPositions = new();
 
     public void RegisterSpawnablePositions(IEnumerable<Vector2Int> positions, Level level)
     {
