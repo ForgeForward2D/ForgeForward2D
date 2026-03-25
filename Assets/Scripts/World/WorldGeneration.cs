@@ -22,13 +22,14 @@ public class WorldGeneration : MonoBehaviour
 
     [SerializeField] int worldSeed;
 
-    [SerializeField] public Level[] levels;
+    public Level[] Levels { get; private set; }
     [SerializeField] private MobSpawner mobSpawner;
 
     private int paddingThickness;
 
     void Start()
     {
+        Levels = Resources.LoadAll<Level>("Levels");
         if (worldSeed == 0)
         {
             worldSeed = System.Environment.TickCount;
@@ -78,7 +79,6 @@ public class WorldGeneration : MonoBehaviour
             {
                 bool outsideWall = x < mapBounds.xMin - 1 || x > mapBounds.xMax
                                 || y < mapBounds.yMin - 1 || y > mapBounds.yMax;
-                Debug.Log($"{x}, {y}: {outsideWall}");
                 if (outsideWall)
                 {
                     backgroundTilemap.SetTile(new Vector3Int(x, y, 0), paddingBlock.tile);
@@ -86,7 +86,7 @@ public class WorldGeneration : MonoBehaviour
             }
         }
 
-        foreach (var level in levels)
+        foreach (var level in Levels)
         {
             GenerateLevel(level);
         }

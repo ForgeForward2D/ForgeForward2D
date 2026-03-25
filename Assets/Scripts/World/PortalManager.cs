@@ -8,7 +8,7 @@ public class PortalManager : MonoBehaviour
 {
     public static event Action<Vector3> OnPlayerTeleport;
 
-    [SerializeField] private WorldGeneration worldGeneration;
+    private WorldGeneration worldGeneration;
     private Tilemap foregroundTilemap;
     private Level[] levels;
 
@@ -20,13 +20,14 @@ public class PortalManager : MonoBehaviour
     {
         Debug.Log("PortalManager: Start called");
 
+        worldGeneration = FindAnyObjectByType<WorldGeneration>();
         if (worldGeneration == null)
         {
             Debug.LogError("PortalManager: worldGeneration is not assigned!");
             return;
         }
 
-        levels = worldGeneration.levels;
+        levels = worldGeneration.Levels;
         foregroundTilemap = TileMapManager.Instance.ForegroundTilemap;
 
         // Link portals: levels sharing the same portalBlock are paired

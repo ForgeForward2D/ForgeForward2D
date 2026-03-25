@@ -180,6 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldGeneration
   backgroundTile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
   wallBlock: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
+  paddingBlock: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
   noiseScale: 0.15
   portalClearRadius: 3
   borderWaves: 20

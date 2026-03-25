@@ -10,14 +10,12 @@ public class MobSpawner : MonoBehaviour
 
     [SerializeField] private bool spawnOnStart = true;
     [SerializeField] private bool clearExistingMobsBeforeSpawn = true;
-    [SerializeField] private int startupSpawnWaitFrames = 5;
-
     private Level[] levels;
     private bool ready = false;
 
     public void SetReady()
     {
-        this.levels = GetComponent<WorldGeneration>().Levels;
+        this.levels = FindAnyObjectByType<WorldGeneration>().Levels;
         this.ready = true;
     }
 
@@ -31,7 +29,7 @@ public class MobSpawner : MonoBehaviour
 
     private IEnumerator SpawnWhenReady()
     {
-        for (int frame = 0; frame < startupSpawnWaitFrames && ready; frame++)
+        while (!ready)
         {
             yield return null;
         }
