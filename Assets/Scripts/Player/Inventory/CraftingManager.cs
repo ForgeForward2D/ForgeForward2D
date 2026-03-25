@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [Serializable]
 public class CraftingManager
 {
-    public static event Action<CraftingManager> OnCraftingManagerUpdate;
+    public event Action<CraftingManager> OnCraftingManagerUpdate;
     public static event Action<CraftingRecipe> OnRecipeCrafted;
 
     [SerializeField] private InventoryManager inventoryManager;

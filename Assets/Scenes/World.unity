@@ -181,7 +181,7 @@ MonoBehaviour:
   baseWallBlock: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
   basePaddingBlock: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
   noiseScale: 0.15
-  portalClearRadius: 2
+  portalClearRadius: 3
   borderWaves: 20
   borderWidth: 0.6
   worldSeed: 23692137
