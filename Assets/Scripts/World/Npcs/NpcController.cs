@@ -7,6 +7,7 @@ public class NpcController : MonoBehaviour
     public static event Action<bool> OnSetDialogueUIActive;
     public static event Action<NpcController> OnNpcControllerUpdate;
 
+    [Header("Settings")]
     private const int CharsPerPage = 200;
 
     [Header("Reference")]
@@ -95,7 +96,7 @@ public class NpcController : MonoBehaviour
                 return;
             }
         }
-        OnNpcControllerUpdate?.Invoke(this); 
+        OnNpcControllerUpdate?.Invoke(this);
     }
 
     public string GetDisplayName()

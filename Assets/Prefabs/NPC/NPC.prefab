@@ -105,10 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2620f34cc1b638043869b73b304d0d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NpcController
-  npcType: {fileID: 11400000, guid: 1bc3c4893a092274d82fe3942381fdde, type: 2}
+  npcType: {fileID: 0}
   spriteRenderer: {fileID: 0}
   currentLineIndex: 0
-  inDialogue: 0
 --- !u!61 &1918065460411583559
 BoxCollider2D:
   m_ObjectHideFlags: 0
