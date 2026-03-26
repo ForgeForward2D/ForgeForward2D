@@ -23,6 +23,12 @@ public class NpcController : MonoBehaviour
     [SerializeField] public bool reduceSpawn = false;
     [SerializeField] public int swordLevel = 0;
 
+    [Header("Dialogue Templates")]
+    [SerializeField] private string giveSwordDialogue = "Thanks for the {0}! I'll use it to keep the monsters at bay. Mob spawns are now reduced by {1}%!";
+    [SerializeField] private string sameSwordDialogue = "I already have a {0}, but thanks anyway!";
+    [SerializeField] private string worseSwordDialogue = "My current sword is much better than that {0}!";
+    [SerializeField] private string reduceSpawnReminderDialogue = "Like I said before, mob spawns are currently reduced by {0}%!";
+
     public void GiveSword(Tool tool)
     {
         if (tool == null || tool.type != ToolType.Sword) return;
@@ -32,7 +38,8 @@ public class NpcController : MonoBehaviour
         Debug.Log($"Gave sword of tier {tool.tier} to NPC {GetDisplayName()}");
 
         int reductionPercentage = swordLevel * 20;
-        pages = BuildPages(new string[] { $"Thanks for the {tool.displayName}! I'll use it to keep the monsters at bay. Mob spawns are now reduced by {reductionPercentage}%!" });
+        string message = string.Format(giveSwordDialogue, tool.displayName, reductionPercentage);
+        pages = BuildPages(new string[] { message });
         currentLineIndex = 0;
     }
 
@@ -46,17 +53,17 @@ public class NpcController : MonoBehaviour
 
         if ((int)tool.tier == swordLevel)
         {
-            lines.Add($"I already have a {tool.displayName}, but thanks anyway!");
+            lines.Add(string.Format(sameSwordDialogue, tool.displayName));
         }
         else
         {
-            lines.Add($"My current sword is much better than that {tool.displayName}!");
+            lines.Add(string.Format(worseSwordDialogue, tool.displayName));
         }
 
         if (reduceSpawn)
         {
             int reductionPercentage = swordLevel * 20;
-            lines.Add($"Like I said before, mob spawns are currently reduced by {reductionPercentage}%!");
+            lines.Add(string.Format(reduceSpawnReminderDialogue, reductionPercentage));
         }
         else if (npcType != null && npcType.dialogueLines != null)
         {
