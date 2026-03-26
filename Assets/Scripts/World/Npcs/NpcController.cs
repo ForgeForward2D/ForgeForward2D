@@ -19,6 +19,22 @@ public class NpcController : MonoBehaviour
 
     private string[] pages;
 
+    [Header("Mob Spawn Control")]
+    [SerializeField] public bool reduceSpawn = false;
+    [SerializeField] public int swordLevel = 0;
+
+    public void GiveSword(Tool tool)
+    {
+        if (tool == null || tool.type != ToolType.Sword) return;
+
+        swordLevel = (int)tool.tier;
+        reduceSpawn = true;
+        Debug.Log($"Gave sword of tier {tool.tier} to NPC {GetDisplayName()}");
+
+        int reductionPercentage = swordLevel * 20;
+        pages = BuildPages(new string[] { $"Thanks for the {tool.displayName}! I'll use it to keep the monsters at bay. Mob spawns are now reduced by {reductionPercentage}%!" });
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();

@@ -55,6 +55,22 @@ public class PlayerInteractionManager : MonoBehaviour
             else
             {
                 Debug.Log($"Triggering NPC interaction with {npc.GetDisplayName()}");
+                InventoryManager inventoryManager = GetComponent<InventoryManager>();
+                if (inventoryManager != null)
+                {
+                    Tool selectedTool = inventoryManager.hotBar.GetSelectedTool();
+                    if (selectedTool != null && selectedTool.type == ToolType.Sword)
+                    {
+                        npc.GiveSword(selectedTool);
+                        inventoryManager.RemoveItemOfType(selectedTool, 1);
+
+                        MobSpawner spawner = FindAnyObjectByType<MobSpawner>();
+                        if (spawner != null)
+                        {
+                            spawner.SpawnMobs();
+                        }
+                    }
+                }
                 npc.HandleInteraction(uiPage);
                 return;
             }
