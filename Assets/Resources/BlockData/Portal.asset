@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Portal
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Portal
-  tile: {fileID: 11400000, guid: 5afbc7f51caaf4d3ab5d18ba413424a3, type: 2}
+  tile: {fileID: 11400000, guid: 0045185480e435643a927b4726f0edc9, type: 2}
   walkable: 0
   breakable: 0
+  interactable: 0
   hardness: 0
   respawnRate: 0
   replacementBlock: {fileID: 0}
