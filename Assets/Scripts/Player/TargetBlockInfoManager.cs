@@ -5,16 +5,20 @@ public class TargetBlockInfoManager : MonoBehaviour
 {
     public static event Action<TargetBlockInfoManager> OnBlockInfoUpdate;
 
+    private static int npcLayerMask;
+
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
     [SerializeField] private Tool currentTool;
     [SerializeField] private BlockType currentBlock;
+    [SerializeField] private NpcController currentNpc;
 
     private bool isPageOpen;
 
     private void Awake()
     {
         movementManager = GetComponent<MovementManager>();
+        npcLayerMask = LayerMask.GetMask("NPC");
         HotBar.OnHotBarUpdate += HandleHotBarUpdate;
         UIManager.OnUpdatePage += HandleUpdatePage;
         MovementManager.OnTargetPositionChanged += HandleTargetPositionChanged;
@@ -34,6 +38,7 @@ public class TargetBlockInfoManager : MonoBehaviour
         {
             OnBlockInfoUpdate?.Invoke(null);
             currentBlock = null;
+            currentNpc = null;
         }
     }
 
@@ -52,14 +57,27 @@ public class TargetBlockInfoManager : MonoBehaviour
     {
         if (isPageOpen) return;
 
-        currentBlock = TileMapManager.Instance.GetBlockTypeAtPosition(movementManager.GetTargetPosition());
-        bool hasAction = currentBlock != null && (currentBlock.breakable || currentBlock.interactable);
+        Vector2Int targetPos = movementManager.GetTargetPosition();
+        Vector3 targetWorldPos = TileMapManager.Instance.CoordinateToPosition(targetPos);
+
+        Collider2D npcHit = Physics2D.OverlapPoint(targetWorldPos, npcLayerMask);
+        currentNpc = npcHit != null ? npcHit.GetComponent<NpcController>() : null;
+
+        currentBlock = currentNpc == null
+            ? TileMapManager.Instance.GetBlockTypeAtPosition(targetPos)
+            : null;
+
+        bool hasAction = currentNpc != null || (currentBlock != null && (currentBlock.breakable || currentBlock.interactable));
         OnBlockInfoUpdate?.Invoke(hasAction ? this : null);
     }
 
     public BlockType GetTargetBlock()
     {
         return currentBlock;
+    }
+    public NpcController GetTargetNpc()
+    {
+        return currentNpc;
     }
 
     public bool CanBreakWithCurrentTool(BlockType block)

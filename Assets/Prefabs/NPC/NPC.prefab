@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8271861676557159628}
   - component: {fileID: 7488516743591794821}
   - component: {fileID: 5037605978683415930}
-  - component: {fileID: 1918065460411583559}
+  - component: {fileID: 9195869746649179692}
   m_Layer: 6
   m_Name: NPC
   m_TagString: Untagged
@@ -108,8 +108,8 @@ MonoBehaviour:
   npcType: {fileID: 0}
   spriteRenderer: {fileID: 0}
   currentLineIndex: 0
---- !u!61 &1918065460411583559
-BoxCollider2D:
+--- !u!70 &9195869746649179692
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -143,14 +143,5 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Direction: 0

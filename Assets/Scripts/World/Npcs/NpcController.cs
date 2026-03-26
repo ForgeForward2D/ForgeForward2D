@@ -99,6 +99,25 @@ public class NpcController : MonoBehaviour
         OnNpcControllerUpdate?.Invoke(this);
     }
 
+    public void HandleDialogueNavigate(int direction)
+    {
+        if (direction > 0)
+        {
+            currentLineIndex++;
+            if (currentLineIndex == pages.Length)
+            {
+                OnSetDialogueUIActive?.Invoke(false);
+                return;
+            }
+        }
+        else
+        {
+            if (currentLineIndex == 0) return;
+            currentLineIndex--;
+        }
+        OnNpcControllerUpdate?.Invoke(this);
+    }
+
     public string GetDisplayName()
     {
         return npcType != null ? npcType.displayName : gameObject.name;
