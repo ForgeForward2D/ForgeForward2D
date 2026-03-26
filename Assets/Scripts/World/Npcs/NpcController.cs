@@ -113,7 +113,7 @@ public class NpcController : MonoBehaviour
             isDialogueActive = true;
             OnSetDialogueUIActive?.Invoke(true);
         }
-        else if (uiPage == UIPage.Dialogue)
+        else if (uiPage == UIPage.Dialogue && isDialogueActive)
         {
             HandleDialogueNavigate(1);
             return;
