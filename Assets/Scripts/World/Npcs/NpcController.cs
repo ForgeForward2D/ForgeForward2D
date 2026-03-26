@@ -31,6 +31,13 @@ public class NpcController : MonoBehaviour
 
         InputManager.OnMoveInput += HandleMoveInput;
         InputManager.OnAttackUpdate += HandleAttackUpdate;
+        UIManager.OnUpdatePage += HandleUpdatePage;
+    }
+
+    private void HandleUpdatePage(UIPage page)
+    {
+        if (page != UIPage.Dialogue)
+            isDialogueActive = false;
     }
 
     private void HandleAttackUpdate((UIPage uiPage, bool isAttacking) data)
@@ -108,13 +115,8 @@ public class NpcController : MonoBehaviour
         }
         else if (uiPage == UIPage.Dialogue)
         {
-            currentLineIndex++;
-            if (currentLineIndex == pages.Length)
-            {
-                isDialogueActive = false;
-                OnSetDialogueUIActive?.Invoke(false);
-                return;
-            }
+            HandleDialogueNavigate(1);
+            return;
         }
         OnNpcControllerUpdate?.Invoke(this);
     }
