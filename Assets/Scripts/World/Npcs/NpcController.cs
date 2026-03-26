@@ -18,6 +18,7 @@ public class NpcController : MonoBehaviour
     [SerializeField] private int currentLineIndex;
 
     private string[] pages;
+    private bool isDialogueActive;
 
     [Header("Mob Spawn Control")]
     [SerializeField] public bool reduceSpawn = false;
@@ -82,6 +83,31 @@ public class NpcController : MonoBehaviour
 
         if (npcType != null)
             pages = BuildPages(npcType.dialogueLines);
+
+        InputManager.OnMoveInput += HandleMoveInput;
+        InputManager.OnAttackUpdate += HandleAttackUpdate;
+        UIManager.OnUpdatePage += HandleUpdatePage;
+    }
+
+    private void HandleUpdatePage(UIPage page)
+    {
+        if (page != UIPage.Dialogue)
+            isDialogueActive = false;
+    }
+
+    private void HandleAttackUpdate((UIPage uiPage, bool isAttacking) data)
+    {
+        if (!isDialogueActive || !data.isAttacking) return;
+        HandleDialogueNavigate(-1);
+    }
+
+    private void HandleMoveInput((UIPage uiPage, bool performed, Vector2 input) data)
+    {
+        if (!isDialogueActive || !data.performed) return;
+        if (data.input.y == 0) return;
+
+        if (data.input.y > 0f) HandleDialogueNavigate(1);
+        else HandleDialogueNavigate(-1);
     }
 
     private string[] BuildPages(string[] lines)
@@ -133,23 +159,44 @@ public class NpcController : MonoBehaviour
     {
         if (uiPage == UIPage.None)
         {
-            // Not active
             if (!CanBeginDialogue())
             {
                 Debug.LogWarning($"Cannot begin dialogue with {GetDisplayName()}. Check previous warnings for details.");
                 return;
             }
             currentLineIndex = 0;
+            isDialogueActive = true;
             OnSetDialogueUIActive?.Invoke(true);
         }
-        else if (uiPage == UIPage.Dialogue)
+        else if (uiPage == UIPage.Dialogue && isDialogueActive)
+        {
+            HandleDialogueNavigate(1);
+            return;
+        }
+        OnNpcControllerUpdate?.Invoke(this);
+    }
+
+    public void HandleDialogueNavigate(int direction)
+    {
+        if (direction > 0)
         {
             currentLineIndex++;
             if (currentLineIndex == pages.Length)
             {
+                isDialogueActive = false;
                 OnSetDialogueUIActive?.Invoke(false);
                 return;
             }
+        }
+        else
+        {
+            if (currentLineIndex == 0)
+            {
+                isDialogueActive = false;
+                OnSetDialogueUIActive?.Invoke(false);
+                return;
+            }
+            currentLineIndex--;
         }
         OnNpcControllerUpdate?.Invoke(this);
     }
