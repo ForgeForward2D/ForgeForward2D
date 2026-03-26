@@ -5,7 +5,7 @@ public class TargetBlockInfoManager : MonoBehaviour
 {
     public static event Action<TargetBlockInfoManager> OnBlockInfoUpdate;
 
-    private static int npcLayerMask;
+    private int npcLayerMask;
 
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
@@ -75,6 +75,7 @@ public class TargetBlockInfoManager : MonoBehaviour
     {
         return currentBlock;
     }
+
     public NpcController GetTargetNpc()
     {
         return currentNpc;

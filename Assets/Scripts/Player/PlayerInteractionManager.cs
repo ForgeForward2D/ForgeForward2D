@@ -8,7 +8,7 @@ public class PlayerInteractionManager : MonoBehaviour
     public static event Action<(UIPage, BlockType, Vector2Int, bool)> OnAttackUpdate;
     public static event Action<(UIPage, BlockType, Vector2Int)> OnBlockInteraction;
 
-    private static int npcLayerMask;
+    private int npcLayerMask;
 
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;

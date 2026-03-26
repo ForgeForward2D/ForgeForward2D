@@ -135,7 +135,12 @@ public class NpcController : MonoBehaviour
         }
         else
         {
-            if (currentLineIndex == 0) return;
+            if (currentLineIndex == 0)
+            {
+                isDialogueActive = false;
+                OnSetDialogueUIActive?.Invoke(false);
+                return;
+            }
             currentLineIndex--;
         }
         OnNpcControllerUpdate?.Invoke(this);
