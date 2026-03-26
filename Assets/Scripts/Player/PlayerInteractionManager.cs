@@ -95,9 +95,12 @@ public class PlayerInteractionManager : MonoBehaviour
         Vector2Int pos = targetPos ?? TileMapManager.Instance.PositionToCoordinate(playerTransform.position) + movementManager.GetMoveDirection();
         Vector3 worldPos = TileMapManager.Instance.CoordinateToPosition(pos);
         Collider2D hit = Physics2D.OverlapPoint(worldPos, npcLayerMask);
-        if (hit == null) return null;
-        NpcController npc = hit.GetComponent<NpcController>();
-        if (npc == null) Debug.LogWarning("Hit an object on the NPC layer that doesn't have an NpcController component.");
-        return npc;
+        if (hit != null)
+        {
+            NpcController npc = hit.GetComponent<NpcController>();
+            if (npc == null) Debug.LogWarning("Hit an object on the NPC layer that doesn't have an NpcController component.");
+            return npc;
+        }
+        return null;
     }
 }
