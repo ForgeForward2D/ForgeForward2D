@@ -8,7 +8,7 @@ public class PlayerInteractionManager : MonoBehaviour
     public static event Action<(UIPage, BlockType, Vector2Int, bool)> OnAttackUpdate;
     public static event Action<(UIPage, BlockType, Vector2Int)> OnBlockInteraction;
 
-    private static int npcLayerMask;
+    private int npcLayerMask;
 
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
@@ -54,7 +54,8 @@ public class PlayerInteractionManager : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Triggering NPC interaction with {npc.GetDisplayName()}");
+                if (uiPage == UIPage.None)
+                    Debug.Log($"Triggering NPC interaction with {npc.GetDisplayName()}");
                 npc.HandleInteraction(uiPage);
                 return;
             }
@@ -66,4 +67,5 @@ public class PlayerInteractionManager : MonoBehaviour
 
         OnBlockInteraction?.Invoke((uiPage, blockType, targetPos));
     }
+
 }
