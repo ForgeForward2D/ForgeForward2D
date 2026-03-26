@@ -13,11 +13,15 @@ public class PlayerInteractionManager : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private InventoryManager inventoryManager;
+
 
     public void Awake()
     {
         movementManager = GetComponent<MovementManager>();
         playerTransform = GetComponent<Transform>();
+        inventoryManager = GetComponent<InventoryManager>();
+
         npcLayerMask = LayerMask.GetMask("NPC");
 
         InputManager.OnAttackUpdate += HandleAttackUpdate;
@@ -55,19 +59,28 @@ public class PlayerInteractionManager : MonoBehaviour
             else
             {
                 Debug.Log($"Triggering NPC interaction with {npc.GetDisplayName()}");
-                InventoryManager inventoryManager = GetComponent<InventoryManager>();
-                if (inventoryManager != null)
+                if (inventoryManager != null && uiPage == UIPage.None)
                 {
                     Tool selectedTool = inventoryManager.hotBar.GetSelectedTool();
                     if (selectedTool != null && selectedTool.type == ToolType.Sword)
                     {
-                        npc.GiveSword(selectedTool);
-                        inventoryManager.RemoveItemOfType(selectedTool, 1);
-
-                        MobSpawner spawner = FindAnyObjectByType<MobSpawner>();
-                        if (spawner != null)
+                        if ((int)selectedTool.tier > npc.swordLevel)
                         {
-                            spawner.SpawnMobs();
+                            npc.GiveSword(selectedTool);
+                            inventoryManager.RemoveItemOfType(selectedTool, 1);
+                            MobSpawner spawner = FindAnyObjectByType<MobSpawner>();
+
+                            if (spawner != null)
+                            {
+                                spawner.SpawnMobs();
+                            }
+                            else {
+                                Debug.LogError($"No MobSpawner found in the scene. Make sure there is a MobSpawner component in the scene for mob spawn reduction to work.");
+                            }
+                        }
+                        else
+                        {
+                            npc.RejectSword(selectedTool);
                         }
                     }
                 }

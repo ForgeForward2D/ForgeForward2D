@@ -33,6 +33,38 @@ public class NpcController : MonoBehaviour
 
         int reductionPercentage = swordLevel * 20;
         pages = BuildPages(new string[] { $"Thanks for the {tool.displayName}! I'll use it to keep the monsters at bay. Mob spawns are now reduced by {reductionPercentage}%!" });
+        currentLineIndex = 0;
+    }
+
+    public void RejectSword(Tool tool)
+    {
+        if (tool == null || tool.type != ToolType.Sword) return;
+
+        Debug.Log($"Rejected sword of tier {tool.tier} from NPC {GetDisplayName()} because they already have tier {swordLevel}");
+
+        List<string> lines = new List<string>();
+
+        if ((int)tool.tier == swordLevel)
+        {
+            lines.Add($"I already have a {tool.displayName}, but thanks anyway!");
+        }
+        else
+        {
+            lines.Add($"My current sword is much better than that {tool.displayName}!");
+        }
+
+        if (reduceSpawn)
+        {
+            int reductionPercentage = swordLevel * 20;
+            lines.Add($"Like I said before, mob spawns are currently reduced by {reductionPercentage}%!");
+        }
+        else if (npcType != null && npcType.dialogueLines != null)
+        {
+             lines.AddRange(npcType.dialogueLines);
+        }
+
+        pages = BuildPages(lines.ToArray());
+        currentLineIndex = 0;
     }
 
     private void Awake()
