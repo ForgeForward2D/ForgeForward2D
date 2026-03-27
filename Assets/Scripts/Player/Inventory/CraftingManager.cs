@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class CraftingManager
 {
     public event Action<CraftingManager> OnCraftingManagerUpdate;
+    public static event Action<CraftingRecipe> OnRecipeCrafted;
 
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private WorkbenchType workbenchType;
@@ -100,7 +101,8 @@ public class CraftingManager
             inventoryManager.RemoveItemOfType(ingredient.required.itemType, ingredient.required.count);
         }
         inventoryManager.AddItemOfType(recipe.result.itemType, recipe.result.count);
-        return true;
+        OnRecipeCrafted?.Invoke(recipe);
+        return  true;
     }
 
     private void UpdateAvailableRecipes()

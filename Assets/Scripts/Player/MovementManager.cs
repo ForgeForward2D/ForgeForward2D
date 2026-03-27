@@ -52,8 +52,13 @@ public class MovementManager : MonoBehaviour
         }
     }
 
-    private void HandleTeleport(Vector3 destination)
+    private void HandleTeleport((Level, Vector3) data)
     {
+        var (level, destination) = data;
+
+        string levelName = level == null ? "Base" : level.levelName;
+        Debug.Log($"Teleporting player to {destination} in level {levelName}");
+
         rb.linearVelocity = Vector2.zero;
         rb.position = destination;
     }

@@ -25,7 +25,7 @@ public class BlockType : ScriptableObject
     private void OnValidate()
     {
         Debug.Assert(!string.IsNullOrEmpty(displayName), $"BlockType '{name}' has no displayName.");
-        Debug.Assert(tile != null, $"BlockType '{name}' has no tile assigned.");
+        Debug.Assert(tile != null || displayName == "Air", $"BlockType '{name}' has no tile assigned.");
 
         if (lootDrops != null)
         {

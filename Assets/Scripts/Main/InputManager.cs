@@ -8,6 +8,7 @@ public enum UIPage
     Inventory,
     Crafting,
     Achievements,
+    Dialogue,
 }
 
 public class InputManager : MonoBehaviour

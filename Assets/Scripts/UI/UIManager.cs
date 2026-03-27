@@ -10,6 +10,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private BlockType craftingTableBlockType;
     [SerializeField] private BlockType anvilBlockType;
     [SerializeField] private AchievementUI achievementUI;
+    [SerializeField] private DialogueUI dialogueUI;
+
+    [Header("Debugging")]
+    [SerializeField] private UIPage currentPage;
 
     private InventoryManager _inventoryManager;
     private InventoryManager inventoryManager =>
@@ -18,7 +22,8 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         InputManager.OnUIChangeInput += ProcessNavigationRequest;
-        PlayerInteractionManager.OnInteraction += HandleInteraction;
+        PlayerInteractionManager.OnBlockInteraction += HandleInteraction;
+        NpcController.OnSetDialogueUIActive += HandleSetDialogueUIActive;
     }
 
     private void ProcessNavigationRequest(UIPage currentPage, UIPage requestedPage)
@@ -55,9 +60,12 @@ public class UIManager : MonoBehaviour
 
     private void SetPage(UIPage page)
     {
+        currentPage = page;
+
         resourceInventoryUI.SetActive(page == UIPage.Inventory);
         craftingTableUI.SetActive(page == UIPage.Crafting);
         achievementUI.SetActive(page == UIPage.Achievements);
+        dialogueUI.SetActive(page == UIPage.Dialogue);
 
         bool open = page != UIPage.None;
         Time.timeScale = open ? 0f : 1f;
@@ -84,5 +92,10 @@ public class UIManager : MonoBehaviour
             craftingTableUI.SetCraftingManager(manager);
 
         ProcessNavigationRequest(uiPage, UIPage.Crafting);
+    }
+
+    private void HandleSetDialogueUIActive(bool isActive)
+    {
+        ProcessNavigationRequest(currentPage, isActive ? UIPage.Dialogue : UIPage.None);
     }
 }
