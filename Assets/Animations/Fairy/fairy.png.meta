@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 757d30a8f8682419a8c2fd605309f110
+guid: 1a4c500e855994b979f1f86da7385ad1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7121372495030655277
-    second: 2026_03_11_sunny-is-a-fairy-23918030_0
+      213: -2990309890484215505
+    second: fairy_0
   - first:
-      213: 2902970005862981246
-    second: 2026_03_11_sunny-is-a-fairy-23918030_1
+      213: 4808560381157864972
+    second: fairy_1
   - first:
-      213: 5855726188609052512
-    second: 2026_03_11_sunny-is-a-fairy-23918030_2
+      213: 4520698335586148961
+    second: fairy_2
   - first:
-      213: 8845028470340638503
-    second: 2026_03_11_sunny-is-a-fairy-23918030_3
+      213: 4704531112747684950
+    second: fairy_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,7 +122,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 2026_03_11_sunny-is-a-fairy-23918030_0
+      name: fairy_0
       rect:
         serializedVersion: 2
         x: 0
@@ -132,19 +132,19 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData:
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3d6e578427dcb2d90800000000000000
-      internalID: -7121372495030655277
+      spriteID: f21e9597ff84086d0800000000000000
+      internalID: -2990309890484215505
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2026_03_11_sunny-is-a-fairy-23918030_1
+      name: fairy_1
       rect:
         serializedVersion: 2
         x: 0
@@ -154,19 +154,19 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData:
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e7e9319f6db694820800000000000000
-      internalID: 2902970005862981246
+      spriteID: c067ee790307bb240800000000000000
+      internalID: 4808560381157864972
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2026_03_11_sunny-is-a-fairy-23918030_2
+      name: fairy_2
       rect:
         serializedVersion: 2
         x: 51
@@ -176,19 +176,19 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData:
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 06f9efd81f7b34150800000000000000
-      internalID: 5855726188609052512
+      spriteID: 162ef4d3f2fbcbe30800000000000000
+      internalID: 4520698335586148961
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2026_03_11_sunny-is-a-fairy-23918030_3
+      name: fairy_3
       rect:
         serializedVersion: 2
         x: 51
@@ -198,37 +198,37 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData:
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 727ded2e78adfba70800000000000000
-      internalID: 8845028470340638503
+      spriteID: 65459121f1ad94140800000000000000
+      internalID: 4704531112747684950
       vertices: []
-      indices:
+      indices: 
       edges: []
       weights: []
     outline: []
-    customData:
+    customData: 
     physicsShape: []
     bones: []
-    spriteID:
+    spriteID: 
     internalID: 0
     vertices: []
-    indices:
+    indices: 
     edges: []
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      2026_03_11_sunny-is-a-fairy-23918030_0: -7121372495030655277
-      2026_03_11_sunny-is-a-fairy-23918030_1: 2902970005862981246
-      2026_03_11_sunny-is-a-fairy-23918030_2: 5855726188609052512
-      2026_03_11_sunny-is-a-fairy-23918030_3: 8845028470340638503
-  mipmapLimitGroupName:
+      fairy_0: -2990309890484215505
+      fairy_1: 4808560381157864972
+      fairy_2: 4520698335586148961
+      fairy_3: 4704531112747684950
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  userData:
-  assetBundleName:
-  assetBundleVariant:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

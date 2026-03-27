@@ -14,7 +14,6 @@ public class NpcController : MonoBehaviour
     [SerializeField] private NpcType npcType;
 
     [Header("Debugging")]
-    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int currentLineIndex;
 
     private string[] pages;
@@ -22,10 +21,6 @@ public class NpcController : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        if (npcType != null && spriteRenderer != null)
-            spriteRenderer.sprite = npcType.characterSprite;
-
         if (npcType != null)
             pages = BuildPages(npcType.dialogueLines);
 
