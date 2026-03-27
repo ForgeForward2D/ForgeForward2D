@@ -34,19 +34,23 @@
     size: text.size * 80%,
   )[TODOs unitl Friday, 10.04.]
 }
+- finish open prs Sinan
 - write blog article Leon
-- implement tracker for mob-stealing Tim
-- implement mob-spwan logic: giving an NPC resources reduces mob spawn rate Sinan + Nils
-- implement NPC-interaction logic for communication Nils
-- finish fairy dialogues to round the game Sinan + Nils
-- analyze statistics and implement at least one of the findings Tim
+- presentation Leon
+- expand tracking Tim
+- Camera bug Tim
+- inventory bug Nils
+- organize play testing and do analysis Tim
 - levels:
-  - finish starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds todo
+  - balancing wood / recipes Nils
+  - make progression more meaningful Nils
+    - lock portals
+    - make every tool useful
+    - make every resource useful
+  - NPCs Sinan
+  - finish stronghold Sinan
+  - redesign starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds Sinan
   - limited vision Leon
-  - create more levels: mine, deep mine, end/stronghold/ the endboss's house Sinan
-  - design mob sprites (1 x hostile, 1 x villager/fairy) Sinan
-- #optional[adapt walk-animation speed to walk speed]
-- #optional[tool animations (3D tool designs) Sinan]
 
 #pagebreak(weak: true)
 = Next Steps
