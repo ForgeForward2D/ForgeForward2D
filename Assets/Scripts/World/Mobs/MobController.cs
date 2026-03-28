@@ -256,9 +256,13 @@ public class MobController : MonoBehaviour
     public void SetMobType(MobType type)
     {
         mobType = type;
-        if (spriteRenderer != null && mobType != null)
+        if (spriteRenderer != null) 
         {
             spriteRenderer.sprite = mobType.sprite;
+        }
+        else 
+        {
+            Debug.LogWarning($"MobController has no SpriteRenderer assigned, cannot set sprite for mob type {mobType.displayName}");
         }
     }
 
