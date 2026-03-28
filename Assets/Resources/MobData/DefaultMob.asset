@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MobType
   displayName: DefaultMob
   prefab: {fileID: 2939615087842769253, guid: bf5b666682e8fee44b8c1c30c8c9882b, type: 3}
+  sprite: {fileID: -1059613970, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
   moveSpeed: 1.5
   chaseSpeed: 2.5
   aggroRange: 5

@@ -265,7 +265,6 @@ GameObject:
   - component: {fileID: 675200225284901707}
   - component: {fileID: 2052784277487766599}
   - component: {fileID: 5781865427355929994}
-  - component: {fileID: 3522726030820198699}
   - component: {fileID: 2709306686887307098}
   m_Layer: 0
   m_Name: Main Camera
@@ -495,28 +494,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraScript
   gameConfig: {fileID: 11400000, guid: b166dd4db11b94fbe9b2d99098c09021, type: 2}
   playerTransform: {fileID: 269482102212504596}
-  pixelPerfectCamera: {fileID: 3522726030820198699}
+  doPixelPerfect: 1
+  assetPixelPerUnit: 128
   camera_height: 0
---- !u!114 &3522726030820198699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1288371355483650873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.2D.PixelPerfect::UnityEngine.U2D.PixelPerfectCamera
-  m_AssetsPPU: 128
-  m_RefResolutionX: 640
-  m_RefResolutionY: 360
-  m_UpscaleRT: 1
-  m_PixelSnapping: 1
-  m_CropFrameX: 1
-  m_CropFrameY: 1
-  m_StretchFill: 1
 --- !u!1 &4624588820926371644
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +724,7 @@ MonoBehaviour:
   movementManager: {fileID: 0}
   currentTool: {fileID: 0}
   currentBlock: {fileID: 0}
+  currentNpc: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

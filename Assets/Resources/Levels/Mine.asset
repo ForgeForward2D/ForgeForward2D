@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Level
   levelName: Mine
   startingPoint: {x: 0, y: -300}
-  backgroundTile: {fileID: 11400000, guid: 7fc30d306216d4266a6c1922807a2385, type: 2}
+  backgroundTile: {fileID: 11400000, guid: 5f4c64ecc6dc74a78b9743bc1777970f, type: 2}
   portalBlock: {fileID: 11400000, guid: 21e0976fe73f64292960b9dec5d6a372, type: 2}
   wallBlock: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
-  paddingTile: {fileID: 11400000, guid: 199c19d17db464ca48be3e224e704c6e, type: 2}
+  paddingTile: {fileID: 11400000, guid: fa6dad6e5f41e4187b7c6138fbce0f7e, type: 2}
   levelSize: 100
   blockMapping:
   - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}

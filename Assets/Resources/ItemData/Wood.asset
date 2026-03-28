@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
   displayName: Wood
   maxStackSize: 64
-  icon: {fileID: 455560143, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
+  icon: {fileID: -1342402577, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}

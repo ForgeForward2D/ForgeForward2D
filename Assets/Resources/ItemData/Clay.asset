@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
   displayName: Clay
   maxStackSize: 64
-  icon: {fileID: -236667059, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
+  icon: {fileID: -558672159, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}

@@ -12,7 +12,8 @@ public class AchievementManager : MonoBehaviour
     public static event Action<AchievementManager> OnAchievementManagerUpdate;
 
     [Header("Debugging")]
-    [SerializeField] private List<Achievement> achievements = new List<Achievement>();
+    [SerializeField] private List<Achievement> achievements;
+    [SerializeField] private List<Achievement> visibleAchievements;
     [SerializeField] private int selectedIndex;
 
     private void Awake()
@@ -22,6 +23,7 @@ public class AchievementManager : MonoBehaviour
         {
             achievement.completionTime = default;
         }
+        visibleAchievements = achievements.Where(a => a.visible).ToList();
         selectedIndex = 0;
 
         AchievementUI.RequestRefresh += HandleRequestRefresh;
@@ -50,7 +52,7 @@ public class AchievementManager : MonoBehaviour
         int delta = movementInput.y > 0 ? -1 : 1;
         
         // Round up to nearest multiple of 4
-        int achievementWrappingPoint = achievements.Count - achievements.Count % 4 + (achievements.Count % 4 == 0 ? 0 : 4);
+        int achievementWrappingPoint = visibleAchievements.Count - visibleAchievements.Count % 4 + (visibleAchievements.Count % 4 == 0 ? 0 : 4);
 
         // Skip one row (equal to 4 achievements)
         selectedIndex += delta * 4;
@@ -69,12 +71,16 @@ public class AchievementManager : MonoBehaviour
             if (achievement.IsCompleted)
                 OnAchievementUnlocked?.Invoke(achievement);
         }
-
     }
 
     public List<Achievement> GetAchievements()
     {
         return achievements;
+    }
+
+    public List<Achievement> GetVisibleAchievements()
+    {
+        return visibleAchievements;
     }
 
     public int GetSelectedIndex()

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Gras
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Gras
-  tile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
+  tile: {fileID: 11400000, guid: db2e09a2a928147a5946a6a64740eaae, type: 2}
   walkable: 1
   breakable: 0
+  interactable: 0
   hardness: 0
   respawnRate: 0
   replacementBlock: {fileID: 0}

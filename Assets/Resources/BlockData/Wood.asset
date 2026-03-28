@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Wood
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Wood
-  tile: {fileID: 11400000, guid: 81f4b56709c6e45d6a72938cc4e41c1b, type: 2}
+  tile: {fileID: 11400000, guid: c814d000283b54421892afba764017aa, type: 2}
   walkable: 0
   breakable: 1
+  interactable: 0
   hardness: 3
   respawnRate: 20
   replacementBlock: {fileID: 11400000, guid: 9d73ce8966f88434a9454877ec6d4b05, type: 2}

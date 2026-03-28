@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlockAchievement
   title: Lumberjack
   visible: 1
-  icon: {fileID: 455560143, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
+  icon: {fileID: -1342402577, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
   type: 1
   blockType: {fileID: 11400000, guid: 7f3076a83042c40aaa8fa8ba50068c68, type: 2}
   targetCount: 10
