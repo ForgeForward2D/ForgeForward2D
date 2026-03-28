@@ -15,9 +15,10 @@ public class MobController : MonoBehaviour
     public static event Func<int, MobType, List<Item>> OnMobStealItems;
 
     [Header("Reference")]
-    [SerializeField] private MobType mobType;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     [Header("Debugging")]
+    [SerializeField] private MobType mobType;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Vector2 moveDirection;
     [SerializeField] private MobState currentState;
@@ -255,6 +256,10 @@ public class MobController : MonoBehaviour
     public void SetMobType(MobType type)
     {
         mobType = type;
+        if (spriteRenderer != null && mobType != null)
+        {
+            spriteRenderer.sprite = mobType.sprite;
+        }
     }
 
     private void Consume()

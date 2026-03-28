@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RedSand
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Red Sand
-  tile: {fileID: 11400000, guid: de84ad3cd65fb4fb8bddef19efb6e559, type: 2}
+  tile: {fileID: 11400000, guid: 5f56e5bfb8f1a4dcf9f51ca6dcd1965a, type: 2}
   walkable: 1
   breakable: 0
   interactable: 0

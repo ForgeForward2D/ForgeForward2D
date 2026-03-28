@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Bricks
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Bricks
-  tile: {fileID: 11400000, guid: 199c19d17db464ca48be3e224e704c6e, type: 2}
+  tile: {fileID: 11400000, guid: fa6dad6e5f41e4187b7c6138fbce0f7e, type: 2}
   walkable: 0
   breakable: 0
+  interactable: 0
+  hardness: 0
   respawnRate: 0
-  replacementBlockId: 0
+  replacementBlock: {fileID: 0}
+  toolType: 0
+  minimumToolTier: 0
+  lootDrops: []

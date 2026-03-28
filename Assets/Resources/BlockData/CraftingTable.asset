@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CraftingTable
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Crafting Table
-  tile: {fileID: 11400000, guid: 1b4a24749d3044b19bb24be3c0ebfa4e, type: 2}
+  tile: {fileID: 11400000, guid: be789609d33e64cc2af7db0d227a8d24, type: 2}
   walkable: 0
   breakable: 0
   interactable: 1

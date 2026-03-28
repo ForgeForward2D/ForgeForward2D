@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Stone
-  tile: {fileID: 11400000, guid: 3db018738a8134e74b5c4d44d08b54d7, type: 2}
+  tile: {fileID: 11400000, guid: 75d80667895e444129fd4e361b29af5e, type: 2}
   walkable: 0
   breakable: 1
+  interactable: 0
   hardness: 1
   respawnRate: 0
   replacementBlock: {fileID: 0}

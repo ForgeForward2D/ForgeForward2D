@@ -5,6 +5,7 @@ public class MobType : ScriptableObject
 {
     public string displayName;
     public GameObject prefab;
+    public Sprite sprite;
 
     public float moveSpeed = 1.5f;
     public float chaseSpeed = 2.5f;

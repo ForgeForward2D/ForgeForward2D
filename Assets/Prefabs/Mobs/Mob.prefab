@@ -111,11 +111,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c9c6e611b388442b16d36a10529416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MobController
+  spriteRenderer: {fileID: 7384287202983481180}
   mobType: {fileID: 0}
   rb: {fileID: 9082670591747480178}
   moveDirection: {x: 0, y: 0}
   currentState: 0
   stateTimer: 0
+  repathInterval: 0.3
 --- !u!1 &8005748751751304038
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +199,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 174818235, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -205,5 +207,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0

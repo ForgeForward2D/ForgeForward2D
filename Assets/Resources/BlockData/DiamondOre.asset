@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DiamondOre
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: DiamondOre
-  tile: {fileID: 11400000, guid: 630f50acf9c0d4b6f81e64ff95070064, type: 2}
+  tile: {fileID: 11400000, guid: a040ce173aa8d4041b17d469270e15bf, type: 2}
   walkable: 0
   breakable: 1
   interactable: 0

@@ -392,6 +392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AchievementManager
   achievements: []
+  visibleAchievements: []
   selectedIndex: 0
 --- !u!114 &889089766
 MonoBehaviour:

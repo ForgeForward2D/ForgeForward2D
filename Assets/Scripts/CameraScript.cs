@@ -2,21 +2,20 @@ using UnityEngine;
 using UnityEngine.U2D;
 
 [RequireComponent(typeof(Camera))]
-[RequireComponent(typeof(PixelPerfectCamera))]
 public class CameraScript : MonoBehaviour
 {
     [SerializeField] GameConfig gameConfig;
     [SerializeField] Transform playerTransform;
-    [SerializeField] PixelPerfectCamera pixelPerfectCamera;
+
+    [Header("Settings")]
+    [SerializeField] private bool doPixelPerfect = true;
+    [SerializeField] private int assetPixelPerUnit = 128;
 
     [Header("Debugging")]
     [SerializeField] private int camera_height;
 
-
     void Start()
     {
-        pixelPerfectCamera = GetComponent<PixelPerfectCamera>();
-
         camera_height = Mathf.RoundToInt(gameConfig.camera_width / gameConfig.camera_aspect);
         GetComponent<Camera>().orthographicSize = camera_height / 2f;
         GetComponent<Camera>().aspect = gameConfig.camera_aspect;
@@ -34,10 +33,11 @@ public class CameraScript : MonoBehaviour
 
         float y = playerTransform.position.y;
 
-        float ppu = pixelPerfectCamera.assetsPPU;
-        x = Mathf.Round(x * (float)ppu) / (float)ppu;
-        y = Mathf.Round(y * (float)ppu) / (float)ppu;
-
+        if (doPixelPerfect)
+        {
+            x = Mathf.Round(x * (float)assetPixelPerUnit) / (float)assetPixelPerUnit;
+            y = Mathf.Round(y * (float)assetPixelPerUnit) / (float)assetPixelPerUnit;
+        }
         transform.position = new Vector3(x, y, transform.position.z);
     }
 }
