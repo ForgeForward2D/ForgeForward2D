@@ -52,7 +52,7 @@ public class AchievementManager : MonoBehaviour
         int delta = movementInput.y > 0 ? -1 : 1;
         
         // Round up to nearest multiple of 4
-        int achievementWrappingPoint = achievements.Count - achievements.Count % 4 + (achievements.Count % 4 == 0 ? 0 : 4);
+        int achievementWrappingPoint = visibleAchievements.Count - visibleAchievements.Count % 4 + (visibleAchievements.Count % 4 == 0 ? 0 : 4);
 
         // Skip one row (equal to 4 achievements)
         selectedIndex += delta * 4;

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.U2D;
 
 [RequireComponent(typeof(Camera))]
 public class CameraScript : MonoBehaviour
@@ -9,6 +8,7 @@ public class CameraScript : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private bool doPixelPerfect = true;
+    [Min(1)]
     [SerializeField] private int assetPixelPerUnit = 128;
 
     [Header("Debugging")]
