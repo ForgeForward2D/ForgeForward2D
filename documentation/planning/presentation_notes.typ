@@ -11,6 +11,22 @@
   ), column-gutter: 1em, row-gutter: 0.5em, ..elements)
 #set heading(numbering: "1.1")
 
+#date[27.03.2026: Analytics]
+ForgeForward2D: The game for endless mining, collecting, and exploring
+
+= Demo
+- #action[show game]
+- mobs chasing player and stealing items
+- anvil
+- achievements
+- new portals
+- new levels
+- (NPC interaction)
+
+= Analytics
+- #action[show analytics and explain a bit]
+
+#pagebreak(weak: true)
 #date[20.03.2026: Addictive Patterns]
 - ForgeForward2D: The game for endless mining, collecting, and exploring
 
@@ -29,8 +45,6 @@
 - #action[show architecture diagram and explain]
 
 #pagebreak()
-
-
 #date[13.03.2026: Unity & Software Architecture]
 - ForgeForward2D: The game for endless mining, collecting, and exploring
 
@@ -76,19 +90,15 @@
       [`wood` + `wood`],
       [$=>$],
       [`wooden hammer` (breaks `stone`)],
-
       [`wood` + `stone`],
       [$=>$],
       [`stone hammer` (breaks `stone` faster)],
-
       [`wood` + `iron ingot`],
       [$=>$],
       [`iron hammer`],
-
       [`iron ingot` + `iron ingot`],
       [$=>$],
       [`iron pickaxe` (breaks `iron ore` and `diamond ore`)],
-
       [`iron ingot` + `diamond`],
       [$=>$],
       [`diamond pickaxe`],
@@ -99,7 +109,6 @@
         [`iron ore`],
         [$=>$],
         [`iron ingot`],
-
         [`diamond ore`],
         [$=>$],
         [`diamond`],
