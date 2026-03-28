@@ -31,6 +31,8 @@ public class AchievementPopupManager : MonoBehaviour
 
     private void HandleAchievementUnlocked(Achievement ach)
     {
+        if (ach == null || !ach.visible)
+            return;
         achievementQueue.Enqueue(ach);
         Debug.Log($"Added achievment to queue {ach.title}, {achievementQueue.Count}");
 
