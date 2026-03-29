@@ -4,9 +4,10 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(Light2D))]
 public class LightScript : MonoBehaviour
 {
-    [SerializeField] Transform playerTransform;
+    [SerializeField] private Transform playerTransform;
 
-    Light2D light2D;
+    [Header("Debugging")]
+    [SerializeField] private Light2D light2D;
 
     void Awake()
     {
