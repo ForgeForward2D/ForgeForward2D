@@ -17,7 +17,10 @@ public class LightScript : MonoBehaviour
     {
         var worldGen = FindAnyObjectByType<WorldGeneration>();
         if (worldGen == null || worldGen.BaseLevel == null)
+        {
             Debug.LogError("No worldGeneration script or base level found in LightScript");
+            return;
+        }
         light2D.pointLightOuterRadius = worldGen.BaseLevel.viewDistance;
     }
 
