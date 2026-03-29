@@ -23,6 +23,7 @@ public class LightScript : MonoBehaviour
             return;
         }
         light2D.pointLightOuterRadius = worldGen.BaseLevel.viewDistance;
+        light2D.lightType = Light2D.LightType.Point;
     }
 
     void OnEnable()

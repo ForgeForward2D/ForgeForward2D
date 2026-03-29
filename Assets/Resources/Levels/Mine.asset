@@ -19,7 +19,7 @@ MonoBehaviour:
   wallBlock: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
   paddingTile: {fileID: 11400000, guid: fa6dad6e5f41e4187b7c6138fbce0f7e, type: 2}
   levelSize: 100
-  viewDistance: 5
+  viewDistance: 10
   blockMapping:
   - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
     threshold: 0.25

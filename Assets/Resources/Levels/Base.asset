@@ -19,7 +19,7 @@ MonoBehaviour:
   wallBlock: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
   paddingTile: {fileID: 11400000, guid: 6c86e2e35826a46e094921920dee50c6, type: 2}
   levelSize: 0
-  viewDistance: 100
+  viewDistance: 1000
   blockMapping: []
   mobCount: 4
   mobSpawns: []
