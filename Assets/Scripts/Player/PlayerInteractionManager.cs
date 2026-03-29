@@ -13,11 +13,15 @@ public class PlayerInteractionManager : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private MovementManager movementManager;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private InventoryManager inventoryManager;
+
 
     public void Awake()
     {
         movementManager = GetComponent<MovementManager>();
         playerTransform = GetComponent<Transform>();
+        inventoryManager = GetComponent<InventoryManager>();
+
         npcLayerMask = LayerMask.GetMask("NPC");
 
         InputManager.OnAttackUpdate += HandleAttackUpdate;
@@ -55,7 +59,34 @@ public class PlayerInteractionManager : MonoBehaviour
             else
             {
                 if (uiPage == UIPage.None)
+                {
                     Debug.Log($"Triggering NPC interaction with {npc.GetDisplayName()}");
+                    if (inventoryManager != null)
+                    {
+                        Tool selectedTool = inventoryManager.hotBar.GetSelectedTool();
+                        if (selectedTool != null && selectedTool.type == ToolType.Sword)
+                        {
+                            if ((int)selectedTool.tier > npc.swordLevel)
+                            {
+                                npc.GiveSword(selectedTool);
+                                inventoryManager.RemoveItemOfType(selectedTool, 1);
+                                MobSpawner spawner = FindAnyObjectByType<MobSpawner>();
+
+                                if (spawner != null)
+                                {
+                                    spawner.SpawnMobs();
+                                }
+                                else {
+                                    Debug.LogError($"No MobSpawner found in the scene. Make sure there is a MobSpawner component in the scene for mob spawn reduction to work.");
+                                }
+                            }
+                            else
+                            {
+                                npc.RejectSword(selectedTool);
+                            }
+                        }
+                    }
+                }
                 npc.HandleInteraction(uiPage);
                 return;
             }
@@ -67,5 +98,4 @@ public class PlayerInteractionManager : MonoBehaviour
 
         OnBlockInteraction?.Invoke((uiPage, blockType, targetPos));
     }
-
 }
