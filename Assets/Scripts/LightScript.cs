@@ -9,12 +9,12 @@ public class LightScript : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private Light2D light2D;
 
-    void Awake()
+    private void Awake()
     {
         light2D = GetComponent<Light2D>();
     }
 
-    void Start()
+    private void Start()
     {
         var worldGen = FindAnyObjectByType<WorldGeneration>();
         if (worldGen == null || worldGen.BaseLevel == null)
@@ -26,22 +26,22 @@ public class LightScript : MonoBehaviour
         light2D.lightType = Light2D.LightType.Point;
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         PortalManager.OnPlayerTeleport += HandleTeleport;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         PortalManager.OnPlayerTeleport -= HandleTeleport;
     }
 
-    void HandleTeleport((Level level, Vector3 destination) data)
+    private void HandleTeleport((Level level, Vector3 destination) data)
     {
         light2D.pointLightOuterRadius = data.level.viewDistance;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (playerTransform != null)
         {
