@@ -73,7 +73,7 @@ public class PortalManager : MonoBehaviour
             if (!portalsByBlock[blockType].Contains(pos))
             {
                 portalsByBlock[blockType].Add(pos);
-                portalLevels[pos] = null;
+                portalLevels[pos] = worldGeneration.BaseLevel;
             }
 
             if (colliderPositions.Add(pos))
@@ -149,7 +149,7 @@ public class PortalManager : MonoBehaviour
             if (portalLevels.TryGetValue(destination, out Level destinationLevel))
             {
                 OnPlayerTeleport?.Invoke((destinationLevel, worldPos));
-                string levelName = destinationLevel == null ? "Base" : destinationLevel.levelName;
+                string levelName = destinationLevel.levelName;
                 Debug.Log($"Portal: teleported player to {destination} in level {levelName}");
             }
             else

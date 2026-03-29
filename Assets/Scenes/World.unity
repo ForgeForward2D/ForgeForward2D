@@ -482,9 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e08e852084c146139d6c49fe7d5bb51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldGeneration
-  backgroundTile: {fileID: 11400000, guid: db2e09a2a928147a5946a6a64740eaae, type: 2}
-  baseWallBlock: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
-  basePaddingBlock: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
+  baseLevel: {fileID: 11400000, guid: d623d184ddf23433c9a3e0ae3bca72e2, type: 2}
   noiseScale: 0.15
   portalClearRadius: 2
   borderWaves: 20

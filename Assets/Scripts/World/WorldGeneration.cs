@@ -6,10 +6,7 @@ using UnityEngine.Tilemaps;
 public class WorldGeneration : MonoBehaviour
 {
 
-    [SerializeField] TileBase backgroundTile;
-
-    [SerializeField] BlockType baseWallBlock;
-    [SerializeField] BlockType basePaddingBlock;
+    [SerializeField] Level baseLevel;
 
     private Tilemap backgroundTilemap;
     private Tilemap foregroundTilemap;
@@ -22,6 +19,7 @@ public class WorldGeneration : MonoBehaviour
 
     [SerializeField] int worldSeed;
 
+    public Level BaseLevel => baseLevel;
     public Level[] Levels { get; private set; }
     [SerializeField] private MobSpawner mobSpawner;
 
@@ -29,7 +27,7 @@ public class WorldGeneration : MonoBehaviour
 
     void Start()
     {
-        Levels = Resources.LoadAll<Level>("Levels");
+        Levels = Resources.LoadAll<Level>("Levels").Where(l => l != baseLevel).ToArray();
         if (worldSeed == 0)
         {
             worldSeed = System.Environment.TickCount;
@@ -49,21 +47,21 @@ public class WorldGeneration : MonoBehaviour
         for (int y = mapBounds.yMin - 1; y <= mapBounds.yMax; y++)
         {
             // Left wall
-            TileMapManager.Instance.DrawBlock(baseWallBlock, new Vector2Int(mapBounds.xMin - 1, y));
+            TileMapManager.Instance.DrawBlock(baseLevel.wallBlock, new Vector2Int(mapBounds.xMin - 1, y));
             // Right wall
-            TileMapManager.Instance.DrawBlock(baseWallBlock, new Vector2Int(mapBounds.xMax, y));
+            TileMapManager.Instance.DrawBlock(baseLevel.wallBlock, new Vector2Int(mapBounds.xMax, y));
         }
         for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
         {
             // Bottom wall
-            TileMapManager.Instance.DrawBlock(baseWallBlock, new Vector2Int(x, mapBounds.yMin - 1));
+            TileMapManager.Instance.DrawBlock(baseLevel.wallBlock, new Vector2Int(x, mapBounds.yMin - 1));
             // Top wall
-            TileMapManager.Instance.DrawBlock(baseWallBlock, new Vector2Int(x, mapBounds.yMax));
+            TileMapManager.Instance.DrawBlock(baseLevel.wallBlock, new Vector2Int(x, mapBounds.yMax));
 
             for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
             {
                 // Background
-                backgroundTilemap.SetTile(new Vector3Int(x, y, 0), backgroundTile);
+                backgroundTilemap.SetTile(new Vector3Int(x, y, 0), baseLevel.backgroundTile);
             }
         }
 
@@ -81,7 +79,7 @@ public class WorldGeneration : MonoBehaviour
                                 || y < mapBounds.yMin - 1 || y > mapBounds.yMax;
                 if (outsideWall)
                 {
-                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), basePaddingBlock.tile);
+                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), baseLevel.paddingTile);
                 }
             }
         }
