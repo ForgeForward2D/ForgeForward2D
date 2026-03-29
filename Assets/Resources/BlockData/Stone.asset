@@ -17,7 +17,7 @@ MonoBehaviour:
   walkable: 0
   breakable: 1
   interactable: 0
-  hardness: 1
+  hardness: 2
   respawnRate: 0
   replacementBlock: {fileID: 0}
   toolType: 2

@@ -17,5 +17,5 @@ MonoBehaviour:
   icon: {fileID: 5361697477024396790, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
   type: 4
   tier: 1
-  efficiency: 2
+  efficiency: 1.5
   prefab: {fileID: 8690767056924379190, guid: d1d536c6d543e4261a0425b39204623c, type: 3}
