@@ -18,7 +18,7 @@ public class NpcController : MonoBehaviour
     [SerializeField] private int currentLineIndex;
 
     private string[] pages;
-    private bool isDialogueActive;
+    public bool isDialogueActive = false;
 
     [Header("Mob Spawn Control")]
     [SerializeField] public bool reduceSpawn = false;
@@ -206,6 +206,7 @@ public class NpcController : MonoBehaviour
         return npcType != null ? npcType.displayName : gameObject.name;
     }
     public string CurrentLine => pages != null && currentLineIndex < pages.Length ? pages[currentLineIndex] : string.Empty;
+    public NpcType NpcType => npcType;
     public int LineIndex => currentLineIndex;
     public int TotalLines => pages != null ? pages.Length : 0;
     public Sprite CharacterSprite => npcType != null ? npcType.characterSprite : null;
