@@ -15,13 +15,7 @@ MonoBehaviour:
   displayName: DefaultNPC
   characterSprite: {fileID: 1858377722, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
   dialogueLines:
-  - Hi
-  - Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-    tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
-    vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-    no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-    amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-    et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-    sanctus est Lorem ipsum dolor sit amet.
-  - "T\xF6m"
+  - Hello Adventurer
+  - I used to protect this city from roaming mobs
+  - I can help you fight them off
+  - Just hand me a better sword, as mine is old and dull
