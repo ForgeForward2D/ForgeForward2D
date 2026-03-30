@@ -7,6 +7,7 @@ using UnityEngine;
 public class ResourceInventory : InventoryComponent<ItemType>
 {
     public static event Action<ResourceInventory> OnResourceInventoryUpdate;
+    public static event Action<(MobType, int)> OnItemsStolenByMob;
 
     [SerializeField] int capacity = 21;
 
@@ -64,7 +65,7 @@ public class ResourceInventory : InventoryComponent<ItemType>
         }
 
         Debug.Log($"{mob.displayName} stole {removed} items from the player: {string.Join(", ", stolenItems.Select(item => $"{item.count} {item.itemType.displayName}"))}");
-
+        OnItemsStolenByMob?.Invoke((mob, removed));
         return stolenItems;
     }
 
