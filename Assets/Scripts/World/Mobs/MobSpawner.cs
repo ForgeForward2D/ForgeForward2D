@@ -86,7 +86,27 @@ public class MobSpawner : MonoBehaviour
             return;
         }
 
-        for (int index = 0; index < level.mobCount; index++)
+        int actualMobCount = level.mobCount;
+        float reductionPercentage = 0f;
+        NpcController npc = FindAnyObjectByType<NpcController>();
+
+        if (npc != null && npc.reduceSpawn)
+        {
+            // Reduce spawns by 20% per sword tier (e.g. Diamond tier 4 = 80% reduction)
+            reductionPercentage = npc.swordLevel * 0.20f;
+        }
+        if (reductionPercentage > 1f) {
+            Debug.LogWarning("Mob spawn reduction percentage exceeds 100%. Capping at 100%.", level);
+            reductionPercentage = 1f;
+        }
+        actualMobCount = Mathf.RoundToInt(actualMobCount * (1f - reductionPercentage));
+        if (actualMobCount < 0) {
+            Debug.LogWarning($"Mob count after reduction is negative. Setting to 0.", level);
+            actualMobCount = 0;
+        }
+        Debug.Log($"Level '{level.levelName}' mob count: {level.mobCount} reduced to {actualMobCount}");
+
+        for (int index = 0; index < actualMobCount; index++)
         {
             if (availableCoordinates.Count == 0)
             {
