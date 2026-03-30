@@ -242,7 +242,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
+  m_PointLightOuterRadius: 5
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -474,7 +474,7 @@ Transform:
   m_GameObject: {fileID: 7538994256864855512}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.96199, y: 0.59646, z: 0}
+  m_LocalPosition: {x: 1.725, y: 3.479, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -636,6 +636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2543936560394429954}
   - component: {fileID: 1203805973995584139}
+  - component: {fileID: 7538994256864855513}
   m_Layer: 0
   m_Name: Global Light 2D
   m_TagString: Untagged
@@ -643,6 +644,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7538994256864855513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7538994256864855512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6609155de7048b580fcb6b86d4ee22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightScript
+  playerTransform: {fileID: 269482102212504596}
+  light2D: {fileID: 0}
 --- !u!114 &8655246054817101122
 MonoBehaviour:
   m_ObjectHideFlags: 0

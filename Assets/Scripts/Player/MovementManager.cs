@@ -56,7 +56,7 @@ public class MovementManager : MonoBehaviour
     {
         var (level, destination) = data;
 
-        string levelName = level == null ? "Base" : level.levelName;
+        string levelName = level.levelName;
         Debug.Log($"Teleporting player to {destination} in level {levelName}");
 
         rb.linearVelocity = Vector2.zero;

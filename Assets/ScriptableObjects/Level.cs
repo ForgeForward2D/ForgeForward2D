@@ -12,6 +12,7 @@ public class Level : ScriptableObject
     public BlockType wallBlock;
     public TileBase paddingTile;
     public int levelSize; // ~radius
+    public float viewDistance;
     public PerlinMapping[] blockMapping;
 
     public int mobCount = 4;

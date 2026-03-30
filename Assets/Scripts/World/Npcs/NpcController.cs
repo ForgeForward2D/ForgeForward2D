@@ -20,6 +20,61 @@ public class NpcController : MonoBehaviour
     private string[] pages;
     private bool isDialogueActive;
 
+    [Header("Mob Spawn Control")]
+    [SerializeField] public bool reduceSpawn = false;
+    [SerializeField] public int swordLevel = 0;
+
+    [Header("Dialogue Templates")]
+    [SerializeField] private string giveSwordDialogue = "Thanks for the {0}! I'll use it to keep the monsters at bay. Mob spawns are now reduced by {1}%!";
+    [SerializeField] private string sameSwordDialogue = "I already have a {0}, but thanks anyway!";
+    [SerializeField] private string worseSwordDialogue = "My current sword is much better than that {0}!";
+    [SerializeField] private string reduceSpawnReminderDialogue = "Like I said before, mob spawns are currently reduced by {0}%!";
+
+    public void GiveSword(Tool tool)
+    {
+        if (tool == null || tool.type != ToolType.Sword) return;
+
+        swordLevel = (int)tool.tier;
+        reduceSpawn = true;
+        Debug.Log($"Gave sword of tier {tool.tier} to NPC {GetDisplayName()}");
+
+        int reductionPercentage = swordLevel * 20;
+        string message = string.Format(giveSwordDialogue, tool.displayName, reductionPercentage);
+        pages = BuildPages(new string[] { message });
+        currentLineIndex = 0;
+    }
+
+    public void RejectSword(Tool tool)
+    {
+        if (tool == null || tool.type != ToolType.Sword) return;
+
+        Debug.Log($"Rejected sword of tier {tool.tier} from NPC {GetDisplayName()} because they already have tier {swordLevel}");
+
+        List<string> lines = new List<string>();
+
+        if ((int)tool.tier == swordLevel)
+        {
+            lines.Add(string.Format(sameSwordDialogue, tool.displayName));
+        }
+        else
+        {
+            lines.Add(string.Format(worseSwordDialogue, tool.displayName));
+        }
+
+        if (reduceSpawn)
+        {
+            int reductionPercentage = swordLevel * 20;
+            lines.Add(string.Format(reduceSpawnReminderDialogue, reductionPercentage));
+        }
+        else if (npcType != null && npcType.dialogueLines != null)
+        {
+             lines.AddRange(npcType.dialogueLines);
+        }
+
+        pages = BuildPages(lines.ToArray());
+        currentLineIndex = 0;
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
