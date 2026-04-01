@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
-  m_Name: BarrierStone3
+  m_Name: DiamondBarrier
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
-  displayName: Stone Barrier 3
+  displayName: Diamond Barrier
   tile: {fileID: 11400000, guid: ec1b8f56207104af6aa0a5a01165a5f2, type: 2}
   walkable: 0
   breakable: 1
