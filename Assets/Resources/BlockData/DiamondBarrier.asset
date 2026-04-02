@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
+  m_Name: DiamondBarrier
+  m_EditorClassIdentifier: Assembly-CSharp::BlockType
+  displayName: Diamond Barrier
+  tile: {fileID: 11400000, guid: ec1b8f56207104af6aa0a5a01165a5f2, type: 2}
+  walkable: 0
+  breakable: 1
+  interactable: 0
+  hardness: 3
+  respawnRate: 0
+  replacementBlock: {fileID: 0}
+  toolType: 2
+  minimumToolTier: 4
+  lootDrops:
+  - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
+    amount: 3
+    chance: 1

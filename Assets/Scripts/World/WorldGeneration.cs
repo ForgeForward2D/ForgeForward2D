@@ -61,7 +61,10 @@ public class WorldGeneration : MonoBehaviour
             for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
             {
                 // Background
-                backgroundTilemap.SetTile(new Vector3Int(x, y, 0), baseLevel.backgroundTile);
+                if (backgroundTilemap.GetTile(new Vector3Int(x, y, 0)) == null)
+                {
+                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), baseLevel.backgroundTile);
+                }
             }
         }
 
@@ -79,7 +82,10 @@ public class WorldGeneration : MonoBehaviour
                                 || y < mapBounds.yMin - 1 || y > mapBounds.yMax;
                 if (outsideWall)
                 {
-                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), baseLevel.paddingTile);
+                    if (backgroundTilemap.GetTile(new Vector3Int(x, y, 0)) == null)
+                    {
+                        backgroundTilemap.SetTile(new Vector3Int(x, y, 0), baseLevel.paddingTile);
+                    }
                 }
             }
         }
