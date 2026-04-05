@@ -17,7 +17,7 @@ MonoBehaviour:
   walkable: 0
   breakable: 1
   interactable: 0
-  hardness: 3
+  hardness: 2
   respawnRate: 20
   replacementBlock: {fileID: 11400000, guid: 9d73ce8966f88434a9454877ec6d4b05, type: 2}
   toolType: 3
