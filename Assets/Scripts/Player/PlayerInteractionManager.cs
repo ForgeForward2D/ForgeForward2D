@@ -63,27 +63,43 @@ public class PlayerInteractionManager : MonoBehaviour
                     Debug.Log($"Triggering NPC interaction with {npc.GetDisplayName()}");
                     if (inventoryManager != null)
                     {
-                        Tool selectedTool = inventoryManager.hotBar.GetSelectedTool();
-                        if (selectedTool != null && selectedTool.type == ToolType.Sword)
+                        SwordItem bestSword = null;
+                        foreach (var item in inventoryManager.resourceInventory.GetItems())
                         {
-                            if ((int)selectedTool.tier > npc.swordLevel)
+                            if (item != null && item.itemType is SwordItem sword && sword.swordLevel > npc.swordLevel)
                             {
-                                npc.GiveSword(selectedTool);
-                                inventoryManager.RemoveItemOfType(selectedTool, 1);
-                                MobSpawner spawner = FindAnyObjectByType<MobSpawner>();
+                                if (bestSword == null || sword.swordLevel > bestSword.swordLevel)
+                                    bestSword = sword;
+                            }
+                        }
 
-                                if (spawner != null)
-                                {
-                                    spawner.SpawnMobs();
-                                }
-                                else {
-                                    Debug.LogError($"No MobSpawner found in the scene. Make sure there is a MobSpawner component in the scene for mob spawn reduction to work.");
-                                }
+                        if (bestSword != null)
+                        {
+                            npc.GiveSword(bestSword);
+                            inventoryManager.RemoveItemOfType(bestSword, 1);
+                            MobSpawner spawner = FindAnyObjectByType<MobSpawner>();
+                            if (spawner != null)
+                            {
+                                spawner.SpawnMobs();
                             }
                             else
                             {
-                                npc.RejectSword(selectedTool);
+                                Debug.LogError($"No MobSpawner found in the scene. Make sure there is a MobSpawner component in the scene for mob spawn reduction to work.");
                             }
+                        }
+                        else
+                        {
+                            SwordItem anySword = null;
+                            foreach (var item in inventoryManager.resourceInventory.GetItems())
+                            {
+                                if (item != null && item.itemType is SwordItem sword)
+                                {
+                                    if (anySword == null || sword.swordLevel > anySword.swordLevel)
+                                        anySword = sword;
+                                }
+                            }
+                            if (anySword != null)
+                                npc.RejectSword(anySword);
                         }
                     }
                 }
