@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Stone Axe
   maxStackSize: 1
   icon: {fileID: 2241432492763528681, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 3
+  type: 2
   tier: 2
   efficiency: 2
   prefab: {fileID: 2094685673995534264, guid: dd4ace377a47e4c968047002d239b0d6, type: 3}

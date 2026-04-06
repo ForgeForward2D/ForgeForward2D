@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Iron Axe
   maxStackSize: 1
   icon: {fileID: -6852271857560207817, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 3
+  type: 2
   tier: 3
   efficiency: 3
   prefab: {fileID: 2094685673995534264, guid: 028c4596489094d3f88d5c4dc67e0123, type: 3}

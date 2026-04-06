@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Wooden Axe
   maxStackSize: 1
   icon: {fileID: -5729418757352732382, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 3
+  type: 2
   tier: 1
   efficiency: 1.5
   prefab: {fileID: 2094685673995534264, guid: 8466049d9d2ae497eb34d179300e25d1, type: 3}
