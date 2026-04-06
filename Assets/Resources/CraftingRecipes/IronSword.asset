@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f548d71a4a4c5da896f8e2a90090e, type: 3}
   m_Name: IronSword
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
-  workbenchType: 1
+  workbenchType: 0
   ingredients:
   - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
     count: 30

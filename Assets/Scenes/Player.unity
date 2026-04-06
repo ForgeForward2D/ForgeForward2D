@@ -694,8 +694,8 @@ MonoBehaviour:
   hotBar:
     tools:
     - {fileID: 0}
-    - {fileID: 11400000, guid: fbf3dff69344c44d29af71a08ac36d95, type: 2}
-    - {fileID: 11400000, guid: 9afff0717c93349fa87b9261d1fe48b2, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
     toolTypes: 
     selectedIndex: 0
   craftingTableManager:
@@ -724,6 +724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractionManager
   movementManager: {fileID: 0}
   playerTransform: {fileID: 0}
+  inventoryManager: {fileID: 0}
 --- !u!114 &8655246054817101125
 MonoBehaviour:
   m_ObjectHideFlags: 0
