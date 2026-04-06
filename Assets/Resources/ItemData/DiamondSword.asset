@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Diamond Sword
   maxStackSize: 1
   icon: {fileID: -3178300661473936600, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  swordLevel: 1
+  swordLevel: 4

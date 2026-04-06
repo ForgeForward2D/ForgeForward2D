@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: Iron Sword
   maxStackSize: 1
   icon: {fileID: 7762634737901213392, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  swordLevel: 1
+  swordLevel: 3
