@@ -17,8 +17,8 @@ public class Tracker : MonoBehaviour
     [SerializeField] private SerializableDictionary<Level, int> visitedLevels;
     [SerializeField] private SerializableDictionary<UIPage, int> visitedUIs;
     [SerializeField] private SerializableDictionary<MobType, int> itemsStolenByMob;
-    [SerializeField] private SerializableDictionary<DateTime, (NpcType, DateTime)> npcInteractions;
-    [SerializeField] private (NpcType npcType, DateTime startTime) currentNpcInteraction;
+    [SerializeField] private SerializableDictionary<string, NpcInteraction> npcInteractions;
+    [SerializeField] private (NpcType, DateTime) currentNpcInteraction;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class Tracker : MonoBehaviour
         visitedLevels = new SerializableDictionary<Level, int>();
         visitedUIs = new SerializableDictionary<UIPage, int>();
         itemsStolenByMob = new SerializableDictionary<MobType, int>();
-        npcInteractions = new SerializableDictionary<DateTime, (NpcType, DateTime)>();
+        npcInteractions = new SerializableDictionary<string, NpcInteraction>();
         currentNpcInteraction = default;
 
         PlayerInteractionManager.OnAttackUpdate += HandleAttackUpdate;
@@ -139,7 +139,10 @@ public class Tracker : MonoBehaviour
         // Track dialogue end
         if (page != UIPage.Dialogue && currentNpcInteraction != default )
         {
-            npcInteractions[currentNpcInteraction.startTime] = (currentNpcInteraction.npcType, DateTime.Now);
+            var (npcType, startTime) = currentNpcInteraction;
+            string startTimeKey = startTime.ToString("yyyy-MM-dd'T'HH-mm-ss");
+            double interactionDuration = DateTime.Now.Subtract(startTime).TotalSeconds;
+            npcInteractions[startTimeKey] = new NpcInteraction(npcType, interactionDuration);
             currentNpcInteraction = default; 
         }
 
@@ -238,12 +241,10 @@ public class Tracker : MonoBehaviour
             sb.AppendLine($"ItemStolenByMob,{kvp.Key.displayName},{kvp.Value}");
         foreach (var kvp in npcInteractions)
         {
-            var (npcType, endInteractionTime) = kvp.Value;
-            string npcName = npcType.displayName;
-            string interactionTime = kvp.Key.ToString("yyyy-MM-dd'T'HH-mm-ss");
-            string interactionDuration = endInteractionTime.Subtract(kvp.Key).TotalSeconds.ToString("F2") + "s";
-            string value = $"{npcName} interaction for {interactionDuration}";
-            sb.AppendLine($"NpcInteraction,{interactionTime},{value}");
+            NpcInteraction npcInteraction = kvp.Value;
+            string npcName = npcInteraction.npcType.displayName;
+            string value = $"{npcName} interaction for {npcInteraction.durationSeconds:F2}s";
+            sb.AppendLine($"NpcInteraction,{kvp.Key},{value}");
         }
 
         return sb.ToString();
@@ -261,4 +262,17 @@ public struct BlockWithTool
         this.blockType = blockType;
         this.tool = tool;
     }
+}
+
+[Serializable]
+public struct NpcInteraction
+{
+    public NpcType npcType;
+    public double durationSeconds;
+
+    public NpcInteraction(NpcType npcType, double durationSeconds)
+    {
+        this.npcType = npcType;
+        this.durationSeconds = durationSeconds;
+    } 
 }

@@ -66,6 +66,7 @@ public class ResourceInventory : InventoryComponent<ItemType>
 
         Debug.Log($"{mob.displayName} stole {removed} items from the player: {string.Join(", ", stolenItems.Select(item => $"{item.count} {item.itemType.displayName}"))}");
         OnItemsStolenByMob?.Invoke((mob, removed));
+        OnResourceInventoryUpdate?.Invoke(this);
         return stolenItems;
     }
 
