@@ -20,7 +20,7 @@ MonoBehaviour:
   hardness: 3
   respawnRate: 0
   replacementBlock: {fileID: 11400000, guid: f15df10fbce2145c1b40bee163d322f0, type: 2}
-  toolType: 4
+  toolType: 1
   minimumToolTier: 2
   lootDrops:
   - itemType: {fileID: 11400000, guid: e20d3d99a6b413346b430aa823cbdd11, type: 2}

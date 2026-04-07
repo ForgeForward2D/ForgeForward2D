@@ -17,10 +17,10 @@ MonoBehaviour:
   walkable: 0
   breakable: 1
   interactable: 0
-  hardness: 3
+  hardness: 5
   respawnRate: 0
   replacementBlock: {fileID: 0}
-  toolType: 2
+  toolType: 1
   minimumToolTier: 4
   lootDrops:
   - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
