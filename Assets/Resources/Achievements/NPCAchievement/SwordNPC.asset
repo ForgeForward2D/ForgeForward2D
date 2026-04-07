@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21fc5edbdc9b40ccb6f5ace6964e038, type: 3}
   m_Name: SwordNPC
   m_EditorClassIdentifier: Assembly-CSharp::NPCAchievement
-  title: 
+  title: Gear up!
   visible: 1
-  icon: {fileID: 0}
-  npcType: {fileID: 0}
-  targetCount: 0
+  icon: {fileID: 4007610613663647153, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
+  npcType: {fileID: 11400000, guid: 1bc3c4893a092274d82fe3942381fdde, type: 2}
+  targetCount: 1
