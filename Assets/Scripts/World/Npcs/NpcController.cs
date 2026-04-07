@@ -17,8 +17,8 @@ public class NpcController : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int currentLineIndex;
 
-    private string[] pages;
-    public bool isDialogueActive = false;
+    [SerializeField] private string[] pages;
+    [SerializeField] private bool isDialogueActive = false;
 
     [Header("Mob Spawn Control")]
     [SerializeField] public bool reduceSpawn = false;
