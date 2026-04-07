@@ -30,35 +30,35 @@ public class NpcController : MonoBehaviour
     [SerializeField] private string worseSwordDialogue = "My current sword is much better than that {0}!";
     [SerializeField] private string reduceSpawnReminderDialogue = "Like I said before, mob spawns are currently reduced by {0}%!";
 
-    public void GiveSword(Tool tool)
+    public void GiveSword(SwordItem sword)
     {
-        if (tool == null || tool.type != ToolType.Sword) return;
+        if (sword == null) return;
 
-        swordLevel = (int)tool.tier;
+        swordLevel = sword.swordLevel;
         reduceSpawn = true;
-        Debug.Log($"Gave sword of tier {tool.tier} to NPC {GetDisplayName()}");
+        Debug.Log($"Gave sword of level {sword.swordLevel} to NPC {GetDisplayName()}");
 
         int reductionPercentage = swordLevel * 20;
-        string message = string.Format(giveSwordDialogue, tool.displayName, reductionPercentage);
+        string message = string.Format(giveSwordDialogue, sword.displayName, reductionPercentage);
         pages = BuildPages(new string[] { message });
         currentLineIndex = 0;
     }
 
-    public void RejectSword(Tool tool)
+    public void RejectSword(SwordItem sword)
     {
-        if (tool == null || tool.type != ToolType.Sword) return;
+        if (sword == null) return;
 
-        Debug.Log($"Rejected sword of tier {tool.tier} from NPC {GetDisplayName()} because they already have tier {swordLevel}");
+        Debug.Log($"Rejected sword of level {sword.swordLevel} from NPC {GetDisplayName()} because they already have level {swordLevel}");
 
         List<string> lines = new List<string>();
 
-        if ((int)tool.tier == swordLevel)
+        if (sword.swordLevel == swordLevel)
         {
-            lines.Add(string.Format(sameSwordDialogue, tool.displayName));
+            lines.Add(string.Format(sameSwordDialogue, sword.displayName));
         }
         else
         {
-            lines.Add(string.Format(worseSwordDialogue, tool.displayName));
+            lines.Add(string.Format(worseSwordDialogue, sword.displayName));
         }
 
         if (reduceSpawn)

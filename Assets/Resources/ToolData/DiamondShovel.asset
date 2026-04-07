@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Diamond Shovel
   maxStackSize: 1
   icon: {fileID: 431537848788143234, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 4
+  type: 3
   tier: 4
   efficiency: 4
   prefab: {fileID: 8690767056924379190, guid: 1def064e02e124fad8a87c5dd8bad03b, type: 3}

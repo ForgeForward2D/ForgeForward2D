@@ -13,11 +13,9 @@ public class Tool : ItemType
 public enum ToolType
 {
     None,
-    Sword,
     Pickaxe,
     Axe,
     Shovel,
-    Hammer,
 }
 
 public enum ToolTier

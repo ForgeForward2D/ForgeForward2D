@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Diamond Axe
   maxStackSize: 1
   icon: {fileID: 2584005244199257219, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 3
+  type: 2
   tier: 4
   efficiency: 4
   prefab: {fileID: 2094685673995534264, guid: f51e37aeb3fab4bb5a3b99100d3d86ae, type: 3}

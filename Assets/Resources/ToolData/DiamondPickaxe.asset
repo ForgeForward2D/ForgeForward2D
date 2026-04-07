@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Diamond Pickaxe
   maxStackSize: 1
   icon: {fileID: -7485147203578233895, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 2
+  type: 1
   tier: 4
   efficiency: 4
   prefab: {fileID: 8506343386138458437, guid: ea8db32db55784ba68edb708c175c55a, type: 3}

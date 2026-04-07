@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Stone Pickaxe
   maxStackSize: 1
   icon: {fileID: 7943440995566245910, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 2
+  type: 1
   tier: 2
   efficiency: 2
   prefab: {fileID: 8506343386138458437, guid: 1d550385d0d5844309bff9f2213efe73, type: 3}

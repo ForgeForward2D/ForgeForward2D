@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Wooden Pickaxe
   maxStackSize: 1
   icon: {fileID: 246200477909967752, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 2
+  type: 1
   tier: 1
   efficiency: 1.5
   prefab: {fileID: 8506343386138458437, guid: c5c52971b98ce4ad099ad5237c76d5a4, type: 3}

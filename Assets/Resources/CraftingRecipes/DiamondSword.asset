@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f548d71a4a4c5da896f8e2a90090e, type: 3}
   m_Name: DiamondSword
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
-  workbenchType: 1
+  workbenchType: 0
   ingredients:
   - itemType: {fileID: 11400000, guid: 401f379e9df7b6b4e8e1f8760a715167, type: 2}
-    count: 3
+    count: 30
+  - itemType: {fileID: 11400000, guid: 0b2e6f9af4b464a95acd05be280cfcae, type: 2}
+    count: 45
   - itemType: {fileID: 11400000, guid: 4e86ef1fb98bb4060b93620d0c52dbf9, type: 2}
-    count: 3
+    count: 2
   result:
-    itemType: {fileID: 11400000, guid: 916b631c99f9c429788b9141ce528ec9, type: 2}
+    itemType: {fileID: 11400000, guid: 41ca4b655b24a214c9d07b36a70e4cf6, type: 2}
     count: 1
