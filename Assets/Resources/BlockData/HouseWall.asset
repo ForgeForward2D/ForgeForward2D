@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18691fcdc53042f3ad2b7240c3abbd2, type: 3}
   m_Name: HouseWall
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
-  displayName: Bridge Wood
+  displayName: House Wall
   tile: {fileID: 11400000, guid: c8dac90ab184242fab5330cd525f55d6, type: 2}
   walkable: 0
   breakable: 0
