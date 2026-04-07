@@ -77,6 +77,14 @@ public class InputManager : MonoBehaviour
     }
 
 
+    // Tutorial Dialogue
+    public static event Action<UIPage> OnTutorialInput;
+    public void TutorialDialogue(InputAction.CallbackContext context)
+    {
+        if (context.phase != InputActionPhase.Performed) return;
+        OnTutorialInput?.Invoke(uiPage);
+    }
+
     // HotBar
     public static event Action<(UIPage, int)> OnHotBarSelected;
     public static event Action<(UIPage, int)> OnHotBarScroll;

@@ -113,7 +113,7 @@ public class NpcController : MonoBehaviour
         if (!isDialogueActive || !data.performed) return;
         if (data.input.y == 0) return;
 
-        if (data.input.y > 0f) HandleDialogueNavigate(1);
+        if (data.input.y < 0f) HandleDialogueNavigate(1);
         else HandleDialogueNavigate(-1);
     }
 
@@ -162,6 +162,13 @@ public class NpcController : MonoBehaviour
         return true;
     }
 
+    public void CloseDialogue()
+    {
+        if (!isDialogueActive) return;
+        isDialogueActive = false;
+        OnSetDialogueUIActive?.Invoke(false);
+    }
+
     public void HandleInteraction(UIPage uiPage)
     {
         if (uiPage == UIPage.None)
@@ -187,22 +194,12 @@ public class NpcController : MonoBehaviour
     {
         if (direction > 0)
         {
+            if (currentLineIndex == pages.Length - 1) return;
             currentLineIndex++;
-            if (currentLineIndex == pages.Length)
-            {
-                isDialogueActive = false;
-                OnSetDialogueUIActive?.Invoke(false);
-                return;
-            }
         }
         else
         {
-            if (currentLineIndex == 0)
-            {
-                isDialogueActive = false;
-                OnSetDialogueUIActive?.Invoke(false);
-                return;
-            }
+            if (currentLineIndex == 0) return;
             currentLineIndex--;
         }
         OnNpcControllerUpdate?.Invoke(this);
