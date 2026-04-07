@@ -210,6 +210,24 @@ public class Tracker : MonoBehaviour
         return visitedLevels;
     }
 
+    public Dictionary<UIPage, int> GetVisitedUIs()
+    {
+        return visitedUIs;
+    }
+
+    public Dictionary<NpcType, int> GetNpcInteractions()
+    {
+        Dictionary<NpcType, int> result = new Dictionary<NpcType, int>();
+        foreach (var kvp in npcInteractions)        {
+            NpcInteraction npcInteraction = kvp.Value;
+            if (result.ContainsKey(npcInteraction.npcType))
+                result[npcInteraction.npcType] ++;
+            else                
+                result[npcInteraction.npcType] = 1;
+        }
+        return result;
+    }
+
     public string Dump()
     {
         StringBuilder sb = new StringBuilder();
