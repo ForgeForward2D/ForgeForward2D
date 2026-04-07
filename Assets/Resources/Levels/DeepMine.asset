@@ -14,22 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Level
   levelName: Deep Mine
   startingPoint: {x: -300, y: -300}
-  backgroundTile: {fileID: 11400000, guid: 50d6e6e934000426a83392c4ab68d9c3, type: 2}
+  backgroundTile: {fileID: 11400000, guid: 85cc68f6944f54d8697e845c1af6bcf6, type: 2}
   portalBlock: {fileID: 11400000, guid: cee512f6af88949ba92441daaa2cc2b1, type: 2}
   wallBlock: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
-  paddingTile: {fileID: 11400000, guid: 199c19d17db464ca48be3e224e704c6e, type: 2}
+  paddingTile: {fileID: 0}
   levelSize: 100
+  viewDistance: 4
   blockMapping:
   - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
     threshold: 0.25
     details: []
   - block: {fileID: 11400000, guid: 327832cc0a49e4e278c2333aa3750657, type: 2}
-    threshold: 0.55
+    threshold: 0.7
     details:
     - block: {fileID: 11400000, guid: cf30de75936df4afe8dfc7906a0eb2cf, type: 2}
-      probability: 0.3
+      probability: 0.005
     - block: {fileID: 11400000, guid: f6d8f3ab302f5461ab56d92eece3e0a1, type: 2}
       probability: 0.4
   - block: {fileID: 0}
-    threshold: 0.9
+    threshold: 1
     details: []
+  mobCount: 4
+  mobSpawns: []

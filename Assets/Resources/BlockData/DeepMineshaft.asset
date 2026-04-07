@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DeepMineshaft
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: Deep Mineshaft
-  tile: {fileID: 11400000, guid: ddfccd6eb4be64bb59760ab023eb5553, type: 2}
+  tile: {fileID: 11400000, guid: 8fe7aa3773543fb4ab1db23072501033, type: 2}
   walkable: 0
   breakable: 0
   interactable: 0
