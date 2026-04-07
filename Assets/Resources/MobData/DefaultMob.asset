@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MobType
   displayName: DefaultMob
   prefab: {fileID: 2939615087842769253, guid: bf5b666682e8fee44b8c1c30c8c9882b, type: 3}
+  sprite: {fileID: -1059613970, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
   moveSpeed: 1.5
-  directionCheckDistance: 0.45
+  chaseSpeed: 2.5
+  aggroRange: 5
+  stealsResources: 1
+  stealRange: 1
+  stealInterval: 2.5
+  maxItemsStolen: 3
+  itemsConsumedPerMin: 10
+  directionCheckDistance: 0.3
   idleDurationRange: {x: 0.75, y: 2}
   walkDurationRange: {x: 1.5, y: 4}

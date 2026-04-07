@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f548d71a4a4c5da896f8e2a90090e, type: 3}
   m_Name: WoodenSword
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
-  workbenchType: 1
+  workbenchType: 0
   ingredients:
   - itemType: {fileID: 11400000, guid: 4574b449bd1083146be7a13857752035, type: 2}
-    count: 5
+    count: 10
   result:
-    itemType: {fileID: 11400000, guid: f51b2755c075b450a99bd0ff3ac4c8c5, type: 2}
+    itemType: {fileID: 11400000, guid: b480c0fb85bbdb14b994203a82ba1e6b, type: 2}
     count: 1

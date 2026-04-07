@@ -15,7 +15,9 @@ MonoBehaviour:
   workbenchType: 1
   ingredients:
   - itemType: {fileID: 11400000, guid: e20d3d99a6b413346b430aa823cbdd11, type: 2}
-    count: 5
+    count: 15
+  - itemType: {fileID: 11400000, guid: 0b2e6f9af4b464a95acd05be280cfcae, type: 2}
+    count: 25
   - itemType: {fileID: 11400000, guid: 8b68d1c5bff35400f9549a9b2afb0f8f, type: 2}
     count: 1
   result:

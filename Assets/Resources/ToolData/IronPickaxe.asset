@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Iron Pickaxe
   maxStackSize: 1
   icon: {fileID: -4065731190136991531, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 2
+  type: 1
   tier: 3
   efficiency: 3
   prefab: {fileID: 8506343386138458437, guid: 3721719dc61544db382a8466193bcb6a, type: 3}

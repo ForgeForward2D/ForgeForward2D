@@ -25,15 +25,24 @@ public class BlockInfoUI : UIComponent<TargetBlockInfoManager>
             return;
         }
 
+        canvasGroup.alpha = 1f;
+
+        NpcController npc = manager.GetTargetNpc();
+        if (npc != null)
+        {
+            actionLabel.text = "Talk";
+            actionLabel.color = Color.white;
+            blockIcon.sprite = npc.CharacterSprite;
+            blockIcon.gameObject.SetActive(npc.CharacterSprite != null);
+            return;
+        }
+
         BlockType block = manager.GetTargetBlock();
         bool isBreakable = block != null && block.breakable;
         bool canBreak = isBreakable && manager.CanBreakWithCurrentTool(block);
 
-        canvasGroup.alpha = 1f;
-
         Color color = !isBreakable ? Color.white : canBreak ? Color.green : Color.red;
         actionLabel.color = color;
-
         actionLabel.text = isBreakable ? "Mine" : "Interact";
 
         if (isBreakable)

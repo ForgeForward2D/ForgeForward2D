@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Stone Shovel
   maxStackSize: 1
   icon: {fileID: -93006566689803346, guid: 1e474fc3814a244b69e74a96037df0bc, type: 3}
-  type: 4
+  type: 3
   tier: 2
   efficiency: 2
   prefab: {fileID: 8690767056924379190, guid: 86e497e7eb5f047878e25a03cea24eb3, type: 3}

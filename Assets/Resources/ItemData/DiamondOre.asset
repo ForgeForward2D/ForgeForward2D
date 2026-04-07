@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a45c7459feb2c44c95e9e3334a4d479, type: 3}
   m_Name: DiamondOre
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
-  displayName: Diamon Ore
+  displayName: Diamond Ore
   maxStackSize: 64
-  icon: {fileID: 425945882, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
+  icon: {fileID: -1196652238, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}

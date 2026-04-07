@@ -8,6 +8,9 @@ using UnityEngine.UI;
 public class CraftingManager
 {
     public event Action<CraftingManager> OnCraftingManagerUpdate;
+    public static event Action<CraftingRecipe> OnRecipeCrafted;
+
+    private static int maxCraftedSwordLevel = 0;
 
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private WorkbenchType workbenchType;
@@ -99,14 +102,19 @@ public class CraftingManager
         {
             inventoryManager.RemoveItemOfType(ingredient.required.itemType, ingredient.required.count);
         }
+        if (recipe.result.itemType is SwordItem craftedSword && craftedSword.swordLevel > maxCraftedSwordLevel)
+            maxCraftedSwordLevel = craftedSword.swordLevel;
         inventoryManager.AddItemOfType(recipe.result.itemType, recipe.result.count);
+        OnRecipeCrafted?.Invoke(recipe);
         return true;
     }
 
     private void UpdateAvailableRecipes()
     {
         availableRecipes = allRecipes
-            .Where(recipe => inventoryManager.CountFreeSpace(recipe.result.itemType) >= recipe.result.count)
+            .Where(recipe =>
+                inventoryManager.CountFreeSpace(recipe.result.itemType) >= recipe.result.count &&
+                !(recipe.result.itemType is SwordItem sword && sword.swordLevel <= maxCraftedSwordLevel))
             .ToList();
         if (selectedRecipeIndex >= availableRecipes.Count)
         {

@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Level
   levelName: Forest
   startingPoint: {x: -300, y: 0}
-  backgroundTile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
+  backgroundTile: {fileID: 11400000, guid: db2e09a2a928147a5946a6a64740eaae, type: 2}
   portalBlock: {fileID: 11400000, guid: ec20352a20e19486f9d3392da0faabe2, type: 2}
   wallBlock: {fileID: 11400000, guid: 2eefb98cc63694ea680a898046976a94, type: 2}
-  paddingTile: {fileID: 11400000, guid: 00144441d1e834044b260ed05312bda6, type: 2}
+  paddingTile: {fileID: 11400000, guid: db2e09a2a928147a5946a6a64740eaae, type: 2}
   levelSize: 200
+  viewDistance: 1000
   blockMapping:
   - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
     threshold: 0.1
@@ -39,3 +40,7 @@ MonoBehaviour:
   - block: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
     threshold: 1
     details: []
+  mobCount: 100
+  mobSpawns:
+  - mobType: {fileID: 11400000, guid: c2e482c1a7f7d6742b2e7d45be75cff7, type: 2}
+    spawnWeight: 1

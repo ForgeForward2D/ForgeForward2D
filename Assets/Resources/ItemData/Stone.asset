@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
   displayName: Stone
   maxStackSize: 64
-  icon: {fileID: -1205228681, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}
+  icon: {fileID: 1760103457, guid: 56b28c1a417c54300b97e1bcb8daad3f, type: 3}

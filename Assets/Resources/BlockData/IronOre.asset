@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: IronOre
   m_EditorClassIdentifier: Assembly-CSharp::BlockType
   displayName: IronOre
-  tile: {fileID: 11400000, guid: b619084e3fcf04580865ac2e0eba880f, type: 2}
+  tile: {fileID: 11400000, guid: 7d3b92899313e4295a220d8829ee876c, type: 2}
   walkable: 0
   breakable: 1
-  hardness: 2
-  respawnRate: 5
+  interactable: 0
+  hardness: 3
+  respawnRate: 20
   replacementBlock: {fileID: 11400000, guid: 327832cc0a49e4e278c2333aa3750657, type: 2}
-  toolType: 2
-  minimumToolTier: 1
+  toolType: 1
+  minimumToolTier: 2
   lootDrops:
   - itemType: {fileID: 11400000, guid: fcd7c5b750db5104d9243c23eb613f4c, type: 2}
     amount: 1

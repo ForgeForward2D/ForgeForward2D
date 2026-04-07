@@ -12,7 +12,18 @@ public class Level : ScriptableObject
     public BlockType wallBlock;
     public TileBase paddingTile;
     public int levelSize; // ~radius
+    public float viewDistance;
     public PerlinMapping[] blockMapping;
+
+    public int mobCount = 4;
+    public MobSpawnEntry[] mobSpawns;
+}
+
+[Serializable]
+public class MobSpawnEntry
+{
+    public MobType mobType;
+    [Min(0.01f)] public float spawnWeight = 1f;
 }
 
 [Serializable]

@@ -6,24 +6,28 @@ using UnityEngine.Tilemaps;
 public class WorldGeneration : MonoBehaviour
 {
 
-    [SerializeField] TileBase backgroundTile;
-
-    [SerializeField] BlockType wallBlock;
+    [SerializeField] Level baseLevel;
 
     private Tilemap backgroundTilemap;
     private Tilemap foregroundTilemap;
 
     [Header("Settings")]
     [SerializeField] float noiseScale;
+    [SerializeField] float portalClearRadius;
     [SerializeField] int borderWaves = 8;
     [SerializeField] float borderWidth = 0.6f;
 
     [SerializeField] int worldSeed;
 
-    [SerializeField] public Level[] levels;
+    public Level BaseLevel => baseLevel;
+    public Level[] Levels { get; private set; }
+    [SerializeField] private MobSpawner mobSpawner;
+
+    private int paddingThickness;
 
     void Start()
     {
+        Levels = Resources.LoadAll<Level>("Levels").Where(l => l != baseLevel).ToArray();
         if (worldSeed == 0)
         {
             worldSeed = System.Environment.TickCount;
@@ -34,35 +38,67 @@ public class WorldGeneration : MonoBehaviour
         backgroundTilemap = TileMapManager.Instance.BackgroundTilemap;
         foregroundTilemap = TileMapManager.Instance.ForegroundTilemap;
 
+        Camera cam = Camera.main;
+        paddingThickness = Mathf.CeilToInt(Mathf.Max(cam.orthographicSize * 2f * cam.aspect, cam.orthographicSize * 2f));
+
         // Draw border around starter level
         (int xMin, int xMax, int yMin, int yMax) mapBounds = TileMapManager.Instance.GetBounds();
-        Debug.Log($"Set world borders to x: ({mapBounds.xMin}, {mapBounds.xMax}), y: ({mapBounds.yMin}, {mapBounds.yMax})");
 
         for (int y = mapBounds.yMin - 1; y <= mapBounds.yMax; y++)
         {
             // Left wall
-            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMin - 1, y));
+            TileMapManager.Instance.DrawBlock(baseLevel.wallBlock, new Vector2Int(mapBounds.xMin - 1, y));
             // Right wall
-            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(mapBounds.xMax, y));
+            TileMapManager.Instance.DrawBlock(baseLevel.wallBlock, new Vector2Int(mapBounds.xMax, y));
         }
         for (int x = mapBounds.xMin; x < mapBounds.xMax; x++)
         {
             // Bottom wall
-            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMin - 1));
+            TileMapManager.Instance.DrawBlock(baseLevel.wallBlock, new Vector2Int(x, mapBounds.yMin - 1));
             // Top wall
-            TileMapManager.Instance.DrawBlock(wallBlock, new Vector2Int(x, mapBounds.yMax));
+            TileMapManager.Instance.DrawBlock(baseLevel.wallBlock, new Vector2Int(x, mapBounds.yMax));
 
             for (int y = mapBounds.yMin; y < mapBounds.yMax; y++)
             {
                 // Background
-                backgroundTilemap.SetTile(new Vector3Int(x, y, 0), backgroundTile);
+                if (backgroundTilemap.GetTile(new Vector3Int(x, y, 0)) == null)
+                {
+                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), baseLevel.backgroundTile);
+                }
             }
         }
 
-        foreach (var level in levels)
+        // Draw paddingBlocks around the starter level
+        int pxMin = mapBounds.xMin - 1 - paddingThickness;
+        int pxMax = mapBounds.xMax + paddingThickness;
+        int pyMin = mapBounds.yMin - 1 - paddingThickness;
+        int pyMax = mapBounds.yMax + paddingThickness;
+
+        for (int x = pxMin; x <= pxMax; x++)
+        {
+            for (int y = pyMin; y <= pyMax; y++)
+            {
+                bool outsideWall = x < mapBounds.xMin - 1 || x > mapBounds.xMax
+                                || y < mapBounds.yMin - 1 || y > mapBounds.yMax;
+                if (outsideWall)
+                {
+                    if (backgroundTilemap.GetTile(new Vector3Int(x, y, 0)) == null)
+                    {
+                        backgroundTilemap.SetTile(new Vector3Int(x, y, 0), baseLevel.paddingTile);
+                    }
+                }
+            }
+        }
+
+        foreach (var level in Levels)
         {
             GenerateLevel(level);
         }
+
+        if (mobSpawner != null)
+            mobSpawner.SetReady();
+        else
+            Debug.LogError($"No mob spawner set");
     }
 
     void GenerateLevel(Level level)
@@ -105,8 +141,6 @@ public class WorldGeneration : MonoBehaviour
         float maxAmpSum = 0f;
         for (int i = 0; i < N; i++) maxAmpSum += amps[i];
 
-        Camera cam = Camera.main;
-        int paddingThickness = Mathf.CeilToInt(Mathf.Max(cam.orthographicSize * 2f * cam.aspect, cam.orthographicSize * 2f));
         int scanRadius = Mathf.CeilToInt(baseRadius * (1f + maxAmpSum)) + 2 + paddingThickness;
 
         int xStart = startingPoint.x - scanRadius;
@@ -117,6 +151,7 @@ public class WorldGeneration : MonoBehaviour
         HashSet<Vector2Int> interiorTiles = new HashSet<Vector2Int>();
         HashSet<Vector2Int> borderTiles = new HashSet<Vector2Int>();
         HashSet<Vector2Int> paddingTiles = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> blockfreeTiles = new HashSet<Vector2Int>();
 
         for (int x = xStart; x <= xEnd; x++)
         {
@@ -125,6 +160,14 @@ public class WorldGeneration : MonoBehaviour
                 float dx = x - startingPoint.x;
                 float dy = y - startingPoint.y;
                 float dist = Mathf.Sqrt(dx * dx + dy * dy);
+
+                // No tiles around portal to prevent trapping the player inside
+                if (dx * dx + dy * dy <= portalClearRadius * portalClearRadius)
+                {
+                    blockfreeTiles.Add(new Vector2Int(x, y));
+                    continue;
+                }
+
                 float angle = Mathf.Atan2(dy, dx);
 
                 float normalizedRadius = 1f;
@@ -147,6 +190,16 @@ public class WorldGeneration : MonoBehaviour
                     paddingTiles.Add(new Vector2Int(x, y));
                 }
             }
+        }
+
+        // Place blockfree tiles with background
+        foreach (var tile in blockfreeTiles)
+        {
+            int x = tile.x;
+            int y = tile.y;
+            Vector3Int tilePos = new Vector3Int(x, y, 0);
+
+            backgroundTilemap.SetTile(tilePos, level.backgroundTile);
         }
 
         // Place interior tiles using Perlin noise
@@ -196,7 +249,7 @@ public class WorldGeneration : MonoBehaviour
             backgroundTilemap.SetTile(tilePos, level.backgroundTile);
         }
 
-        TileMapManager.Instance.RegisterSpawnablePositions(interiorTiles);
+        TileMapManager.Instance.RegisterSpawnablePositions(interiorTiles, level);
 
         // Place border wall tiles
         foreach (var tile in borderTiles)
