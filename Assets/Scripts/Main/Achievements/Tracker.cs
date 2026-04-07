@@ -10,24 +10,28 @@ public class Tracker : MonoBehaviour
 
     [Header("Debugging")]
     [SerializeField] private SerializableDictionary<BlockType, int> blockAttacks;
-    [SerializeField] private SerializableDictionary<BlockType, int> blocksBroken;
     [SerializeField] private SerializableDictionary<BlockWithTool, int> blocksBrokenWithTool;
     [SerializeField] private SerializableDictionary<BlockType, int> blockInteractions;
     [SerializeField] private SerializableDictionary<ItemType, int> itemsCollected;
     [SerializeField] private SerializableDictionary<CraftingRecipe, int> recipesCrafted;
     [SerializeField] private SerializableDictionary<Level, int> visitedLevels;
     [SerializeField] private SerializableDictionary<UIPage, int> visitedUIs;
+    [SerializeField] private SerializableDictionary<MobType, int> itemsStolenByMob;
+    [SerializeField] private SerializableDictionary<string, NpcInteraction> npcInteractions;
+    [SerializeField] private (NpcType, DateTime) currentNpcInteraction;
 
     private void Awake()
     {
         blockAttacks = new SerializableDictionary<BlockType, int>();
-        blocksBroken = new SerializableDictionary<BlockType, int>();
         blocksBrokenWithTool = new SerializableDictionary<BlockWithTool, int>();
         blockInteractions = new SerializableDictionary<BlockType, int>();
         itemsCollected = new SerializableDictionary<ItemType, int>();
         recipesCrafted = new SerializableDictionary<CraftingRecipe, int>();
         visitedLevels = new SerializableDictionary<Level, int>();
         visitedUIs = new SerializableDictionary<UIPage, int>();
+        itemsStolenByMob = new SerializableDictionary<MobType, int>();
+        npcInteractions = new SerializableDictionary<string, NpcInteraction>();
+        currentNpcInteraction = default;
 
         PlayerInteractionManager.OnAttackUpdate += HandleAttackUpdate;
         PlayerInteractionManager.OnBlockInteraction += HandleInteraction;
@@ -37,6 +41,9 @@ public class Tracker : MonoBehaviour
         CraftingManager.OnRecipeCrafted += HandleRecipeCrafted;
         PortalManager.OnPlayerTeleport += HandlePlayerTeleport;
         UIManager.OnUpdatePage += HandlePageUpdate;
+
+        ResourceInventory.OnItemsStolenByMob += HandleMobStealItems;
+        NpcController.OnNpcControllerUpdate += HandleNpcControllerUpdate;
     }
 
     private void HandleAttackUpdate((UIPage, BlockType, Vector2Int, bool) data)
@@ -76,11 +83,6 @@ public class Tracker : MonoBehaviour
 
         if (blockType == null)
             blockType = BlockTypeRepository.GetBlockByName("Air");
-
-        if (blocksBroken.ContainsKey(blockType))
-            blocksBroken[blockType]++;
-        else
-            blocksBroken[blockType] = 1;
 
         var key = new BlockWithTool(blockType, tool);
         if (blocksBrokenWithTool.ContainsKey(key))
@@ -125,14 +127,44 @@ public class Tracker : MonoBehaviour
 
     private void HandlePageUpdate(UIPage page)
     {
-        if (page == UIPage.None)
-            return;
+        // Track visited UIs
+        if (page != UIPage.None)
+        {
+            if (visitedUIs.ContainsKey(page))
+                visitedUIs[page]++;
+            else
+                visitedUIs[page] = 1;
+        }
 
-        if (visitedUIs.ContainsKey(page))
-            visitedUIs[page]++;
-        else
-            visitedUIs[page] = 1;
+        // Track dialogue end
+        if (page != UIPage.Dialogue && currentNpcInteraction != default )
+        {
+            var (npcType, startTime) = currentNpcInteraction;
+            string startTimeKey = startTime.ToString("yyyy-MM-dd'T'HH-mm-ss");
+            double interactionDuration = DateTime.Now.Subtract(startTime).TotalSeconds;
+            npcInteractions[startTimeKey] = new NpcInteraction(npcType, interactionDuration);
+            currentNpcInteraction = default; 
+        }
+
         OnTrackerUpdate?.Invoke(this);
+    }
+
+    private void HandleMobStealItems((MobType, int) data)
+    {
+        var (mobType, count) = data;
+
+        if (itemsStolenByMob.ContainsKey(mobType))
+            itemsStolenByMob[mobType] += count;
+        else
+            itemsStolenByMob[mobType] = count;
+        OnTrackerUpdate?.Invoke(this);
+    }
+
+    private void HandleNpcControllerUpdate(NpcController npcController)
+    {
+        if (currentNpcInteraction != default || npcController == null || npcController.NpcType == null)
+            return;
+        currentNpcInteraction = (npcController.NpcType, DateTime.Now);
     }
 
     public Dictionary<BlockType, int> GetBlockAttacks()
@@ -142,7 +174,15 @@ public class Tracker : MonoBehaviour
 
     public Dictionary<BlockType, int> GetBlocksBroken()
     {
-        return blocksBroken;
+        Dictionary<BlockType, int> blockBroken = new Dictionary<BlockType, int>();
+        foreach (var kvp in blocksBrokenWithTool)
+        {
+            if (blockBroken.ContainsKey(kvp.Key.blockType))
+                blockBroken[kvp.Key.blockType] += kvp.Value;
+            else
+                blockBroken[kvp.Key.blockType] = kvp.Value;
+        }
+        return blockBroken;
     }
 
     public Dictionary<BlockWithTool, int> GetBlocksBrokenWithTool()
@@ -170,6 +210,24 @@ public class Tracker : MonoBehaviour
         return visitedLevels;
     }
 
+    public Dictionary<UIPage, int> GetVisitedUIs()
+    {
+        return visitedUIs;
+    }
+
+    public Dictionary<NpcType, int> GetNpcInteractions()
+    {
+        Dictionary<NpcType, int> result = new Dictionary<NpcType, int>();
+        foreach (var kvp in npcInteractions)        {
+            NpcInteraction npcInteraction = kvp.Value;
+            if (result.ContainsKey(npcInteraction.npcType))
+                result[npcInteraction.npcType] ++;
+            else                
+                result[npcInteraction.npcType] = 1;
+        }
+        return result;
+    }
+
     public string Dump()
     {
         StringBuilder sb = new StringBuilder();
@@ -179,7 +237,7 @@ public class Tracker : MonoBehaviour
             sb.AppendLine($"BlockAttack,{kvp.Key.displayName},{kvp.Value}");
         foreach (var kvp in blockInteractions)
             sb.AppendLine($"BlockInteraction,{kvp.Key.displayName},{kvp.Value}");
-        foreach (var kvp in blocksBroken)
+        foreach (var kvp in GetBlocksBroken())
             sb.AppendLine($"BlockBroken,{kvp.Key.displayName},{kvp.Value}");
         foreach (var kvp in blocksBrokenWithTool)
         {
@@ -197,6 +255,15 @@ public class Tracker : MonoBehaviour
             sb.AppendLine($"VisitedLevel,{kvp.Key.levelName},{kvp.Value}");
         foreach (var kvp in visitedUIs)
             sb.AppendLine($"VisitedUI,{kvp.Key},{kvp.Value}");
+        foreach (var kvp in itemsStolenByMob)
+            sb.AppendLine($"ItemStolenByMob,{kvp.Key.displayName},{kvp.Value}");
+        foreach (var kvp in npcInteractions)
+        {
+            NpcInteraction npcInteraction = kvp.Value;
+            string npcName = npcInteraction.npcType.displayName;
+            string value = $"{npcName} interaction for {npcInteraction.durationSeconds:F2}s";
+            sb.AppendLine($"NpcInteraction,{kvp.Key},{value}");
+        }
 
         return sb.ToString();
     }
@@ -213,4 +280,17 @@ public struct BlockWithTool
         this.blockType = blockType;
         this.tool = tool;
     }
+}
+
+[Serializable]
+public struct NpcInteraction
+{
+    public NpcType npcType;
+    public double durationSeconds;
+
+    public NpcInteraction(NpcType npcType, double durationSeconds)
+    {
+        this.npcType = npcType;
+        this.durationSeconds = durationSeconds;
+    } 
 }
