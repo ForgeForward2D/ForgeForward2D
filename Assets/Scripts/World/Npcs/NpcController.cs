@@ -68,7 +68,7 @@ public class NpcController : MonoBehaviour
         }
         else if (npcType != null && npcType.dialogueLines != null)
         {
-             lines.AddRange(npcType.dialogueLines);
+            lines.AddRange(npcType.dialogueLines);
         }
 
         pages = BuildPages(lines.ToArray());
@@ -86,6 +86,7 @@ public class NpcController : MonoBehaviour
 
         InputManager.OnMoveInput += HandleMoveInput;
         InputManager.OnAttackUpdate += HandleAttackUpdate;
+        InputManager.OnInteractionInput += HandleInteractionInput;
         UIManager.OnUpdatePage += HandleUpdatePage;
     }
 
@@ -99,6 +100,12 @@ public class NpcController : MonoBehaviour
     {
         if (!isDialogueActive || !data.isAttacking) return;
         HandleDialogueNavigate(-1);
+    }
+
+    private void HandleInteractionInput(UIPage uiPage)
+    {
+        if (!isDialogueActive || uiPage != UIPage.Dialogue) return;
+        HandleDialogueNavigate(1);
     }
 
     private void HandleMoveInput((UIPage uiPage, bool performed, Vector2 input) data)
