@@ -81,7 +81,14 @@
     name: <craftingmanager>,
   ),
   event(<onmoveinput>, <craftingmanager>, corner: left),
+  node(
+    (1, 3),
+    [NPC Controller#desc[Update Dialogue Text]],
+    name: <npccontroller>,
+  ),
+  event(<onmoveinput>, <npccontroller>, corner: left),
 
+  node((2, 0), [Achievement Popup Manager], name: <achievementpopupmanager>),
   node((2, 1), [Achievement UI#desc[Refresh UI]], name: <achievementui>),
   event(
     <achievementmanager>,
@@ -109,6 +116,19 @@
     label: [Request\ Refresh],
     bend: bend,
   ),
+  node(
+    (2, 3),
+    [Dialogue UI#desc[Refresh UI]],
+    name: <dialogueui>,
+  ),
+
+  node((1.5, 4), [Tracker#desc[Record Event]], name: <tracker>),
+  event(<npccontroller>, <dialogueui>, label: [OnNPCControllerUpdate]),
+  event(<npccontroller>, (1.5, 3), <tracker>),
+
+  event(<tracker>, (2.5, 4), (2.5, -0.5), (1.5, -0.5), (1.5, 0.3), (1, 0.3), <achievementmanager>, label: [OnTrackerUpdate]),
+
+  event(<achievementmanager>, (1, 0.5), (2, 0.5), <achievementpopupmanager>, label: [OnAchievement-\ Unlocked], label-anchor: "center", bend: left),
 )
 
 #diagram-box(
