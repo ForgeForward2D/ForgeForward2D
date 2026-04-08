@@ -704,7 +704,7 @@ MonoBehaviour:
   noiseScale: 0.15
   portalClearRadius: 2
   borderWaves: 20
-  borderWidth: 0.6
+  borderWidth: 1
   worldSeed: 23692137
   mobSpawner: {fileID: 245548428}
 --- !u!483693784 &672237593530260148
