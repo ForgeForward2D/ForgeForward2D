@@ -77,6 +77,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TutorialDialogue",
+                    "type": "Button",
+                    "id": "40755cb5-8d7d-4efe-9cfd-64bcaec12a5e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -407,6 +416,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Achievements",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e7492f0c-99f9-42e3-abdc-9542df047ff8",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TutorialDialogue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

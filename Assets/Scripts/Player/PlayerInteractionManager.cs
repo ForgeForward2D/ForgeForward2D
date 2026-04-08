@@ -102,8 +102,8 @@ public class PlayerInteractionManager : MonoBehaviour
                                 npc.RejectSword(anySword);
                         }
                     }
+                    npc.HandleInteraction(uiPage);
                 }
-                npc.HandleInteraction(uiPage);
                 return;
             }
         }

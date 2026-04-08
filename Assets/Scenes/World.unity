@@ -124,6 +124,70 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7488516743591794821, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
   m_PrefabInstance: {fileID: 477567815}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &231449038
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3202815307857340162, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_Name
+      value: TutorialNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 5037605978683415930, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: npcType
+      value: 
+      objectReference: {fileID: 11400000, guid: f705f462aad95b5499718b91d8b50bf0, type: 2}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3202815307857340162, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 457370028}
+  m_SourcePrefab: {fileID: 100100000, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
 --- !u!1 &245548427
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,6 +234,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &457370023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3202815307857340162, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+  m_PrefabInstance: {fileID: 231449038}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &457370025 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5037605978683415930, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+  m_PrefabInstance: {fileID: 231449038}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457370023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2620f34cc1b638043869b73b304d0d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcController
+--- !u!114 &457370028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457370023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538313e351c348944bf58ddc120ed11c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialStarter
+  npcController: {fileID: 457370025}
 --- !u!1001 &477567815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19592,3 +19685,4 @@ SceneRoots:
   - {fileID: 245548429}
   - {fileID: 681071052}
   - {fileID: 477567815}
+  - {fileID: 231449038}
