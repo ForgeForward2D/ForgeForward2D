@@ -10,34 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b6397b489f5441dcb369b1a6623f32c, type: 3}
-  m_Name: Mine
+  m_Name: DeepMine
   m_EditorClassIdentifier: Assembly-CSharp::Level
-  levelName: Mine
-  startingPoint: {x: 0, y: -300}
-  backgroundTile: {fileID: 11400000, guid: 5f4c64ecc6dc74a78b9743bc1777970f, type: 2}
-  portalBlock: {fileID: 11400000, guid: 21e0976fe73f64292960b9dec5d6a372, type: 2}
+  levelName: Deep Mine
+  startingPoint: {x: -300, y: -300}
+  backgroundTile: {fileID: 11400000, guid: 85cc68f6944f54d8697e845c1af6bcf6, type: 2}
+  portalBlock: {fileID: 11400000, guid: cee512f6af88949ba92441daaa2cc2b1, type: 2}
   wallBlock: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
-  paddingTile: {fileID: 11400000, guid: fa6dad6e5f41e4187b7c6138fbce0f7e, type: 2}
+  paddingTile: {fileID: 0}
   levelSize: 100
-  viewDistance: 10
+  viewDistance: 4
   blockMapping:
   - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
-    threshold: 0.15
+    threshold: 0.25
     details: []
   - block: {fileID: 11400000, guid: 327832cc0a49e4e278c2333aa3750657, type: 2}
-    threshold: 0.55
+    threshold: 0.7
     details:
     - block: {fileID: 11400000, guid: cf30de75936df4afe8dfc7906a0eb2cf, type: 2}
-      probability: 0.2
+      probability: 0.005
     - block: {fileID: 11400000, guid: f6d8f3ab302f5461ab56d92eece3e0a1, type: 2}
-      probability: 0.205
+      probability: 0.4
   - block: {fileID: 0}
-    threshold: 0.75
-    details: []
-  - block: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
     threshold: 1
     details: []
-  mobCount: 20
-  mobSpawns:
-  - mobType: {fileID: 11400000, guid: c2e482c1a7f7d6742b2e7d45be75cff7, type: 2}
-    spawnWeight: 1
+  mobCount: 4
+  mobSpawns: []

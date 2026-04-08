@@ -22,18 +22,20 @@ MonoBehaviour:
   viewDistance: 1000
   blockMapping:
   - block: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
-    threshold: 0.132
+    threshold: 0.1
     details: []
   - block: {fileID: 11400000, guid: 327832cc0a49e4e278c2333aa3750657, type: 2}
-    threshold: 0.236
-    details: []
+    threshold: 0.25
+    details:
+    - block: {fileID: 11400000, guid: cf30de75936df4afe8dfc7906a0eb2cf, type: 2}
+      probability: 0.05
   - block: {fileID: 0}
-    threshold: 0.667
+    threshold: 0.625
     details:
     - block: {fileID: 11400000, guid: 7f3076a83042c40aaa8fa8ba50068c68, type: 2}
       probability: 0.05
   - block: {fileID: 11400000, guid: e7e5a10912c6540c994f3a48deab9599, type: 2}
-    threshold: 0.85
+    threshold: 0.825
     details: []
   - block: {fileID: 11400000, guid: 5626557a04e4f4d90972191314cda74c, type: 2}
     threshold: 1
