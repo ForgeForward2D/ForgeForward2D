@@ -17,6 +17,7 @@ MonoBehaviour:
   dialogueLines:
   - Welcome to ForgeForward2D! I will give you a quick overview about the controls.
     Press S to continue.
+  - You can open this help menu at any point by pressing Z.
   - Press W / A / S / D or Arrow Keys to move around the world.
   - Press J or Left Click to break blocks. Press K or Right Click to interact with
     NPCs and objects in the world.
