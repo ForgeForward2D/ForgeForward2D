@@ -23,6 +23,7 @@ public class NpcController : MonoBehaviour
     [Header("Mob Spawn Control")]
     [SerializeField] public bool reduceSpawn = false;
     [SerializeField] public int swordLevel = 0;
+    [SerializeField] public bool acceptsSword = false;
 
     [Header("Dialogue Templates")]
     [SerializeField] private string giveSwordDialogue = "Thanks for the {0}! I'll use it to keep the monsters at bay. Mob spawns are now reduced by {1}%!";
@@ -32,7 +33,7 @@ public class NpcController : MonoBehaviour
 
     public void GiveSword(SwordItem sword)
     {
-        if (sword == null) return;
+        if (sword == null || !acceptsSword) return;
 
         swordLevel = sword.swordLevel;
         reduceSpawn = true;
@@ -46,7 +47,7 @@ public class NpcController : MonoBehaviour
 
     public void RejectSword(SwordItem sword)
     {
-        if (sword == null) return;
+        if (sword == null || !acceptsSword) return;
 
         Debug.Log($"Rejected sword of level {sword.swordLevel} from NPC {GetDisplayName()} because they already have level {swordLevel}");
 

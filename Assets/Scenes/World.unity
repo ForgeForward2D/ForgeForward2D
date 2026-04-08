@@ -138,7 +138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037605978683415930, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
       propertyPath: npcType
-      value: 
+      value:
       objectReference: {fileID: 11400000, guid: f705f462aad95b5499718b91d8b50bf0, type: 2}
     - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
       propertyPath: m_LocalPosition.x
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbca344a5b27a864089dda76e4fd7441, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::MobSpawner
   spawnOnStart: 1
   clearExistingMobsBeforeSpawn: 1
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2620f34cc1b638043869b73b304d0d1b, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::NpcController
 --- !u!114 &457370028
 MonoBehaviour:
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 538313e351c348944bf58ddc120ed11c, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialStarter
   npcController: {fileID: 457370025}
 --- !u!1001 &477567815
@@ -277,11 +277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037605978683415930, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
       propertyPath: npcType
-      value: 
+      value:
       objectReference: {fileID: 11400000, guid: 6b30cc55c687544de948914231e51541, type: 2}
     - target: {fileID: 5037605978683415930, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
       propertyPath: spriteRenderer
-      value: 
+      value:
       objectReference: {fileID: 217690755}
     - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
       propertyPath: m_LocalPosition.x
@@ -346,8 +346,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037605978683415930, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
       propertyPath: npcType
-      value: 
+      value:
       objectReference: {fileID: 11400000, guid: 1bc3c4893a092274d82fe3942381fdde, type: 2}
+    - target: {fileID: 5037605978683415930, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
+      propertyPath: acceptsSword
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8271861676557159628, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.54
@@ -403,7 +407,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.Tilemaps.Tile
   m_Sprite: {fileID: 1729082148}
   m_Color: {r: 0.8496231, g: 0.34654853, b: 0.44378072, a: 1}
@@ -433,7 +437,7 @@ Sprite:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name:
   m_Rect:
     serializedVersion: 2
     x: 0
@@ -446,7 +450,7 @@ Sprite:
   m_Pivot: {x: 0.5, y: 0.5}
   m_Extrude: 0
   m_IsPolygon: 0
-  m_PackingTag: 
+  m_PackingTag:
   m_RenderDataKey:
     00000000000000000000000000000000: 0
   m_AtlasTags: []
@@ -636,7 +640,7 @@ Sprite:
   m_PhysicsShape: []
   m_Bones: []
   m_ScriptableObjects: []
-  m_SpriteID: 
+  m_SpriteID:
 --- !u!1 &2088212864 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3202815307857340162, guid: ea8a0c1ef4e07514f8af1f4662a80a14, type: 3}
@@ -698,7 +702,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e08e852084c146139d6c49fe7d5bb51, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::WorldGeneration
   baseLevel: {fileID: 11400000, guid: d623d184ddf23433c9a3e0ae3bca72e2, type: 2}
   noiseScale: 0.15
@@ -7386,7 +7390,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45abccff28c87422292cca39a0a89f28, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::TileMapManager
   wallTilemap: {fileID: 7420243097569545091}
   walkableTilemap: {fileID: 3019561882642584167}
@@ -19625,7 +19629,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1035c4caabcc1470faa668461ba1d30d, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::PortalManager
 --- !u!114 &8421946597684521387
 MonoBehaviour:
@@ -19637,7 +19641,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e8b037bb609b4e48bf0dd9aab71899e, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::ResourceGenerator
 --- !u!19719996 &8732432593242641620
 TilemapCollider2D:

@@ -61,7 +61,7 @@ public class PlayerInteractionManager : MonoBehaviour
                 if (uiPage == UIPage.None)
                 {
                     Debug.Log($"Triggering NPC interaction with {npc.GetDisplayName()}");
-                    if (inventoryManager != null)
+                    if (npc.acceptsSword && inventoryManager != null)
                     {
                         SwordItem bestSword = null;
                         foreach (var item in inventoryManager.resourceInventory.GetItems())
