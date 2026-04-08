@@ -133,8 +133,11 @@
 
 #diagram-box(
   title: [Attack],
-  input((-1, 0), <inputmanager>, label: [_left click_ / J]),
-  node((0, 0), [Input Manager], name: <inputmanager>),
+  input((-2, 0), <inputmanager>, label: [_left click_ / J]),
+  node((-1, 0), [Input Manager], name: <inputmanager>),
+
+  node((0, 0), [Player Interaction Manager], name: <playerinteractionmanager>),
+
   node((0, 2), [CraftingTable UI#desc[Refresh UI]], name: <craftingui>),
 
   node(
@@ -146,6 +149,7 @@
   node((1, 2), [Crafting Manager], name: <craftingmanager>),
   node((1, 3), [Inventory Manager], name: <inventorymanager>),
 
+  node((2, -1), [Tracker#desc[Record Event]], name: <tracker>),
   node(
     (2, 0),
     [Achievement Manager#desc[Track Broken Blocks]],
@@ -175,8 +179,10 @@
 
   node((0.5, 0), stroke: none, name: <onattackinput>),
 
+  event(<inputmanager>, <playerinteractionmanager>, label: [OnAttack-\ InputUpdate]),
+
   event(
-    <inputmanager>,
+    <playerinteractionmanager>,
     <onattackinput>,
     marks: "-",
     label: [OnAttack\ Update],
@@ -188,6 +194,9 @@
     label-anchor: "north",
   ),
   event(<onattackinput>, <craftingmanager>, corner: left),
+  event(<onattackinput>, (0.5, -1), <tracker>),
+
+  event(<tracker>, <achievementmanager>, label: [OnTrackerUpdate]),
 
   event(<tilemapmanager>, <blockbreakingmanager>, label: [OnBlock\ Changed]),
 
@@ -258,6 +267,7 @@
     (1, -1),
     <blockbreakingmanager>,
     label: [OnUpdate],
+    label-pos: 65%
   ),
 
   event(
@@ -299,6 +309,7 @@
   title: [Interact],
   node((0, 0), [Input Manager], name: <inputmanager>),
 
+  node((1, -1), [NPC Controller#desc[Update Dialogue Texts]], name: <npccontroller>),
   node(
     (1, 0),
     [PlayerInteraction Manager#desc[Find Block For Interaction]],
@@ -306,7 +317,9 @@
   ),
   node((1, 1), [TileMap Manager], name: <tilemapmanager>),
 
+  node((2, -1), [Dialogue UI#desc[Refresh UI]], name: <dialogueui>),
   node((2, 0), [UI Manager], name: <uimanager>),
+  node((2, 2), [Tracker#desc[Record Event]], name: <tracker>),
 
   node(
     (3, 0),
@@ -318,6 +331,11 @@
     [Movement Manager#desc[Cancel Walking + Animation]],
     name: <movementmanager>,
   ),
+  node(
+    (3, 2),
+    [Achievement Manager#desc[Check for Achievement]],
+    name: <achievementmanager>,
+  ),
 
   input((-1, 0), <inputmanager>, label: [_right click_ / K], shift: 10pt),
   input(
@@ -328,10 +346,21 @@
     label-anchor: "north",
   ),
 
+  event(<npccontroller>, <dialogueui>, label: [OnNPCControllerUpdate]),
+
+node((0.5, 0), stroke: none, name: <oninteractioninput>),
   event(
     <inputmanager>,
+    <oninteractioninput>,
+    label: [OnInteraction-\ Input],
+    marks: "-"
+  ),
+    event(<oninteractioninput>,
     <playerinteractionmanager>,
-    label: [OnInteractionInput],
+  ),
+    event(<oninteractioninput>,
+    <npccontroller>,
+    corner: right,
   ),
 
   method-call(
@@ -340,7 +369,10 @@
     label: [Read Block],
   ),
 
-  event(<playerinteractionmanager>, <uimanager>, label: [OnInteraction]),
+node((1.5, 0), stroke: none, name: <oninteraction>),
+  event(<playerinteractionmanager>, <oninteraction>, marks: "-", label: [OnInteraction]),
+  event(<oninteraction>, <uimanager>),
+  event(<oninteraction>, <tracker>, corner: left),
 
   event(
     <inputmanager>,
@@ -360,7 +392,10 @@
   ),
   event(<onupdatepage>, <blockbreakingmanager>),
   event(<onupdatepage>, <movementmanager>, corner: left),
-  event(<onupdatepage>, (2.5, -1), (0, -1), <inputmanager>),
+  event(<onupdatepage>, (2.5, -2), (0, -2), <inputmanager>),
+  event(<onupdatepage>, <tracker>, corner: right),
+
+  event(<tracker.south-west>, <achievementmanager.south-west>,label: [OnTrackerUpdate]),
 )
 
 #diagram-box(
