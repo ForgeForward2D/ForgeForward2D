@@ -36,18 +36,18 @@
   edge(<crafting>, <none>, [K, ESC]),
 
   edge(<none>, <achievements>, [U]),
-  edge(<achievements>, <none>, [U, ESC]),
+  edge(<achievements>, <none>, [U, ESC], label-pos: 70%),
 
   edge(<none>, <dialogue>, [K, ESC]),
   edge(<dialogue>, <none>, [U]),
 
   edge(<none>, <none>, [ESC], bend: 120deg),
 
-  edge(<inventory>, <inventory>, [K, S, W, U]),
+  edge(<inventory>, <inventory>, [J, K, S, W, U]),
 
-  edge(<crafting>, <crafting>, [E, S, W, U]),
+  edge(<crafting>, <crafting>, [E, J, S, W, U]),
 
-  edge(<achievements>, <achievements>, [E, S, W, K]),
+  edge(<achievements>, <achievements>, [E, J, S, W, K]),
 
-  edge(<dialogue>, <dialogue>, [E, K, S, W]),
+  edge(<dialogue>, <dialogue>, [E, J, K, S, W]),
 )

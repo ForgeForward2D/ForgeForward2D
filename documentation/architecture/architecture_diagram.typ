@@ -126,9 +126,26 @@
   event(<npccontroller>, <dialogueui>, label: [OnNPCControllerUpdate]),
   event(<npccontroller>, (1.5, 3), <tracker>),
 
-  event(<tracker>, (2.5, 4), (2.5, -0.5), (1.5, -0.5), (1.5, 0.3), (1, 0.3), <achievementmanager>, label: [OnTrackerUpdate]),
+  event(
+    <tracker>,
+    (2.5, 4),
+    (2.5, -0.5),
+    (1.5, -0.5),
+    (1.5, 0.3),
+    (1, 0.3),
+    <achievementmanager>,
+    label: [OnTrackerUpdate],
+  ),
 
-  event(<achievementmanager>, (1, 0.5), (2, 0.5), <achievementpopupmanager>, label: [OnAchievement-\ Unlocked], label-anchor: "center", bend: left),
+  event(
+    <achievementmanager>,
+    (1, 0.5),
+    (2, 0.5),
+    <achievementpopupmanager>,
+    label: [OnAchievement-\ Unlocked],
+    label-anchor: "center",
+    bend: left,
+  ),
 )
 
 #diagram-box(
@@ -179,7 +196,11 @@
 
   node((0.5, 0), stroke: none, name: <onattackinput>),
 
-  event(<inputmanager>, <playerinteractionmanager>, label: [OnAttack-\ InputUpdate]),
+  event(
+    <inputmanager>,
+    <playerinteractionmanager>,
+    label: [OnAttack-\ InputUpdate],
+  ),
 
   event(
     <playerinteractionmanager>,
@@ -267,7 +288,7 @@
     (1, -1),
     <blockbreakingmanager>,
     label: [OnUpdate],
-    label-pos: 65%
+    label-pos: 65%,
   ),
 
   event(
@@ -309,7 +330,11 @@
   title: [Interact],
   node((0, 0), [Input Manager], name: <inputmanager>),
 
-  node((1, -1), [NPC Controller#desc[Update Dialogue Texts]], name: <npccontroller>),
+  node(
+    (1, -1),
+    [NPC Controller#desc[Update Dialogue Texts]],
+    name: <npccontroller>,
+  ),
   node(
     (1, 0),
     [PlayerInteraction Manager#desc[Find Block For Interaction]],
@@ -348,20 +373,15 @@
 
   event(<npccontroller>, <dialogueui>, label: [OnNPCControllerUpdate]),
 
-node((0.5, 0), stroke: none, name: <oninteractioninput>),
+  node((0.5, 0), stroke: none, name: <oninteractioninput>),
   event(
     <inputmanager>,
     <oninteractioninput>,
     label: [OnInteraction-\ Input],
-    marks: "-"
+    marks: "-",
   ),
-    event(<oninteractioninput>,
-    <playerinteractionmanager>,
-  ),
-    event(<oninteractioninput>,
-    <npccontroller>,
-    corner: right,
-  ),
+  event(<oninteractioninput>, <playerinteractionmanager>),
+  event(<oninteractioninput>, <npccontroller>, corner: right),
 
   method-call(
     <playerinteractionmanager>,
@@ -369,8 +389,13 @@ node((0.5, 0), stroke: none, name: <oninteractioninput>),
     label: [Read Block],
   ),
 
-node((1.5, 0), stroke: none, name: <oninteraction>),
-  event(<playerinteractionmanager>, <oninteraction>, marks: "-", label: [OnInteraction]),
+  node((1.5, 0), stroke: none, name: <oninteraction>),
+  event(
+    <playerinteractionmanager>,
+    <oninteraction>,
+    marks: "-",
+    label: [OnInteraction],
+  ),
   event(<oninteraction>, <uimanager>),
   event(<oninteraction>, <tracker>, corner: left),
 
@@ -395,7 +420,11 @@ node((1.5, 0), stroke: none, name: <oninteraction>),
   event(<onupdatepage>, (2.5, -2), (0, -2), <inputmanager>),
   event(<onupdatepage>, <tracker>, corner: right),
 
-  event(<tracker.south-west>, <achievementmanager.south-west>,label: [OnTrackerUpdate]),
+  event(
+    <tracker.south-west>,
+    <achievementmanager.south-west>,
+    label: [OnTrackerUpdate],
+  ),
 )
 
 #diagram-box(
