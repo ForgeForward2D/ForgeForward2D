@@ -23,10 +23,11 @@
 #v(2em)
 
 #diagram(
-  node((1, 0), [None], name: <none>),
+  node((1, 1), [None], name: <none>),
   node((0, 0), [Inventory], name: <inventory>),
-  node((1, 1), [Crafting], name: <crafting>),
+  node((0, 2), [Crafting], name: <crafting>),
   node((2, 0), [Achieve-ments], name: <achievements>),
+  node((2, 2), [Dialogue], name: <dialogue>),
 
   edge(<none>, <inventory>, [E]),
   edge(<inventory>, <none>, [E, ESC]),
@@ -35,13 +36,18 @@
   edge(<crafting>, <none>, [K, ESC]),
 
   edge(<none>, <achievements>, [U]),
-  edge(<achievements>, <none>, [U, ESC]),
+  edge(<achievements>, <none>, [U, ESC], label-pos: 70%),
+
+  edge(<none>, <dialogue>, [K]),
+  edge(<dialogue>, <none>, [ESC]),
 
   edge(<none>, <none>, [ESC], bend: 120deg),
 
-  edge(<inventory>, <inventory>, [K, U]),
+  edge(<inventory>, <inventory>, [J, K, S, W, U]),
 
-  edge(<crafting>, <crafting>, [E, U]),
+  edge(<crafting>, <crafting>, [E, J, S, W, U]),
 
-  edge(<achievements>, <achievements>, [E, K]),
+  edge(<achievements>, <achievements>, [E, J, S, W, K]),
+
+  edge(<dialogue>, <dialogue>, [E, J, K, S, W]),
 )
