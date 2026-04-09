@@ -20,7 +20,7 @@ MonoBehaviour:
   aggroRange: 5
   stealsResources: 1
   stealRange: 1
-  stealInterval: 2.5
+  stealInterval: 2
   maxItemsStolen: 3
   itemsConsumedPerMin: 10
   directionCheckDistance: 0.3

@@ -24,7 +24,7 @@ public class PlayerInteractionManager : MonoBehaviour
 
         npcLayerMask = LayerMask.GetMask("NPC");
 
-        InputManager.OnAttackUpdate += HandleAttackUpdate;
+        InputManager.OnAttackInputUpdate += HandleAttackUpdate;
         InputManager.OnInteractionInput += HandleInteractionInput;
     }
 

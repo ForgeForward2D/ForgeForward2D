@@ -17,7 +17,7 @@ MonoBehaviour:
   backgroundTile: {fileID: 11400000, guid: 85cc68f6944f54d8697e845c1af6bcf6, type: 2}
   portalBlock: {fileID: 11400000, guid: cee512f6af88949ba92441daaa2cc2b1, type: 2}
   wallBlock: {fileID: 11400000, guid: 616a8520276444b07937de3469920001, type: 2}
-  paddingTile: {fileID: 0}
+  paddingTile: {fileID: 11400000, guid: fa6dad6e5f41e4187b7c6138fbce0f7e, type: 2}
   levelSize: 100
   viewDistance: 4
   blockMapping:

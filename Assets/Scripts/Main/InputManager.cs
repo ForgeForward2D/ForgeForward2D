@@ -36,16 +36,16 @@ public class InputManager : MonoBehaviour
         OnMoveInput?.Invoke((uiPage, performed, input));
     }
 
-    public static event Action<(UIPage, bool)> OnAttackUpdate;
+    public static event Action<(UIPage, bool)> OnAttackInputUpdate;
     public void Attack(InputAction.CallbackContext context)
     {
         switch (context.phase)
         {
             case InputActionPhase.Performed:
-                OnAttackUpdate?.Invoke((uiPage, true));
+                OnAttackInputUpdate?.Invoke((uiPage, true));
                 break;
             case InputActionPhase.Canceled:
-                OnAttackUpdate?.Invoke((uiPage, false));
+                OnAttackInputUpdate?.Invoke((uiPage, false));
                 break;
         }
     }
