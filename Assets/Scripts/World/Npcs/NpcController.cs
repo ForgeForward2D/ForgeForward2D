@@ -86,7 +86,7 @@ public class NpcController : MonoBehaviour
             pages = BuildPages(npcType.dialogueLines);
 
         InputManager.OnMoveInput += HandleMoveInput;
-        InputManager.OnAttackUpdate += HandleAttackUpdate;
+        InputManager.OnAttackInputUpdate += HandleAttackUpdate;
         InputManager.OnInteractionInput += HandleInteractionInput;
         UIManager.OnUpdatePage += HandleUpdatePage;
     }

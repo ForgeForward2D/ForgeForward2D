@@ -31,7 +31,7 @@ public class CraftingManager
         UpdateAvailableRecipes();
         inventoryManager.OnInventoryUpdate += HandleInventoryUpdate;
         InputManager.OnMoveInput += HandleMovementInput;
-        InputManager.OnAttackUpdate += HandleAttackUpdate;
+        InputManager.OnAttackInputUpdate += HandleAttackUpdate;
     }
 
     public void SetActive(bool isActive)
