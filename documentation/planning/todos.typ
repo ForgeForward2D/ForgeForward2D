@@ -34,23 +34,23 @@
     size: text.size * 80%,
   )[TODOs unitl Friday, 10.04.]
 }
-- finish open prs Sinan
-- write blog article Leon
-- presentation Leon
-- expand tracking Tim
-- Camera bug Tim
-- inventory bug Nils
-- organize play testing and do analysis Tim
-- levels:
-  - balancing wood / recipes Nils
-  - make progression more meaningful Nils
-    - lock portals
-    - make every tool useful
-    - make every resource useful
-  - NPCs Sinan
-  - finish stronghold Sinan
-  - redesign starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds Sinan
-  - limited vision Leon
+- #strike[finish open prs Sinan]
+- #strike[write blog article Leon]
+- #strike[presentation Leon]
+- #strike[expand tracking Tim]
+- #strike[Camera bug Tim]
+- #strike[inventory bug Nils]
+- #strike[organize play testing and do analysis Tim]
+- #strike[levels:]
+  - #strike[balancing wood / recipes Nils]
+  - #strike[make progression more meaningful Nils]
+    - #strike[lock portals]
+    - #strike[make every tool useful]
+    - #strike[make every resource useful]
+  - #strike[NPCs Sinan]
+  - #strike[finish stronghold Sinan]
+  - #strike[redesign starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds Sinan]
+  - #strike[limited vision Leon]
 
 #pagebreak(weak: true)
 = Next Steps
@@ -60,19 +60,19 @@
     size: text.size * 80%,
   )[TODOs unitl Friday, 27.03.]
 }
-- write blog article Leon
-- prepare presentation Tim
+- #strike[write blog article Leon]
+- #strike[prepare presentation Tim]
 - #strike[implement "mob steals resources" logic Tim + Leon]
-- implement mob-spwan logic: giving an NPC resources reduces mob spawn rate Sinan + Nils
+- #strike[implement mob-spwan logic: giving an NPC resources reduces mob spawn rate Sinan + Nils]
 - #strike[implement "mob following player" logic -> pathfinding Leon]
-- implement NPC-interaction logic for communication Nils
+- #strike[implement NPC-interaction logic for communication Nils]
 - levels:
   - #strike[add more achievements (maybe second type of achievements, e.g. craft 100 times) Tim]
-  - #optional[design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds]
-  - #optional[limited vision]
-  - create more levels: mine, deep mine, end/stronghold/ the endboss's house Sinan (CCO)
+  - #strike[#optional[design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds]]
+  - #strike[#optional[limited vision]]
+  - #strike[create more levels: mine, deep mine, end/stronghold/ the endboss's house Sinan (CCO)]
   - #strike[design sprites for portals, loot boxes Nils]
-  - design mob sprites (1 x hostile, 1 x villager/fairy) Sinan
+  - #strike[design mob sprites (1 x hostile, 1 x villager/fairy) Sinan]
 - #strike[crafting recipe sorting Leon]
 - #strike[anvil for tools Leon]
 - #strike[implement game analytics Tim]
@@ -96,9 +96,9 @@
 - levels: Leon + Sinan
   - #strike[write world creation logic for forest, mine, ...]
   - add second layer
-  - design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds
+  - #strike[design starter level: starter house with crafting table, starter treasure; some resources on the map; portals to the other worlds]
   - #strike[level/world switching logic, door/portal etc.]
-  - limited vision
+  - #strike[limited vision]
 - #strike[think of storyline and progression system #math.arrow create a plan (figma/excalidraw) Leon + Sinan]
 - #strike[add mobs (that only run around for now) Nils]
 - #optional[tool animations Sinan]
@@ -134,18 +134,18 @@
 - #optional[Add sound effects for block break etc.]
 
 == Game Idea
-- spawn in house/base, entry world has portals to further worlds
-- one world for every resource
+- #strike[spawn in house/base, entry world has portals to further worlds]
+- #strike[one world for every resource]
 
 == Feedback
 - "villagers"/farm workers can be bought and placed
-- weather conditions like fog where you cant see the whole map so that would make it a bit harder to find stuff
+- #strike[weather conditions like fog where you cant see the whole map so that would make it a bit harder to find stuff]
   - torch for more viewing distance
   - craft sth like blitz in pokemon where you can then see the whole map?
 - #strike[achievements]
 - upgradable tool #math.arrow enchantments
   - man könnte auch so 2x2 enchantments hinzufügen (also dass man statt 1x1 2x2 abbauen kann)
-- mobs disturbing you from mining
+- #strike[mobs disturbing you from mining]
 - #optional[food]
 - armor for the player to protect against mobs
 - #optional[day-night cycle]
