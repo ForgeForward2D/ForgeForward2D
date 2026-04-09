@@ -38,8 +38,8 @@
   edge(<none>, <achievements>, [U]),
   edge(<achievements>, <none>, [U, ESC], label-pos: 70%),
 
-  edge(<none>, <dialogue>, [K, ESC]),
-  edge(<dialogue>, <none>, [U]),
+  edge(<none>, <dialogue>, [K]),
+  edge(<dialogue>, <none>, [ESC]),
 
   edge(<none>, <none>, [ESC], bend: 120deg),
 
